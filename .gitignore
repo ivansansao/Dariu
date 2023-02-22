@@ -1,8 +1,8 @@
-Dariu
+dariu
 CMakeFiles
 cmake_install.cmake
 CMakeCache.txt
-Makefile
+build/Makefile
 
 # Prerequisites
 *.d

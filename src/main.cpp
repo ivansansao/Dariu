@@ -1,8 +1,15 @@
-#include <SFML/Graphics.hpp>
 #include <iostream>
+#include "model/game.hpp"
+// using namespace std;
 
 int main()
 {
-    std::cout << "Working...\n";
+
+    Game *game = new Game();
+    game->run();
+    delete game;
+    game = nullptr;
+
+    // cout << "Working..";
     return EXIT_SUCCESS;
 }
