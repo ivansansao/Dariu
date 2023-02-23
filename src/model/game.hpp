@@ -16,9 +16,6 @@ public:
 
     sf::Music music;
 
-    sf::Texture hammer;
-    sf::Sprite ham;
-
     bool gameover;
     bool paused;
 
