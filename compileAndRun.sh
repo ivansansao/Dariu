@@ -8,6 +8,7 @@
 
 # g++ src/main.cpp src/model/game.cpp -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio && ./a.out
 
+rm dariu
 cd src
 make
 cd ..

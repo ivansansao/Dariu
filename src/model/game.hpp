@@ -6,17 +6,27 @@
 #include <experimental/random>
 #include <iostream>
 
+#include "dariu.hpp"
+
 class Game
 {
 public:
     Game();
     sf::RenderWindow window;
+
+    sf::Music music;
+
+    sf::Texture hammer;
+    sf::Sprite ham;
+
     bool gameover;
     bool paused;
 
+    Dariu dariu;
+
     void play();
-    void game_over();
     void pause();
+    void game_over();
     void loop_events();
     void run();
 };
