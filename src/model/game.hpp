@@ -15,6 +15,7 @@ class Game {
     sf::RenderWindow window;
 
     sf::Music music;
+    sf::View view;
 
     bool gameover;
     bool paused;

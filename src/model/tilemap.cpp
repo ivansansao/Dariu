@@ -8,9 +8,16 @@ Tilemap::Tilemap() {
     terrain_tex.loadFromFile("./asset/Free/Terrain/Terrain (16x16).png");
     ground.setTexture(terrain_tex);
     ground.setTextureRect(sf::IntRect(96, 0, 48, 48));
-    bananas_tex.loadFromFile("./asset/Free/Items/Fruits/Bananas.png");
-    banana.setTexture(bananas_tex);
+    banana_tex.loadFromFile("./asset/Free/Items/Fruits/Bananas.png");
+    banana.setTexture(banana_tex);
     banana.setTextureRect(sf::IntRect(0, 0, 32, 32));
+
+    trophy_tex.loadFromFile("./asset/Free/Items/Checkpoints/End/End (Pressed) (64x64).png");
+    trophy.setTexture(trophy_tex);
+    trophy.setTextureRect(sf::IntRect(0, 0, 64, 64));
+
+    background_tex.loadFromFile("./asset/Redwood.jpg");
+    background.setTexture(background_tex);
 
     sf::RectangleShape block(sf::Vector2f(height_floor, height_floor));
     sf::String tilemap[H] = {
@@ -51,9 +58,9 @@ void Tilemap::draw(sf::RenderWindow *w) {
         "                                 B                                       B     B",
         "B                                B                                       B     B",
         "B                                B                                       B     B",
-        "           0                     B                                       B     B",
-        "B                                B                                       B     B",
-        "B                                B                                       B     B",
+        "                                 B                                       B     B",
+        "B         T                      B                                       B     B",
+        "B                     0          B                                       B     B",
         "B        BBBB                    B                                       B     B",
         "B                                B                                       B     B",
         "B                   BBBBB      0 B                                       B     B",
@@ -67,6 +74,8 @@ void Tilemap::draw(sf::RenderWindow *w) {
         "B    B         BB    0    BB           BB    B         BB         BB           X",
         "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"};
 
+    w->draw(background);
+
     for (int i{}; i < H; ++i) {
         for (int j{}; j < W; ++j) {
             // std::cout << tilemap2[i][j] << " \n";
@@ -76,6 +85,10 @@ void Tilemap::draw(sf::RenderWindow *w) {
                 banana.setTextureRect(sf::IntRect(((int)i_banana % q_banana) * 32, 0, 32, 32));
                 banana.setPosition(j * 32, i * 32);
                 w->draw(banana);
+            } else if (tilemap2[i][j] == 'T') {
+                trophy.setTextureRect(sf::IntRect(((int)i_trophy % q_trophy) * 64, 0, 64, 64));
+                trophy.setPosition(j * 32, i * 32);
+                w->draw(trophy);
             } else if (tilemap2[i][j] == 'B') {
                 ground.setPosition(j * 32, i * 32);
                 w->draw(ground);
@@ -84,4 +97,5 @@ void Tilemap::draw(sf::RenderWindow *w) {
         }
     }
     i_banana += 0.5f;
+    i_trophy += 0.1f;
 }

@@ -15,7 +15,7 @@ Dariu::Dariu() {
     lift = -17;
 }
 void Dariu::update() {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
         this->up();
     }
 

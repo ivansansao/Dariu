@@ -10,12 +10,17 @@ Game::Game() {
 
     music.openFromFile("./asset/soundtrack.wav");
     music.setVolume(4.f);  // 0 to 100
+
+    // view1.reset(sf::FloatRect(0.f, 0.f, 1280.f, 736.f));
+    sf::View view(sf::FloatRect(0.f, 0.f, 2280.f, 736.f));
 }
 void Game::play() {
     this->dariu.update();
     this->tilemap.update();
-
+    view.move(0.5f, 0.f);
+    window.setView(view);
     window.clear();
+
     this->tilemap.draw(&window);
     this->dariu.draw(&window);
     window.display();
