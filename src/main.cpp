@@ -1,8 +1,8 @@
-#include "model/game.hpp"
 #include <iostream>
 
-int main()
-{
+#include "model/game.hpp"
+
+int main() {
     Game *game = new Game();
     game->run();
     delete game;

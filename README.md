@@ -2,6 +2,8 @@
 
 A plataform game
 
+![Alt Text](src/asset/show1.gif)
+
 ## Compile
 
 Here we are using Makefile.

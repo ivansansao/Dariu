@@ -1,16 +1,16 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
+#include <SFML/Graphics.hpp>
 #include <experimental/random>
 #include <iostream>
 
 #include "dariu.hpp"
+#include "tilemap.hpp"
 
-class Game
-{
-public:
+class Game {
+   public:
     Game();
     sf::RenderWindow window;
 
@@ -20,6 +20,7 @@ public:
     bool paused;
 
     Dariu dariu;
+    Tilemap tilemap;
 
     void play();
     void pause();
