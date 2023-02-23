@@ -3,14 +3,16 @@
 #include <cmath>
 
 #include "iostream"
+#include "tools.hpp"
 
 Dariu::Dariu() {
-    dariu_tex.loadFromFile("./asset/dariu.png");
-    dariu_spr.setTexture(dariu_tex);
+    dariu_tex_idle.loadFromFile("./asset/Free/Main Characters/Virtual Guy/Idle (32x32).png");
+    dariu_tex.loadFromFile("./asset/Free/Main Characters/Virtual Guy/Run (32x32).png");
     pos = sf::Vector2f(400.f, 400.f);
-    speed = sf::Vector2f(0.f, 0.f);
     velocity = sf::Vector2f(0.f, 0.f);
-    ground_y = 680;
+    direction = 1;
+    i_idle_sprite = 1;
+    ground_y = 736 - 32 - 32;
     gravity = 0.9;
     lift = -17;
 }
@@ -31,9 +33,12 @@ void Dariu::update() {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
         velocity.x += 3;
         velocity.x = std::min(5.f, velocity.x);
+        direction = 1;
+
     } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
         velocity.x -= 3;
         velocity.x = std::max(-5.f, velocity.x);
+        direction = -1;
     } else {
         if (velocity.x > 0.f) {
             velocity.x -= 0.2f;
@@ -50,7 +55,20 @@ void Dariu::update() {
     dariu_spr.setPosition(pos);
 }
 void Dariu::draw(sf::RenderWindow *w) {
-    w->draw(dariu_spr);
+    if (onFloor()) {
+        if (velocity.x == 0) {
+            dariu_spr.setTexture(dariu_tex_idle);
+            dariu_spr.setTextureRect(sf::IntRect(Tools::getStartSprite((int)i_idle_sprite % 11, direction) * 32, 0, direction * 32, 32));
+            w->draw(dariu_spr);
+            i_idle_sprite += 0.2;
+        } else {
+            dariu_spr.setTexture(dariu_tex);
+            dariu_spr.setTextureRect(sf::IntRect(Tools::getStartSprite((int)pos.x % 12, direction) * 32, 0, direction * 32, 32));
+            w->draw(dariu_spr);
+        }
+    } else {
+        w->draw(dariu_spr);
+    }
 }
 bool Dariu::onFloor() {
     return (pos.y == ground_y);

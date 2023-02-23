@@ -28,5 +28,6 @@ class Tilemap {
 
     void update();
     void draw(sf::RenderWindow *w);
+    void collision(int direction, sf::String *tilemap2);
 };
 #endif

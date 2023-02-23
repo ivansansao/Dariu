@@ -1,5 +1,7 @@
 #include "game.hpp"
 
+#include <bits/stdc++.h>
+
 #include "iostream"
 
 Game::Game() {
@@ -11,19 +13,27 @@ Game::Game() {
     music.openFromFile("./asset/soundtrack.wav");
     music.setVolume(4.f);  // 0 to 100
 
-    // view1.reset(sf::FloatRect(0.f, 0.f, 1280.f, 736.f));
-    sf::View view(sf::FloatRect(0.f, 0.f, 2280.f, 736.f));
+    view.reset(sf::FloatRect(0.f, 0.f, 1280.f, 736.f));
 }
 void Game::play() {
+    std::stringstream ss;
+
+    auto position = sf::Mouse::getPosition(window);
+
     this->dariu.update();
     this->tilemap.update();
-    view.move(0.5f, 0.f);
-    window.setView(view);
-    window.clear();
+    // this->view.move(1.f, 0.f);
+    if (dariu.pos.x > 800) {
+    }
+    view.setCenter(dariu.pos.x, 736 / 2);
+    window.setView(this->view);
 
+    window.clear(sf::Color(62, 49, 60, 255));
     this->tilemap.draw(&window);
     this->dariu.draw(&window);
     window.display();
+    ss << "Mouse (" << position.x << "," << position.y << ") Dariu (" << dariu.pos.x << "," << dariu.pos.y << ")";
+    window.setTitle(ss.str());
 }
 void Game::pause() { music.pause(); };
 void Game::game_over() { music.stop(); };
@@ -46,6 +56,7 @@ void Game::loop_events() {
         }
     }
 }
+
 void Game::run() {
     while (window.isOpen()) {
         this->loop_events();

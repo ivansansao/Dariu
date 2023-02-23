@@ -7,7 +7,7 @@
 Tilemap::Tilemap() {
     terrain_tex.loadFromFile("./asset/Free/Terrain/Terrain (16x16).png");
     ground.setTexture(terrain_tex);
-    ground.setTextureRect(sf::IntRect(96, 0, 48, 48));
+    ground.setTextureRect(sf::IntRect(96, 0, 32, 32));
     banana_tex.loadFromFile("./asset/Free/Items/Fruits/Bananas.png");
     banana.setTexture(banana_tex);
     banana.setTextureRect(sf::IntRect(0, 0, 32, 32));
@@ -63,10 +63,10 @@ void Tilemap::draw(sf::RenderWindow *w) {
         "B                     0          B                                       B     B",
         "B        BBBB                    B                                       B     B",
         "B                                B                                       B     B",
-        "B                   BBBBB      0 B                                       B     B",
-        "B                                B                                       B     B",
-        "B         0 0 0 0             BBBB                0 0 0               BBBB     B",
-        "B                                B                                       B     B",
+        "B                   BBBBB      0 B                0   0                  B     B",
+        "B 0                              B                0 0 0                  B     B",
+        "B 0       0 0 0 0             BBBB                0 0 0               BBBB     B",
+        "B 0                              B                                       B     B",
         "BBB                              B       BB                              B     B",
         "B              BB                BB    BB              BB              BBBB    B",
         "B        0     BB         BB           BB              BB                      X",
@@ -74,7 +74,7 @@ void Tilemap::draw(sf::RenderWindow *w) {
         "B    B         BB    0    BB           BB    B         BB         BB           X",
         "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"};
 
-    w->draw(background);
+    // w->draw(background);
 
     for (int i{}; i < H; ++i) {
         for (int j{}; j < W; ++j) {
@@ -98,4 +98,17 @@ void Tilemap::draw(sf::RenderWindow *w) {
     }
     i_banana += 0.5f;
     i_trophy += 0.1f;
+
+    collision(1, tilemap2);
+}
+void Tilemap::collision(int direction, sf::String *tilemap2) {
+    for (int i{}; i < H; ++i) {
+        for (int j{}; j < W; ++j) {
+            if (tilemap2[i][j] == 'B') {
+                if (tilemap2[i][j] == '0') {
+                    tilemap2[i][j] = ' ';
+                }
+            }
+        }
+    }
 }
