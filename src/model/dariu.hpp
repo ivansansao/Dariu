@@ -2,27 +2,35 @@
 #define DARIU_H
 #include <SFML/Graphics.hpp>
 
+#include "tilemap.hpp"
+
 class Dariu {
    public:
     Dariu();
 
     sf::RenderWindow window;
 
+    sf::Texture dariu_tex_fall;
     sf::Texture dariu_tex_idle;
     sf::Texture dariu_tex;
     sf::Sprite dariu_spr;
 
-    sf::Vector2f pos;
+    sf::FloatRect pos;
     sf::Vector2f velocity;
-    int direction;
+    int direction_x;
     float i_idle_sprite;
     float ground_y;
     float gravity;
     float lift;
+    bool on_ground;
 
-    void update();
+    sf::Font font_vibes;
+    sf::Text deb;
+
+    void update(Tilemap *tilemap);
     void draw(sf::RenderWindow *w);
     void up();
     bool onFloor();
+    void collision(Tilemap *, bool);
 };
 #endif
