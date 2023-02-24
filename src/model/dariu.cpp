@@ -59,16 +59,13 @@ void Dariu::draw(sf::RenderWindow *w) {
         if (velocity.x == 0) {
             dariu_spr.setTexture(dariu_tex_idle);
             dariu_spr.setTextureRect(sf::IntRect(Tools::getStartSprite((int)i_idle_sprite % 11, direction) * 32, 0, direction * 32, 32));
-            w->draw(dariu_spr);
             i_idle_sprite += 0.2;
         } else {
             dariu_spr.setTexture(dariu_tex);
             dariu_spr.setTextureRect(sf::IntRect(Tools::getStartSprite((int)pos.x % 12, direction) * 32, 0, direction * 32, 32));
-            w->draw(dariu_spr);
         }
-    } else {
-        w->draw(dariu_spr);
     }
+    w->draw(dariu_spr);
 }
 bool Dariu::onFloor() {
     return (pos.y == ground_y);
