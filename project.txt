@@ -1,0 +1,47 @@
+// chatgpt answer !
+
+checkCollisions() {
+    for (let row = topTile; row <= bottomTile; row++) {
+        for (let col = leftTile; col <= rightTile; col++) {
+            if (tilemap[row][col] == 1) {
+                // Collision detected
+                return true;
+            }
+        }
+    }
+
+    // No collision detected
+    return false;
+}
+
+update() {
+    // Move player left or right
+    if (input.left) {
+        player.x -= PLAYER_SPEED;
+        if (checkCollisions()) {
+            // Undo move if collision detected
+            player.x += PLAYER_SPEED;
+        }
+    } else if (input.right) {
+        player.x += PLAYER_SPEED;
+        if (checkCollisions()) {
+            // Undo move if collision detected
+            player.x -= PLAYER_SPEED;
+        }
+    }
+
+    // Move player up or down
+    if (input.up) {
+        player.y -= PLAYER_SPEED;
+        if (checkCollisions()) {
+            // Undo move if collision detected
+            player.y += PLAYER_SPEED;
+        }
+    } else if (input.down) {
+        player.y += PLAYER_SPEED;
+        if (checkCollisions()) {
+            // Undo move if collision detected
+            player.y -= PLAYER_SPEED;
+        }
+    }
+}

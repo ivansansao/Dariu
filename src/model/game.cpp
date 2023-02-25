@@ -28,14 +28,18 @@ void Game::play() {
 
     this->dariu.update(&tilemap);
     this->tilemap.update();
+    // const float LERP_SPEED = 0.1f;
+    // sf::Vector2f targetPosition = sf::Vector2f(dariu.pos.left, 736 / 2) + sf::Vector2f(dariu.pos.left / 2, 736 / 2);
+    // view.setCenter(view.getCenter() + (targetPosition - view.getCenter()) * LERP_SPEED);
     view.setCenter(dariu.pos.left, 736 / 2);
+
     window.setView(this->view);
 
     window.clear(sf::Color(62, 49, 60, 255));
     this->tilemap.draw(&window);
     this->dariu.draw(&window);
     window.display();
-    ss << "Mouse (" << position.x << "," << position.y << ") Dariu (" << dariu.pos.left << "," << dariu.pos.top << ")";
+    ss << "Mouse (" << position.x << "," << position.y << ") Dariu TL (" << dariu.pos.top << "," << dariu.pos.left << ") H: " << dariu.pos.height << " W: " << dariu.pos.width;
     window.setTitle(ss.str());
 }
 void Game::pause() { music.pause(); };

@@ -55,7 +55,6 @@ void Dariu::update(Tilemap *tilemap) {
         velocity.x -= 3;
         velocity.x = std::max(-5.f, velocity.x);
         direction_x = -1;
-
     } else {
         if (velocity.x > 0.f) {
             velocity.x -= 0.2f;
@@ -76,8 +75,8 @@ void Dariu::update(Tilemap *tilemap) {
 
     deb.setString("on_ground: " + to_string(on_ground) + " map[" + to_string(i) + "][" + to_string(j) + "] = ' " + tilemap->map[i][j] + " ' i2: " + to_string(i2) + " j2: " + to_string(j2));
 
-    collision(tilemap, true);
-    collision(tilemap, false);
+    // collision_x(tilemap);
+    collision_y(tilemap);
 
     dariu_spr.setPosition(pos.left, pos.top);
 
@@ -104,33 +103,37 @@ void Dariu::up() {
         on_ground = false;
     }
 }
-
-void Dariu::collision(Tilemap *tilemap, bool horizontal_move) {
+void Dariu::collision_x(Tilemap *tilemap) {
+    // i = 384/12=12 < 384+32=416/32=13
     for (int i = pos.top / 32; i < (pos.top + pos.height) / 32; i++) {
         for (int j = pos.left / 32; j < (pos.left + pos.width) / 32; j++) {
             if (tilemap->map[i][j] == 'B') {
                 // cout << "[" << i << "][" << j << "] pos.height = " << pos.height << " width: " << pos.width << "\n";
                 // PARA o X
-                if (horizontal_move == true) {
-                    if (velocity.x > 0) {
-                        pos.left = j * 32 - pos.width;
-                    }
-                    if (velocity.x < 0) {
-                        pos.left = j * 32 + 32;
-                    }
+                if (velocity.x > 0) {
+                    pos.left = j * 32 - pos.width;
                 }
+                if (velocity.x < 0) {
+                    pos.left = j * 32 + 32;
+                }
+            }
+        }
+    }
+}
 
-                // PARA o Y
-                if (horizontal_move == false) {
-                    if (velocity.y > 0) {
-                        pos.top = i * 32 - pos.height;
-                        on_ground = true;
-                    }
-                    if (velocity.y < 0) {
-                        pos.top = i * 32 + 32;
-                    }
-                    velocity.y = 0;
+void Dariu::collision_y(Tilemap *tilemap) {
+    // i = 384/12=12 < 384+32=416/32=13
+    for (int i = pos.top / 32; i < (pos.top + pos.height) / 32; i++) {
+        for (int j = pos.left / 32; j < (pos.left + pos.width) / 32; j++) {
+            if (tilemap->map[i][j] == 'B') {
+                if (velocity.y > 0) {
+                    pos.top = i * 32 - pos.height;
+                    on_ground = true;
                 }
+                if (velocity.y < 0) {
+                    pos.top = i * 32 + 32;
+                }
+                velocity.y = 0;
             }
 
             if (tilemap->map[i][j] == '0') {

@@ -31,6 +31,7 @@ class Dariu {
     void draw(sf::RenderWindow *w);
     void up();
     bool onFloor();
-    void collision(Tilemap *, bool);
+    void collision_x(Tilemap *);
+    void collision_y(Tilemap *);
 };
 #endif
