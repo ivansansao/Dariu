@@ -75,8 +75,8 @@ void Dariu::update(Tilemap *tilemap) {
 
     deb.setString("on_ground: " + to_string(on_ground) + " map[" + to_string(i) + "][" + to_string(j) + "] = ' " + tilemap->map[i][j] + " ' i2: " + to_string(i2) + " j2: " + to_string(j2));
 
-    // collision_x(tilemap);
     collision_y(tilemap);
+    collision_x(tilemap);  // There is a issue here!
 
     dariu_spr.setPosition(pos.left, pos.top);
 
