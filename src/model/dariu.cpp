@@ -19,7 +19,7 @@ Dariu::Dariu() {
     i_idle_sprite = 1;
     ground_y = 736 - (32 + 32);
     on_ground = false;
-    gravity = 0.9;
+    gravity = 1.0;
     lift = -17;
 
     font_vibes.loadFromFile("./asset/fonts/RobotoFlex-Regular.ttf");
@@ -36,22 +36,40 @@ void Dariu::up() {
     }
 }
 void Dariu::update(Tilemap *tilemap) {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-        pos.left += 3;
-        direction_x = 1;
-    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-        pos.left -= 3;
-        direction_x = -1;
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-        up();
+    // ---- Y ----
+
+    cout << "E: " << (int)pos.top / 32 << "," << (int)pos.left / 32 << "\n";
+
+    if (tilemap->map[(int)pos.top / 32][(int)pos.left / 32] == 'B') {
+        cout << "Iniciou com B\n";
     }
 
-    velocity.y += gravity;
+    // if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+    //     velocity.y += lift;
+    // }
+    velocity.y += 1;
     pos.top += velocity.y;
+    cout << "pos.top:" << pos.top << " velocity.y: " << velocity.y << "\n";
 
     collision_y(tilemap);
-    collision_x(tilemap);  // There is a issue here!
+
+    // ---- X ----
+
+    // if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+    //     pos.left += 3;
+    //     direction_x = 1;
+    // } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+    //     pos.left -= 3;
+    //     direction_x = -1;
+    // }
+
+    // collision_x(tilemap);  // There is a issue here!
+
+    // ---- END ----
+
+    if (tilemap->map[(int)pos.top / 32][(int)pos.left / 32] == 'B') {
+        cout << "Ended com B\n";
+    }
 
     dariu_spr.setPosition(pos.left, pos.top);
 
@@ -61,6 +79,8 @@ void Dariu::update(Tilemap *tilemap) {
     int i2 = (pos.top + pos.height) / 32;
     int j2 = (pos.left + pos.width) / 32;
     deb.setString("on_ground: " + to_string(on_ground) + " map[" + to_string(i) + "][" + to_string(j) + "] = ' " + tilemap->map[i][j] + " ' i2: " + to_string(i2) + " j2: " + to_string(j2) + " on_block: " + to_string(0));
+
+    cout << "S: " << (int)pos.top / 32 << "," << (int)pos.left / 32 << "\n";
 }
 
 void Dariu::collision_y(Tilemap *tilemap) {
@@ -71,9 +91,11 @@ void Dariu::collision_y(Tilemap *tilemap) {
         if (velocity.y > 0) {
             pos.top = i * 32 - pos.height;
             on_ground = true;
+            cout << "A\n";
         }
         if (velocity.y < 0) {
             pos.top = i * 32 + 32;
+            cout << "2\n";
         }
         velocity.y = 0;
     }
