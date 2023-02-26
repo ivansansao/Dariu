@@ -29,58 +29,84 @@ Dariu::Dariu() {
     deb.setPosition(sf::Vector2f(100, 100));
     deb.setString("");
 }
-void Dariu::update(Tilemap *tilemap) {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-        this->up();
+void Dariu::up() {
+    if (on_ground) {
+        velocity.y += lift;
+        on_ground = false;
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
-        pos = sf::FloatRect(700.f, 100.f, 32.f, 32.f);
+}
+void Dariu::update(Tilemap *tilemap) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+        pos.left += 3;
+        direction_x = 1;
+    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+        pos.left -= 3;
+        direction_x = -1;
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+        up();
     }
 
     velocity.y += gravity;
     pos.top += velocity.y;
-    if (pos.top > ground_y) {
-        pos.top = ground_y;
-        velocity.y = 0;
-        on_ground = true;
-    }
-
-    // Right left
-
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-        velocity.x += 3;
-        velocity.x = std::min(5.f, velocity.x);
-        direction_x = 1;
-    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-        velocity.x -= 3;
-        velocity.x = std::max(-5.f, velocity.x);
-        direction_x = -1;
-    } else {
-        if (velocity.x > 0.f) {
-            velocity.x -= 0.2f;
-            velocity.x = std::max(0.f, velocity.x);
-        } else if (velocity.x < 0.f) {
-            velocity.x += 0.2f;
-            velocity.x = std::min(0.f, velocity.x);
-        }
-        velocity.x = 0;
-    }
-
-    pos.left += velocity.x;
-
-    int i = pos.top / 32;
-    int j = pos.left / 32;
-    int i2 = (pos.top + pos.height) / 32;
-    int j2 = (pos.left + pos.width) / 32;
-
-    deb.setString("on_ground: " + to_string(on_ground) + " map[" + to_string(i) + "][" + to_string(j) + "] = ' " + tilemap->map[i][j] + " ' i2: " + to_string(i2) + " j2: " + to_string(j2));
 
     collision_y(tilemap);
     collision_x(tilemap);  // There is a issue here!
 
     dariu_spr.setPosition(pos.left, pos.top);
 
-    deb.setPosition(sf::Vector2f(pos.left - 620, 100));
+    // Just debug
+    int i = pos.top / 32;
+    int j = pos.left / 32;
+    int i2 = (pos.top + pos.height) / 32;
+    int j2 = (pos.left + pos.width) / 32;
+    deb.setString("on_ground: " + to_string(on_ground) + " map[" + to_string(i) + "][" + to_string(j) + "] = ' " + tilemap->map[i][j] + " ' i2: " + to_string(i2) + " j2: " + to_string(j2) + " on_block: " + to_string(0));
+}
+
+void Dariu::collision_y(Tilemap *tilemap) {
+    // i = 384/12=12 < 384+32=416/32=13
+    int i = pos.top / 32;
+    int j = pos.left / 32;
+    if (tilemap->map[i][j] == 'B') {
+        if (velocity.y > 0) {
+            pos.top = i * 32 - pos.height;
+            on_ground = true;
+        }
+        if (velocity.y < 0) {
+            pos.top = i * 32 + 32;
+        }
+        velocity.y = 0;
+    }
+}
+void Dariu::collision_x(Tilemap *tilemap) {
+    // i = 384/12=12 < 384+32=416/32=13
+    int i = pos.top / 32;
+    int j = pos.left / 32;
+    if (tilemap->map[i][j] == 'B') {
+        // cout << "[" << i << "][" << j << "] pos.height = " << pos.height << " width: " << pos.width << "\n";
+        // PARA o X
+        if (velocity.x > 0) {
+            pos.left = j * 32 - pos.width;
+        }
+        if (velocity.x < 0) {
+            pos.left = j * 32 + 32;
+        }
+    }
+}
+
+void Dariu::collision_other(Tilemap *tilemap) {
+    for (int i = pos.top / 32; i < (pos.top + pos.height) / 32; i++) {
+        for (int j = pos.left / 32; j < (pos.left + pos.width) / 32; j++) {
+            if (tilemap->map[i][j] == '0') {
+                tilemap->map[i][j] = ' ';
+            }
+            if (tilemap->map[i][j] == 'T') {
+                tilemap->map[i][j] = ' ';
+            }
+            if (tilemap->map[i][j] == 'X') {
+            }
+        }
+    }
 }
 void Dariu::draw(sf::RenderWindow *w) {
     if (on_ground) {
@@ -93,58 +119,8 @@ void Dariu::draw(sf::RenderWindow *w) {
             dariu_spr.setTextureRect(sf::IntRect(Tools::getStartSprite((int)pos.left % 12, direction_x) * 32, 0, direction_x * 32, 32));
         }
     }
+
+    deb.setPosition(sf::Vector2f(pos.left - 620, 100));
     w->draw(dariu_spr);
     w->draw(deb);
-}
-
-void Dariu::up() {
-    if (on_ground) {
-        velocity.y += lift;
-        on_ground = false;
-    }
-}
-void Dariu::collision_x(Tilemap *tilemap) {
-    // i = 384/12=12 < 384+32=416/32=13
-    for (int i = pos.top / 32; i < (pos.top + pos.height) / 32; i++) {
-        for (int j = pos.left / 32; j < (pos.left + pos.width) / 32; j++) {
-            if (tilemap->map[i][j] == 'B') {
-                // cout << "[" << i << "][" << j << "] pos.height = " << pos.height << " width: " << pos.width << "\n";
-                // PARA o X
-                if (velocity.x > 0) {
-                    pos.left = j * 32 - pos.width;
-                }
-                if (velocity.x < 0) {
-                    pos.left = j * 32 + 32;
-                }
-            }
-        }
-    }
-}
-
-void Dariu::collision_y(Tilemap *tilemap) {
-    // i = 384/12=12 < 384+32=416/32=13
-    for (int i = pos.top / 32; i < (pos.top + pos.height) / 32; i++) {
-        for (int j = pos.left / 32; j < (pos.left + pos.width) / 32; j++) {
-            if (tilemap->map[i][j] == 'B') {
-                if (velocity.y > 0) {
-                    pos.top = i * 32 - pos.height;
-                    on_ground = true;
-                }
-                if (velocity.y < 0) {
-                    pos.top = i * 32 + 32;
-                }
-                velocity.y = 0;
-            }
-
-            if (tilemap->map[i][j] == '0') {
-                tilemap->map[i][j] = ' ';
-            }
-            if (tilemap->map[i][j] == 'T') {
-                tilemap->map[i][j] = ' ';
-            }
-            if (tilemap->map[i][j] == 'X') {
-                // fase_1 = true;
-            }
-        }
-    }
 }

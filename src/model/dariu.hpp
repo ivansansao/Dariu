@@ -33,5 +33,6 @@ class Dariu {
     bool onFloor();
     void collision_x(Tilemap *);
     void collision_y(Tilemap *);
+    void collision_other(Tilemap *);
 };
 #endif

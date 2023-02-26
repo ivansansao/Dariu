@@ -1,5 +1,5 @@
 {
-    "workbench.colorTheme": "Slack Theme Monument",
+    "workbench.colorTheme": "Slack Theme Aubergine",
     "C_Cpp.clang_format_fallbackStyle": "{ BasedOnStyle: Google, IndentWidth: 4, ColumnLimit: 0}",
     "files.associations": {
         "iostream": "cpp",

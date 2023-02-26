@@ -28,6 +28,11 @@ void Game::play() {
 
     this->dariu.update(&tilemap);
     this->tilemap.update();
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
+        dariu.pos = sf::FloatRect(700.f, 100.f, 32.f, 32.f);
+    }
+
     // const float LERP_SPEED = 0.1f;
     // sf::Vector2f targetPosition = sf::Vector2f(dariu.pos.left, 736 / 2) + sf::Vector2f(dariu.pos.left / 2, 736 / 2);
     // view.setCenter(view.getCenter() + (targetPosition - view.getCenter()) * LERP_SPEED);
