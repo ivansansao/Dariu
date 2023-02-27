@@ -11,8 +11,10 @@ Game::Game() {
     window.setFramerateLimit(60);
     window.setPosition(sf::Vector2i(0, 0));
     window.setMouseCursorVisible(true);
-
+    music.openFromFile("./asset/sound/track1.mp3");
+    music.setLoop(true);
     music.setVolume(8.f);  // 0 to 100
+    music.play();
     view.reset(sf::FloatRect(0.f, 0.f, 1280.f, 736.f));
 }
 void Game::play() {
@@ -27,7 +29,9 @@ void Game::play() {
         dariu.pos = sf::FloatRect(700.f, 100.f, 32.f, 32.f);
     }
 
-    view.setCenter(dariu.pos.left, 736 / 2);
+    if (dariu.pos.left > 900.f && dariu.pos.left < 2560.f) {
+        view.setCenter(dariu.pos.left, 736 / 2);
+    }
 
     window.setView(this->view);
 
@@ -36,7 +40,7 @@ void Game::play() {
     this->dariu.draw(&window);
     window.display();
     ss << "Mouse (" << position.x << "," << position.y << ") Dariu TL (" << dariu.pos.top << "," << dariu.pos.left << ") / 32 = " << dariu.pos.left / 32;
-    window.setTitle(ss.str());
+    // window.setTitle(ss.str());
 }
 void Game::pause() { music.pause(); };
 void Game::game_over() { music.stop(); };
@@ -44,8 +48,8 @@ void Game::game_over() { music.stop(); };
 void Game::loop_events() {
     if (music.getStatus() == sf::Music::Stopped || music.getStatus() == sf::Music::Paused) {
         // Accept 16 bits, convert to OGG on Vlc!
-        music.openFromFile("./asset/soundtrack.wav");
-        music.play();
+        // music.openFromFile("./asset/sound/track1.mp3");
+        // music.play();
         cout << "Try play music...\n";
     }
 

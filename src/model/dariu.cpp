@@ -23,6 +23,29 @@ Dariu::Dariu() {
     gravity = 1.0;
     lift = -17;
 
+    pop.loadFromFile("./asset/sound/pop.wav");
+    pop_sound0.setBuffer(pop);
+    pop_sound1.setBuffer(pop);
+    pop_sound2.setBuffer(pop);
+    pop_sound3.setBuffer(pop);
+    pop_sound4.setBuffer(pop);
+    pop_sound5.setBuffer(pop);
+    pop_sound6.setBuffer(pop);
+    pop_sound7.setBuffer(pop);
+    pop_sound8.setBuffer(pop);
+    pop_sound9.setBuffer(pop);
+
+    pop_sound0.setVolume(7.f);
+    pop_sound1.setVolume(7.f);
+    pop_sound2.setVolume(7.f);
+    pop_sound3.setVolume(7.f);
+    pop_sound4.setVolume(7.f);
+    pop_sound5.setVolume(7.f);
+    pop_sound6.setVolume(7.f);
+    pop_sound7.setVolume(7.f);
+    pop_sound8.setVolume(7.f);
+    pop_sound9.setVolume(7.f);
+
     font_vibes.loadFromFile("./asset/fonts/RobotoFlex-Regular.ttf");
     deb.setFont(font_vibes);
     deb.setCharacterSize(20);
@@ -30,6 +53,7 @@ Dariu::Dariu() {
     deb.setPosition(sf::Vector2f(100, 100));
     deb.setString("");
 }
+
 void Dariu::up() {
     if (on_ground) {
         velocity.y += lift;
@@ -151,6 +175,9 @@ void Dariu::collision_other(Tilemap *tilemap) {
         for (int j = pos.left / 32; j < (pos.left + pos.width) / 32; j++) {
             if (tilemap->map[i][j] == '0') {
                 tilemap->map[i][j] = ' ';
+                // pop_sound.play();
+
+                play_sound_pop();
             }
             if (tilemap->map[i][j] == 'T') {
                 tilemap->map[i][j] = ' ';
@@ -174,5 +201,38 @@ void Dariu::draw(sf::RenderWindow *w) {
 
     deb.setPosition(sf::Vector2f(pos.left - 620, 100));
     w->draw(dariu_spr);
-    w->draw(deb);
+    // w->draw(deb);
+}
+void Dariu::play_sound_pop() {
+    if (pop_sound0.getStatus() == 0) {
+        pop_sound0.play();
+        cout << "sound0\n";
+    } else if (pop_sound1.getStatus() == 0) {
+        pop_sound1.play();
+        cout << "sound1\n";
+    } else if (pop_sound2.getStatus() == 0) {
+        pop_sound2.play();
+        cout << "sound2\n";
+    } else if (pop_sound3.getStatus() == 0) {
+        pop_sound3.play();
+        cout << "sound3\n";
+    } else if (pop_sound4.getStatus() == 0) {
+        pop_sound4.play();
+        cout << "sound4\n";
+    } else if (pop_sound5.getStatus() == 0) {
+        pop_sound5.play();
+        cout << "sound5\n";
+    } else if (pop_sound6.getStatus() == 0) {
+        pop_sound6.play();
+        cout << "sound6\n";
+    } else if (pop_sound7.getStatus() == 0) {
+        pop_sound7.play();
+        cout << "sound7\n";
+    } else if (pop_sound8.getStatus() == 0) {
+        pop_sound8.play();
+        cout << "sound8\n";
+    } else if (pop_sound9.getStatus() == 0) {
+        pop_sound9.play();
+        cout << "sound9\n";
+    }
 }

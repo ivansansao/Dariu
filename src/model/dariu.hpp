@@ -1,5 +1,6 @@
 #ifndef DARIU_H
 #define DARIU_H
+#include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 
 #include "tilemap.hpp"
@@ -28,6 +29,18 @@ class Dariu {
     sf::Font font_vibes;
     sf::Text deb;
 
+    sf::SoundBuffer pop;
+    sf::Sound pop_sound0;
+    sf::Sound pop_sound1;
+    sf::Sound pop_sound2;
+    sf::Sound pop_sound3;
+    sf::Sound pop_sound4;
+    sf::Sound pop_sound5;
+    sf::Sound pop_sound6;
+    sf::Sound pop_sound7;
+    sf::Sound pop_sound8;
+    sf::Sound pop_sound9;
+
     void update(Tilemap *tilemap);
     void draw(sf::RenderWindow *w);
     void up();
@@ -35,5 +48,6 @@ class Dariu {
     void collision_x(Tilemap *);
     void collision_y(Tilemap *);
     void collision_other(Tilemap *);
+    void play_sound_pop();
 };
 #endif
