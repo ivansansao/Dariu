@@ -8,6 +8,11 @@ Tilemap::Tilemap() {
     terrain_tex.loadFromFile("./asset/Free/Terrain/Terrain (16x16).png");
     ground.setTexture(terrain_tex);
     ground.setTextureRect(sf::IntRect(96, 0, 32, 32));
+
+    ground_ora.setTexture(terrain_tex);
+    ground_ora.setTextureRect(sf::IntRect(272, 64, 32, 32));
+    // ground_ora.setTextureRect(sf::IntRect(96, 64, 32, 32));
+
     banana_tex.loadFromFile("./asset/Free/Items/Fruits/Bananas.png");
     banana.setTexture(banana_tex);
     banana.setTextureRect(sf::IntRect(0, 0, 32, 32));
@@ -29,7 +34,7 @@ std::string Tilemap::map[H] = {
     "B                                B                                  0000000000                     B",
     "B                                B                00000000000       BBBBBBBBBB                     B",
     "B                                0                00000000000  BBBB      B                         B",
-    "B                                0                00000000000            B   BBBB                  B",
+    "B                                0                00000000000            B   bbbb                  B",
     "B                                0               BBBB T  BBBBB           B        000000    00000  B",
     "B         0                      0                    0                  B                  0 T 0  B",
     "B         0                      B00000              BBBB                B        BBBBBB    00 00  B",
@@ -39,12 +44,12 @@ std::string Tilemap::map[H] = {
     "B             BBBBBBBBBBBBBBBB 0 B      B0        0   0     000        T B      00000              B",
     "B 0                              B       B        0 0 0    00000         B      BBBBB              B",
     "B 0       0 0 0 0             BBBB        BBB     0 0 0               BBBB00000                    B",
-    "B 0                              B                                       BBBBBB                    B",
-    "B                                B             BBBBB                     B       0000000           B",
-    "B              BB                BB    BBBB            BB              BBBBB     BBBBBBB           B",
-    "B        0     BB         BB           BB              BB 0000000                                  X",
-    "B              BB         BB           BB    B000000000BB 0000000 BB                               X",
-    "B       000    BB    0    BB           BB    B000000000BB 0000000 BB                               X",
+    "B 0                              B bbbb                                  BBBBBB                    B",
+    "B                                B bbbb        BbbbB                     B       0000000           B",
+    "B              BB         00     BBbbbbBBBB000000000000BB              BBBBB     BBBBBBB           B",
+    "B        0     BB         BB           BB00000000000000BB 0000000                                  X",
+    "B              BB         BB           BB0000B000000000BB 0000000 BB                               X",
+    "B       000    BB0B0000000BB           BB0000B000000000BB 0000000 BB 000000000000000000000000000000X",
     "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"};
 
 void Tilemap::update() {
@@ -68,6 +73,9 @@ void Tilemap::draw(sf::RenderWindow *w) {
             } else if (map[i][j] == 'B') {
                 ground.setPosition(j * 32, i * 32);
                 w->draw(ground);
+            } else if (map[i][j] == 'b') {
+                ground_ora.setPosition(j * 32, i * 32);
+                w->draw(ground_ora);
             } else {
             }
         }

@@ -22,6 +22,13 @@ Dariu::Dariu() {
     on_ground = false;
     gravity = 1.0;
     lift = -17;
+    jump.loadFromFile("./asset/sound/jump.ogg");
+    jump_sound.setBuffer(jump);
+    jump_sound.setVolume(9.f);
+
+    crash.loadFromFile("./asset/sound/crash.ogg");
+    crash_sound.setBuffer(crash);
+    crash_sound.setVolume(9.f);
 
     pop.loadFromFile("./asset/sound/pop.wav");
     pop_sound0.setBuffer(pop);
@@ -71,6 +78,7 @@ void Dariu::update(Tilemap *tilemap) {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
         if (up_released) {
             if (on_ground) {
+                jump_sound.play();
                 velocity.y += lift;
                 up_released = false;
             }
@@ -105,6 +113,10 @@ void Dariu::update(Tilemap *tilemap) {
 
     collision_x(tilemap);
 
+    if (tilemap->map[((int)pos.top / 32)][(int)pos.left / 32] == 'B') {
+        cerr << "******************* Erro local 2\n";
+    }
+
     // -----------------------------------
 
     collision_other(tilemap);
@@ -131,13 +143,15 @@ void Dariu::collision_y(Tilemap *tilemap) {
     // Y
     for (int i = pos.top / 32; i <= (pos.top + pos.height) / 32; i++) {
         for (int j = pos.left / 32; j < (pos.left + pos.width) / 32; j++) {
-            if (tilemap->map[i][j] == 'B') {
+            if (tilemap->map[i][j] == 'B' || tilemap->map[i][j] == 'b') {
                 if (velocity.y > 0) {
+                    on_collide("ground", i, j, tilemap);
                     pos.top = i * 32 - pos.height;
                     on_ground = true;
                     // cout << "A\n";
                 }
                 if (velocity.y < 0) {
+                    on_collide("top", i, j, tilemap);
                     pos.top = i * 32 + 32;
                     cout << "Toin..\n";
                 }
@@ -151,15 +165,17 @@ void Dariu::collision_x(Tilemap *tilemap) {
     // cout << " > ";
     for (int i = pos.top / 32; i < (pos.top + pos.height) / 32; i++) {
         for (int j = pos.left / 32; j <= (pos.left + pos.width) / 32; ++j) {
-            if (tilemap->map[i][j] == 'B') {
+            if (tilemap->map[i][j] == 'B' || tilemap->map[i][j] == 'b') {
                 // PARA o X
                 if (velocity.x < 0) {
+                    on_collide("left", i, j, tilemap);
                     cout << i << "," << j << "\n";
                     cout << "Pahhh!!\n";
                     pos.left = j * 32 + 32;
                     cout << pos.left / 32 << "\n";
                 }
                 if (velocity.x > 0) {
+                    on_collide("right", i, j, tilemap);
                     cout << i << "," << j << "\n";
                     cout << "Pufff!!\n";
                     pos.left = j * 32 - 32;
@@ -175,14 +191,17 @@ void Dariu::collision_other(Tilemap *tilemap) {
         for (int j = pos.left / 32; j < (pos.left + pos.width) / 32; j++) {
             if (tilemap->map[i][j] == '0') {
                 tilemap->map[i][j] = ' ';
-                // pop_sound.play();
-
                 play_sound_pop();
             }
             if (tilemap->map[i][j] == 'T') {
                 tilemap->map[i][j] = ' ';
             }
+            if (tilemap->map[i][j] == 'b') {
+                tilemap->map[i][j] = 'B';
+            }
             if (tilemap->map[i][j] == 'X') {
+                pos.left = 910.f;
+                pos.top = 672.f;
             }
         }
     }
@@ -234,5 +253,13 @@ void Dariu::play_sound_pop() {
     } else if (pop_sound9.getStatus() == 0) {
         pop_sound9.play();
         cout << "sound9\n";
+    }
+}
+void Dariu::on_collide(std::string where, int i, int j, Tilemap *tilemap) {
+    if (where == "top") {
+        if (tilemap->map[i][j] == 'b') {
+            tilemap->map[i][j] = ' ';
+            crash_sound.play();
+        };
     }
 }

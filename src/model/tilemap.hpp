@@ -19,6 +19,7 @@ class Tilemap {
     sf::Texture trophy_tex;
     sf::Texture background_tex;
     sf::Sprite ground;
+    sf::Sprite ground_ora;
     sf::Sprite coin;
     sf::Sprite banana;
     sf::Sprite trophy;

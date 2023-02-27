@@ -29,6 +29,12 @@ class Dariu {
     sf::Font font_vibes;
     sf::Text deb;
 
+    sf::SoundBuffer jump;
+    sf::Sound jump_sound;
+
+    sf::SoundBuffer crash;
+    sf::Sound crash_sound;
+
     sf::SoundBuffer pop;
     sf::Sound pop_sound0;
     sf::Sound pop_sound1;
@@ -49,5 +55,6 @@ class Dariu {
     void collision_y(Tilemap *);
     void collision_other(Tilemap *);
     void play_sound_pop();
+    void on_collide(std::string where, int i, int j, Tilemap *tilemap);
 };
 #endif
