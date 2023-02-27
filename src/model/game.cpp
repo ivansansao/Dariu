@@ -51,14 +51,13 @@ void Game::pause() { music.pause(); };
 void Game::game_over() { music.stop(); };
 
 void Game::loop_events() {
-    sf::Event event;
-    sf::Clock clock;
-
     if (music.getStatus() == sf::Music::Stopped || music.getStatus() == sf::Music::Paused) {
         music.openFromFile("./asset/track1.mp3");
         music.play();
     }
 
+    sf::Event event;
+    sf::Clock clock;
     while (window.pollEvent(event)) {
         // float time = clock.getElapsedTime().asMicroseconds();
         // clock.restart();
@@ -67,10 +66,16 @@ void Game::loop_events() {
         if (event.type == sf::Event::Closed) {
             window.close();
         }
+        if (playing) {
+            if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Up) {
+                this->dariu.up_released = true;
+            }
+        }
     }
 }
 
 void Game::run() {
+    playing = true;
     while (window.isOpen()) {
         this->loop_events();
 

@@ -33,7 +33,6 @@ Dariu::Dariu() {
 void Dariu::up() {
     if (on_ground) {
         velocity.y += lift;
-        on_ground = false;
     }
 }
 void Dariu::update(Tilemap *tilemap) {
@@ -46,10 +45,14 @@ void Dariu::update(Tilemap *tilemap) {
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-        if (on_ground) {
-            velocity.y += lift;
+        if (up_released) {
+            if (on_ground) {
+                velocity.y += lift;
+                up_released = false;
+            }
         }
     }
+
     velocity.y += 1;
     pos.top += velocity.y;
     collision_y(tilemap);
@@ -79,6 +82,8 @@ void Dariu::update(Tilemap *tilemap) {
     collision_x(tilemap);
 
     // -----------------------------------
+
+    collision_other(tilemap);
 
     if (tilemap->map[(int)pos.top / 32][(int)pos.left / 32] == 'B') {
         cout << "Ended com B\n";

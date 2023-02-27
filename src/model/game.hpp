@@ -19,6 +19,7 @@ class Game {
 
     bool gameover;
     bool paused;
+    bool playing = false;
 
     Dariu dariu;
     Tilemap tilemap;

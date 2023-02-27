@@ -23,6 +23,7 @@ class Dariu {
     float gravity;
     float lift;
     bool on_ground;
+    bool up_released = true;
 
     sf::Font font_vibes;
     sf::Text deb;
