@@ -13,7 +13,8 @@ Dariu::Dariu() {
     dariu_tex_idle.loadFromFile("./asset/Free/Main Characters/Virtual Guy/Idle (32x32).png");
     dariu_tex.loadFromFile("./asset/Free/Main Characters/Virtual Guy/Run (32x32).png");
     dariu_spr.setTexture(dariu_tex_fall);
-    pos = sf::FloatRect(640.f, 64.f, 32.f, 32.f);
+    // pos = sf::FloatRect(448.f, 672.f, 32.f, 32.f);
+    pos = sf::FloatRect(448.f, 672.f, 32.f, 32.f);
     velocity = sf::Vector2f(0.f, 0.f);
     direction_x = 1;
     i_idle_sprite = 1;
@@ -36,7 +37,7 @@ void Dariu::up() {
     }
 }
 void Dariu::update(Tilemap *tilemap) {
-    // ---- Y ----
+    // ---------------- Y ----------------
 
     // cout << "E: " << (int)pos.top / 32 << "," << (int)pos.left / 32 << "\n";
 
@@ -51,27 +52,33 @@ void Dariu::update(Tilemap *tilemap) {
     }
     velocity.y += 1;
     pos.top += velocity.y;
-    // cout << "pos.top: " << pos.top << " velocity.y: " << velocity.y << "\n";
-
     collision_y(tilemap);
 
     if (tilemap->map[((int)pos.top / 32)][(int)pos.left / 32] == 'B') {
         cerr << "******************* Erro local 1\n";
     }
 
-    // ---- X ----
+    // ---------------- X ----------------
+
+    // Bug: Right direction climb block!
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-        pos.left += 3;
+        velocity.x += 1;
         direction_x = 1;
     } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-        pos.left -= 3;
+        velocity.x -= 1;
         direction_x = -1;
+    } else {
+        velocity.x = 0;
     }
+    if (velocity.x > 5) velocity.x = 5;
+    if (velocity.x < -5) velocity.x = -5;
 
-    collision_x(tilemap);  // There is a issue here!
+    pos.left += velocity.x;
 
-    // ---- END ----
+    collision_x(tilemap);
+
+    // -----------------------------------
 
     if (tilemap->map[(int)pos.top / 32][(int)pos.left / 32] == 'B') {
         cout << "Ended com B\n";
@@ -92,8 +99,9 @@ void Dariu::update(Tilemap *tilemap) {
 void Dariu::collision_y(Tilemap *tilemap) {
     on_ground = false;
     // i = 384/12=12 < 384+32=416/32=13
+    // Y
     for (int i = pos.top / 32; i <= (pos.top + pos.height) / 32; i++) {
-        for (int j = pos.left / 32; j <= (pos.left + pos.width) / 32; j++) {
+        for (int j = pos.left / 32; j < (pos.left + pos.width) / 32; j++) {
             if (tilemap->map[i][j] == 'B') {
                 if (velocity.y > 0) {
                     pos.top = i * 32 - pos.height;
@@ -111,16 +119,24 @@ void Dariu::collision_y(Tilemap *tilemap) {
 }
 void Dariu::collision_x(Tilemap *tilemap) {
     // i = 384/12=12 < 384+32=416/32=13
-    int i = pos.top / 32;
-    int j = pos.left / 32;
-    if (tilemap->map[i][j] == 'B') {
-        // cout << "[" << i << "][" << j << "] pos.height = " << pos.height << " width: " << pos.width << "\n";
-        // PARA o X
-        if (velocity.x > 0) {
-            pos.left = j * 32 - pos.width;
-        }
-        if (velocity.x < 0) {
-            pos.left = j * 32 + 32;
+    // cout << " > ";
+    for (int i = pos.top / 32; i < (pos.top + pos.height) / 32; i++) {
+        for (int j = pos.left / 32; j <= (pos.left + pos.width) / 32; ++j) {
+            if (tilemap->map[i][j] == 'B') {
+                // PARA o X
+                if (velocity.x < 0) {
+                    cout << i << "," << j << "\n";
+                    cout << "Pahhh!!\n";
+                    pos.left = j * 32 + 32;
+                    cout << pos.left / 32 << "\n";
+                }
+                if (velocity.x > 0) {
+                    cout << i << "," << j << "\n";
+                    cout << "Pufff!!\n";
+                    pos.left = j * 32 - 32;
+                    cout << pos.left / 32 << "\n";
+                }
+            }
         }
     }
 }

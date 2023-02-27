@@ -44,7 +44,7 @@ void Game::play() {
     this->tilemap.draw(&window);
     this->dariu.draw(&window);
     window.display();
-    ss << "Mouse (" << position.x << "," << position.y << ") Dariu TL (" << dariu.pos.top << "," << dariu.pos.left << ") H: " << dariu.pos.height << " W: " << dariu.pos.width;
+    ss << "Mouse (" << position.x << "," << position.y << ") Dariu TL (" << dariu.pos.top << "," << dariu.pos.left << ") / 32 = " << dariu.pos.left / 32;
     window.setTitle(ss.str());
 }
 void Game::pause() { music.pause(); };
