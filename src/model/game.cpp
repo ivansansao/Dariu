@@ -12,13 +12,7 @@ Game::Game() {
     window.setPosition(sf::Vector2i(0, 0));
     window.setMouseCursorVisible(true);
 
-    if (music.openFromFile("./asset/track1.mp3")) {  // Accept 16 bits, convert to OGG on Vlc!
-        std::cout << "Yep for the music!\n";
-    } else {
-        std::cout << "Given sheet for the music!\n";
-    }
-    music.setVolume(4.f);  // 0 to 100
-
+    music.setVolume(8.f);  // 0 to 100
     view.reset(sf::FloatRect(0.f, 0.f, 1280.f, 736.f));
 }
 void Game::play() {
@@ -33,9 +27,6 @@ void Game::play() {
         dariu.pos = sf::FloatRect(700.f, 100.f, 32.f, 32.f);
     }
 
-    // const float LERP_SPEED = 0.1f;
-    // sf::Vector2f targetPosition = sf::Vector2f(dariu.pos.left, 736 / 2) + sf::Vector2f(dariu.pos.left / 2, 736 / 2);
-    // view.setCenter(view.getCenter() + (targetPosition - view.getCenter()) * LERP_SPEED);
     view.setCenter(dariu.pos.left, 736 / 2);
 
     window.setView(this->view);
@@ -52,8 +43,10 @@ void Game::game_over() { music.stop(); };
 
 void Game::loop_events() {
     if (music.getStatus() == sf::Music::Stopped || music.getStatus() == sf::Music::Paused) {
-        music.openFromFile("./asset/track1.mp3");
+        // Accept 16 bits, convert to OGG on Vlc!
+        music.openFromFile("./asset/soundtrack.wav");
         music.play();
+        cout << "Try play music...\n";
     }
 
     sf::Event event;
