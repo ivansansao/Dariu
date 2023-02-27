@@ -7,7 +7,8 @@
 using namespace std;
 
 Game::Game() {
-    window.create(sf::VideoMode(1280, 736), "Dariu - 0.1", sf::Style::Titlebar | sf::Style::Close);
+    window.create(sf::VideoMode(800, 600, 32), "Dariu - 0.1", sf::Style::Fullscreen);
+    // window.create(sf::VideoMode(1280, 736), "Dariu - 0.1", sf::Style::Titlebar | sf::Style::Close);
     window.setFramerateLimit(60);
     window.setPosition(sf::Vector2i(0, 0));
     window.setMouseCursorVisible(true);
