@@ -38,32 +38,38 @@ void Dariu::up() {
 void Dariu::update(Tilemap *tilemap) {
     // ---- Y ----
 
-    cout << "E: " << (int)pos.top / 32 << "," << (int)pos.left / 32 << "\n";
+    // cout << "E: " << (int)pos.top / 32 << "," << (int)pos.left / 32 << "\n";
 
     if (tilemap->map[(int)pos.top / 32][(int)pos.left / 32] == 'B') {
         cout << "Iniciou com B\n";
     }
 
-    // if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-    //     velocity.y += lift;
-    // }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+        if (on_ground) {
+            velocity.y += lift;
+        }
+    }
     velocity.y += 1;
     pos.top += velocity.y;
-    cout << "pos.top:" << pos.top << " velocity.y: " << velocity.y << "\n";
+    // cout << "pos.top: " << pos.top << " velocity.y: " << velocity.y << "\n";
 
     collision_y(tilemap);
 
+    if (tilemap->map[((int)pos.top / 32)][(int)pos.left / 32] == 'B') {
+        cerr << "******************* Erro local 1\n";
+    }
+
     // ---- X ----
 
-    // if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-    //     pos.left += 3;
-    //     direction_x = 1;
-    // } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-    //     pos.left -= 3;
-    //     direction_x = -1;
-    // }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+        pos.left += 3;
+        direction_x = 1;
+    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+        pos.left -= 3;
+        direction_x = -1;
+    }
 
-    // collision_x(tilemap);  // There is a issue here!
+    collision_x(tilemap);  // There is a issue here!
 
     // ---- END ----
 
@@ -80,24 +86,27 @@ void Dariu::update(Tilemap *tilemap) {
     int j2 = (pos.left + pos.width) / 32;
     deb.setString("on_ground: " + to_string(on_ground) + " map[" + to_string(i) + "][" + to_string(j) + "] = ' " + tilemap->map[i][j] + " ' i2: " + to_string(i2) + " j2: " + to_string(j2) + " on_block: " + to_string(0));
 
-    cout << "S: " << (int)pos.top / 32 << "," << (int)pos.left / 32 << "\n";
+    // cout << "S: " << (int)pos.top / 32 << "," << (int)pos.left / 32 << "\n";
 }
 
 void Dariu::collision_y(Tilemap *tilemap) {
+    on_ground = false;
     // i = 384/12=12 < 384+32=416/32=13
-    int i = pos.top / 32;
-    int j = pos.left / 32;
-    if (tilemap->map[i][j] == 'B') {
-        if (velocity.y > 0) {
-            pos.top = i * 32 - pos.height;
-            on_ground = true;
-            cout << "A\n";
+    for (int i = pos.top / 32; i <= (pos.top + pos.height) / 32; i++) {
+        for (int j = pos.left / 32; j <= (pos.left + pos.width) / 32; j++) {
+            if (tilemap->map[i][j] == 'B') {
+                if (velocity.y > 0) {
+                    pos.top = i * 32 - pos.height;
+                    on_ground = true;
+                    // cout << "A\n";
+                }
+                if (velocity.y < 0) {
+                    pos.top = i * 32 + 32;
+                    cout << "Toin..\n";
+                }
+                velocity.y = 0;
+            }
         }
-        if (velocity.y < 0) {
-            pos.top = i * 32 + 32;
-            cout << "2\n";
-        }
-        velocity.y = 0;
     }
 }
 void Dariu::collision_x(Tilemap *tilemap) {
