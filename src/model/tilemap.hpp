@@ -2,6 +2,8 @@
 #define TILEMAP_H
 #include <SFML/Graphics.hpp>
 
+#include "animation.hpp"
+
 class Tilemap {
    public:
     Tilemap();
@@ -12,6 +14,8 @@ class Tilemap {
     const int q_banana = 17;
     float i_trophy = 0;
     const int q_trophy = 8;
+
+    Animation ban(int q_frame, float step, std::string file);
 
     sf::RenderWindow window;
     sf::Texture terrain_tex;

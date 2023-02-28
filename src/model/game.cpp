@@ -2,6 +2,8 @@
 
 #include <bits/stdc++.h>
 
+#include <cmath>
+
 #include "iostream"
 
 using namespace std;
@@ -29,12 +31,17 @@ void Game::play() {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
         dariu.pos = sf::FloatRect(700.f, 100.f, 32.f, 32.f);
     }
+    const int width = 800;
+    float wLeft = floor((dariu.pos.left) / width) * width;
+    if (wLeft < 0) wLeft = 0.f;
+    view.reset(sf::FloatRect(wLeft, 0.f, 1280, 736.f));
 
-    if (dariu.pos.left > 900.f && dariu.pos.left < 2560.f) {
-        view.setCenter(dariu.pos.left, 736 / 2);
-    } else if (dariu.pos.left <= 900) {
-        view.reset(sf::FloatRect(0.f, 0.f, 1280.f, 736.f));
-    }
+    // if (dariu.pos.left > 900.f && dariu.pos.left < 2560.f) {
+    //     view.setCenter(dariu.pos.left, 736 / 2);
+
+    // } else if (dariu.pos.left <= 900) {
+    //     view.reset(sf::FloatRect(0.f, 0.f, 1280.f, 736.f));
+    // }
 
     window.setView(this->view);
 
@@ -42,8 +49,9 @@ void Game::play() {
     this->tilemap.draw(&window);
     this->dariu.draw(&window);
     window.display();
-    ss << "Mouse (" << position.x << "," << position.y << ") Dariu TL (" << dariu.pos.top << "," << dariu.pos.left << ") / 32 = " << dariu.pos.left / 32;
-    // window.setTitle(ss.str());
+
+    ss << "Mouse (" << position.x << "," << position.y << ") Dariu TL (" << dariu.pos.top << "," << dariu.pos.left << ") / 32 = " << dariu.pos.left / 32 << " hmm: " << window.getSize().x;
+    window.setTitle(ss.str());
 }
 void Game::pause() { music.pause(); };
 void Game::game_over() { music.stop(); };

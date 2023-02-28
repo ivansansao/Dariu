@@ -14,6 +14,7 @@ Actor::Actor() {
     actor_tex.loadFromFile("./asset/Free/Main Characters/Virtual Guy/Run (32x32).png");
     actor_spr.setTexture(actor_tex_fall);
     pos = sf::FloatRect(448.f, 672.f, 32.f, 32.f);
+    abs_pos = pos;
     velocity = sf::Vector2f(0.f, 0.f);
     direction_x = 1;
     i_idle_sprite = 1;

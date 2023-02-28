@@ -17,6 +17,7 @@ class Actor {
     sf::Sprite actor_spr;
 
     sf::FloatRect pos;
+    sf::FloatRect abs_pos;
     sf::Vector2f velocity;
     int direction_x;
     float i_idle_sprite;
