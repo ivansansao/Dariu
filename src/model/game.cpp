@@ -32,6 +32,8 @@ void Game::play() {
 
     if (dariu.pos.left > 900.f && dariu.pos.left < 2560.f) {
         view.setCenter(dariu.pos.left, 736 / 2);
+    } else if (dariu.pos.left <= 900) {
+        view.reset(sf::FloatRect(0.f, 0.f, 1280.f, 736.f));
     }
 
     window.setView(this->view);

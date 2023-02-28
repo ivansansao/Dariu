@@ -164,15 +164,20 @@ void Dariu::collision_x(Tilemap *tilemap) {
     // i = 384/12=12 < 384+32=416/32=13
     // cout << " > ";
     for (int i = pos.top / 32; i < (pos.top + pos.height) / 32; i++) {
-        for (int j = pos.left / 32; j <= (pos.left + pos.width) / 32; ++j) {
-            if (tilemap->map[i][j] == 'B' || tilemap->map[i][j] == 'b') {
+        for (int j = pos.left / 32; j <= (pos.left + pos.width) / 32; j++) {
+            if (is_block(tilemap->map[i][j])) {
                 // PARA o X
                 if (velocity.x < 0) {
                     on_collide("left", i, j, tilemap);
                     cout << i << "," << j << "\n";
                     cout << "Pahhh!!\n";
-                    pos.left = j * 32 + 32;
-                    cout << pos.left / 32 << "\n";
+                    const int j2 = ((int)pos.left / 32) + 1;
+                    if (is_block(tilemap->map[i][j2])) {
+                        cerr << "MOV CANCEL: Has block\n";
+                    } else {
+                        pos.left = j * 32 + 32;
+                        cout << pos.left / 32 << "\n";
+                    }
                 }
                 if (velocity.x > 0) {
                     on_collide("right", i, j, tilemap);
@@ -262,4 +267,8 @@ void Dariu::on_collide(std::string where, int i, int j, Tilemap *tilemap) {
             crash_sound.play();
         };
     }
+}
+
+bool Dariu::is_block(char el) {
+    return el == 'B' || el == 'b';
 }

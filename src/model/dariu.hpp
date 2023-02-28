@@ -56,5 +56,7 @@ class Dariu {
     void collision_other(Tilemap *);
     void play_sound_pop();
     void on_collide(std::string where, int i, int j, Tilemap *tilemap);
+
+    bool is_block(char el);
 };
 #endif
