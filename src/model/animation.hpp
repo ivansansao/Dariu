@@ -3,9 +3,11 @@
 
 #include <SFML/Graphics.hpp>
 
+using namespace std;
+
 class Animation {
    public:
-    Animation(int q_frame, float step, std::string file){};
+    Animation(int q_frame, float step, std::string file);
 
     sf::Texture texture;
     sf::Sprite sprite;
