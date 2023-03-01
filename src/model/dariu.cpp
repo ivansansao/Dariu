@@ -14,7 +14,7 @@ Dariu::Dariu() {
     text_score.setFillColor(sf::Color::White);
     reset_position();
     score.bananas = 0;
-    score.bananas_total = 290;  // 290
+    score.bananas_total = 282;
     score.darius = 10;
     score.thophy = 0;
     score.thophy_total = 3;
@@ -35,7 +35,7 @@ void Dariu::update(Tilemap *tilemap) {
 }
 void Dariu::draw(sf::RenderWindow *w) {
     Actor::draw(w);
-    text_score.setString("Darius: " + to_string(score.darius) + " Bananas: " + to_string(score.bananas) + "/" + to_string(score.bananas_total) + " Trofeus: " + to_string(score.thophy));
+    text_score.setString("Darius: " + to_string(score.darius) + " Bananas: " + to_string(score.bananas) + "/" + to_string(score.bananas_total) + " Trofeus: " + to_string(score.thophy) + "/" + to_string(score.thophy_total));
     w->draw(text_score);
 }
 

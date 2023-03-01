@@ -59,10 +59,10 @@ std::string Tilemap::map[H] = {
     "B 0                              B bbbb                                  BBBBBB                    B",
     "B                                B bbbb        BbbbB                     B       0000000           B",
     "B              BB         00     BBbbbbBBBB000000000000BB              BBBBB     BBBBBBB           B",
-    "B        0    bBB         BB         00BB00000000000000BB 0000000                                  B",
-    "B            BbBB         BB         00BB0000B000000000BB 0000000 BB                               B",
-    "B       000  B BB0B0000000BB         00BB0000B000000000BB 0000000 BB 000000000000000000000000000000D",
-    "BBBBBFBBBBBBBBBBBBBBFBFBBBBBBBFFBBFBFBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"};
+    "B        0     BB         BB         00BB00000000000000BB 0000000                                  B",
+    "B            B BB         BB         00BB0000B000000000BB 0000000 BB                          BBB  B",
+    "B       000B B BB B0000000BB         00BB0000B000000000BB 0000000 BB 00000000000000000000000     00D",
+    "BBBBBBBBBBBBFBFBBFBBFBFBBBBBBBFFBBFBFBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBFFFFFBBB"};
 
 void Tilemap::update() {
     // std::cout << "Update " << map[0] << "\n";
