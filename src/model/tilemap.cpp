@@ -20,6 +20,10 @@ Tilemap::Tilemap() {
     banana.setTexture(banana_tex);
     banana.setTextureRect(sf::IntRect(0, 0, 32, 32));
 
+    fire_tex.loadFromFile("./asset/Free/fire1.png");
+    fire.setTexture(fire_tex);
+    fire.setTextureRect(sf::IntRect(0, 0, 32, 32));
+
     trophy_tex.loadFromFile("./asset/Free/Items/Checkpoints/End/End (Pressed) (64x64).png");
     trophy.setTexture(trophy_tex);
     trophy.setTextureRect(sf::IntRect(0, 0, 64, 64));
@@ -53,7 +57,7 @@ std::string Tilemap::map[H] = {
     "B        0    bBB         BB           BB00000000000000BB 0000000                                  X",
     "B            BbBB         BB           BB0000B000000000BB 0000000 BB                               X",
     "B       000  B BB0B0000000BB           BB0000B000000000BB 0000000 BB 000000000000000000000000000000X",
-    "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"};
+    "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBFFBBFBFBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"};
 
 void Tilemap::update() {
     // std::cout << "Update " << map[0] << "\n";
@@ -106,10 +110,15 @@ void Tilemap::draw(sf::RenderWindow *w) {
             } else if (map[i][j] == 'b') {
                 ground_ora.setPosition(j * 32, i * 32);
                 w->draw(ground_ora);
+            } else if (map[i][j] == 'F') {
+                fire.setTextureRect(sf::IntRect(((int)i_fire % q_fire) * 32, 0, 32, 32));
+                fire.setPosition(j * 32, i * 32);
+                w->draw(fire);
             } else {
             }
         }
     }
     i_banana += 0.5f;
     i_trophy += 0.1f;
+    i_fire += 0.5f;
 }

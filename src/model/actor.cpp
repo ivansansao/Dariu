@@ -143,7 +143,8 @@ void Actor::collision_y(Tilemap *tilemap) {
     // Y
     for (int i = pos.top / 32; i <= (pos.top + pos.height) / 32; i++) {
         for (int j = pos.left / 32; j < (pos.left + pos.width) / 32; j++) {
-            if (tilemap->map[i][j] == 'B' || tilemap->map[i][j] == 'b') {
+            // if (tilemap->map[i][j] == 'B' || tilemap->map[i][j] == 'b') {
+            if (is_block(tilemap->map[i][j])) {
                 if (velocity.y > 0) {
                     on_collide("ground", i, j, tilemap);
                     pos.top = i * 32 - pos.height;
@@ -200,6 +201,8 @@ void Actor::collision_other(Tilemap *tilemap) {
             }
             if (tilemap->map[i][j] == 'T') {
                 tilemap->map[i][j] = ' ';
+            }
+            if (tilemap->map[i][j] == 'F') {
             }
             if (tilemap->map[i][j] == 'b') {
                 tilemap->map[i][j] = 'B';
@@ -267,8 +270,11 @@ void Actor::on_collide(std::string where, int i, int j, Tilemap *tilemap) {
             crash_sound.play();
         };
     }
+    if (tilemap->map[i][j] == 'F') {
+        pos.left = pos.left - (32 * 2);
+    }
 }
 
 bool Actor::is_block(char el) {
-    return el == 'B' || el == 'b';
+    return el == 'B' || el == 'b' || el == 'F';
 }

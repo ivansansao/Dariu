@@ -30,6 +30,11 @@ class Tilemap {
     sf::Sprite background;
     sf::RectangleShape block;
 
+    sf::Texture fire_tex;
+    sf::Sprite fire;
+    float i_fire = 0;
+    const int q_fire = 4;
+
     static std::string map[H];
 
     void update();
