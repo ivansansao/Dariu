@@ -24,6 +24,8 @@ class Tilemap {
     sf::Texture background_tex;
     sf::Sprite ground;
     sf::Sprite ground_ora;
+    sf::Sprite ground_door_opened;
+    sf::Sprite ground_door_closed;
     sf::Sprite coin;
     sf::Sprite banana;
     sf::Sprite trophy;

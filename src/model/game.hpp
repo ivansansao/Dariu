@@ -16,9 +16,21 @@ class Game {
 
     sf::Music music;
     sf::View view;
+    sf::Font font_roboto;
+    sf::Font font_greatvibes;
+    sf::Text text_gameover;
 
-    bool gameover;
-    bool paused;
+    sf::Music music_gameover;
+    bool gameover = false;
+    bool gameover_trigged = false;
+
+    sf::Music music_gamewin;
+    sf::Text text_gamewin;
+    bool gamewin = false;
+    bool gamewin_trigged = false;
+    void game_win();
+
+    bool paused = false;
     bool playing = false;
 
     Dariu dariu;
@@ -29,5 +41,6 @@ class Game {
     void game_over();
     void loop_events();
     void run();
+    bool is_fullscreen();
 };
 #endif

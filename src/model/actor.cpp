@@ -13,18 +13,24 @@ Actor::Actor() {
     actor_tex_idle.loadFromFile("./asset/Free/Main Characters/Virtual Guy/Idle (32x32).png");
     actor_tex.loadFromFile("./asset/Free/Main Characters/Virtual Guy/Run (32x32).png");
     actor_spr.setTexture(actor_tex_fall);
-    pos = sf::FloatRect(448.f, 672.f, 32.f, 32.f);
     abs_pos = pos;
     velocity = sf::Vector2f(0.f, 0.f);
     direction_x = 1;
     i_idle_sprite = 1;
-    ground_y = 736 - (32 + 32);
     on_ground = false;
     gravity = 1.0;
     lift = -17;
     jump.loadFromFile("./asset/sound/jump.ogg");
     jump_sound.setBuffer(jump);
     jump_sound.setVolume(9.f);
+
+    dooropen.loadFromFile("./asset/sound/dooropen.ogg");
+    dooropen_sound.setBuffer(dooropen);
+    fired_sound.setVolume(10.f);
+
+    fired.loadFromFile("./asset/sound/fired.ogg");
+    fired_sound.setBuffer(fired);
+    fired_sound.setVolume(9.f);
 
     crash.loadFromFile("./asset/sound/crash.ogg");
     crash_sound.setBuffer(crash);
@@ -59,12 +65,17 @@ Actor::Actor() {
     deb.setFillColor(sf::Color::White);
     deb.setPosition(sf::Vector2f(100, 100));
     deb.setString("");
+
+    reset_position();
 }
 
 void Actor::up() {
     if (on_ground) {
         velocity.y += lift;
     }
+}
+void Actor::reset_position() {
+    pos = sf::FloatRect(672.f, 672.f, 32.f, 32.f);
 }
 void Actor::update(Tilemap *tilemap) {
     // ---------------- Y ----------------
@@ -195,22 +206,7 @@ void Actor::collision_x(Tilemap *tilemap) {
 void Actor::collision_other(Tilemap *tilemap) {
     for (int i = pos.top / 32; i < (pos.top + pos.height) / 32; i++) {
         for (int j = pos.left / 32; j < (pos.left + pos.width) / 32; j++) {
-            if (tilemap->map[i][j] == '0') {
-                tilemap->map[i][j] = ' ';
-                play_sound_pop();
-            }
-            if (tilemap->map[i][j] == 'T') {
-                tilemap->map[i][j] = ' ';
-            }
-            if (tilemap->map[i][j] == 'F') {
-            }
-            if (tilemap->map[i][j] == 'b') {
-                tilemap->map[i][j] = 'B';
-            }
-            if (tilemap->map[i][j] == 'X') {
-                pos.left = 910.f;
-                pos.top = 672.f;
-            }
+            on_collide_other(i, j, tilemap);
         }
     }
 }
@@ -264,17 +260,10 @@ void Actor::play_sound_pop() {
     }
 }
 void Actor::on_collide(std::string where, int i, int j, Tilemap *tilemap) {
-    if (where == "top") {
-        if (tilemap->map[i][j] == 'b') {
-            tilemap->map[i][j] = ' ';
-            crash_sound.play();
-        };
-    }
-    if (tilemap->map[i][j] == 'F') {
-        pos.left = pos.left - (32 * 2);
-    }
+}
+void Actor::on_collide_other(int i, int j, Tilemap *tilemap) {
 }
 
 bool Actor::is_block(char el) {
-    return el == 'B' || el == 'b' || el == 'F';
+    return el == 'B' || el == 'b' || el == 'F' || el == 'D';
 }

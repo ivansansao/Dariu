@@ -21,7 +21,6 @@ class Actor {
     sf::Vector2f velocity;
     int direction_x;
     float i_idle_sprite;
-    float ground_y;
     float gravity;
     float lift;
     bool on_ground;
@@ -32,6 +31,12 @@ class Actor {
 
     sf::SoundBuffer jump;
     sf::Sound jump_sound;
+
+    sf::SoundBuffer fired;
+    sf::Sound fired_sound;
+
+    sf::SoundBuffer dooropen;
+    sf::Sound dooropen_sound;
 
     sf::SoundBuffer crash;
     sf::Sound crash_sound;
@@ -48,16 +53,18 @@ class Actor {
     sf::Sound pop_sound8;
     sf::Sound pop_sound9;
 
-    void update(Tilemap *tilemap);
-    void draw(sf::RenderWindow *w);
+    virtual void draw(sf::RenderWindow *w);
+    virtual void update(Tilemap *tilemap);
+    virtual void on_collide(std::string where, int i, int j, Tilemap *tilemap);
+    virtual void on_collide_other(int i, int j, Tilemap *tilemap);
+    virtual void reset_position();
+
     void up();
     bool onFloor();
     void collision_x(Tilemap *);
     void collision_y(Tilemap *);
     void collision_other(Tilemap *);
     void play_sound_pop();
-    virtual void on_collide(std::string where, int i, int j, Tilemap *tilemap);
-
     bool is_block(char el);
 };
 #endif

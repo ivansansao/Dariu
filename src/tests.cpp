@@ -1,14 +1,8 @@
-#include "tools.hpp"
+#include <iostream>
 
-Tools::Tools() {
-}
-int Tools::getStartSprite(int index, int direction) {
-    if (direction == -1)
-        return index + 1;
+using namespace std;
 
-    return index;
-}
-float Tools::ceil_special(float num, float biggerthan) {
+float ceil_special(float num, float biggerthan) {
     const int int_num = num;
     const float dec = (num - int_num);
     if (dec >= biggerthan) {
@@ -17,11 +11,17 @@ float Tools::ceil_special(float num, float biggerthan) {
     return num;
 }
 
-float Tools::floor_special(float num, float lessthan) {
+float floor_special(float num, float lessthan) {
     const int int_num = num;
     const float dec = (num - int_num);
     if (dec <= lessthan) {
         return int_num - 1;
     }
     return num;
+}
+
+int main() {
+    cout << floor_special(21.0, 0.61) << "\n";
+    // cout << ceil_special(21.4, 0.39) << "\n";
+    return EXIT_SUCCESS;
 }

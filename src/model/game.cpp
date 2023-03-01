@@ -5,6 +5,7 @@
 #include <cmath>
 
 #include "iostream"
+#include "tools.hpp"
 
 using namespace std;
 
@@ -18,7 +19,19 @@ Game::Game() {
     music.setLoop(true);
     music.setVolume(8.f);  // 0 to 100
     music.play();
+
+    music_gameover.openFromFile("./asset/sound/gameover.ogg");
+    music_gameover.setVolume(8.f);
+
+    music_gamewin.openFromFile("./asset/sound/gamewin.ogg");
+    music_gamewin.setLoop(true);
+    music_gamewin.setVolume(8.f);
+
     view.reset(sf::FloatRect(0.f, 0.f, 1280.f, 736.f));
+    gameover = false;
+    gameover_trigged = false;
+    font_roboto.loadFromFile("./asset/fonts/RobotoFlex-Regular.ttf");
+    font_greatvibes.loadFromFile("./asset/fonts/GreatVibes-Regular.ttf");
 }
 void Game::play() {
     std::stringstream ss;
@@ -29,19 +42,16 @@ void Game::play() {
     this->tilemap.update();
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
-        dariu.pos = sf::FloatRect(700.f, 100.f, 32.f, 32.f);
+        dariu.pos = sf::FloatRect(672.f, 672.f, 32.f, 32.f);
     }
     const int width = 800;
     float wLeft = floor((dariu.pos.left) / width) * width;
     if (wLeft < 0) wLeft = 0.f;
     view.reset(sf::FloatRect(wLeft, 0.f, 1280, 736.f));
+    dariu.text_score.setPosition(wLeft + 8, 6);
 
-    // if (dariu.pos.left > 900.f && dariu.pos.left < 2560.f) {
-    //     view.setCenter(dariu.pos.left, 736 / 2);
-
-    // } else if (dariu.pos.left <= 900) {
-    //     view.reset(sf::FloatRect(0.f, 0.f, 1280.f, 736.f));
-    // }
+    gamewin = dariu.win;
+    gameover = dariu.over;
 
     window.setView(this->view);
 
@@ -49,21 +59,56 @@ void Game::play() {
     this->tilemap.draw(&window);
     this->dariu.draw(&window);
     window.display();
+    const float i = dariu.pos.top / 32;
+    const float j = dariu.pos.left / 32;
 
-    ss << "Mouse (" << position.x << "," << position.y << ") Dariu TL (" << dariu.pos.top << "," << dariu.pos.left << ") / 32 = " << dariu.pos.left / 32 << " hmm: " << window.getSize().x;
+    ss << "Mouse (" << position.x << "," << position.y << ") Dariu (" << dariu.pos.top << "," << dariu.pos.left << ") i/32,j/32 (" << i << " , " << j << ") Bloco da esquerda: " << (int)Tools::floor_special(j + 1, 0.71) << " Bloco da direita: " << (int)Tools::ceil_special(j, 0.39);
     window.setTitle(ss.str());
 }
 void Game::pause() { music.pause(); };
-void Game::game_over() { music.stop(); };
+void Game::game_win() {
+    if (!gamewin_trigged) {
+        view.reset(sf::FloatRect(0.f, 0.f, 1280, 736.f));
+        window.setView(view);
+        music.stop();
+        music_gamewin.play();
+        gamewin_trigged = true;
+    }
+    window.clear(sf::Color(62, 49, 60, 255));
+    text_gamewin.setFont(font_greatvibes);
+    text_gamewin.setCharacterSize(60);
+    text_gamewin.setFillColor(sf::Color::White);
+    text_gamewin.setString("Parabens, voce ganhou!!!");
+    // int a = window.getSize().x;
+    // int b = window.getSize().y;
+    // int c = text_gamewin.getGlobalBounds().width;
+    // int d = text_gamewin.getGlobalBounds().height;
+    // cout << "a: " << a << " b: " << b << " c: " << c << " d: " << d << endl;
+
+    text_gamewin.setPosition(sf::Vector2f(600 - text_gamewin.getGlobalBounds().width / 2, window.getSize().y / 2 - text_gamewin.getGlobalBounds().height / 2));
+
+    window.draw(text_gamewin);
+    window.display();
+};
+void Game::game_over() {
+    if (!gameover_trigged) {
+        view.reset(sf::FloatRect(0.f, 0.f, 1280, 736.f));
+        window.setView(view);
+        music.stop();
+        music_gameover.play();
+        gameover_trigged = true;
+    }
+    window.clear(sf::Color(62, 49, 60, 255));
+    text_gameover.setFont(font_roboto);
+    text_gameover.setCharacterSize(60);
+    text_gameover.setFillColor(sf::Color::White);
+    text_gameover.setString("GAME OVER!");
+    text_gameover.setPosition(sf::Vector2f(600 - text_gameover.getGlobalBounds().width / 2, window.getSize().y / 2 - text_gameover.getGlobalBounds().height / 2));
+    window.draw(text_gameover);
+    window.display();
+};
 
 void Game::loop_events() {
-    if (music.getStatus() == sf::Music::Stopped || music.getStatus() == sf::Music::Paused) {
-        // Accept 16 bits, convert to OGG on Vlc!
-        // music.openFromFile("./asset/sound/track1.mp3");
-        // music.play();
-        cout << "Try play music...\n";
-    }
-
     sf::Event event;
     sf::Clock clock;
     while (window.pollEvent(event)) {
@@ -82,6 +127,10 @@ void Game::loop_events() {
     }
 }
 
+bool Game::is_fullscreen() {
+    return window.getSize().x == sf::VideoMode::getDesktopMode().width;
+}
+
 void Game::run() {
     playing = true;
     while (window.isOpen()) {
@@ -89,6 +138,8 @@ void Game::run() {
 
         if (this->gameover) {
             this->game_over();
+        } else if (this->gamewin) {
+            this->game_win();
         } else if (this->paused) {
             this->pause();
         } else {
