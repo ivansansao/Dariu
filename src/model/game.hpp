@@ -38,6 +38,7 @@ class Game {
 
     std::vector<Inimigo> inimigos;
     std::vector<Catraca> catracas;
+    std::vector<Catraca *> catas;
 
     Dariu dariu;
     Tilemap tilemap;

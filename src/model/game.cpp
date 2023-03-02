@@ -150,18 +150,26 @@ void Game::run() {
         cout << e.idade << endl;
     }
 
-    Catraca c1;
-    Catraca c2;
-    Catraca c3;
-    c1.idade = 45;
-    c2.idade = 46;
-    c3.idade = 47;
-    catracas.push_back(c1);
-    catracas.push_back(c2);
-    catracas.push_back(c3);
+    // Catraca c1;
+    // Catraca c2;
+    // Catraca c3;
+    // c1.idade = 45;
+    // c2.idade = 46;
+    // c3.idade = 47;
+    // catracas.push_back(c1);
+    // catracas.push_back(c2);
+    // catracas.push_back(c3);
 
-    for (auto& e : catracas) {
-        cout << e.idade << endl;
+    // for (auto& e : catracas) {
+    //     cout << e.idade << endl;
+    // }
+
+    Catraca* t1 = new Catraca();
+    t1->idade = 45;
+    catas.push_back(t1);
+
+    for (auto& e : catas) {
+        cout << e->idade << " name: " << e->name << endl;
     }
 
     playing = true;

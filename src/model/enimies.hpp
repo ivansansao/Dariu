@@ -17,7 +17,7 @@ class Enimy {
 //     int idade;
 // };
 
-class Catraca {
+class Catraca : public Enimy {
    public:
     Catraca();
     int idade;
