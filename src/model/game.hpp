@@ -5,8 +5,11 @@
 #include <SFML/Graphics.hpp>
 #include <experimental/random>
 #include <iostream>
+#include <vector>
 
 #include "dariu.hpp"
+#include "enimies.hpp"
+#include "inimigo.hpp"
 #include "tilemap.hpp"
 
 class Game {
@@ -32,6 +35,9 @@ class Game {
 
     bool paused = false;
     bool playing = false;
+
+    std::vector<Inimigo> inimigos;
+    std::vector<Catraca> catracas;
 
     Dariu dariu;
     Tilemap tilemap;

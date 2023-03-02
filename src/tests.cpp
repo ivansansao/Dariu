@@ -1,27 +1,31 @@
+// C++ Program to create
+// a vector of class objects
 #include <iostream>
+#include <string>
+#include <vector>
 
 using namespace std;
 
-float ceil_special(float num, float biggerthan) {
-    const int int_num = num;
-    const float dec = (num - int_num);
-    if (dec >= biggerthan) {
-        return int_num + 1;
-    }
-    return num;
-}
-
-float floor_special(float num, float lessthan) {
-    const int int_num = num;
-    const float dec = (num - int_num);
-    if (dec <= lessthan) {
-        return int_num - 1;
-    }
-    return num;
-}
+class Student {
+};
 
 int main() {
-    cout << floor_special(21.0, 0.61) << "\n";
-    // cout << ceil_special(21.4, 0.39) << "\n";
-    return EXIT_SUCCESS;
+    // Vector of class objects
+    vector<Student> v;
+    Student s;
+
+    for (int i = 0; i < 10; i++) {
+        // getting the random values from
+        // functions
+
+        // inserting objects to vector
+        v.push_back(s);
+    }
+
+    for (int i = 0; i < 10; i++) {
+        // displaying object data
+        // cout << v[i].name << endl;
+    }
+
+    return 0;
 }

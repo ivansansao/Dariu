@@ -38,6 +38,7 @@ class Tilemap {
     const int q_fire = 4;
 
     static std::string map[H];
+    static std::string enimies[H];
 
     void update();
     void draw(sf::RenderWindow *w);

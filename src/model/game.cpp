@@ -32,6 +32,8 @@ Game::Game() {
     gameover_trigged = false;
     font_roboto.loadFromFile("./asset/fonts/RobotoFlex-Regular.ttf");
     font_greatvibes.loadFromFile("./asset/fonts/GreatVibes-Regular.ttf");
+    std::vector<Inimigo> inimigos;
+    std::vector<Catraca> catracas;
 }
 void Game::play() {
     std::stringstream ss;
@@ -134,6 +136,34 @@ bool Game::is_fullscreen() {
 }
 
 void Game::run() {
+    Inimigo s1;
+    Inimigo s2;
+    Inimigo s3;
+    s1.idade = 35;
+    s2.idade = 36;
+    s3.idade = 37;
+    inimigos.push_back(s1);
+    inimigos.push_back(s2);
+    inimigos.push_back(s3);
+
+    for (auto& e : inimigos) {
+        cout << e.idade << endl;
+    }
+
+    Catraca c1;
+    Catraca c2;
+    Catraca c3;
+    c1.idade = 45;
+    c2.idade = 46;
+    c3.idade = 47;
+    catracas.push_back(c1);
+    catracas.push_back(c2);
+    catracas.push_back(c3);
+
+    for (auto& e : catracas) {
+        cout << e.idade << endl;
+    }
+
     playing = true;
     while (window.isOpen()) {
         this->loop_events();
