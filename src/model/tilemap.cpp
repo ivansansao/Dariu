@@ -57,7 +57,7 @@ std::string Tilemap::map[H] = {
     "B 0                              B       B        0 0 0    00000         B      BBBBB                             B",
     "B 0       0 0 0 0             BBBB        BBB     0 0 0               BBBB00000                                   B",
     "B 0                              B bbbb                                  BBBBBB                                   B",
-    "B                                B bbbb        BbbbB                     B       0000000                          B",
+    "B                                B bbbb        BbFbB                     B       0000000                          B",
     "B              BB         00     BBbbbbBBBB000000000000BB              BBBBB     BBBBBBB                          B",
     "B        0     BB         BB         00BB00000000000000BB 0000000                                                 B",
     "B            B BB         BB         00BB0000B000000000BB 0000000 BB                          BBB                 B",
