@@ -167,7 +167,13 @@ void Game::run() {
     Catraca* t1 = new Catraca();
     t1->idade = 45;
     t1->name = "Bigorna";
+
+    Catraca* t2 = new Catraca();
+    t2->idade = 80;
+    t2->name = "Ferruga";
+
     catas.push_back(t1);
+    catas.push_back(t2);
 
     for (auto& e : catas) {
         cout << e->idade << " name: " << e->name << endl;
