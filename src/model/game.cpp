@@ -166,6 +166,7 @@ void Game::run() {
 
     Catraca* t1 = new Catraca();
     t1->idade = 45;
+    t1->name = "Bigorna";
     catas.push_back(t1);
 
     for (auto& e : catas) {
