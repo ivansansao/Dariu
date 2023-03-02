@@ -5,22 +5,20 @@
 
 #include "actor.hpp"
 
-class Enimy {
+class Enimy : public Actor {
    public:
     Enimy();
     std::string name = "Indefinido";
+    // Override
+    void update(Tilemap *tilemap);
 };
-
-// class Catraca : public Enimy {
-//    public:
-//     Catraca();
-//     int idade;
-// };
 
 class Catraca : public Enimy {
    public:
     Catraca();
     int idade;
+    // Override
+    void update(Tilemap *tilemap);
 };
 
 #endif

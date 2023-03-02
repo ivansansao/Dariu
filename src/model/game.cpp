@@ -29,19 +29,27 @@ Game::Game() {
 
     view.reset(sf::FloatRect(0.f, 0.f, 1280.f, 736.f));
     gameover = false;
-    gameover_trigged = false;
+    gameover_loaded = false;
+
     font_roboto.loadFromFile("./asset/fonts/RobotoFlex-Regular.ttf");
     font_greatvibes.loadFromFile("./asset/fonts/GreatVibes-Regular.ttf");
     std::vector<Inimigo> inimigos;
     std::vector<Catraca> catracas;
 }
 void Game::play() {
+    if (!phase_loaded) {
+        load_phase();
+    }
     std::stringstream ss;
 
     auto position = sf::Mouse::getPosition(window);
 
     this->dariu.update(&tilemap);
     this->tilemap.update();
+
+    for (auto& catraca : catracas) {
+        catraca->update(&tilemap);
+    }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
         dariu.pos = sf::FloatRect(672.f, 672.f, 32.f, 32.f);
@@ -71,12 +79,12 @@ void Game::play() {
 }
 void Game::pause() { music.pause(); };
 void Game::game_win() {
-    if (!gamewin_trigged) {
+    if (!gamewin_loaded) {
         view.reset(sf::FloatRect(0.f, 0.f, 1280, 736.f));
         window.setView(view);
         music.stop();
         music_gamewin.play();
-        gamewin_trigged = true;
+        gamewin_loaded = true;
     }
     window.clear(sf::Color(62, 49, 60, 255));
     text_gamewin.setFont(font_greatvibes);
@@ -95,12 +103,12 @@ void Game::game_win() {
     window.display();
 };
 void Game::game_over() {
-    if (!gameover_trigged) {
+    if (!gameover_loaded) {
         view.reset(sf::FloatRect(0.f, 0.f, 1280, 736.f));
         window.setView(view);
         music.stop();
         music_gameover.play();
-        gameover_trigged = true;
+        gameover_loaded = true;
     }
     window.clear(sf::Color(62, 49, 60, 255));
     text_gameover.setFont(font_roboto);
@@ -135,49 +143,40 @@ bool Game::is_fullscreen() {
     return window.getSize().x == sf::VideoMode::getDesktopMode().width;
 }
 
+void Game::load_phase() {
+    phase_loaded = true;
+    cout << "Fase carregada!\n";
+    for (int i{}; i < tilemap.H; ++i) {
+        for (int j{}; j < tilemap.W; j++) {
+            if (tilemap.enimies[i][j] == 'E') {
+                cout << "Encontrou um Enimy em: " << i << "," << j << endl;
+                Catraca* catraca = new Catraca();
+                catraca->pos.top = i;
+                catraca->pos.left = j;
+                catracas.push_back(catraca);
+            }
+        }
+    }
+}
+void Game::load_enimy_catracas(Tilemap* tilemap){
+
+};
+
 void Game::run() {
-    Inimigo s1;
-    Inimigo s2;
-    Inimigo s3;
-    s1.idade = 35;
-    s2.idade = 36;
-    s3.idade = 37;
-    inimigos.push_back(s1);
-    inimigos.push_back(s2);
-    inimigos.push_back(s3);
+    // Catraca* t1 = new Catraca();
+    // t1->idade = 45;
+    // t1->name = "Bigorna";
 
-    for (auto& e : inimigos) {
-        cout << e.idade << endl;
-    }
+    // Catraca* t2 = new Catraca();
+    // t2->idade = 80;
+    // t2->name = "Ferruga";
 
-    // Catraca c1;
-    // Catraca c2;
-    // Catraca c3;
-    // c1.idade = 45;
-    // c2.idade = 46;
-    // c3.idade = 47;
-    // catracas.push_back(c1);
-    // catracas.push_back(c2);
-    // catracas.push_back(c3);
+    // catas.push_back(t1);
+    // catas.push_back(t2);
 
-    // for (auto& e : catracas) {
-    //     cout << e.idade << endl;
+    // for (auto& e : catas) {
+    //     cout << e->idade << " name: " << e->name << endl;
     // }
-
-    Catraca* t1 = new Catraca();
-    t1->idade = 45;
-    t1->name = "Bigorna";
-
-    Catraca* t2 = new Catraca();
-    t2->idade = 80;
-    t2->name = "Ferruga";
-
-    catas.push_back(t1);
-    catas.push_back(t2);
-
-    for (auto& e : catas) {
-        cout << e->idade << " name: " << e->name << endl;
-    }
 
     playing = true;
     while (window.isOpen()) {

@@ -25,20 +25,21 @@ class Game {
 
     sf::Music music_gameover;
     bool gameover = false;
-    bool gameover_trigged = false;
+    bool gameover_loaded = false;
+    bool phase_loaded = false;
+    bool phase_number = 1;
 
     sf::Music music_gamewin;
     sf::Text text_gamewin;
     bool gamewin = false;
-    bool gamewin_trigged = false;
+    bool gamewin_loaded = false;
     void game_win();
 
     bool paused = false;
     bool playing = false;
 
-    std::vector<Inimigo> inimigos;
-    std::vector<Catraca> catracas;
-    std::vector<Catraca *> catas;
+    std::vector<Catraca *> catracas;
+    // std::vector<Catraca *> catas;
 
     Dariu dariu;
     Tilemap tilemap;
@@ -49,5 +50,7 @@ class Game {
     void loop_events();
     void run();
     bool is_fullscreen();
+    void load_enimy_catracas(Tilemap *tilemap);
+    void load_phase();
 };
 #endif
