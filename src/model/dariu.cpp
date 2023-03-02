@@ -14,7 +14,7 @@ Dariu::Dariu() {
     text_score.setFillColor(sf::Color::White);
     reset_position();
     score.bananas = 0;
-    score.bananas_total = 282;
+    score.bananas_total = 284;
     score.darius = 10;
     score.thophy = 0;
     score.thophy_total = 3;
@@ -71,9 +71,9 @@ void Dariu::on_collide_other(int i, int j, Tilemap *tilemap) {
     if (score.darius >= 0) {
         if (score.bananas >= score.bananas_total) {
             if (score.thophy >= score.thophy_total) {
-                if (tilemap->map[21][99] != 'd') {
+                if (tilemap->map[21][114] != 'd') {
                     dooropen_sound.play();
-                    tilemap->map[21][99] = 'd';
+                    tilemap->map[21][114] = 'd';
                 }
             }
         }

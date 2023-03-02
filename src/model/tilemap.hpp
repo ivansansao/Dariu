@@ -8,7 +8,7 @@ class Tilemap {
    public:
     Tilemap();
     const float height_floor = 23.f;
-    static const int W = 100;
+    static const int W = 115;
     static const int H = 23;
     float i_banana = 0;
     const int q_banana = 17;

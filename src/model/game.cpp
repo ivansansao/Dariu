@@ -46,9 +46,11 @@ void Game::play() {
     }
     const int width = 800;
     float wLeft = floor((dariu.pos.left) / width) * width;
-    if (wLeft < 0) wLeft = 0.f;
-    view.reset(sf::FloatRect(wLeft, 0.f, 1280, 736.f));
-    dariu.text_score.setPosition(wLeft + 8, 6);
+    if (dariu.pos.left < 2500) {
+        if (wLeft < 0) wLeft = 0.f;
+        view.reset(sf::FloatRect(wLeft, 0.f, 1280, 736.f));
+        dariu.text_score.setPosition(wLeft + 8, 6);
+    }
 
     gamewin = dariu.win;
     gameover = dariu.over;
