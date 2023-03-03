@@ -44,7 +44,7 @@ std::string Tilemap::map[H] = {
     "B                                B                                  0000000000                                    B",
     "B                                B                                  0000000000                                    B",
     "B                                B                                  E000000000                                    B",
-    "B                                B                00000000000       BBBBBBBBBB                                    B",
+    "B   BBBBBBBBBBBBBB               B                00000000000       BBBBBBBBBB                                    B",
     "B                                0                00000000000  BBBB      B                                        B",
     "B                                0                00000000000            B   bBbb                                 B",
     "B                                0               BBBB T  BBBBB           B        000000    00000                 B",
@@ -66,7 +66,7 @@ std::string Tilemap::map[H] = {
 
 std::string Tilemap::enimies[H] = {
     "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
-    "B                                B                                                                                B",
+    "B   E                            B                                                                                B",
     "B                                B                                                                                B",
     "B                                B                                                                                B",
     "B                                B                                  BBBBBBBBBB                                    B",
@@ -77,7 +77,7 @@ std::string Tilemap::enimies[H] = {
     "B                                B                   BBBB                B        BBBBBB                          B",
     "B                        BBB     B                                       BE                 BBBBB                 B",
     "B        BBBB                    BBBBBB                                  BBBBBB                                   B",
-    "B                B E   E B       B     B                                 B                                        B",
+    "B                B     E B       B     B                                 B                                        B",
     "B             BBBBBBBBBBBBBBBB   B      B                              T B                                        B",
     "B                                B       B                               B      BBBBB                             B",
     "B                             BBBB        BBB                         BBBB                                        B",
