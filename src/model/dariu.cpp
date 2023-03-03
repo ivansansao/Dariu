@@ -10,7 +10,7 @@ using namespace std;
 
 Dariu::Dariu() {
     text_score.setFont(font_vibes);
-    text_score.setCharacterSize(20);
+    text_score.setCharacterSize(14);
     text_score.setFillColor(sf::Color::White);
     reset_position();
     score.bananas = 0;
@@ -40,7 +40,12 @@ void Dariu::update(Tilemap *tilemap) {
 }
 void Dariu::draw(sf::RenderWindow *w) {
     Actor::draw(w);
-    text_score.setString("Darius: " + to_string(score.darius) + " Bananas: " + to_string(score.bananas) + "/" + to_string(score.bananas_total) + " Trofeus: " + to_string(score.thophy) + "/" + to_string(score.thophy_total));
+    sf::String xscore = L"Vidas: ";
+    xscore += to_string(score.darius) + " Bananas: " + to_string(score.bananas) + "/" + to_string(score.bananas_total);
+    xscore += L" Troféus: ";
+    xscore += to_string(score.thophy) + "/" + to_string(score.thophy_total);
+
+    text_score.setString(xscore);
     w->draw(text_score);
 }
 

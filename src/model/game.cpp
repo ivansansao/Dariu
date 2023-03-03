@@ -65,7 +65,7 @@ void Game::play() {
     if (dariu.pos.left < 2500) {
         if (wLeft < 0) wLeft = 0.f;
         view.reset(sf::FloatRect(wLeft, 0.f, 1280, 736.f));
-        dariu.text_score.setPosition(wLeft + 8, 6);
+        dariu.text_score.setPosition(wLeft + 36, 36);
     }
 
     gamewin = dariu.win;
@@ -101,7 +101,7 @@ void Game::game_win() {
     text_gamewin.setFont(font_greatvibes);
     text_gamewin.setCharacterSize(60);
     text_gamewin.setFillColor(sf::Color::White);
-    text_gamewin.setString("Parabens, voce ganhou!!!");
+    text_gamewin.setString(L"Parabéns, você ganhou!!!");
     // int a = window.getSize().x;
     // int b = window.getSize().y;
     // int c = text_gamewin.getGlobalBounds().width;
@@ -142,7 +142,7 @@ void Game::game_over() {
     text_gameover.setFont(font_roboto);
     text_gameover.setCharacterSize(60);
     text_gameover.setFillColor(sf::Color::White);
-    text_gameover.setString("GAME OVER!");
+    text_gameover.setString(L"VOCÊ PERDEU!");
     text_gameover.setPosition(sf::Vector2f(600 - text_gameover.getGlobalBounds().width / 2, window.getSize().y / 2 - text_gameover.getGlobalBounds().height / 2));
     window.draw(text_gameover);
     window.display();
