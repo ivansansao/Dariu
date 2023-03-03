@@ -70,7 +70,6 @@ void Game::play() {
 
     gamewin = dariu.win;
     gameover = dariu.over;
-    gamewin = true;
 
     window.setView(this->view);
 
