@@ -21,5 +21,6 @@ class Dariu : public Actor {
     void draw(sf::RenderWindow *w);
     void on_collide(std::string where, int i, int j, Tilemap *tilemap);
     void on_collide_other(int i, int j, Tilemap *tilemap);
+    void die();
 };
 #endif

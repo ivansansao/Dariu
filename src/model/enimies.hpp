@@ -4,21 +4,22 @@
 #define ENIMIES_HPP
 
 #include "actor.hpp"
+#include "tools.hpp"
 
 class Enimy : public Actor {
    public:
     Enimy();
-    std::string name = "Indefinido";
     // Override
     void update(Tilemap *tilemap);
+    void draw(sf::RenderWindow *w);
+    void on_collide(std::string where, int i, int j, Tilemap *tilemap);
 };
-
 class Catraca : public Enimy {
    public:
     Catraca();
-    int idade;
     // Override
     void update(Tilemap *tilemap);
+    void draw(sf::RenderWindow *w);
+    void on_collide(std::string where, int i, int j, Tilemap *tilemap);
 };
-
 #endif

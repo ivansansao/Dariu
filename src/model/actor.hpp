@@ -58,6 +58,7 @@ class Actor {
     virtual void on_collide(std::string where, int i, int j, Tilemap *tilemap);
     virtual void on_collide_other(int i, int j, Tilemap *tilemap);
     virtual void reset_position();
+    virtual void die();
 
     void up();
     bool onFloor();

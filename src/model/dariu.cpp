@@ -26,6 +26,10 @@ Dariu::~Dariu() {
 void Dariu::reset_position() {
     pos = sf::FloatRect(32.f, 672.f, 32.f, 32.f);
 }
+void Dariu::die() {
+    score.darius--;
+    reset_position();
+}
 void Dariu::update(Tilemap *tilemap) {
     Actor::update(tilemap);
 
@@ -55,13 +59,11 @@ void Dariu::on_collide(std::string where, int i, int j, Tilemap *tilemap) {
     if (tilemap->map[i][left_block] == 'F') {
         if (fired_sound.getStatus() == 0) fired_sound.play();
         cout << "Uuuuu meu pé esquerdo! \n";
-        score.darius--;
-        reset_position();
+        die();
     } else if (tilemap->map[i][right_block] == 'F') {
         if (fired_sound.getStatus() == 0) fired_sound.play();
         cout << "Hahhhh meu pé direito!\n";
-        score.darius--;
-        reset_position();
+        die();
     }
 }
 

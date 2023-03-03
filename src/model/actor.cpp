@@ -264,6 +264,9 @@ void Actor::on_collide(std::string where, int i, int j, Tilemap *tilemap) {
 void Actor::on_collide_other(int i, int j, Tilemap *tilemap) {
 }
 
+void Actor::die() {
+}
+
 bool Actor::is_block(char el) {
     return el == 'B' || el == 'b' || el == 'F' || el == 'D';
 }

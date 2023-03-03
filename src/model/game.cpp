@@ -50,6 +50,7 @@ void Game::play() {
     for (auto& catraca : catracas) {
         catraca->update(&tilemap);
     }
+    check_collisions_enimies();
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
         dariu.pos = sf::FloatRect(672.f, 672.f, 32.f, 32.f);
@@ -70,6 +71,11 @@ void Game::play() {
     window.clear(sf::Color(62, 49, 60, 255));
     this->tilemap.draw(&window);
     this->dariu.draw(&window);
+
+    for (auto& catraca : catracas) {
+        catraca->draw(&window);
+    }
+
     window.display();
     const float i = dariu.pos.top / 32;
     const float j = dariu.pos.left / 32;
@@ -145,39 +151,33 @@ bool Game::is_fullscreen() {
 
 void Game::load_phase() {
     phase_loaded = true;
+    load_enimy_catracas();
     cout << "Fase carregada!\n";
+}
+void Game::load_enimy_catracas() {
     for (int i{}; i < tilemap.H; ++i) {
         for (int j{}; j < tilemap.W; j++) {
             if (tilemap.enimies[i][j] == 'E') {
                 cout << "Encontrou um Enimy em: " << i << "," << j << endl;
                 Catraca* catraca = new Catraca();
-                catraca->pos.top = i;
-                catraca->pos.left = j;
+                catraca->pos.top = i * 32;
+                catraca->pos.left = j * 32;
                 catracas.push_back(catraca);
             }
         }
     }
-}
-void Game::load_enimy_catracas(Tilemap* tilemap){
-
 };
 
+void Game::check_collisions_enimies() {
+    for (auto& catraca : catracas) {
+        if (catraca->pos.intersects(dariu.pos)) {
+            cout << "BATERAMMMMMMM\n";
+            dariu.die();
+        }
+    }
+}
+
 void Game::run() {
-    // Catraca* t1 = new Catraca();
-    // t1->idade = 45;
-    // t1->name = "Bigorna";
-
-    // Catraca* t2 = new Catraca();
-    // t2->idade = 80;
-    // t2->name = "Ferruga";
-
-    // catas.push_back(t1);
-    // catas.push_back(t2);
-
-    // for (auto& e : catas) {
-    //     cout << e->idade << " name: " << e->name << endl;
-    // }
-
     playing = true;
     while (window.isOpen()) {
         this->loop_events();
