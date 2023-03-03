@@ -35,6 +35,11 @@ class Game {
     bool gamewin_loaded = false;
     void game_win();
 
+    sf::Texture fireworks_tex;
+    sf::Sprite fireworks_spr;
+    float fireworks_i;
+    float fireworks_j;
+
     bool paused = false;
     bool playing = false;
 

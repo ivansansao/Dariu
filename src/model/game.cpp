@@ -35,6 +35,11 @@ Game::Game() {
     font_greatvibes.loadFromFile("./asset/fonts/GreatVibes-Regular.ttf");
     std::vector<Inimigo> inimigos;
     std::vector<Catraca> catracas;
+
+    fireworks_tex.loadFromFile("./asset/Free/fireworks.png");
+    fireworks_spr.setTexture(fireworks_tex);
+    fireworks_i = 0;
+    fireworks_j = 0;
 }
 void Game::play() {
     if (!phase_loaded) {
@@ -65,6 +70,7 @@ void Game::play() {
 
     gamewin = dariu.win;
     gameover = dariu.over;
+    gamewin = true;
 
     window.setView(this->view);
 
@@ -103,8 +109,25 @@ void Game::game_win() {
     // int d = text_gamewin.getGlobalBounds().height;
     // cout << "a: " << a << " b: " << b << " c: " << c << " d: " << d << endl;
 
+    // Show fireworks
+
+    fireworks_spr.setPosition(500, 100);
+    fireworks_spr.setTextureRect(sf::IntRect((int)fireworks_j * 256, (int)fireworks_i * 256, 256, 256));
+    fireworks_j += 0.3;
+    if ((int)fireworks_j > 5) {
+        fireworks_j = 0;
+        fireworks_i += 1;
+    }
+    if ((int)fireworks_i > 10) {
+        fireworks_j = 0;
+        fireworks_i = 0;
+    }
+
+    // Show congratulations
+
     text_gamewin.setPosition(sf::Vector2f(600 - text_gamewin.getGlobalBounds().width / 2, window.getSize().y / 2 - text_gamewin.getGlobalBounds().height / 2));
 
+    window.draw(fireworks_spr);
     window.draw(text_gamewin);
     window.display();
 };
@@ -152,6 +175,17 @@ bool Game::is_fullscreen() {
 void Game::load_phase() {
     phase_loaded = true;
     load_enimy_catracas();
+
+    // Read quantity of bananas from tilemap.
+    dariu.score.bananas_total = 0;
+    for (int i{}; i < tilemap.H; ++i) {
+        for (int j{}; j < tilemap.W; j++) {
+            if (tilemap.map[i][j] == '0') {
+                dariu.score.bananas_total += 1;
+            }
+        }
+    }
+
     cout << "Fase carregada!\n";
 }
 void Game::load_enimy_catracas() {

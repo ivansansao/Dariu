@@ -14,7 +14,7 @@ Dariu::Dariu() {
     text_score.setFillColor(sf::Color::White);
     reset_position();
     score.bananas = 0;
-    score.bananas_total = 284;
+    score.bananas_total = 0;
     score.darius = 10;
     score.thophy = 0;
     score.thophy_total = 3;
