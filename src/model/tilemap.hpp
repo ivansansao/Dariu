@@ -1,6 +1,7 @@
 #ifndef TILEMAP_H
 #define TILEMAP_H
 #include <SFML/Graphics.hpp>
+#include <fstream>
 
 #include "animation.hpp"
 
@@ -42,5 +43,6 @@ class Tilemap {
 
     void update();
     void draw(sf::RenderWindow *w);
+    void load_from_file(int phase);
 };
 #endif

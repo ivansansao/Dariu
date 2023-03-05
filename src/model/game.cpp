@@ -173,6 +173,9 @@ bool Game::is_fullscreen() {
 
 void Game::load_phase() {
     phase_loaded = true;
+
+    tilemap.load_from_file(1);
+
     load_enimy_catracas();
 
     // Read quantity of bananas from tilemap.
@@ -181,6 +184,15 @@ void Game::load_phase() {
         for (int j{}; j < tilemap.W; j++) {
             if (tilemap.map[i][j] == '0') {
                 dariu.score.bananas_total += 1;
+            }
+        }
+    }
+    // Read quantity of bananas from thophys.
+    dariu.score.thophy_total = 0;
+    for (int i{}; i < tilemap.H; ++i) {
+        for (int j{}; j < tilemap.W; j++) {
+            if (tilemap.map[i][j] == 'T') {
+                dariu.score.thophy_total += 1;
             }
         }
     }

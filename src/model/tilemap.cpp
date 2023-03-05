@@ -39,55 +39,8 @@ Tilemap::Tilemap() {
     sf::RectangleShape block(sf::Vector2f(height_floor, height_floor));
 }
 
-std::string Tilemap::map[H] = {
-    "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
-    "B                                B                                  0000000000                                    B",
-    "B                                B                                  0000000000                                    B",
-    "B   BBB                          B                                  E000000000                                    B",
-    "B      BBBBBBB                   B                00000000000       BBBBBBBBBB                                    B",
-    "B             BBB                0                00000000000  BBBB      B                                        B",
-    "B                                0                00000000000            B   bBbb                                 B",
-    "B                                0               BBBB T  BBBBB           B        000000    00000                 B",
-    "B         0                      0                    0                  B                  0 T 0                 B",
-    "B         0                      B00000              BBBB                B        BBBBBB    00 00                 B",
-    "B         0        00000 BBB     B00000                                  B00000             BBBBB                 B",
-    "B        BBBB     0000000        BBBBBB0                                 BBBBBB                                   B",
-    "B                B0000000B       B     B0                    0           B                                        B",
-    "B             BBBBBBBBBBBBBBBB 0 B      B0        0   0     000        T B      00000                             B",
-    "B 0                              B       B        0 0 0    00000         B      BBBBB                             B",
-    "B 0       0 0 0 0             BBBB        BBB     0 0 0               BBBB00000                                   B",
-    "B 0                              B bbbb                                  BBBBBB                                   B",
-    "B                                B bbbb        BbFbB                     B       0000000                          B",
-    "B              BB         00     BBbbbbBBBB000000000000BB              BBBBB     BBBBBBB                          B",
-    "B        0     BB         BB         00BB00000000000000BB 0000000 E                                               B",
-    "B            B BB         BB         00BB0000B000000000BB 0000000 BB                          BBB                 B",
-    "B       000B B BB B0000000BB         00BB0000B000000000BB 0000000 BB 00000000000000000000000     00          B    D",
-    "BBBBBBBBBBBBFBFBBFBBFBFBBBBBBBFFBBFBFBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBFFFFFBBBBBBBBBBBBBBBBBB"};
-
-std::string Tilemap::enimies[H] = {
-    "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
-    "B   E                            B                                                                                B",
-    "B                                B                                                                                B",
-    "B            E                   B                                                                                B",
-    "B                                B                                  BBBBBBBBBB                                    B",
-    "B                                                              BBBB      B                                        B",
-    "B                                                E                       B   bBbb                                 B",
-    "B                                                BBBB T  BBBBB           B                                        B",
-    "B                                E                   E                   B                    T                   B",
-    "B                                B                   BBBB                B        BBBBBB                          B",
-    "B                        BBB     B                                       BE                 BBBBB                 B",
-    "B        BBBB                    BBBBBB                                  BBBBBB                                   B",
-    "B                B       B       B     B                                 B                                        B",
-    "B             BBBBBBBBBBBBBBBB   B      B                              T B                                        B",
-    "B                                B       B                               B      BBBBB                             B",
-    "B                             BBBB        BBB                         BBBB                                        B",
-    "B                                B bbbb                                  BBBBBB                                   B",
-    "B                                B bbbb        BbbbB                     B                                        B",
-    "B              BB                BBbbbbBBBB            BB              BBBBB     BBBBBBB                          B",
-    "B              BB         BB           BB              BB              E                                          B",
-    "B            B BB         BB           BB    B         BB         BB                          BBB                 B",
-    "B          B B BB B       BB           BB    B         BB         BB                                              D",
-    "BBBBBBBBBBBBFBFBBFBBFBFBBBBBBBFFBBFBFBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBFFFFFBBBBBBBBBBBBBBBBBB"};
+std::string Tilemap::map[H] = {};
+std::string Tilemap::enimies[H] = {};
 
 void Tilemap::update() {
     // std::cout << "Update " << map[0] << "\n";
@@ -131,4 +84,31 @@ void Tilemap::draw(sf::RenderWindow *w) {
     i_banana += 0.5f;
     i_trophy += 0.1f;
     i_fire += 0.5f;
+}
+void Tilemap::load_from_file(int phase) {
+    // Start
+
+    int i;
+    string line;
+
+    // Map.
+
+    ifstream map_file("./resource/map_" + to_string(phase) + ".dtm");
+    cout << "File opened? " << map_file.is_open() << endl;
+
+    i = 0;
+    while (getline(map_file, line)) {
+        this->map[i] = line;
+        i++;
+    }
+    map_file.close();
+
+    // Enimies.
+    ifstream enimies_file("./resource/enimies_" + to_string(phase) + ".dtm");
+    i = 0;
+    while (getline(enimies_file, line)) {
+        this->enimies[i] = line;
+        i++;
+    }
+    enimies_file.close();
 }
