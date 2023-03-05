@@ -26,8 +26,7 @@ class Game {
     sf::Music music_gameover;
     bool gameover = false;
     bool gameover_loaded = false;
-    bool phase_loaded = false;
-    bool phase_current = 1;
+    int phase_current = 0;
     int phase_total = 0;
 
     sf::Music music_gamewin;

@@ -46,7 +46,7 @@ void Game::play() {
     if (!game_loaded) {
         game_load();
     }
-    if (!phase_loaded) {
+    if (phase_current == 0) {
         load_phase();
     }
     std::stringstream ss;
@@ -75,6 +75,14 @@ void Game::play() {
     gamewin = dariu.win;
     gameover = dariu.over;
 
+    if (gamewin) {
+        if (phase_current < phase_total) {
+            gamewin = false;
+            dariu.win = false;
+            dariu.reset_position();
+            load_phase();
+        }
+    }
     window.setView(this->view);
 
     window.clear(sf::Color(62, 49, 60, 255));
@@ -194,9 +202,8 @@ bool Game::is_fullscreen() {
 }
 
 void Game::load_phase() {
-    phase_loaded = true;
-
-    tilemap.load_from_file(1);
+    phase_current++;
+    tilemap.load_from_file(phase_current);
 
     load_enimy_catracas();
 
@@ -218,6 +225,9 @@ void Game::load_phase() {
             }
         }
     }
+
+    // dariu.score.bananas_total = 10;
+    // dariu.score.thophy_total = 1;
 
     cout << "Fase carregada!\n";
 }
