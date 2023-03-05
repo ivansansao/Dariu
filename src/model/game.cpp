@@ -1,6 +1,7 @@
 #include "game.hpp"
 
 #include <bits/stdc++.h>
+#include <dirent.h>
 
 #include <cmath>
 
@@ -42,6 +43,9 @@ Game::Game() {
     fireworks_j = 0;
 }
 void Game::play() {
+    if (!game_loaded) {
+        game_load();
+    }
     if (!phase_loaded) {
         load_phase();
     }
@@ -147,7 +151,25 @@ void Game::game_over() {
     window.draw(text_gameover);
     window.display();
 };
+void Game::game_load() {
+    game_loaded = true;
 
+    // Read total phases in the game
+
+    phase_total = 0;
+    DIR* dir;
+    struct dirent* ent;
+    if ((dir = opendir("./resource")) != nullptr) {
+        while ((ent = readdir(dir)) != nullptr) {
+            if (std::string(ent->d_name).find("map_") != std::string::npos) {
+                phase_total++;
+            }
+        }
+        closedir(dir);
+    } else {
+        std::cerr << "Could not open directory" << std::endl;
+    }
+}
 void Game::loop_events() {
     sf::Event event;
     sf::Clock clock;

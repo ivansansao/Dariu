@@ -27,13 +27,16 @@ class Game {
     bool gameover = false;
     bool gameover_loaded = false;
     bool phase_loaded = false;
-    bool phase_number = 1;
+    bool phase_current = 1;
+    int phase_total = 0;
 
     sf::Music music_gamewin;
     sf::Text text_gamewin;
     bool gamewin = false;
     bool gamewin_loaded = false;
     void game_win();
+
+    bool game_loaded = false;
 
     sf::Texture fireworks_tex;
     sf::Sprite fireworks_spr;
@@ -51,6 +54,7 @@ class Game {
     void play();
     void pause();
     void game_over();
+    void game_load();
     void loop_events();
     void run();
     bool is_fullscreen();
