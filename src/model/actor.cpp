@@ -268,5 +268,5 @@ void Actor::die() {
 }
 
 bool Actor::is_block(char el) {
-    return el == 'B' || el == 'b' || el == 'F' || el == 'D';
+    return el == 'A' || el == 'B' || el == 'C' || el == 'D' || el == 'E' || el == 'F' || el == 'b' || el == 'R' || el == 'X';
 }

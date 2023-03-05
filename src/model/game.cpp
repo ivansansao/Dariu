@@ -202,7 +202,7 @@ void Game::load_phase() {
 void Game::load_enimy_catracas() {
     for (int i{}; i < tilemap.H; ++i) {
         for (int j{}; j < tilemap.W; j++) {
-            if (tilemap.enimies[i][j] == 'E') {
+            if (tilemap.enimies[i][j] == 'Z') {
                 cout << "Encontrou um Enimy em: " << i << "," << j << endl;
                 Catraca* catraca = new Catraca();
                 catraca->pos.top = i * 32;

@@ -9,6 +9,7 @@ Tilemap::Tilemap() {
     ban.setTextureRect(sf::IntRect(0, 0, 32, 32));
 
     terrain_tex.loadFromFile("./asset/Free/Terrain/Terrain (16x16).png");
+    terrain2_tex.loadFromFile("./asset/Free/Terrain/Terrain (32x32).png");
     ground.setTexture(terrain_tex);
     ground.setTextureRect(sf::IntRect(96, 0, 32, 32));
 
@@ -20,6 +21,20 @@ Tilemap::Tilemap() {
 
     ground_door_closed.setTexture(terrain_tex);
     ground_door_closed.setTextureRect(sf::IntRect(0, 0, 32, 32));
+
+    ground_left.setTexture(terrain2_tex);
+    ground_left.setTextureRect(sf::IntRect(0, 0, 32, 32));
+    ground_mid.setTexture(terrain2_tex);
+    ground_mid.setTextureRect(sf::IntRect(32, 0, 32, 32));
+    ground_right.setTexture(terrain2_tex);
+    ground_right.setTextureRect(sf::IntRect(64, 0, 32, 32));
+
+    ground_left2.setTexture(terrain2_tex);
+    ground_left2.setTextureRect(sf::IntRect(0, 32, 32, 32));
+    ground_mid2.setTexture(terrain2_tex);
+    ground_mid2.setTextureRect(sf::IntRect(32, 32, 32, 32));
+    ground_right2.setTexture(terrain2_tex);
+    ground_right2.setTextureRect(sf::IntRect(64, 32, 32, 32));
 
     banana_tex.loadFromFile("./asset/Free/Items/Fruits/Bananas.png");
     banana.setTexture(banana_tex);
@@ -61,20 +76,35 @@ void Tilemap::draw(sf::RenderWindow *w) {
                 trophy.setTextureRect(sf::IntRect(((int)i_trophy % q_trophy) * 64, 0, 64, 64));
                 trophy.setPosition(j * 32, i * 32);
                 w->draw(trophy);
+            } else if (map[i][j] == 'A') {
+                ground_left.setPosition(j * 32, i * 32);
+                w->draw(ground_left);
             } else if (map[i][j] == 'B') {
-                ground.setPosition(j * 32, i * 32);
-                w->draw(ground);
+                ground_mid.setPosition(j * 32, i * 32);
+                w->draw(ground_mid);
+            } else if (map[i][j] == 'C') {
+                ground_right.setPosition(j * 32, i * 32);
+                w->draw(ground_right);
+            } else if (map[i][j] == 'D') {
+                ground_left2.setPosition(j * 32, i * 32);
+                w->draw(ground_left2);
+            } else if (map[i][j] == 'E') {
+                ground_mid2.setPosition(j * 32, i * 32);
+                w->draw(ground_mid2);
+            } else if (map[i][j] == 'F') {
+                ground_right2.setPosition(j * 32, i * 32);
+                w->draw(ground_right2);
             } else if (map[i][j] == 'b') {
                 ground_ora.setPosition(j * 32, i * 32);
                 w->draw(ground_ora);
-            } else if (map[i][j] == 'F') {
+            } else if (map[i][j] == 'R') {
                 fire.setTextureRect(sf::IntRect(((int)i_fire % q_fire) * 32, 0, 32, 32));
                 fire.setPosition(j * 32, i * 32);
                 w->draw(fire);
-            } else if (map[i][j] == 'D') {
+            } else if (map[i][j] == 'X') {
                 ground_door_closed.setPosition(j * 32, i * 32);
                 w->draw(ground_door_closed);
-            } else if (map[i][j] == 'd') {
+            } else if (map[i][j] == 'x') {
                 ground_door_opened.setPosition(j * 32, i * 32);
                 w->draw(ground_door_opened);
             } else {

@@ -20,6 +20,7 @@ class Tilemap {
 
     sf::RenderWindow window;
     sf::Texture terrain_tex;
+    sf::Texture terrain2_tex;
     sf::Texture banana_tex;
     sf::Texture trophy_tex;
     sf::Texture background_tex;
@@ -32,6 +33,13 @@ class Tilemap {
     sf::Sprite trophy;
     sf::Sprite background;
     sf::RectangleShape block;
+
+    sf::Sprite ground_left;
+    sf::Sprite ground_mid;
+    sf::Sprite ground_right;
+    sf::Sprite ground_left2;
+    sf::Sprite ground_mid2;
+    sf::Sprite ground_right2;
 
     sf::Texture fire_tex;
     sf::Sprite fire;

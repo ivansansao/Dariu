@@ -49,9 +49,9 @@ void Enimy::on_collide(std::string where, int i, int j, Tilemap *tilemap) {
     if (where == "left") direction_x = 1;
     if (where == "right") direction_x = -1;
 
-    if (tilemap->map[i][left_block] == 'F') {
+    if (tilemap->map[i][left_block] == 'R') {
         if (fired_sound.getStatus() == 0) fired_sound.play();
-    } else if (tilemap->map[i][right_block] == 'F') {
+    } else if (tilemap->map[i][right_block] == 'R') {
         if (fired_sound.getStatus() == 0) fired_sound.play();
     }
 }
