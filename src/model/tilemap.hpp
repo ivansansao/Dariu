@@ -21,6 +21,7 @@ class Tilemap {
     sf::RenderWindow window;
     sf::Texture terrain_tex;
     sf::Texture terrain2_tex;
+    sf::Texture door_tex;
     sf::Texture banana_tex;
     sf::Texture trophy_tex;
     sf::Texture background_tex;

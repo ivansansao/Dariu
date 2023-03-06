@@ -10,17 +10,19 @@ Tilemap::Tilemap() {
 
     terrain_tex.loadFromFile("./asset/Free/Terrain/Terrain (16x16).png");
     terrain2_tex.loadFromFile("./asset/Free/Terrain/Terrain (32x32).png");
+    door_tex.loadFromFile("./asset/Free/door.png");
+
     ground.setTexture(terrain_tex);
     ground.setTextureRect(sf::IntRect(96, 0, 32, 32));
 
     ground_ora.setTexture(terrain_tex);
     ground_ora.setTextureRect(sf::IntRect(272, 64, 32, 32));
 
-    ground_door_opened.setTexture(terrain_tex);
-    ground_door_opened.setTextureRect(sf::IntRect(0, 0, 32, 5));
-
-    ground_door_closed.setTexture(terrain_tex);
+    ground_door_closed.setTexture(door_tex);
     ground_door_closed.setTextureRect(sf::IntRect(0, 0, 32, 32));
+
+    ground_door_opened.setTexture(door_tex);
+    ground_door_opened.setTextureRect(sf::IntRect(32, 0, 32, 32));
 
     ground_left.setTexture(terrain2_tex);
     ground_left.setTextureRect(sf::IntRect(0, 0, 32, 32));
