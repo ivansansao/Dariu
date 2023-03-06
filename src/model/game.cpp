@@ -207,6 +207,9 @@ void Game::load_phase() {
 
     load_enimy_catracas();
 
+    dariu.score.bananas = 0;
+    dariu.score.thophy = 0;
+
     // Read quantity of bananas from tilemap.
     dariu.score.bananas_total = 0;
     for (int i{}; i < tilemap.H; ++i) {
@@ -216,7 +219,7 @@ void Game::load_phase() {
             }
         }
     }
-    // Read quantity of bananas from thophys.
+    // Read quantity of thophys from tilemap.
     dariu.score.thophy_total = 0;
     for (int i{}; i < tilemap.H; ++i) {
         for (int j{}; j < tilemap.W; j++) {
@@ -225,9 +228,6 @@ void Game::load_phase() {
             }
         }
     }
-
-    // dariu.score.bananas_total = 10;
-    // dariu.score.thophy_total = 1;
 
     cout << "Fase carregada!\n";
 }
