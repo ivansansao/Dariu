@@ -89,8 +89,6 @@ void Actor::reset_position() {
 void Actor::update(Tilemap *tilemap) {
     // ---------------- Y ----------------
 
-    cout << "Update IN\n";
-
     if (tilemap->map[(int)pos.top / 32][(int)pos.left / 32] == 'B') {
         cout << "Iniciou com B\n";
     }
@@ -152,8 +150,6 @@ void Actor::update(Tilemap *tilemap) {
     int i2 = (pos.top + pos.height) / 32;
     int j2 = (pos.left + pos.width) / 32;
     deb.setString("on_ground: " + to_string(on_ground) + " map[" + to_string(i) + "][" + to_string(j) + "] = ' " + tilemap->map[i][j] + " ' i2: " + to_string(i2) + " j2: " + to_string(j2) + " on_block: " + to_string(0));
-
-    cout << "Update OUT\n";
 }
 
 void Actor::collision_y(Tilemap *tilemap) {

@@ -18,7 +18,7 @@ class Dariu : public Actor {
     // Override
     void update(Tilemap *tilemap);
     void reset_position();
-    void draw(sf::RenderWindow *w);
+    void draw(sf::RenderWindow *w, int phase);
     void on_collide(std::string where, int i, int j, Tilemap *tilemap);
     void on_collide_other(int i, int j, Tilemap *tilemap);
     void die();

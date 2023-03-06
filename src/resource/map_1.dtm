@@ -1,23 +1,23 @@
 EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-E                                E                                  0000000000                                    E
-E                                E                                  0000000000                                    E
-E   ABC                          E                                  0000000000                                    E
-E      BBBBBBB                   E                00000000000       ABBBBBBBBC                                    E
-E             BBB                0                00000000000  ABBC      E                                        E
-E                                0                00000000000            E   bBbb                                 E
-E                                0               ABBC T  ABBBC           E        000000    00000                 E
-E         0                      0                    0                  E                  0 T 0                 E
-E         0                      B00000              ABBC                E        ABBBBC    00 00                 E
-E         0        00000 BBB     E00000                                  E00000             ABBBC                 E
-E        BBBB     0000000        EBBBBB0                                 EBBBBC                                   E
-E                B0000000B       E     B0                    0           E                                        E
-E             BBBEBBBBBBBEBBBB 0 E      B0        0   0     000        T E      00000                             E
-E 0                              E       B        0 0 0    00000         E      ABBBC                             E
-E 0       0 0 0 0             ABBE        BBB     0 0 0               ABBE00000                                   E
-E 0                              E bbbb                                  EBBBBB                                   E
-E                                E bbbb        AbRbC                     E       0000000                          E
-E              AC         00     EBbbbbABBC000000000000AC              ABEBC     ABBBBBC                          E
-E      A   C   DF         AC         00DF00000000000000DF 0000000                                                 E
-E  ARC DEEEF B DF         DF         00DF0000B000000000DF 0000000 AC                          ABC                 E
-E  DEF DEEEF E DF B0000000DF         00DF0000E000000000DF 0000000 DF 00000000000000000000000     00          B    X
+E   Z                            E                                  ..........                                    E
+E                                E                                  ..........                                    E
+E   ABC  Y                       E                                  ..........                                    E
+E      BBBBBBB                   E                ...........       ABBBBBBBBC                                    E
+E             BBB                .                ...........  ABBC      E                                        E
+E                                .                ...........            E   bBbb                                 E
+E                                .               ABBC T  ABBBC           E        ......    .....                 E
+E         .                      .Z                  Z.                  E                  . T .                 E
+E         .            Z         B.....              ABBC                E        ABBBBC    .. ..                 E
+E         .        ..... BBB     E.....                                  E.....             ABBBC                 E
+E        BBBB     .......        EBBBBB.                                 EBBBBC                                   E
+E                B.......B       E     B.                                E                                        E
+E             BBBEBBBBBBBEBBBB . E      B.        .   .                  E      .....                             E
+E .                              E       B        . . .    .....         E      ABBBC                             E
+E .       . . . .             ABBE        BBB     . . .               ABBE.....                                   E
+E .                              E bbbb         Y                       TEBBBBB                                   E
+E                                E bbbb        AbRbC                     E       .......                          E
+E              AC         ..     EBbbbbABBC............AC              ABEBC     ABBBBBC                          E
+E      AZ YC   DF         AC         ..DF..............DF .......      Z                                          E
+E  ARC DEEEF B DF         DF         ..DF....B.........DF ....... AC         Y                ABC                 E
+E  DEF DEEEF E DF B.......DF  Y      ..DF....E.........DF ....... DF .......................     ..          B    X
 EBBEEEEEEEEERERDFREBRBRBBBEEBBRRBBRBRBBEEBBBBEBBBBBBBBBEEBBBBBBBBBEEBBBBBBBBBBBBBBBBBBBBBBBBRRRRRBBBBBBBBBBBBEBBBBB

@@ -90,7 +90,7 @@ void Game::play() {
 
     window.clear(sf::Color(62, 49, 60, 255));
     this->tilemap.draw(&window);
-    this->dariu.draw(&window);
+    this->dariu.draw(&window, phase_current);
 
     for (auto& catraca : catracas) {
         catraca->draw(&window);
@@ -220,7 +220,7 @@ void Game::load_phase() {
     dariu.score.bananas_total = 0;
     for (int i{}; i < tilemap.H; ++i) {
         for (int j{}; j < tilemap.W; j++) {
-            if (tilemap.map[i][j] == '0') {
+            if (tilemap.map[i][j] == '.') {
                 dariu.score.bananas_total += 1;
             }
         }
@@ -241,7 +241,7 @@ void Game::load_enimies() {
     catracas.clear();
     for (int i{}; i < tilemap.H; ++i) {
         for (int j{}; j < tilemap.W; j++) {
-            if (tilemap.enimies[i][j] == 'Z') {
+            if (tilemap.map[i][j] == 'Z') {
                 cout << "Encontrou um Enimy em: " << i << "," << j << endl;
                 Catraca* catraca = new Catraca();
                 catraca->pos.top = i * 32;
@@ -253,7 +253,7 @@ void Game::load_enimies() {
     sovas.clear();
     for (int i{}; i < tilemap.H; ++i) {
         for (int j{}; j < tilemap.W; j++) {
-            if (tilemap.enimies[i][j] == 'Y') {
+            if (tilemap.map[i][j] == 'Y') {
                 cout << "Encontrou um Sova em: " << i << "," << j << endl;
                 Sova* sova = new Sova();
                 sova->pos.top = i * 32;

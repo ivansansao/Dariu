@@ -82,13 +82,13 @@ void Dariu::update(Tilemap *tilemap) {
         over = true;
     }
 }
-void Dariu::draw(sf::RenderWindow *w) {
-    cout << "DRAWing at: " << pos.left << " , top: " << pos.top << endl;
+void Dariu::draw(sf::RenderWindow *w, int phase) {
     Actor::draw(w);
     sf::String xscore = L"Vidas: ";
     xscore += to_string(score.darius) + " Bananas: " + to_string(score.bananas) + "/" + to_string(score.bananas_total);
     xscore += L" Troféus: ";
     xscore += to_string(score.thophy) + "/" + to_string(score.thophy_total);
+    xscore += "    Fase: " + to_string(phase);
 
     text_score.setString(xscore);
     w->draw(text_score);
@@ -131,7 +131,7 @@ void Dariu::on_collide_other(int i, int j, Tilemap *tilemap) {
         }
     }
 
-    if (tilemap->map[i][j] == '0') {
+    if (tilemap->map[i][j] == '.') {
         tilemap->map[i][j] = ' ';
         play_sound_pop();
         score.bananas++;

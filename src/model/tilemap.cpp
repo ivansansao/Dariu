@@ -57,7 +57,6 @@ Tilemap::Tilemap() {
 }
 
 std::string Tilemap::map[H] = {};
-std::string Tilemap::enimies[H] = {};
 
 void Tilemap::update() {
     // std::cout << "Update " << map[0] << "\n";
@@ -70,7 +69,7 @@ void Tilemap::draw(sf::RenderWindow *w) {
             // std::cout << map[i] << " \n";
             if (map[i][j] == ' ') {
                 continue;
-            } else if (map[i][j] == '0') {
+            } else if (map[i][j] == '.') {
                 banana.setTextureRect(sf::IntRect(((int)i_banana % q_banana) * 32, 0, 32, 32));
                 banana.setPosition(j * 32, i * 32);
                 w->draw(banana);
@@ -134,13 +133,4 @@ void Tilemap::load_from_file(int phase) {
         i++;
     }
     map_file.close();
-
-    // Enimies.
-    ifstream enimies_file("./resource/enimies_" + to_string(phase) + ".dtm");
-    i = 0;
-    while (getline(enimies_file, line)) {
-        this->enimies[i] = line;
-        i++;
-    }
-    enimies_file.close();
 }
