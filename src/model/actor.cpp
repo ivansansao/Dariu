@@ -229,10 +229,7 @@ void Actor::draw(sf::RenderWindow *w) {
             actor_spr.setTextureRect(sf::IntRect(Tools::getStartSprite((int)pos.left % 12, direction_x) * 32, 0, direction_x * 32, 32));
         }
     }
-
-    deb.setPosition(sf::Vector2f(pos.left - 620, 100));
     w->draw(actor_spr);
-    // w->draw(deb);
 }
 void Actor::play_sound_pop() {
     if (pop_sound0.getStatus() == 0) {

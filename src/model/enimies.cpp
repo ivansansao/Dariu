@@ -77,9 +77,9 @@ void Enimy::on_collide(std::string where, int i, int j, Tilemap *tilemap) {
     if (where == "right") direction_x = -1;
 
     if (tilemap->map[i][left_block] == 'R') {
-        if (fired_sound.getStatus() == 0) fired_sound.play();
+        // if (fired_sound.getStatus() == 0) fired_sound.play();
     } else if (tilemap->map[i][right_block] == 'R') {
-        if (fired_sound.getStatus() == 0) fired_sound.play();
+        // if (fired_sound.getStatus() == 0) fired_sound.play();
     }
 }
 
@@ -110,5 +110,31 @@ void Catraca::on_collide(std::string where, int i, int j, Tilemap *tilemap) {
     Enimy::on_collide(where, i, j, tilemap);
 }
 void Catraca::die() {
+    Enimy::die();
+}
+/**
+ * Sova is enimy
+ */
+
+Sova::Sova() {
+    actor_tex_fall.loadFromFile("./asset/Free/sova.png");
+    actor_tex.loadFromFile("./asset/Free/sova.png");
+    actor_tex_idle.loadFromFile("./asset/Free/sova.png");
+};
+
+void Sova::update(Tilemap *tilemap) {
+    Enimy::update(tilemap);
+}
+void Sova::draw(sf::RenderWindow *w) {
+    if (on_ground) {
+        actor_spr.setTexture(actor_tex);
+        actor_spr.setTextureRect(sf::IntRect(Tools::getStartSprite((int)pos.left % 6, direction_x * -1) * 32, 0, (direction_x * -1) * 32, 32));
+    }
+    w->draw(actor_spr);
+}
+void Sova::on_collide(std::string where, int i, int j, Tilemap *tilemap) {
+    Enimy::on_collide(where, i, j, tilemap);
+}
+void Sova::die() {
     Enimy::die();
 }

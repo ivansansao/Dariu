@@ -59,6 +59,9 @@ void Game::play() {
     for (auto& catraca : catracas) {
         catraca->update(&tilemap);
     }
+    for (auto& sova : sovas) {
+        sova->update(&tilemap);
+    }
     check_collisions_enimies();
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
@@ -91,6 +94,9 @@ void Game::play() {
 
     for (auto& catraca : catracas) {
         catraca->draw(&window);
+    }
+    for (auto& sova : sovas) {
+        sova->draw(&window);
     }
 
     window.display();
@@ -205,7 +211,7 @@ void Game::load_phase() {
     phase_current++;
     tilemap.load_from_file(phase_current);
 
-    load_enimy_catracas();
+    load_enimies();
 
     dariu.score.bananas = 0;
     dariu.score.thophy = 0;
@@ -231,7 +237,7 @@ void Game::load_phase() {
 
     cout << "Fase carregada!\n";
 }
-void Game::load_enimy_catracas() {
+void Game::load_enimies() {
     catracas.clear();
     for (int i{}; i < tilemap.H; ++i) {
         for (int j{}; j < tilemap.W; j++) {
@@ -244,10 +250,21 @@ void Game::load_enimy_catracas() {
             }
         }
     }
+    sovas.clear();
+    for (int i{}; i < tilemap.H; ++i) {
+        for (int j{}; j < tilemap.W; j++) {
+            if (tilemap.enimies[i][j] == 'Y') {
+                cout << "Encontrou um Sova em: " << i << "," << j << endl;
+                Sova* sova = new Sova();
+                sova->pos.top = i * 32;
+                sova->pos.left = j * 32;
+                sovas.push_back(sova);
+            }
+        }
+    }
 };
 
 void Game::check_collisions_enimies() {
-    int i = 0;
     if (dariu.is_alive()) {
         for (auto& catraca : catracas) {
             if (catraca->is_alive()) {
@@ -265,7 +282,22 @@ void Game::check_collisions_enimies() {
                 }
             }
         }
-        i++;
+        for (auto& sova : sovas) {
+            if (sova->is_alive()) {
+                if (sova->pos.intersects(dariu.pos)) {
+                    cout << "BATERAMMMMMMM y: " << dariu.velocity.y << endl;
+                    if (dariu.velocity.y > 0) {
+                        cout << "   sova DIES\n";
+                        // sovas.erase(sovas.begin() + i);
+                        dariu.jump();
+                        sova->die();
+                    } else {
+                        cout << "   DARIU DIES\n";
+                        dariu.die();
+                    }
+                }
+            }
+        }
     }
 }
 

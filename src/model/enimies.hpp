@@ -27,4 +27,14 @@ class Catraca : public Enimy {
     void on_collide(std::string where, int i, int j, Tilemap *tilemap);
     void die();
 };
+class Sova : public Enimy {
+   public:
+    Sova();
+
+    // Override
+    void update(Tilemap *tilemap);
+    void draw(sf::RenderWindow *w);
+    void on_collide(std::string where, int i, int j, Tilemap *tilemap);
+    void die();
+};
 #endif

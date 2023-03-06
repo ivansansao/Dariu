@@ -46,6 +46,7 @@ class Game {
     bool playing = false;
 
     std::vector<Catraca *> catracas;
+    std::vector<Sova *> sovas;
 
     Dariu dariu;
     Tilemap tilemap;
@@ -57,7 +58,7 @@ class Game {
     void loop_events();
     void run();
     bool is_fullscreen();
-    void load_enimy_catracas();
+    void load_enimies();
     void check_collisions_enimies();
     void load_phase();
 };
