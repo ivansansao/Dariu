@@ -19,6 +19,12 @@ class Actor {
     sf::FloatRect pos;
     sf::FloatRect abs_pos;
     sf::Vector2f velocity;
+
+    enum States { Normal,
+                  Dieing,
+                  Reviving,
+                  Died } state = Normal;
+
     int direction_x;
     float i_idle_sprite;
     float gravity;

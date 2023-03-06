@@ -27,18 +27,61 @@ void Dariu::reset_position() {
     pos = sf::FloatRect(32.f, 672.f, 32.f, 32.f);
 }
 void Dariu::die() {
+    cout << "*die\n";
+    state = States::Dieing;
     if (fired_sound.getStatus() == 0) fired_sound.play();
-    score.darius--;
-    reset_position();
+    velocity.y = lift;
+    cout << " Vel: " << velocity.y << endl;
+    on_ground = true;
 }
+
 void Dariu::update(Tilemap *tilemap) {
-    Actor::update(tilemap);
+    const float posx = pos.left;
+    const float posy = pos.top;
+
+    switch (state) {
+        case (States::Normal): {
+            cout << "*Normal\n";
+            Actor::update(tilemap);
+            break;
+        }
+        case (States::Dieing): {
+            cout << "*Dieing\n";
+            velocity.y += 1;
+            pos.top += velocity.y;
+            if (pos.top > (tilemap->H * 32) + 32) state = States::Died;
+            actor_spr.setPosition(pos.left, pos.top);
+            break;
+        }
+        case (States::Died): {
+            cout << "*Died\n";
+            score.darius--;
+            reset_position();
+            state = States::Reviving;
+            velocity.y += lift;
+            actor_spr.setPosition(pos.left, pos.top);
+            break;
+        }
+        case (States::Reviving): {
+            cout << "*Reviving\n";
+            velocity.y += 1;
+            pos.top += velocity.y;
+            if (pos.top > (tilemap->H * 32) + 32) {
+                state = States::Normal;
+                reset_position();
+            }
+            actor_spr.setPosition(pos.left, pos.top);
+            break;
+        }
+    }
+    cout << "LEFT: " << pos.left << " TOP: " << pos.top << endl;
 
     if (score.darius < 0) {
         over = true;
     }
 }
 void Dariu::draw(sf::RenderWindow *w) {
+    cout << "DRAWing at: " << pos.left << " , top: " << pos.top << endl;
     Actor::draw(w);
     sf::String xscore = L"Vidas: ";
     xscore += to_string(score.darius) + " Bananas: " + to_string(score.bananas) + "/" + to_string(score.bananas_total);
@@ -62,9 +105,12 @@ void Dariu::on_collide(std::string where, int i, int j, Tilemap *tilemap) {
             crash_sound.play();
         };
     }
-    if (tilemap->map[i][left_block] == 'R') {
+    if (tilemap->map[i][left_block] == 'R') {  // Fire
+
+        cout << "COMECOU L\n";
         die();
-    } else if (tilemap->map[i][right_block] == 'R') {
+    } else if (tilemap->map[i][right_block] == 'R') {  // Fire
+        cout << "COMECOU R\n";
         die();
     }
 }
