@@ -17,7 +17,7 @@ E 0       0 0 0 0             ABBE        BBB     0 0 0               ABBE00000 
 E 0                              E bbbb                                  EBBBBB                                   E
 E                                E bbbb        AbRbC                     E       0000000                          E
 E              AC         00     EBbbbbABBC000000000000AC              ABEBC     ABBBBBC                          E
-E        0     DF         AC         00DF00000000000000DF 0000000                                                 E
-E  ABC       B DF         DF         00DF0000B000000000DF 0000000 AC                          ABC                 E
-E  DEF  000B E DF B0000000DF         00DF0000E000000000DF 0000000 DF 00000000000000000000000     00          B    X
-EBBEEEBBBBBERERDFREBRBRBBBEEBBRRBBRBRBBEEBBBBEBBBBBBBBBEEBBBBBBBBBEEBBBBBBBBBBBBBBBBBBBBBBBBRRRRRBBBBBBBBBBBBEBBBBB
+E      A   C   DF         AC         00DF00000000000000DF 0000000                                                 E
+E  ARC DEEEF B DF         DF         00DF0000B000000000DF 0000000 AC                          ABC                 E
+E  DEF DEEEF E DF B0000000DF         00DF0000E000000000DF 0000000 DF 00000000000000000000000     00          B    X
+EBBEEEEEEEEERERDFREBRBRBBBEEBBRRBBRBRBBEEBBBBEBBBBBBBBBEEBBBBBBBBBEEBBBBBBBBBBBBBBBBBBBBBBBBRRRRRBBBBBBBBBBBBEBBBBB

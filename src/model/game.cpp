@@ -232,6 +232,7 @@ void Game::load_phase() {
     cout << "Fase carregada!\n";
 }
 void Game::load_enimy_catracas() {
+    catracas.clear();
     for (int i{}; i < tilemap.H; ++i) {
         for (int j{}; j < tilemap.W; j++) {
             if (tilemap.enimies[i][j] == 'Z') {
@@ -246,11 +247,25 @@ void Game::load_enimy_catracas() {
 };
 
 void Game::check_collisions_enimies() {
-    for (auto& catraca : catracas) {
-        if (catraca->pos.intersects(dariu.pos)) {
-            cout << "BATERAMMMMMMM\n";
-            dariu.die();
+    int i = 0;
+    if (dariu.is_alive()) {
+        for (auto& catraca : catracas) {
+            if (catraca->is_alive()) {
+                if (catraca->pos.intersects(dariu.pos)) {
+                    cout << "BATERAMMMMMMM y: " << dariu.velocity.y << endl;
+                    if (dariu.velocity.y > 0) {
+                        cout << "   CATRACA DIES\n";
+                        // catracas.erase(catracas.begin() + i);
+                        dariu.jump();
+                        catraca->die();
+                    } else {
+                        cout << "   DARIU DIES\n";
+                        dariu.die();
+                    }
+                }
+            }
         }
+        i++;
     }
 }
 

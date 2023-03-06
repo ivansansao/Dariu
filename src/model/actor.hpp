@@ -21,9 +21,12 @@ class Actor {
     sf::Vector2f velocity;
 
     enum States { Normal,
+                  DieStart,
                   Dieing,
+                  Died,
+                  ReviveStart,
                   Reviving,
-                  Died } state = Normal;
+                  Revived } state = Normal;
 
     int direction_x;
     float i_idle_sprite;
@@ -35,7 +38,7 @@ class Actor {
     sf::Font font_vibes;
     sf::Text deb;
 
-    sf::SoundBuffer jump;
+    sf::SoundBuffer jump_buffer;
     sf::Sound jump_sound;
 
     sf::SoundBuffer fired;
@@ -66,12 +69,15 @@ class Actor {
     virtual void reset_position();
     virtual void die();
 
-    void up();
+    void jump();
+    void jump(bool little);
+    void add_gravity();
     bool onFloor();
     void collision_x(Tilemap *);
     void collision_y(Tilemap *);
     void collision_other(Tilemap *);
     void play_sound_pop();
     bool is_block(char el);
+    bool is_alive();
 };
 #endif

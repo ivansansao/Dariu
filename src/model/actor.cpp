@@ -20,8 +20,8 @@ Actor::Actor() {
     on_ground = false;
     gravity = 1.0;
     lift = -17;
-    jump.loadFromFile("./asset/sound/jump.ogg");
-    jump_sound.setBuffer(jump);
+    jump_buffer.loadFromFile("./asset/sound/jump.ogg");
+    jump_sound.setBuffer(jump_buffer);
     jump_sound.setVolume(9.f);
 
     dooropen.loadFromFile("./asset/sound/dooropen.ogg");
@@ -69,10 +69,19 @@ Actor::Actor() {
     reset_position();
 }
 
-void Actor::up() {
-    if (on_ground) {
-        velocity.y += lift;
-    }
+void Actor::jump() {
+    cout << "   UP antes " << velocity.y << endl;
+    velocity.y = lift;
+    cout << "   UP depois " << velocity.y << endl;
+}
+void Actor::jump(bool little) {
+    cout << "   UP antes " << velocity.y << endl;
+    velocity.y = lift * 0.3;
+    cout << "   UP depois " << velocity.y << endl;
+}
+void Actor::add_gravity() {
+    velocity.y += 1;
+    pos.top += velocity.y;
 }
 void Actor::reset_position() {
     pos = sf::FloatRect(672.f, 672.f, 32.f, 32.f);
@@ -80,7 +89,7 @@ void Actor::reset_position() {
 void Actor::update(Tilemap *tilemap) {
     // ---------------- Y ----------------
 
-    // cout << "E: " << (int)pos.top / 32 << "," << (int)pos.left / 32 << "\n";
+    cout << "Update IN\n";
 
     if (tilemap->map[(int)pos.top / 32][(int)pos.left / 32] == 'B') {
         cout << "Iniciou com B\n";
@@ -96,8 +105,7 @@ void Actor::update(Tilemap *tilemap) {
         }
     }
 
-    velocity.y += 1;
-    pos.top += velocity.y;
+    add_gravity();
     collision_y(tilemap);
 
     if (tilemap->map[((int)pos.top / 32)][(int)pos.left / 32] == 'B') {
@@ -145,7 +153,7 @@ void Actor::update(Tilemap *tilemap) {
     int j2 = (pos.left + pos.width) / 32;
     deb.setString("on_ground: " + to_string(on_ground) + " map[" + to_string(i) + "][" + to_string(j) + "] = ' " + tilemap->map[i][j] + " ' i2: " + to_string(i2) + " j2: " + to_string(j2) + " on_block: " + to_string(0));
 
-    // cout << "S: " << (int)pos.top / 32 << "," << (int)pos.left / 32 << "\n";
+    cout << "Update OUT\n";
 }
 
 void Actor::collision_y(Tilemap *tilemap) {
@@ -269,4 +277,7 @@ void Actor::die() {
 
 bool Actor::is_block(char el) {
     return el == 'A' || el == 'B' || el == 'C' || el == 'D' || el == 'E' || el == 'F' || el == 'b' || el == 'R' || el == 'X';
+}
+bool Actor::is_alive() {
+    return state == States::Normal;
 }

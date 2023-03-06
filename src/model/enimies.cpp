@@ -8,24 +8,51 @@ using namespace std;
  * Base class for enimies
  */
 
-Enimy::Enimy(){};
+Enimy::Enimy() {
+    enimydie.loadFromFile("./asset/sound/enimydie.ogg");
+    enimydie_sound.setBuffer(enimydie);
+};
 
 void Enimy::update(Tilemap *tilemap) {
-    // Actor::update(tilemap);
+    switch (state) {
+        case (States::Normal): {
+            // ---------------- Y ----------------
+            add_gravity();
+            collision_y(tilemap);
 
-    // ---------------- Y ----------------
-    velocity.y += 1;
-    pos.top += velocity.y;
-    collision_y(tilemap);
+            // ---------------- X ----------------
 
-    // ---------------- X ----------------
+            if (direction_x == 1) velocity.x = 0.5;
+            if (direction_x == -1) velocity.x = -0.5;
 
-    if (direction_x == 1) velocity.x = 0.5;
-    if (direction_x == -1) velocity.x = -0.5;
+            pos.left += velocity.x;
 
-    pos.left += velocity.x;
-
-    collision_x(tilemap);
+            collision_x(tilemap);
+            break;
+        }
+        case (States::DieStart): {
+            state = States::Dieing;
+            jump(true);
+            break;
+        }
+        case (States::Dieing): {
+            add_gravity();
+            if (pos.top > (tilemap->H * 32) + 32) state = States::Died;
+            break;
+        }
+        case (States::Died): {
+            break;
+        }
+        case (States::ReviveStart): {
+            break;
+        }
+        case (States::Reviving): {
+            break;
+        }
+        case (States::Revived): {
+            break;
+        }
+    }
 
     actor_spr.setPosition(pos.left, pos.top);
 }
@@ -55,6 +82,14 @@ void Enimy::on_collide(std::string where, int i, int j, Tilemap *tilemap) {
         if (fired_sound.getStatus() == 0) fired_sound.play();
     }
 }
+
+void Enimy::die() {
+    if (state == States::Normal) {
+        cout << "*die (eminy)\n";
+        state = States::DieStart;
+        if (enimydie_sound.getStatus() == 0) enimydie_sound.play();
+    }
+}
 /**
  * Catraca is enimy
  */
@@ -73,4 +108,7 @@ void Catraca::draw(sf::RenderWindow *w) {
 }
 void Catraca::on_collide(std::string where, int i, int j, Tilemap *tilemap) {
     Enimy::on_collide(where, i, j, tilemap);
+}
+void Catraca::die() {
+    Enimy::die();
 }

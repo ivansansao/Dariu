@@ -27,54 +27,56 @@ void Dariu::reset_position() {
     pos = sf::FloatRect(32.f, 672.f, 32.f, 32.f);
 }
 void Dariu::die() {
-    cout << "*die\n";
-    state = States::Dieing;
-    if (fired_sound.getStatus() == 0) fired_sound.play();
-    velocity.y = lift;
-    cout << " Vel: " << velocity.y << endl;
-    on_ground = true;
+    if (state == States::Normal) {
+        cout << "*die\n";
+        state = States::DieStart;
+        if (fired_sound.getStatus() == 0) fired_sound.play();
+    }
 }
 
 void Dariu::update(Tilemap *tilemap) {
-    const float posx = pos.left;
-    const float posy = pos.top;
-
     switch (state) {
         case (States::Normal): {
-            cout << "*Normal\n";
             Actor::update(tilemap);
             break;
         }
+        case (States::DieStart): {
+            state = States::Dieing;
+            jump(true);
+            break;
+        }
         case (States::Dieing): {
-            cout << "*Dieing\n";
-            velocity.y += 1;
-            pos.top += velocity.y;
+            add_gravity();
             if (pos.top > (tilemap->H * 32) + 32) state = States::Died;
             actor_spr.setPosition(pos.left, pos.top);
             break;
         }
         case (States::Died): {
-            cout << "*Died\n";
+            state = States::ReviveStart;
             score.darius--;
-            reset_position();
-            state = States::Reviving;
-            velocity.y += lift;
             actor_spr.setPosition(pos.left, pos.top);
             break;
         }
+        case (States::ReviveStart): {
+            state = States::Reviving;
+            reset_position();
+            jump();
+            break;
+        }
         case (States::Reviving): {
-            cout << "*Reviving\n";
-            velocity.y += 1;
-            pos.top += velocity.y;
-            if (pos.top > (tilemap->H * 32) + 32) {
-                state = States::Normal;
-                reset_position();
+            add_gravity();
+            if (velocity.y == 0) {
+                state = States::Revived;
             }
             actor_spr.setPosition(pos.left, pos.top);
             break;
         }
+        case (States::Revived): {
+            state = States::Normal;
+            actor_spr.setPosition(pos.left, pos.top);
+            break;
+        }
     }
-    cout << "LEFT: " << pos.left << " TOP: " << pos.top << endl;
 
     if (score.darius < 0) {
         over = true;
