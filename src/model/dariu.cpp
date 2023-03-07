@@ -138,6 +138,11 @@ void Dariu::on_collide_other(int i, int j, Tilemap *tilemap) {
         tilemap->map[i][j] = ' ';
         play_sound_pop();
         score.bananas++;
+        if (score.bananas % 30 == 0) {
+            score.bananas -= 30;
+            score.bananas_total -= 30;
+            score.darius++;
+        }
     }
     if (tilemap->map[i][j] == 'T') {
         tilemap->map[i][j] = ' ';
