@@ -1,15 +1,22 @@
-TARGET=../dariu
 CXX=g++
 DEBUG=-g
 OPT=-O0
 WARN=-Wall
-SFML=-lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
+ifeq ($(OS), Windows_NT)	
+	TARGET=../dariu.exe
+	REMOVE=del *.o
+	SFML=-IC:\SFML\include -LC:\SFML\lib -LC:\mingw64\x86_64-w64-mingw32 -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
+else
+	TARGET=../dariu
+	REMOVE=rm *.o
+	SFML=-lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
+endif
 CXXFLAGS=$(DEBUG) $(OPT) $(WARN) $(SFML)
 LD=g++
 OBJS= main.o game.o dariu.o tilemap.o tools.o actor.o animation.o score.o enimies.o inimigo.o
 all: $(OBJS)
 	$(LD) -o $(TARGET) $(OBJS) $(CXXFLAGS)
-	@rm *.o
+	@$(REMOVE)
 	@./$(TARGET) 2
 
 main.o: main.cpp ; $(CXX) -c $(CXXFLAGS) main.cpp -o main.o
