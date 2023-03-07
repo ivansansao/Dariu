@@ -20,6 +20,9 @@ Dariu::Dariu() {
     score.thophy_total = 3;
     win = false;
     over = false;
+    levelcomplete.loadFromFile("./asset/sound/levelcomplete.ogg");
+    levelcomplete_sound.setBuffer(levelcomplete);
+    levelcomplete_sound.setVolume(9.f);
 }
 Dariu::~Dariu() {
 }
@@ -146,6 +149,7 @@ void Dariu::on_collide_other(int i, int j, Tilemap *tilemap) {
         tilemap->map[i][j] = 'B';
     }
     if (tilemap->map[i][j] == 'x') {
+        levelcomplete_sound.play();
         win = true;
     }
 }

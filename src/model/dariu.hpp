@@ -12,6 +12,9 @@ class Dariu : public Actor {
     Score score;
     sf::Text text_score;
 
+    sf::SoundBuffer levelcomplete;
+    sf::Sound levelcomplete_sound;
+
     bool win;
     bool over;
 
