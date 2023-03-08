@@ -15,7 +15,7 @@ Dariu::Dariu() {
     reset_position();
     score.bananas = 0;
     score.bananas_total = 0;
-    score.darius = 10;
+    score.darius = 3;
     score.thophy = 0;
     score.thophy_total = 3;
     win = false;
@@ -124,12 +124,10 @@ void Dariu::on_collide_other(int i, int j, Tilemap *tilemap) {
     Actor::on_collide_other(i, j, tilemap);
 
     if (score.darius >= 0) {
-        if (score.bananas >= score.bananas_total) {
-            if (score.thophy >= score.thophy_total) {
-                if (tilemap->map[21][114] != 'x') {
-                    dooropen_sound.play();
-                    tilemap->map[21][114] = 'x';
-                }
+        if (score.thophy >= score.thophy_total) {
+            if (tilemap->map[21][114] != 'x') {
+                dooropen_sound.play();
+                tilemap->map[21][114] = 'x';
             }
         }
     }

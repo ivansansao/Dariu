@@ -26,7 +26,7 @@ Actor::Actor() {
 
     dooropen.loadFromFile("./asset/sound/dooropen.ogg");
     dooropen_sound.setBuffer(dooropen);
-    fired_sound.setVolume(10.f);
+    dooropen_sound.setVolume(10.f);
 
     fired.loadFromFile("./asset/sound/fired.ogg");
     fired_sound.setBuffer(fired);
@@ -36,7 +36,7 @@ Actor::Actor() {
     crash_sound.setBuffer(crash);
     crash_sound.setVolume(9.f);
 
-    pop.loadFromFile("./asset/sound/pop.wav");
+    pop.loadFromFile("./asset/sound/pop.ogg");
     pop_sound0.setBuffer(pop);
     pop_sound1.setBuffer(pop);
     pop_sound2.setBuffer(pop);

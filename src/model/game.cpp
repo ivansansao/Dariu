@@ -11,13 +11,12 @@
 using namespace std;
 
 Game::Game() {
-    
-    window.create(sf::VideoMode(sf::VideoMode::getDesktopMode().width, sf::VideoMode::getDesktopMode().height, 32), "Dariu - 0.1", sf::Style::Fullscreen);
-    // window.create(sf::VideoMode(1280, 736), "Dariu - 0.1", sf::Style::Titlebar | sf::Style::Close);
+    window.create(sf::VideoMode(sf::VideoMode::getDesktopMode().width, sf::VideoMode::getDesktopMode().height, 32), "Dariu - 0.2", sf::Style::Fullscreen);
+    // window.create(sf::VideoMode(1280, 736), "Dariu - 0.2", sf::Style::Titlebar | sf::Style::Close);
     window.setFramerateLimit(60);
     window.setPosition(sf::Vector2i(0, 0));
     window.setMouseCursorVisible(true);
-    music.openFromFile("./asset/sound/track1.mp3");
+    music.openFromFile("./asset/sound/track1.ogg");
     music.setLoop(true);
     music.setVolume(8.f);  // 0 to 100
     music.play();
@@ -48,6 +47,7 @@ void Game::play() {
         game_load();
     }
     if (phase_current == 0) {
+        // phase_current = 0;
         load_phase();
     }
     std::stringstream ss;
@@ -289,7 +289,6 @@ void Game::check_collisions_enimies() {
                     cout << "BATERAMMMMMMM y: " << dariu.velocity.y << endl;
                     if (dariu.velocity.y > 0) {
                         cout << "   sova DIES\n";
-                        // sovas.erase(sovas.begin() + i);
                         dariu.jump();
                         sova->die();
                     } else {

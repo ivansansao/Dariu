@@ -11,6 +11,7 @@ using namespace std;
 Enimy::Enimy() {
     enimydie.loadFromFile("./asset/sound/enimydie.ogg");
     enimydie_sound.setBuffer(enimydie);
+    enimydie_sound.setVolume(100.f);
 };
 
 void Enimy::update(Tilemap *tilemap) {
@@ -87,7 +88,15 @@ void Enimy::die() {
     if (state == States::Normal) {
         cout << "*die (eminy)\n";
         state = States::DieStart;
-        if (enimydie_sound.getStatus() == 0) enimydie_sound.play();
+        if (enimydie_sound.getStatus() == 0) {
+            enimydie_sound.play();
+            cout << "play() => " << enimydie_sound.getStatus();
+            if (enimydie_sound.getStatus() == 0) {
+                enimydie.loadFromFile("./asset/sound/enimydie.ogg");
+                enimydie_sound.setBuffer(enimydie);
+                enimydie_sound.play();
+            }
+        };
     }
 }
 /**
