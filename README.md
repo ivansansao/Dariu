@@ -8,6 +8,12 @@ A plataform game
 
 Here we are using Makefile.
 
+Install
+~~~bash
+sudo apt update
+sudo apt install libsfml-dev
+~~~
+
 ~~~bash
 chmod +x compileAndRun.sh # Just first time
 ./compileAndRun.sh
@@ -45,3 +51,14 @@ dariu\src\make
 Done, dariu.exe has created! I believe!
 
 Create a shortcut on Desktop for dariu.exe and put Workdir at dariu\src\
+
+# Links
+
+https://www.bensound.com/ <br>
+http://www.vgmusic.com/ <br>
+https://freesound.org/ <br>
+https://mixkit.co/free-sound-effects/ <br>
+https://www.gamedev.net/ <br>
+https://itch.io/game-assets/genre-platformer <br>
+https://craftpix.net/?s=threes&category=124 <br>
+https://convertio.co/pt/wav-ogg/ <br>
