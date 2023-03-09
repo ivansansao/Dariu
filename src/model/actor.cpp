@@ -169,7 +169,7 @@ void Actor::collision_y(Tilemap *tilemap) {
                 }
                 if (velocity.y < 0) {
                     on_collide("top", i, j, tilemap);
-                    pos.top = i * 32 + pos.height;
+                    pos.top = i * 32 + 32;
                     cout << "Toin..\n";
                 }
                 velocity.y = 0;
@@ -219,7 +219,7 @@ void Actor::collision_x(Tilemap *tilemap) {
                     on_collide("right", i, j, tilemap);
                     cout << i << "," << j << "\n";
                     cout << "Pufff!!\n";
-                    pos.left = j * 32 - 32;
+                    pos.left = j * 32 - pos.width;
                     cout << pos.left / 32 << "\n";
                 }
             }
@@ -251,12 +251,20 @@ void Actor::draw(sf::RenderWindow *w) {
     if (on_ground) {
         if (velocity.x == 0) {
             actor_spr.setTexture(actor_tex_idle);
-            actor_spr.setTextureRect(sf::IntRect(Tools::getStartSprite((int)i_idle_sprite % 11, direction_x) * 32, 0, direction_x * 32, 32));
+            actor_spr.setTextureRect(sf::IntRect(Tools::getStartSprite((int)i_idle_sprite % 11, direction_x) * pos.width, 0, direction_x * pos.width, pos.height));
             i_idle_sprite += 0.2;
         } else {
             actor_spr.setTexture(actor_tex);
-            actor_spr.setTextureRect(sf::IntRect(Tools::getStartSprite((int)pos.left % 12, direction_x) * 32, 0, direction_x * 32, 32));
+            actor_spr.setTextureRect(sf::IntRect(Tools::getStartSprite((int)pos.left % 12, direction_x) * pos.width, 0, direction_x * pos.width, pos.height));
         }
+    }
+
+    if (false) {
+        // We can make a variable specific for sprite and turn pos minor!
+        sf::RectangleShape rectangle(sf::Vector2f(pos.left, pos.top));
+        rectangle.setSize(sf::Vector2f(pos.width, pos.height));
+        rectangle.setPosition(sf::Vector2f(pos.left, pos.top));
+        w->draw(rectangle);
     }
     w->draw(actor_spr);
 }

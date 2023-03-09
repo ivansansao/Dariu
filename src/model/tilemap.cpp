@@ -64,7 +64,6 @@ void Tilemap::update() {
     std::string e;
     for (auto& plataform : plataforms) {
         e = map[(int)plataform->pos.top / 32][(int)plataform->pos.left / 32];
-        std::cout << e << endl;
         if (e == "<") {
             plataform->velocity.x = -plataform->vel_step;
             plataform->velocity.y = 0.0f;
