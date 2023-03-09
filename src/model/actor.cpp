@@ -169,25 +169,30 @@ void Actor::collision_y(Tilemap *tilemap) {
                 }
                 if (velocity.y < 0) {
                     on_collide("top", i, j, tilemap);
-                    pos.top = i * 32 + 32;
+                    pos.top = i * 32 + pos.height;
                     cout << "Toin..\n";
                 }
                 velocity.y = 0;
+                break;  // Experimental
             }
         }
     }
     // }
 
     // Verify Plataforms
+    sf::FloatRect pos1 = sf::FloatRect(pos.left, pos.top + 1, pos.width, pos.height);
     for (auto &plataform : tilemap->plataforms) {
-        if (plataform->pos.intersects(pos)) {
+        if (plataform->pos.intersects(pos1)) {
             if (velocity.y > 0) {
-                pos.top = plataform->pos.top - pos.height + 1;
+                // pos.top = plataform->pos.top - pos.height + 1;
+                pos.top = plataform->pos.top - pos.height;
                 pos.left += plataform->velocity.x;
                 on_ground = true;
-                velocity.y = 0;
-                break;
+            } else if (velocity.y < 0) {
+                pos.top = plataform->pos.top + plataform->pos.height;
             }
+            velocity.y = 0;
+            break;
         }
     }
 }
@@ -218,6 +223,19 @@ void Actor::collision_x(Tilemap *tilemap) {
                     cout << pos.left / 32 << "\n";
                 }
             }
+        }
+    }
+
+    // Verify Plataforms
+    for (auto &plataform : tilemap->plataforms) {
+        if (plataform->pos.intersects(pos)) {
+            if (velocity.x > 0) {
+                pos.left = plataform->pos.left - pos.width;
+            } else if (velocity.x < 0) {
+                pos.left = plataform->pos.left + plataform->pos.height;
+            }
+            velocity.x = 0;
+            break;
         }
     }
 }

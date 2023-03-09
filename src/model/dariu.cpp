@@ -27,6 +27,7 @@ Dariu::Dariu() {
 Dariu::~Dariu() {
 }
 void Dariu::reset_position() {
+    // pos = sf::FloatRect(32.f, 672.f, 22.f, 26.f);
     pos = sf::FloatRect(32.f, 672.f, 32.f, 32.f);
 }
 void Dariu::die() {

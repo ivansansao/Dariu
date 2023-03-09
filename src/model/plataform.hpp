@@ -11,6 +11,7 @@ class Plataform {
     sf::Sprite sprite;
     int direction_x;
     float i_idle_sprite;
+    float vel_step;
     sf::Vector2f velocity;
 
     sf::FloatRect pos;

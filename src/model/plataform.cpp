@@ -11,7 +11,8 @@ Plataform::Plataform() {
     textura.loadFromFile("./asset/Free/plataform.png");
     sprite.setTexture(textura);
     pos = sf::FloatRect(672.f, 672.f, 32.f, 32.f);
-    velocity = sf::Vector2f(0.3f, 0.f);
+    vel_step = 0.9f;
+    velocity = sf::Vector2f(vel_step, 0.f);
     direction_x = 1;
     i_idle_sprite = 1;
 }

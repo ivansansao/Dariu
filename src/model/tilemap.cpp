@@ -66,17 +66,17 @@ void Tilemap::update() {
         e = map[(int)plataform->pos.top / 32][(int)plataform->pos.left / 32];
         std::cout << e << endl;
         if (e == "<") {
-            plataform->velocity.x = -0.3f;
+            plataform->velocity.x = -plataform->vel_step;
             plataform->velocity.y = 0.0f;
         } else if (e == ">") {
-            plataform->velocity.x = 0.3f;
+            plataform->velocity.x = plataform->vel_step;
             plataform->velocity.y = 0.0f;
         } else if (e == "^") {
             plataform->velocity.x = 0.0f;
-            plataform->velocity.y = -0.3f;
+            plataform->velocity.y = -plataform->vel_step;
         } else if (e == "V") {
             plataform->velocity.x = 0.0f;
-            plataform->velocity.y = 0.3f;
+            plataform->velocity.y = plataform->vel_step;
         }
         plataform->update();
     }
