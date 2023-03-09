@@ -18,7 +18,7 @@ Game::Game() {
     window.setMouseCursorVisible(true);
     music.openFromFile("./asset/sound/track1.ogg");
     music.setLoop(true);
-    music.setVolume(6.f);  // 0 to 100
+    music.setVolume(9.f);  // 0 to 100
     music.play();
 
     music_gameover.openFromFile("./asset/sound/gameover.ogg");
