@@ -47,7 +47,7 @@ void Game::play() {
         game_load();
     }
     if (phase_current == 0) {
-        phase_current = 3;
+        // phase_current = 3;
         load_phase();
     }
     std::stringstream ss;
