@@ -37,4 +37,5 @@ class Sova : public Enimy {
     void on_collide(std::string where, int i, int j, Tilemap *tilemap);
     void die();
 };
+
 #endif

@@ -47,7 +47,7 @@ void Game::play() {
         game_load();
     }
     if (phase_current == 0) {
-        // phase_current = 0;
+        phase_current = 3;
         load_phase();
     }
     std::stringstream ss;
@@ -63,6 +63,9 @@ void Game::play() {
     for (auto& sova : sovas) {
         sova->update(&tilemap);
     }
+    // for (auto& plataform : plataforms) {
+    //     plataform->update(&tilemap);
+    // }
     check_collisions_enimies();
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
@@ -211,6 +214,7 @@ bool Game::is_fullscreen() {
 void Game::load_phase() {
     phase_current++;
     tilemap.load_from_file(phase_current);
+    tilemap.load_plataforms();
 
     load_enimies();
 

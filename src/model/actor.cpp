@@ -97,7 +97,7 @@ void Actor::update(Tilemap *tilemap) {
         if (up_released) {
             if (on_ground) {
                 jump_sound.play();
-                velocity.y += lift;
+                jump();
                 up_released = false;
             }
         }
@@ -156,6 +156,7 @@ void Actor::collision_y(Tilemap *tilemap) {
     on_ground = false;
     // i = 384/12=12 < 384+32=416/32=13
     // Y
+    // if (tilemap->map[(int)pos.top / 32][(int)pos.left / 32] != 'B') {
     for (int i = pos.top / 32; i <= (pos.top + pos.height) / 32; i++) {
         for (int j = pos.left / 32; j < (pos.left + pos.width) / 32; j++) {
             // if (tilemap->map[i][j] == 'B' || tilemap->map[i][j] == 'b') {
@@ -172,6 +173,20 @@ void Actor::collision_y(Tilemap *tilemap) {
                     cout << "Toin..\n";
                 }
                 velocity.y = 0;
+            }
+        }
+    }
+    // }
+
+    // Verify Plataforms
+    for (auto &plataform : tilemap->plataforms) {
+        if (plataform->pos.intersects(pos)) {
+            if (velocity.y > 0) {
+                pos.top = plataform->pos.top - pos.height + 1;
+                pos.left += plataform->velocity.x;
+                on_ground = true;
+                velocity.y = 0;
+                break;
             }
         }
     }

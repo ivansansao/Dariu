@@ -4,6 +4,7 @@
 #include <fstream>
 
 #include "animation.hpp"
+#include "plataform.hpp"
 
 class Tilemap {
    public:
@@ -48,9 +49,11 @@ class Tilemap {
     const int q_fire = 4;
 
     static std::string map[H];
+    std::vector<Plataform *> plataforms;
 
     void update();
     void draw(sf::RenderWindow *w);
     void load_from_file(int phase);
+    void load_plataforms();
 };
 #endif

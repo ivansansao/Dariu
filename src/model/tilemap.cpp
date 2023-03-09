@@ -61,9 +61,28 @@ std::string Tilemap::map[H] = {};
 void Tilemap::update() {
     // std::cout << "Update " << map[0] << "\n";
     // tilemap_spr.setPosition(sf::Vector2f(0, 0));
+    std::string e;
+    for (auto& plataform : plataforms) {
+        e = map[(int)plataform->pos.top / 32][(int)plataform->pos.left / 32];
+        std::cout << e << endl;
+        if (e == "<") {
+            plataform->velocity.x = -0.3f;
+            plataform->velocity.y = 0.0f;
+        } else if (e == ">") {
+            plataform->velocity.x = 0.3f;
+            plataform->velocity.y = 0.0f;
+        } else if (e == "^") {
+            plataform->velocity.x = 0.0f;
+            plataform->velocity.y = -0.3f;
+        } else if (e == "V") {
+            plataform->velocity.x = 0.0f;
+            plataform->velocity.y = 0.3f;
+        }
+        plataform->update();
+    }
 }
 
-void Tilemap::draw(sf::RenderWindow *w) {
+void Tilemap::draw(sf::RenderWindow* w) {
     for (int i{}; i < H; ++i) {
         for (int j{}; j < W; ++j) {
             // std::cout << map[i] << " \n";
@@ -115,6 +134,10 @@ void Tilemap::draw(sf::RenderWindow *w) {
     i_banana += 0.5f;
     i_trophy += 0.1f;
     i_fire += 0.5f;
+
+    for (auto& plataform : plataforms) {
+        plataform->draw(w);
+    }
 }
 void Tilemap::load_from_file(int phase) {
     // Start
@@ -133,4 +156,18 @@ void Tilemap::load_from_file(int phase) {
         i++;
     }
     map_file.close();
+}
+void Tilemap::load_plataforms() {
+    plataforms.clear();
+    for (int i{}; i < this->H; ++i) {
+        for (int j{}; j < this->W; j++) {
+            if (this->map[i][j] == 'M') {
+                cout << "Encontrou um Plataform em: " << i << "," << j << endl;
+                Plataform* plataform = new Plataform();
+                plataform->pos.top = i * 32;
+                plataform->pos.left = j * 32;
+                plataforms.push_back(plataform);
+            }
+        }
+    }
 }

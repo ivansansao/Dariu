@@ -13,7 +13,7 @@ else
 endif
 CXXFLAGS=$(DEBUG) $(OPT) $(WARN) $(SFML)
 LD=g++
-OBJS= main.o game.o dariu.o tilemap.o tools.o actor.o animation.o score.o enimies.o inimigo.o
+OBJS= main.o game.o dariu.o tilemap.o tools.o actor.o animation.o score.o enimies.o inimigo.o plataform.o
 all: $(OBJS)
 	$(LD) -o $(TARGET) $(OBJS) $(CXXFLAGS)
 	@$(REMOVE)
@@ -29,3 +29,4 @@ animation.o: ./model/animation.cpp ; $(CXX) -c $(CXXFLAGS) ./model/animation.cpp
 score.o: ./model/score.cpp ; $(CXX) -c $(CXXFLAGS) ./model/score.cpp -o score.o
 enimies.o: ./model/enimies.cpp ; $(CXX) -c $(CXXFLAGS) ./model/enimies.cpp -o enimies.o
 inimigo.o: ./model/inimigo.cpp ; $(CXX) -c $(CXXFLAGS) ./model/inimigo.cpp -o inimigo.o
+plataform.o: ./model/plataform.cpp ; $(CXX) -c $(CXXFLAGS) ./model/plataform.cpp -o plataform.o
