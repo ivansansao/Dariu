@@ -63,6 +63,30 @@ void Game::play() {
     for (auto& sova : sovas) {
         sova->update(&tilemap);
     }
+    // for (auto& cannon : cannons) {
+    //     cannon->update(&tilemap);
+    // }
+    // for (auto& bulletc : bulletcs) {
+    //     bulletc->update(&tilemap);
+    // }
+
+    int i1 = 0;
+    for (auto& cannon : cannons) {
+        cannon->update(&tilemap);
+        bulletcs[i1]->update(&tilemap);
+        bulletcs[i1]->start_pos.left = cannons[i1]->pos.left;
+        bulletcs[i1]->start_pos.top = cannons[i1]->pos.top;
+        bulletcs[i1]->start_pos.top = cannons[i1]->pos.top;
+        if (cannons[i1]->pos.left == bulletcs[i1]->pos.left) {
+            if (dariu.pos.left > cannons[i1]->pos.left)
+                bulletcs[i1]->direction_x = 1;
+            else
+                bulletcs[i1]->direction_x = -1;
+        }
+
+        i1++;
+    }
+
     // for (auto& plataform : plataforms) {
     //     plataform->update(&tilemap);
     // }
@@ -101,6 +125,12 @@ void Game::play() {
     }
     for (auto& sova : sovas) {
         sova->draw(&window);
+    }
+    for (auto& bulletc : bulletcs) {
+        bulletc->draw(&window);
+    }
+    for (auto& cannon : cannons) {
+        cannon->draw(&window);
     }
 
     window.display();
@@ -249,8 +279,7 @@ void Game::load_enimies() {
             if (tilemap.map[i][j] == 'Z') {
                 cout << "Encontrou um Enimy em: " << i << "," << j << endl;
                 Catraca* catraca = new Catraca();
-                catraca->pos.top = i * 32;
-                catraca->pos.left = j * 32;
+                catraca->set_position(j * 32, i * 32);
                 catracas.push_back(catraca);
             }
         }
@@ -261,9 +290,30 @@ void Game::load_enimies() {
             if (tilemap.map[i][j] == 'Y') {
                 cout << "Encontrou um Sova em: " << i << "," << j << endl;
                 Sova* sova = new Sova();
-                sova->pos.top = i * 32;
-                sova->pos.left = j * 32;
+                sova->set_position(j * 32, i * 32);
                 sovas.push_back(sova);
+            }
+        }
+    }
+    cannons.clear();
+    for (int i{}; i < tilemap.H; ++i) {
+        for (int j{}; j < tilemap.W; j++) {
+            if (tilemap.map[i][j] == 'H') {
+                cout << "Encontrou um cannon em: " << i << "," << j << endl;
+                Cannon* cannon = new Cannon();
+                cannon->set_position(j * 32, i * 32);
+                cannons.push_back(cannon);
+            }
+        }
+    }
+    bulletcs.clear();
+    for (int i{}; i < tilemap.H; ++i) {
+        for (int j{}; j < tilemap.W; j++) {
+            if (tilemap.map[i][j] == 'H') {
+                cout << "Encontrou um bulletc em: " << i << "," << j << endl;
+                Bulletc* bulletc = new Bulletc();
+                bulletc->set_position(j * 32, i * 32);
+                bulletcs.push_back(bulletc);
             }
         }
     }
@@ -295,6 +345,21 @@ void Game::check_collisions_enimies() {
                         cout << "   sova DIES\n";
                         dariu.jump();
                         sova->die();
+                    } else {
+                        cout << "   DARIU DIES\n";
+                        dariu.die();
+                    }
+                }
+            }
+        }
+        for (auto& bulletc : bulletcs) {
+            if (bulletc->is_alive()) {
+                if (bulletc->pos.intersects(dariu.pos)) {
+                    cout << "BATERAMMMMMMM y: " << dariu.velocity.y << endl;
+                    if (dariu.velocity.y > 0) {
+                        cout << "   bulletc DIES\n";
+                        dariu.jump();
+                        bulletc->die();
                     } else {
                         cout << "   DARIU DIES\n";
                         dariu.die();

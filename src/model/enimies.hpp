@@ -37,5 +37,25 @@ class Sova : public Enimy {
     void on_collide(std::string where, int i, int j, Tilemap *tilemap);
     void die();
 };
+class Cannon : public Enimy {
+   public:
+    Cannon();
+
+    // Override
+    void update(Tilemap *tilemap);
+    void draw(sf::RenderWindow *w);
+    void on_collide(std::string where, int i, int j, Tilemap *tilemap);
+    void die();
+};
+class Bulletc : public Enimy {
+   public:
+    Bulletc();
+
+    // Override
+    void update(Tilemap *tilemap);
+    void draw(sf::RenderWindow *w);
+    void on_collide(std::string where, int i, int j, Tilemap *tilemap);
+    void die();
+};
 
 #endif

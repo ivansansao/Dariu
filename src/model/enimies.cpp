@@ -147,3 +147,145 @@ void Sova::on_collide(std::string where, int i, int j, Tilemap *tilemap) {
 void Sova::die() {
     Enimy::die();
 }
+/**
+ * Cannon is enimy
+ */
+
+Cannon::Cannon() {
+    actor_tex_fall.loadFromFile("./asset/Free/cannon.png");
+    actor_tex.loadFromFile("./asset/Free/cannon.png");
+    actor_tex_idle.loadFromFile("./asset/Free/cannon.png");
+};
+
+void Cannon::update(Tilemap *tilemap) {
+    switch (state) {
+        case (States::Normal): {
+            // ---------------- Y ----------------
+            add_gravity();
+            collision_y(tilemap);
+
+            // ---------------- X ----------------
+
+            if (direction_x == 1) velocity.x = 0.5;
+            if (direction_x == -1) velocity.x = -0.5;
+
+            // pos.left += velocity.x;
+
+            // collision_x(tilemap);
+            break;
+        }
+        case (States::DieStart): {
+            state = States::Dieing;
+            jump(true);
+            break;
+        }
+        case (States::Dieing): {
+            add_gravity();
+            if (pos.top > (tilemap->H * 32) + 32) state = States::Died;
+            break;
+        }
+        case (States::Died): {
+            break;
+        }
+        case (States::ReviveStart): {
+            break;
+        }
+        case (States::Reviving): {
+            break;
+        }
+        case (States::Revived): {
+            break;
+        }
+    }
+
+    actor_spr.setPosition(pos.left, pos.top);
+}
+void Cannon::draw(sf::RenderWindow *w) {
+    if (on_ground) {
+        actor_spr.setTexture(actor_tex);
+        actor_spr.setTextureRect(sf::IntRect(Tools::getStartSprite((int)pos.left % 2, direction_x * -1) * 32, 0, (direction_x * -1) * 32, 32));
+    }
+    w->draw(actor_spr);
+}
+void Cannon::on_collide(std::string where, int i, int j, Tilemap *tilemap) {
+    Enimy::on_collide(where, i, j, tilemap);
+}
+void Cannon::die() {
+    Enimy::die();
+}
+/**
+ * Bulletc is enimy
+ */
+
+Bulletc::Bulletc() {
+    actor_tex_fall.loadFromFile("./asset/Free/bulletc.png");
+    actor_tex.loadFromFile("./asset/Free/bulletc.png");
+    actor_tex_idle.loadFromFile("./asset/Free/bulletc.png");
+    on_ground = true;
+    direction_x = -1;
+};
+
+void Bulletc::update(Tilemap *tilemap) {
+    switch (state) {
+        case (States::Normal): {
+            // ---------------- Y ----------------
+            // add_gravity();
+            // collision_y(tilemap);
+
+            // ---------------- X ----------------
+
+            if (direction_x == 1) velocity.x = 0.5;
+            if (direction_x == -1) velocity.x = -0.5;
+
+            pos.left += velocity.x;
+
+            if (pos.left + pos.width < 0) {
+                reset_position();
+            } else {
+                if (pos.left + pos.width > tilemap->W * 32) {
+                    reset_position();
+                }
+            }
+
+            // collision_x(tilemap);
+            break;
+        }
+        case (States::DieStart): {
+            state = States::Dieing;
+            jump(true);
+            break;
+        }
+        case (States::Dieing): {
+            add_gravity();
+            if (pos.top > (tilemap->H * 32) + 32) state = States::Died;
+            break;
+        }
+        case (States::Died): {
+            break;
+        }
+        case (States::ReviveStart): {
+            break;
+        }
+        case (States::Reviving): {
+            break;
+        }
+        case (States::Revived): {
+            break;
+        }
+    }
+
+    actor_spr.setPosition(pos.left, pos.top);
+}
+void Bulletc::draw(sf::RenderWindow *w) {
+    if (on_ground) {
+        actor_spr.setTexture(actor_tex);
+        actor_spr.setTextureRect(sf::IntRect(Tools::getStartSprite((int)pos.left % 5, direction_x * -1) * 32, 0, (direction_x * -1) * 32, 32));
+    }
+    w->draw(actor_spr);
+}
+void Bulletc::on_collide(std::string where, int i, int j, Tilemap *tilemap) {
+    Enimy::on_collide(where, i, j, tilemap);
+}
+void Bulletc::die() {
+    Enimy::die();
+}

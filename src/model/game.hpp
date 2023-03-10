@@ -46,6 +46,8 @@ class Game {
 
     std::vector<Catraca *> catracas;
     std::vector<Sova *> sovas;
+    std::vector<Cannon *> cannons;
+    std::vector<Bulletc *> bulletcs;
 
     Dariu dariu;
     Tilemap tilemap;

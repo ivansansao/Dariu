@@ -13,6 +13,7 @@ Actor::Actor() {
     actor_tex_idle.loadFromFile("./asset/Free/Main Characters/Virtual Guy/Idle (32x32).png");
     actor_tex.loadFromFile("./asset/Free/Main Characters/Virtual Guy/Run (32x32).png");
     actor_spr.setTexture(actor_tex_fall);
+    start_pos = sf::FloatRect(672.f, 32.f, 32.f, 32.f);
     abs_pos = pos;
     velocity = sf::Vector2f(0.f, 0.f);
     direction_x = 1;
@@ -83,8 +84,14 @@ void Actor::add_gravity() {
     velocity.y += 1;
     pos.top += velocity.y;
 }
+void Actor::set_position(float left, float top) {
+    pos.left = left;
+    pos.top = top;
+    start_pos.left = left;
+    start_pos.top = top;
+}
 void Actor::reset_position() {
-    pos = sf::FloatRect(672.f, 672.f, 32.f, 32.f);
+    pos = sf::FloatRect(start_pos.left, start_pos.top, 32.f, 32.f);
 }
 void Actor::update(Tilemap *tilemap) {
     // ---------------- Y ----------------

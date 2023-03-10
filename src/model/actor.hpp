@@ -16,6 +16,7 @@ class Actor {
     sf::Texture actor_tex;
     sf::Sprite actor_spr;
 
+    sf::FloatRect start_pos;
     sf::FloatRect pos;
 
     sf::FloatRect abs_pos;
@@ -67,6 +68,7 @@ class Actor {
     virtual void update(Tilemap *tilemap);
     virtual void on_collide(std::string where, int i, int j, Tilemap *tilemap);
     virtual void on_collide_other(int i, int j, Tilemap *tilemap);
+    virtual void set_position(float left, float top);
     virtual void reset_position();
     virtual void die();
 
