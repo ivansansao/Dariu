@@ -234,12 +234,12 @@ void Bulletc::update(Tilemap *tilemap) {
 
             // ---------------- X ----------------
 
-            if (direction_x == 1) velocity.x = 0.5;
-            if (direction_x == -1) velocity.x = -0.5;
+            if (direction_x == 1) velocity.x = 0.9;
+            if (direction_x == -1) velocity.x = -0.9;
 
             pos.left += velocity.x;
 
-            if (pos.left + pos.width < 0) {
+            if (pos.left < 0) {
                 reset_position();
             } else {
                 if (pos.left + pos.width > tilemap->W * 32) {
@@ -261,6 +261,8 @@ void Bulletc::update(Tilemap *tilemap) {
             break;
         }
         case (States::Died): {
+            state = States::Normal;
+            reset_position();
             break;
         }
         case (States::ReviveStart): {
