@@ -108,7 +108,8 @@ void Dariu::on_collide(std::string where, int i, int j, Tilemap *tilemap) {
     if (where == "top") {
         if (tilemap->map[i][j] == 'b') {
             tilemap->map[i][j] = ' ';
-            crash_sound.play();
+            if (crash_sound.getStatus() == 0) crash_sound.play();
+            cout << "crash_sound.play()" << endl;
         };
     }
     if (tilemap->map[i][left_block] == 'R') {  // Fire
@@ -127,7 +128,8 @@ void Dariu::on_collide_other(int i, int j, Tilemap *tilemap) {
     if (score.darius >= 0) {
         if (score.thophy >= score.thophy_total) {
             if (tilemap->map[21][114] != 'x') {
-                dooropen_sound.play();
+                if (dooropen_sound.getStatus() == 0) dooropen_sound.play();
+                cout << "dooropen_sound.play()" << endl;
                 tilemap->map[21][114] = 'x';
             }
         }
@@ -153,7 +155,10 @@ void Dariu::on_collide_other(int i, int j, Tilemap *tilemap) {
         tilemap->map[i][j] = 'B';
     }
     if (tilemap->map[i][j] == 'x') {
-        levelcomplete_sound.play();
+        if (levelcomplete_sound.getStatus() == 0) {
+            levelcomplete_sound.play();
+            cout << "levelcomplete_sound.play()" << endl;
+        }
         win = true;
     }
 }

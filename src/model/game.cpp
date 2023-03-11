@@ -20,6 +20,7 @@ Game::Game() {
     music.setLoop(true);
     music.setVolume(9.f);  // 0 to 100
     music.play();
+    cout << "music.play()" << endl;
 
     music_gameover.openFromFile("./asset/sound/gameover.ogg");
     music_gameover.setVolume(8.f);
@@ -147,6 +148,8 @@ void Game::game_win() {
         window.setView(view);
         music.stop();
         music_gamewin.play();
+        cout << "music_gamewin.play()" << endl;
+
         gamewin_loaded = true;
     }
     window.clear(sf::Color(62, 49, 60, 255));
@@ -188,6 +191,7 @@ void Game::game_over() {
         window.setView(view);
         music.stop();
         music_gameover.play();
+        cout << "music_gameover.play()" << endl;
         gameover_loaded = true;
     }
     window.clear(sf::Color(62, 49, 60, 255));

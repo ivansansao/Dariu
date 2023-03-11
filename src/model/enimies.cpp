@@ -91,11 +91,6 @@ void Enimy::die() {
         if (enimydie_sound.getStatus() == 0) {
             enimydie_sound.play();
             cout << "play() => " << enimydie_sound.getStatus();
-            if (enimydie_sound.getStatus() == 0) {
-                enimydie.loadFromFile("./asset/sound/enimydie.ogg");
-                enimydie_sound.setBuffer(enimydie);
-                enimydie_sound.play();
-            }
         };
     }
 }

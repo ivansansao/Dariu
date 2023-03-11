@@ -103,7 +103,10 @@ void Actor::update(Tilemap *tilemap) {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
         if (up_released) {
             if (on_ground) {
-                jump_sound.play();
+                if (jump_sound.getStatus() == 0) {
+                    jump_sound.play();
+                    cout << "jump_sound.play()" << endl;
+                }
                 jump();
                 up_released = false;
             }
