@@ -92,9 +92,6 @@ void Game::play() {
     // }
     check_collisions_enimies();
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
-        dariu.pos = sf::FloatRect(672.f, 672.f, 32.f, 32.f);
-    }
     const int width = 800;
     float wLeft = floor((dariu.pos.left) / width) * width;
     if (dariu.pos.left < 2500) {
