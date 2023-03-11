@@ -77,7 +77,6 @@ void Game::play() {
         bulletcs[i1]->update(&tilemap);
         bulletcs[i1]->start_pos.left = cannons[i1]->pos.left;
         bulletcs[i1]->start_pos.top = cannons[i1]->pos.top;
-        bulletcs[i1]->start_pos.top = cannons[i1]->pos.top;
         if (cannons[i1]->pos.left == bulletcs[i1]->pos.left) {
             if (dariu.pos.left > cannons[i1]->pos.left)
                 bulletcs[i1]->direction_x = 1;
@@ -281,7 +280,6 @@ void Game::load_enimies() {
     for (int i{}; i < tilemap.H; ++i) {
         for (int j{}; j < tilemap.W; j++) {
             if (tilemap.map[i][j] == 'Z') {
-                cout << "Encontrou um Enimy em: " << i << "," << j << endl;
                 Catraca* catraca = new Catraca();
                 catraca->set_position(j * 32, i * 32);
                 catracas.push_back(catraca);
@@ -292,7 +290,6 @@ void Game::load_enimies() {
     for (int i{}; i < tilemap.H; ++i) {
         for (int j{}; j < tilemap.W; j++) {
             if (tilemap.map[i][j] == 'Y') {
-                cout << "Encontrou um Sova em: " << i << "," << j << endl;
                 Sova* sova = new Sova();
                 sova->set_position(j * 32, i * 32);
                 sovas.push_back(sova);
@@ -303,7 +300,6 @@ void Game::load_enimies() {
     for (int i{}; i < tilemap.H; ++i) {
         for (int j{}; j < tilemap.W; j++) {
             if (tilemap.map[i][j] == 'H') {
-                cout << "Encontrou um cannon em: " << i << "," << j << endl;
                 Cannon* cannon = new Cannon();
                 cannon->set_position(j * 32, i * 32);
                 cannons.push_back(cannon);
@@ -314,7 +310,6 @@ void Game::load_enimies() {
     for (int i{}; i < tilemap.H; ++i) {
         for (int j{}; j < tilemap.W; j++) {
             if (tilemap.map[i][j] == 'H') {
-                cout << "Encontrou um bulletc em: " << i << "," << j << endl;
                 Bulletc* bulletc = new Bulletc();
                 bulletc->set_position(j * 32, i * 32);
                 bulletcs.push_back(bulletc);

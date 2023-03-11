@@ -4,6 +4,7 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <memory>
 #include <vector>
 
 #include "dariu.hpp"
@@ -14,6 +15,7 @@
 class Game {
    public:
     Game();
+
     sf::RenderWindow window;
 
     sf::Music music;
@@ -44,6 +46,7 @@ class Game {
     bool paused = false;
     bool playing = false;
 
+    // std::vector<std::shared_ptr<Catraca>> catracas;
     std::vector<Catraca *> catracas;
     std::vector<Sova *> sovas;
     std::vector<Cannon *> cannons;

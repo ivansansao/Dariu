@@ -2,6 +2,7 @@ CXX=g++
 DEBUG=-g
 OPT=-O0
 WARN=-Wall
+CPPVERSION=-std=c++17
 ifeq ($(OS), Windows_NT)	
 	TARGET=../dariu.exe
 	REMOVE=del *.o
@@ -11,7 +12,7 @@ else
 	REMOVE=rm *.o
 	SFML=-lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 endif
-CXXFLAGS=$(DEBUG) $(OPT) $(WARN) $(SFML)
+CXXFLAGS=$(DEBUG) $(OPT) $(WARN) $(SFML) $(CPPVERSION)
 LD=g++
 OBJS= main.o game.o dariu.o tilemap.o tools.o actor.o animation.o score.o enimies.o inimigo.o plataform.o
 all: $(OBJS)

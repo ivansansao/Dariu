@@ -71,14 +71,10 @@ Actor::Actor() {
 }
 
 void Actor::jump() {
-    cout << "   UP antes " << velocity.y << endl;
     velocity.y = lift;
-    cout << "   UP depois " << velocity.y << endl;
 }
 void Actor::jump(bool little) {
-    cout << "   UP antes " << velocity.y << endl;
     velocity.y = lift * 0.3;
-    cout << "   UP depois " << velocity.y << endl;
 }
 void Actor::add_gravity() {
     velocity.y += 1;
@@ -175,7 +171,6 @@ void Actor::collision_y(Tilemap *tilemap) {
                     on_collide("ground", i, j, tilemap);
                     pos.top = i * 32 - pos.height;
                     on_ground = true;
-                    // cout << "A\n";
                 }
                 if (velocity.y < 0) {
                     on_collide("top", i, j, tilemap);
@@ -215,22 +210,16 @@ void Actor::collision_x(Tilemap *tilemap) {
                 // PARA o X
                 if (velocity.x < 0) {
                     on_collide("left", i, j, tilemap);
-                    cout << i << "," << j << "\n";
-                    cout << "Pahhh!!\n";
                     const int j2 = ((int)pos.left / 32) + 1;
                     if (is_block(tilemap->map[i][j2])) {
                         cerr << "MOV CANCEL: Has block\n";
                     } else {
                         pos.left = j * 32 + 32;
-                        cout << pos.left / 32 << "\n";
                     }
                 }
                 if (velocity.x > 0) {
                     on_collide("right", i, j, tilemap);
-                    cout << i << "," << j << "\n";
-                    cout << "Pufff!!\n";
                     pos.left = j * 32 - pos.width;
-                    cout << pos.left / 32 << "\n";
                 }
             }
         }

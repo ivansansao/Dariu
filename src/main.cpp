@@ -3,9 +3,8 @@
 
 #include "model/game.hpp"
 
-using namespace std;
-
 int main() {
+    std::cout << "c++ version: " << __cplusplus << std::endl;
     Game *game = new Game();
     game->run();
     delete game;

@@ -1,5 +1,5 @@
 {
-    "workbench.colorTheme": "Viow Flat",
+    "workbench.colorTheme": "Default Light+",
     "C_Cpp.clang_format_fallbackStyle": "{ BasedOnStyle: Google, IndentWidth: 4, ColumnLimit: 0}",
     "files.associations": {
         "iostream": "cpp",

@@ -147,7 +147,6 @@ void Tilemap::load_from_file(int phase) {
     // Map.
 
     ifstream map_file("./resource/map_" + to_string(phase) + ".dtm");
-    cout << "File opened? " << map_file.is_open() << endl;
 
     i = 0;
     while (getline(map_file, line)) {
@@ -161,7 +160,6 @@ void Tilemap::load_plataforms() {
     for (int i{}; i < this->H; ++i) {
         for (int j{}; j < this->W; j++) {
             if (this->map[i][j] == 'M') {
-                cout << "Encontrou um Plataform em: " << i << "," << j << endl;
                 Plataform* plataform = new Plataform();
                 plataform->pos.top = i * 32;
                 plataform->pos.left = j * 32;
