@@ -62,3 +62,7 @@ https://www.gamedev.net/ <br>
 https://itch.io/game-assets/genre-platformer <br>
 https://craftpix.net/?s=threes&category=124 <br>
 https://convertio.co/pt/wav-ogg/ <br>
+
+#Licence
+
+This project has sprites and sounds free from third part sites.
