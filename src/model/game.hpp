@@ -1,3 +1,5 @@
+#pragma once
+
 #ifndef GAME_H
 #define GAME_H
 
@@ -47,7 +49,6 @@ class Game {
     bool paused = false;
     bool playing = false;
 
-    // std::vector<std::shared_ptr<Catraca>> catracas;
     std::vector<Catraca *> catracas;
     std::vector<Sova *> sovas;
     std::vector<Cannon *> cannons;

@@ -1,3 +1,5 @@
+#pragma once
+
 #ifndef DARIU_H
 #define DARIU_H
 #include <SFML/Graphics.hpp>
@@ -12,13 +14,11 @@ class Dariu : public Actor {
     Score score;
     sf::Text text_score;
 
-    sf::SoundBuffer levelcomplete;
-    sf::Sound levelcomplete_sound;
+    sf::Font font_vibes;
 
     bool win;
     bool over;
 
-    // Override
     void update(Tilemap *tilemap, Sounds *sounds);
     void reset_position();
     void draw(sf::RenderWindow *w, int phase);

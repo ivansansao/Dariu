@@ -9,6 +9,7 @@
 using namespace std;
 
 Dariu::Dariu() {
+    font_vibes.loadFromFile("./asset/fonts/RobotoFlex-Regular.ttf");
     text_score.setFont(font_vibes);
     text_score.setCharacterSize(14);
     text_score.setFillColor(sf::Color::White);
@@ -20,19 +21,15 @@ Dariu::Dariu() {
     score.thophy_total = 3;
     win = false;
     over = false;
-    levelcomplete.loadFromFile("./asset/sound/levelcomplete.ogg");
-    levelcomplete_sound.setBuffer(levelcomplete);
-    levelcomplete_sound.setVolume(9.f);
+
 }
 Dariu::~Dariu() {
 }
 void Dariu::reset_position() {
-    // pos = sf::FloatRect(32.f, 672.f, 32.f, 32.f);
     pos = sf::FloatRect(32.f, 672.f, 32.f, 32.f);
 }
 void Dariu::die(Sounds *sounds) {
     if (state == States::Normal) {
-        cout << "*die\n";
         state = States::DieStart;
         if (sounds->fired_sound.getStatus() == 0) sounds->fired_sound.play();
     }
@@ -109,15 +106,11 @@ void Dariu::on_collide(std::string where, int i, int j, Tilemap *tilemap, Sounds
         if (tilemap->map[i][j] == 'b') {
             tilemap->map[i][j] = ' ';
             if (sounds->crash_sound.getStatus() == 0) sounds->crash_sound.play();
-            cout << "crash_sound.play()" << endl;
         };
     }
-    if (tilemap->map[i][left_block] == 'R') {  // Fire
-
-        cout << "COMECOU L\n";
+    if (tilemap->map[i][left_block] == 'R') {
         die(sounds);
-    } else if (tilemap->map[i][right_block] == 'R') {  // Fire
-        cout << "COMECOU R\n";
+    } else if (tilemap->map[i][right_block] == 'R') {
         die(sounds);
     }
 }
@@ -129,7 +122,6 @@ void Dariu::on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds) {
         if (score.thophy >= score.thophy_total) {
             if (tilemap->map[21][114] != 'x') {
                 if (sounds->dooropen_sound.getStatus() == 0) sounds->dooropen_sound.play();
-                cout << "dooropen_sound.play()" << endl;
                 tilemap->map[21][114] = 'x';
             }
         }
@@ -155,9 +147,8 @@ void Dariu::on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds) {
         tilemap->map[i][j] = 'B';
     }
     if (tilemap->map[i][j] == 'x') {
-        if (levelcomplete_sound.getStatus() == 0) {
-            levelcomplete_sound.play();
-            cout << "levelcomplete_sound.play()" << endl;
+        if (sounds->levelcomplete_sound.getStatus() == 0) {
+            sounds->levelcomplete_sound.play();
         }
         win = true;
     }

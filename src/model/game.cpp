@@ -11,16 +11,15 @@
 using namespace std;
 
 Game::Game() {
-    window.create(sf::VideoMode(sf::VideoMode::getDesktopMode().width, sf::VideoMode::getDesktopMode().height, 32), "Dariu - 0.2", sf::Style::Fullscreen);
+    window.create(sf::VideoMode(sf::VideoMode::getDesktopMode().width, sf::VideoMode::getDesktopMode().height, 32), "Dariu - 0.4", sf::Style::Fullscreen);
     // window.create(sf::VideoMode(1280, 736), "Dariu - 0.2", sf::Style::Titlebar | sf::Style::Close);
     window.setFramerateLimit(60);
     window.setPosition(sf::Vector2i(0, 0));
     window.setMouseCursorVisible(true);
     music.openFromFile("./asset/sound/track1.ogg");
     music.setLoop(true);
-    music.setVolume(3.f);  // 0 to 100
+    music.setVolume(6.f);
     music.play();
-    cout << "music.play()" << endl;
 
     music_gameover.openFromFile("./asset/sound/gameover.ogg");
     music_gameover.setVolume(8.f);
@@ -48,7 +47,6 @@ void Game::play() {
         game_load();
     }
     if (phase_current == 0) {
-        // phase_current = 3;
         load_phase();
     }
     std::stringstream ss;
@@ -64,12 +62,6 @@ void Game::play() {
     for (auto& sova : sovas) {
         sova->update(&tilemap, &sounds);
     }
-    // for (auto& cannon : cannons) {
-    //     cannon->update(&tilemap);
-    // }
-    // for (auto& bulletc : bulletcs) {
-    //     bulletc->update(&tilemap);
-    // }
 
     int i1 = 0;
     for (auto& cannon : cannons) {
@@ -87,9 +79,6 @@ void Game::play() {
         i1++;
     }
 
-    // for (auto& plataform : plataforms) {
-    //     plataform->update(&tilemap);
-    // }
     check_collisions_enimies();
 
     const int width = 800;
@@ -144,7 +133,6 @@ void Game::game_win() {
         window.setView(view);
         music.stop();
         music_gamewin.play();
-        cout << "music_gamewin.play()" << endl;
 
         gamewin_loaded = true;
     }
@@ -153,11 +141,6 @@ void Game::game_win() {
     text_gamewin.setCharacterSize(60);
     text_gamewin.setFillColor(sf::Color::White);
     text_gamewin.setString(L"Parabéns, você ganhou!!!");
-    // int a = window.getSize().x;
-    // int b = window.getSize().y;
-    // int c = text_gamewin.getGlobalBounds().width;
-    // int d = text_gamewin.getGlobalBounds().height;
-    // cout << "a: " << a << " b: " << b << " c: " << c << " d: " << d << endl;
 
     // Show fireworks
 
@@ -187,7 +170,6 @@ void Game::game_over() {
         window.setView(view);
         music.stop();
         music_gameover.play();
-        cout << "music_gameover.play()" << endl;
         gameover_loaded = true;
     }
     window.clear(sf::Color(62, 49, 60, 255));
@@ -222,9 +204,6 @@ void Game::loop_events() {
     sf::Event event;
     sf::Clock clock;
     while (window.pollEvent(event)) {
-        // float time = clock.getElapsedTime().asMicroseconds();
-        // clock.restart();
-        // time = time / 800;
 
         if (event.type == sf::Event::Closed) {
             window.close();
@@ -270,25 +249,19 @@ void Game::load_phase() {
         }
     }
 
-    cout << "Fase carregada!\n";
 }
 void Game::load_enimies() {
-    cout << "Load 1.0\n";
 
     catracas.clear();
     for (int i{}; i < tilemap.H; ++i) {
         for (int j{}; j < tilemap.W; j++) {
             if (tilemap.map[i][j] == 'Z') {
-                cout << "Load 1.1 Error happens here\n";
                 Catraca* catraca = new Catraca();
-                cout << "Load 1.2\n";
                 catraca->set_position(j * 32, i * 32);
                 catracas.push_back(catraca);
-                cout << "Load 1.3\n";
             }
         }
     }
-    cout << "Load 2.0\n";
     sovas.clear();
     for (int i{}; i < tilemap.H; ++i) {
         for (int j{}; j < tilemap.W; j++) {
@@ -299,7 +272,6 @@ void Game::load_enimies() {
             }
         }
     }
-    cout << "Load 3.0\n";
     cannons.clear();
     for (int i{}; i < tilemap.H; ++i) {
         for (int j{}; j < tilemap.W; j++) {
@@ -310,7 +282,6 @@ void Game::load_enimies() {
             }
         }
     }
-    cout << "Load 4.0\n";
     bulletcs.clear();
     for (int i{}; i < tilemap.H; ++i) {
         for (int j{}; j < tilemap.W; j++) {
@@ -321,7 +292,6 @@ void Game::load_enimies() {
             }
         }
     }
-    cout << "Load 5.0\n";
 };
 
 void Game::check_collisions_enimies() {
@@ -329,14 +299,10 @@ void Game::check_collisions_enimies() {
         for (auto& catraca : catracas) {
             if (catraca->is_alive()) {
                 if (catraca->pos.intersects(dariu.pos)) {
-                    cout << "BATERAMMMMMMM y: " << dariu.velocity.y << endl;
                     if (dariu.velocity.y > 0) {
-                        cout << "   CATRACA DIES\n";
-                        // catracas.erase(catracas.begin() + i);
                         dariu.jump();
                         catraca->die(&sounds);
                     } else {
-                        cout << "   DARIU DIES\n";
                         dariu.die(&sounds);
                     }
                 }
@@ -345,13 +311,10 @@ void Game::check_collisions_enimies() {
         for (auto& sova : sovas) {
             if (sova->is_alive()) {
                 if (sova->pos.intersects(dariu.pos)) {
-                    cout << "BATERAMMMMMMM y: " << dariu.velocity.y << endl;
                     if (dariu.velocity.y > 0) {
-                        cout << "   sova DIES\n";
                         dariu.jump();
                         sova->die(&sounds);
                     } else {
-                        cout << "   DARIU DIES\n";
                         dariu.die(&sounds);
                     }
                 }
@@ -360,13 +323,10 @@ void Game::check_collisions_enimies() {
         for (auto& bulletc : bulletcs) {
             if (bulletc->is_alive()) {
                 if (bulletc->pos.intersects(dariu.pos)) {
-                    cout << "BATERAMMMMMMM y: " << dariu.velocity.y << endl;
                     if (dariu.velocity.y > 0) {
-                        cout << "   bulletc DIES\n";
                         dariu.jump();
                         bulletc->die(&sounds);
                     } else {
-                        cout << "   DARIU DIES\n";
                         dariu.die(&sounds);
                     }
                 }

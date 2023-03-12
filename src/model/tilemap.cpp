@@ -50,17 +50,12 @@ Tilemap::Tilemap() {
     trophy.setTexture(trophy_tex);
     trophy.setTextureRect(sf::IntRect(0, 0, 64, 64));
 
-    // background_tex.loadFromFile("./asset/Redwood.jpg");
-    // background.setTexture(background_tex);
-
     sf::RectangleShape block(sf::Vector2f(height_floor, height_floor));
 }
 
 std::string Tilemap::map[H] = {};
 
 void Tilemap::update() {
-    // std::cout << "Update " << map[0] << "\n";
-    // tilemap_spr.setPosition(sf::Vector2f(0, 0));
     std::string e;
     for (auto& plataform : plataforms) {
         e = map[(int)plataform->pos.top / 32][(int)plataform->pos.left / 32];
@@ -84,7 +79,6 @@ void Tilemap::update() {
 void Tilemap::draw(sf::RenderWindow* w) {
     for (int i{}; i < H; ++i) {
         for (int j{}; j < W; ++j) {
-            // std::cout << map[i] << " \n";
             if (map[i][j] == ' ') {
                 continue;
             } else if (map[i][j] == '.') {
@@ -139,12 +133,9 @@ void Tilemap::draw(sf::RenderWindow* w) {
     }
 }
 void Tilemap::load_from_file(int phase) {
-    // Start
 
     int i;
     string line;
-
-    // Map.
 
     ifstream map_file("./resource/map_" + to_string(phase) + ".dtm");
 

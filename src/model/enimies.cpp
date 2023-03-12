@@ -15,11 +15,8 @@ Enimy::Enimy(){
 void Enimy::update(Tilemap *tilemap, Sounds *sounds) {
     switch (state) {
         case (States::Normal): {
-            // ---------------- Y ----------------
             add_gravity();
             collision_y(tilemap, sounds);
-
-            // ---------------- X ----------------
 
             if (direction_x == 1) velocity.x = 0.5;
             if (direction_x == -1) velocity.x = -0.5;
@@ -68,27 +65,16 @@ void Enimy::draw(sf::RenderWindow *w) {
 }
 
 void Enimy::on_collide(std::string where, int i, int j, Tilemap *tilemap, Sounds *sounds) {
-    const float j32 = pos.left / 32;
-    int left_block = Tools::floor_special(j32 + 1, 0.71);
-    int right_block = Tools::ceil_special(j32, 0.39);
 
     if (where == "left") direction_x = 1;
-    if (where == "right") direction_x = -1;
-
-    if (tilemap->map[i][left_block] == 'R') {
-        // if (fired_sound.getStatus() == 0) fired_sound.play();
-    } else if (tilemap->map[i][right_block] == 'R') {
-        // if (fired_sound.getStatus() == 0) fired_sound.play();
-    }
+    if (where == "right") direction_x = -1;    
 }
 
 void Enimy::die(Sounds *sounds) {
     if (state == States::Normal) {
-        cout << "*die (eminy)\n";
         state = States::DieStart;
         if (sounds->enimydie_sound.getStatus() == 0) {
             sounds->enimydie_sound.play();
-            cout << "play() => " << sounds->enimydie_sound.getStatus();
         };
     }
 }
@@ -97,11 +83,9 @@ void Enimy::die(Sounds *sounds) {
  */
 
 Catraca::Catraca() {
-    cout << "Catraca 1.0\n";
     actor_tex_fall.loadFromFile("./asset/Free/Main Characters/Mask Dude/Fall (32x32).png");
     actor_tex.loadFromFile("./asset/Free/Main Characters/Mask Dude/Run (32x32).png");
     actor_tex_idle.loadFromFile("./asset/Free/Main Characters/Mask Dude/Idle (32x32).png");
-    cout << "Catraca 2.0\n";
 };
 
 void Catraca::update(Tilemap *tilemap, Sounds *sounds) {
@@ -155,18 +139,13 @@ Cannon::Cannon() {
 void Cannon::update(Tilemap *tilemap, Sounds *sounds) {
     switch (state) {
         case (States::Normal): {
-            // ---------------- Y ----------------
+
             add_gravity();
             collision_y(tilemap, sounds);
-
-            // ---------------- X ----------------
 
             if (direction_x == 1) velocity.x = 0.5;
             if (direction_x == -1) velocity.x = -0.5;
 
-            // pos.left += velocity.x;
-
-            // collision_x(tilemap);
             break;
         }
         case (States::DieStart): {
@@ -223,11 +202,6 @@ Bulletc::Bulletc() {
 void Bulletc::update(Tilemap *tilemap) {
     switch (state) {
         case (States::Normal): {
-            // ---------------- Y ----------------
-            // add_gravity();
-            // collision_y(tilemap);
-
-            // ---------------- X ----------------
 
             if (direction_x == 1) velocity.x = 0.9;
             if (direction_x == -1) velocity.x = -0.9;
@@ -242,7 +216,6 @@ void Bulletc::update(Tilemap *tilemap) {
                 }
             }
 
-            // collision_x(tilemap);
             break;
         }
         case (States::DieStart): {

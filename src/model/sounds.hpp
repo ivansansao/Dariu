@@ -1,3 +1,5 @@
+#pragma once
+
 #ifndef SOUNDS_H
 #define SOUNDS_H
 
@@ -33,5 +35,9 @@ class Sounds {
 
     sf::SoundBuffer enimydie;
     sf::Sound enimydie_sound;
+
+    sf::SoundBuffer levelcomplete;
+    sf::Sound levelcomplete_sound;
+
 };
 #endif

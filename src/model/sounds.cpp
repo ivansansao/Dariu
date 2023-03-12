@@ -9,22 +9,18 @@ Sounds::Sounds() {
     jump_sound.setBuffer(jump_buffer);
     jump_sound.setVolume(9.f);
 
-    cout << "actor 2.0\n";
     dooropen.loadFromFile("./asset/sound/dooropen.ogg");
     dooropen_sound.setBuffer(dooropen);
     dooropen_sound.setVolume(10.f);
 
-    cout << "actor 3.0\n";
     fired.loadFromFile("./asset/sound/fired.ogg");
     fired_sound.setBuffer(fired);
     fired_sound.setVolume(9.f);
 
-    cout << "actor 4.0\n";
     crash.loadFromFile("./asset/sound/crash.ogg");
     crash_sound.setBuffer(crash);
     crash_sound.setVolume(9.f);
 
-    cout << "actor 5.0\n";
     pop.loadFromFile("./asset/sound/pop.ogg");
     pop_sound0.setBuffer(pop);
     pop_sound1.setBuffer(pop);
@@ -51,4 +47,8 @@ Sounds::Sounds() {
     enimydie.loadFromFile("./asset/sound/enimydie.ogg");
     enimydie_sound.setBuffer(enimydie);
     enimydie_sound.setVolume(100.f);
+
+    levelcomplete.loadFromFile("./asset/sound/levelcomplete.ogg");
+    levelcomplete_sound.setBuffer(levelcomplete);
+    levelcomplete_sound.setVolume(9.f);
 }
