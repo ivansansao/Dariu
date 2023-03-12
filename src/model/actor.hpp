@@ -3,6 +3,7 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 
+#include "sounds.hpp"
 #include "tilemap.hpp"
 
 class Actor {
@@ -40,46 +41,46 @@ class Actor {
     sf::Font font_vibes;
     sf::Text deb;
 
-    sf::SoundBuffer jump_buffer;
-    sf::Sound jump_sound;
+    // sf::SoundBuffer jump_buffer;
+    // sf::Sound jump_sound;
 
-    sf::SoundBuffer fired;
-    sf::Sound fired_sound;
+    // sf::SoundBuffer fired;
+    // sf::Sound fired_sound;
 
-    sf::SoundBuffer dooropen;
-    sf::Sound dooropen_sound;
+    // sf::SoundBuffer dooropen;
+    // sf::Sound dooropen_sound;
 
-    sf::SoundBuffer crash;
-    sf::Sound crash_sound;
+    // sf::SoundBuffer crash;
+    // sf::Sound crash_sound;
 
-    sf::SoundBuffer pop;
-    sf::Sound pop_sound0;
-    sf::Sound pop_sound1;
-    sf::Sound pop_sound2;
-    sf::Sound pop_sound3;
-    sf::Sound pop_sound4;
-    sf::Sound pop_sound5;
-    sf::Sound pop_sound6;
-    sf::Sound pop_sound7;
-    sf::Sound pop_sound8;
-    sf::Sound pop_sound9;
+    // sf::SoundBuffer pop;
+    // sf::Sound pop_sound0;
+    // sf::Sound pop_sound1;
+    // sf::Sound pop_sound2;
+    // sf::Sound pop_sound3;
+    // sf::Sound pop_sound4;
+    // sf::Sound pop_sound5;
+    // sf::Sound pop_sound6;
+    // sf::Sound pop_sound7;
+    // sf::Sound pop_sound8;
+    // sf::Sound pop_sound9;
 
     virtual void draw(sf::RenderWindow *w);
-    virtual void update(Tilemap *tilemap);
-    virtual void on_collide(std::string where, int i, int j, Tilemap *tilemap);
-    virtual void on_collide_other(int i, int j, Tilemap *tilemap);
+    virtual void update(Tilemap *tilemap, Sounds *sounds);
+    virtual void on_collide(std::string where, int i, int j, Tilemap *tilemap, Sounds *sounds);
+    virtual void on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds);
     virtual void set_position(float left, float top);
     virtual void reset_position();
-    virtual void die();
+    virtual void die(Sounds *sounds);
 
     void jump();
     void jump(bool little);
     void add_gravity();
     bool onFloor();
-    void collision_x(Tilemap *);
-    void collision_y(Tilemap *);
-    void collision_other(Tilemap *);
-    void play_sound_pop();
+    void collision_x(Tilemap *, Sounds *sounds);
+    void collision_y(Tilemap *, Sounds *sounds);
+    void collision_other(Tilemap *, Sounds *sounds);
+    void play_sound_pop(Sounds *sounds);
     bool is_block(char el);
     bool is_alive();
 };

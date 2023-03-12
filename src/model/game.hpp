@@ -10,6 +10,7 @@
 #include "dariu.hpp"
 #include "enimies.hpp"
 #include "inimigo.hpp"
+#include "sounds.hpp"
 #include "tilemap.hpp"
 
 class Game {
@@ -54,6 +55,7 @@ class Game {
 
     Dariu dariu;
     Tilemap tilemap;
+    Sounds sounds;
 
     void play();
     void pause();

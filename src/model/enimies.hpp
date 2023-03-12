@@ -9,43 +9,42 @@
 class Enimy : public Actor {
    public:
     Enimy();
-    sf::SoundBuffer enimydie;
-    sf::Sound enimydie_sound;
+
     // Override
-    void update(Tilemap *tilemap);
+    void update(Tilemap *tilemap, Sounds *sounds);
     void draw(sf::RenderWindow *w);
-    void on_collide(std::string where, int i, int j, Tilemap *tilemap);
-    void die();
+    void on_collide(std::string where, int i, int j, Tilemap *tilemap, Sounds *sounds);
+    void die(Sounds *sounds);
 };
 class Catraca : public Enimy {
    public:
     Catraca();
 
     // Override
-    void update(Tilemap *tilemap);
+    void update(Tilemap *tilemap, Sounds *sounds);
     void draw(sf::RenderWindow *w);
-    void on_collide(std::string where, int i, int j, Tilemap *tilemap);
-    void die();
+    void on_collide(std::string where, int i, int j, Tilemap *tilemap, Sounds *sounds);
+    void die(Sounds *sounds);
 };
 class Sova : public Enimy {
    public:
     Sova();
 
     // Override
-    void update(Tilemap *tilemap);
+    void update(Tilemap *tilemap, Sounds *sounds);
     void draw(sf::RenderWindow *w);
-    void on_collide(std::string where, int i, int j, Tilemap *tilemap);
-    void die();
+    void on_collide(std::string where, int i, int j, Tilemap *tilemap, Sounds *sounds);
+    void die(Sounds *sounds);
 };
 class Cannon : public Enimy {
    public:
     Cannon();
 
     // Override
-    void update(Tilemap *tilemap);
+    void update(Tilemap *tilemap, Sounds *sounds);
     void draw(sf::RenderWindow *w);
-    void on_collide(std::string where, int i, int j, Tilemap *tilemap);
-    void die();
+    void on_collide(std::string where, int i, int j, Tilemap *tilemap, Sounds *sounds);
+    void die(Sounds *sounds);
 };
 class Bulletc : public Enimy {
    public:
@@ -54,8 +53,8 @@ class Bulletc : public Enimy {
     // Override
     void update(Tilemap *tilemap);
     void draw(sf::RenderWindow *w);
-    void on_collide(std::string where, int i, int j, Tilemap *tilemap);
-    void die();
+    void on_collide(std::string where, int i, int j, Tilemap *tilemap, Sounds *sounds);
+    void die(Sounds *sounds);
 };
 
 #endif

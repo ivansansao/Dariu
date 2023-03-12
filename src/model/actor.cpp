@@ -9,6 +9,7 @@
 using namespace std;
 
 Actor::Actor() {
+    cout << "actor 1.-1\n";
     actor_tex_fall.loadFromFile("./asset/Free/Main Characters/Virtual Guy/Fall (32x32).png");
     actor_tex_idle.loadFromFile("./asset/Free/Main Characters/Virtual Guy/Idle (32x32).png");
     actor_tex.loadFromFile("./asset/Free/Main Characters/Virtual Guy/Run (32x32).png");
@@ -21,45 +22,53 @@ Actor::Actor() {
     on_ground = false;
     gravity = 1.0;
     lift = -17;
-    jump_buffer.loadFromFile("./asset/sound/jump.ogg");
-    jump_sound.setBuffer(jump_buffer);
-    jump_sound.setVolume(9.f);
+    cout << "actor 1.0\n";
+    // jump_buffer.loadFromFile("./asset/sound/jump.ogg");
+    // cout << "actor 1.1\n";
+    // jump_sound.setBuffer(jump_buffer);
+    // cout << "actor 1.2\n";
+    // jump_sound.setVolume(9.f);
 
-    dooropen.loadFromFile("./asset/sound/dooropen.ogg");
-    dooropen_sound.setBuffer(dooropen);
-    dooropen_sound.setVolume(10.f);
+    // cout << "actor 2.0\n";
+    // dooropen.loadFromFile("./asset/sound/dooropen.ogg");
+    // dooropen_sound.setBuffer(dooropen);
+    // dooropen_sound.setVolume(10.f);
 
-    fired.loadFromFile("./asset/sound/fired.ogg");
-    fired_sound.setBuffer(fired);
-    fired_sound.setVolume(9.f);
+    // cout << "actor 3.0\n";
+    // fired.loadFromFile("./asset/sound/fired.ogg");
+    // fired_sound.setBuffer(fired);
+    // fired_sound.setVolume(9.f);
 
-    crash.loadFromFile("./asset/sound/crash.ogg");
-    crash_sound.setBuffer(crash);
-    crash_sound.setVolume(9.f);
+    // cout << "actor 4.0\n";
+    // crash.loadFromFile("./asset/sound/crash.ogg");
+    // crash_sound.setBuffer(crash);
+    // crash_sound.setVolume(9.f);
 
-    pop.loadFromFile("./asset/sound/pop.ogg");
-    pop_sound0.setBuffer(pop);
-    pop_sound1.setBuffer(pop);
-    pop_sound2.setBuffer(pop);
-    pop_sound3.setBuffer(pop);
-    pop_sound4.setBuffer(pop);
-    pop_sound5.setBuffer(pop);
-    pop_sound6.setBuffer(pop);
-    pop_sound7.setBuffer(pop);
-    pop_sound8.setBuffer(pop);
-    pop_sound9.setBuffer(pop);
+    // cout << "actor 5.0\n";
+    // pop.loadFromFile("./asset/sound/pop.ogg");
+    // pop_sound0.setBuffer(pop);
+    // pop_sound1.setBuffer(pop);
+    // pop_sound2.setBuffer(pop);
+    // pop_sound3.setBuffer(pop);
+    // pop_sound4.setBuffer(pop);
+    // pop_sound5.setBuffer(pop);
+    // pop_sound6.setBuffer(pop);
+    // pop_sound7.setBuffer(pop);
+    // pop_sound8.setBuffer(pop);
+    // pop_sound9.setBuffer(pop);
 
-    pop_sound0.setVolume(7.f);
-    pop_sound1.setVolume(7.f);
-    pop_sound2.setVolume(7.f);
-    pop_sound3.setVolume(7.f);
-    pop_sound4.setVolume(7.f);
-    pop_sound5.setVolume(7.f);
-    pop_sound6.setVolume(7.f);
-    pop_sound7.setVolume(7.f);
-    pop_sound8.setVolume(7.f);
-    pop_sound9.setVolume(7.f);
+    // pop_sound0.setVolume(7.f);
+    // pop_sound1.setVolume(7.f);
+    // pop_sound2.setVolume(7.f);
+    // pop_sound3.setVolume(7.f);
+    // pop_sound4.setVolume(7.f);
+    // pop_sound5.setVolume(7.f);
+    // pop_sound6.setVolume(7.f);
+    // pop_sound7.setVolume(7.f);
+    // pop_sound8.setVolume(7.f);
+    // pop_sound9.setVolume(7.f);
 
+    cout << "actor 6.0\n";
     font_vibes.loadFromFile("./asset/fonts/RobotoFlex-Regular.ttf");
     deb.setFont(font_vibes);
     deb.setCharacterSize(20);
@@ -68,6 +77,7 @@ Actor::Actor() {
     deb.setString("");
 
     reset_position();
+    cout << "actor 7.0\n";
 }
 
 void Actor::jump() {
@@ -89,7 +99,7 @@ void Actor::set_position(float left, float top) {
 void Actor::reset_position() {
     pos = sf::FloatRect(start_pos.left, start_pos.top, 32.f, 32.f);
 }
-void Actor::update(Tilemap *tilemap) {
+void Actor::update(Tilemap *tilemap, Sounds *sounds) {
     // ---------------- Y ----------------
 
     if (tilemap->map[(int)pos.top / 32][(int)pos.left / 32] == 'B') {
@@ -99,10 +109,14 @@ void Actor::update(Tilemap *tilemap) {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
         if (up_released) {
             if (on_ground) {
-                if (jump_sound.getStatus() == 0) {
-                    jump_sound.play();
-                    cout << "jump_sound.play()" << endl;
+                if (sounds->jump_sound.getStatus() == 0) {
+                    sounds->jump_sound.play();
+                    cout << "sounds->jump_sound.play()" << endl;
                 }
+                // if (jump_sound.getStatus() == 0) {
+                //     jump_sound.play();
+                //     cout << "jump_sound.play()" << endl;
+                // }
                 jump();
                 up_released = false;
             }
@@ -110,7 +124,7 @@ void Actor::update(Tilemap *tilemap) {
     }
 
     add_gravity();
-    collision_y(tilemap);
+    collision_y(tilemap, sounds);
 
     if (tilemap->map[((int)pos.top / 32)][(int)pos.left / 32] == 'B') {
         cerr << "******************* Erro local 1\n";
@@ -134,7 +148,7 @@ void Actor::update(Tilemap *tilemap) {
 
     pos.left += velocity.x;
 
-    collision_x(tilemap);
+    collision_x(tilemap, sounds);
 
     if (tilemap->map[((int)pos.top / 32)][(int)pos.left / 32] == 'B') {
         cerr << "******************* Erro local 2\n";
@@ -142,7 +156,7 @@ void Actor::update(Tilemap *tilemap) {
 
     // -----------------------------------
 
-    collision_other(tilemap);
+    collision_other(tilemap, sounds);
 
     if (tilemap->map[(int)pos.top / 32][(int)pos.left / 32] == 'B') {
         cout << "Ended com B\n";
@@ -158,7 +172,7 @@ void Actor::update(Tilemap *tilemap) {
     deb.setString("on_ground: " + to_string(on_ground) + " map[" + to_string(i) + "][" + to_string(j) + "] = ' " + tilemap->map[i][j] + " ' i2: " + to_string(i2) + " j2: " + to_string(j2) + " on_block: " + to_string(0));
 }
 
-void Actor::collision_y(Tilemap *tilemap) {
+void Actor::collision_y(Tilemap *tilemap, Sounds *sounds) {
     on_ground = false;
     // i = 384/12=12 < 384+32=416/32=13
     // Y
@@ -168,12 +182,12 @@ void Actor::collision_y(Tilemap *tilemap) {
             // if (tilemap->map[i][j] == 'B' || tilemap->map[i][j] == 'b') {
             if (is_block(tilemap->map[i][j])) {
                 if (velocity.y > 0) {
-                    on_collide("ground", i, j, tilemap);
+                    on_collide("ground", i, j, tilemap, sounds);
                     pos.top = i * 32 - pos.height;
                     on_ground = true;
                 }
                 if (velocity.y < 0) {
-                    on_collide("top", i, j, tilemap);
+                    on_collide("top", i, j, tilemap, sounds);
                     pos.top = i * 32 + 32;
                     cout << "Toin..\n";
                 }
@@ -201,7 +215,7 @@ void Actor::collision_y(Tilemap *tilemap) {
         }
     }
 }
-void Actor::collision_x(Tilemap *tilemap) {
+void Actor::collision_x(Tilemap *tilemap, Sounds *sounds) {
     // i = 384/12=12 < 384+32=416/32=13
     // cout << " > ";
     for (int i = pos.top / 32; i < (pos.top + pos.height) / 32; i++) {
@@ -209,7 +223,7 @@ void Actor::collision_x(Tilemap *tilemap) {
             if (is_block(tilemap->map[i][j])) {
                 // PARA o X
                 if (velocity.x < 0) {
-                    on_collide("left", i, j, tilemap);
+                    on_collide("left", i, j, tilemap, sounds);
                     const int j2 = ((int)pos.left / 32) + 1;
                     if (is_block(tilemap->map[i][j2])) {
                         cerr << "MOV CANCEL: Has block\n";
@@ -218,7 +232,8 @@ void Actor::collision_x(Tilemap *tilemap) {
                     }
                 }
                 if (velocity.x > 0) {
-                    on_collide("right", i, j, tilemap);
+                    on_collide("right", i, j, tilemap, sounds);
+                    cout << "actor.cpp right\n";
                     pos.left = j * 32 - pos.width;
                 }
             }
@@ -239,10 +254,10 @@ void Actor::collision_x(Tilemap *tilemap) {
     }
 }
 
-void Actor::collision_other(Tilemap *tilemap) {
+void Actor::collision_other(Tilemap *tilemap, Sounds *sounds) {
     for (int i = pos.top / 32; i < (pos.top + pos.height) / 32; i++) {
         for (int j = pos.left / 32; j < (pos.left + pos.width) / 32; j++) {
-            on_collide_other(i, j, tilemap);
+            on_collide_other(i, j, tilemap, sounds);
         }
     }
 }
@@ -267,45 +282,45 @@ void Actor::draw(sf::RenderWindow *w) {
     }
     w->draw(actor_spr);
 }
-void Actor::play_sound_pop() {
-    if (pop_sound0.getStatus() == 0) {
-        pop_sound0.play();
+void Actor::play_sound_pop(Sounds *sounds) {
+    if (sounds->pop_sound0.getStatus() == 0) {
+        sounds->pop_sound0.play();
         cout << "sound0\n";
-    } else if (pop_sound1.getStatus() == 0) {
-        pop_sound1.play();
+    } else if (sounds->pop_sound1.getStatus() == 0) {
+        sounds->pop_sound1.play();
         cout << "sound1\n";
-    } else if (pop_sound2.getStatus() == 0) {
-        pop_sound2.play();
+    } else if (sounds->pop_sound2.getStatus() == 0) {
+        sounds->pop_sound2.play();
         cout << "sound2\n";
-    } else if (pop_sound3.getStatus() == 0) {
-        pop_sound3.play();
+    } else if (sounds->pop_sound3.getStatus() == 0) {
+        sounds->pop_sound3.play();
         cout << "sound3\n";
-    } else if (pop_sound4.getStatus() == 0) {
-        pop_sound4.play();
+    } else if (sounds->pop_sound4.getStatus() == 0) {
+        sounds->pop_sound4.play();
         cout << "sound4\n";
-    } else if (pop_sound5.getStatus() == 0) {
-        pop_sound5.play();
+    } else if (sounds->pop_sound5.getStatus() == 0) {
+        sounds->pop_sound5.play();
         cout << "sound5\n";
-    } else if (pop_sound6.getStatus() == 0) {
-        pop_sound6.play();
+    } else if (sounds->pop_sound6.getStatus() == 0) {
+        sounds->pop_sound6.play();
         cout << "sound6\n";
-    } else if (pop_sound7.getStatus() == 0) {
-        pop_sound7.play();
+    } else if (sounds->pop_sound7.getStatus() == 0) {
+        sounds->pop_sound7.play();
         cout << "sound7\n";
-    } else if (pop_sound8.getStatus() == 0) {
-        pop_sound8.play();
+    } else if (sounds->pop_sound8.getStatus() == 0) {
+        sounds->pop_sound8.play();
         cout << "sound8\n";
-    } else if (pop_sound9.getStatus() == 0) {
-        pop_sound9.play();
+    } else if (sounds->pop_sound9.getStatus() == 0) {
+        sounds->pop_sound9.play();
         cout << "sound9\n";
     }
 }
-void Actor::on_collide(std::string where, int i, int j, Tilemap *tilemap) {
+void Actor::on_collide(std::string where, int i, int j, Tilemap *tilemap, Sounds *sounds) {
 }
-void Actor::on_collide_other(int i, int j, Tilemap *tilemap) {
+void Actor::on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds) {
 }
 
-void Actor::die() {
+void Actor::die(Sounds *sounds) {
 }
 
 bool Actor::is_block(char el) {

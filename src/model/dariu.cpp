@@ -30,18 +30,18 @@ void Dariu::reset_position() {
     // pos = sf::FloatRect(32.f, 672.f, 32.f, 32.f);
     pos = sf::FloatRect(32.f, 672.f, 32.f, 32.f);
 }
-void Dariu::die() {
+void Dariu::die(Sounds *sounds) {
     if (state == States::Normal) {
         cout << "*die\n";
         state = States::DieStart;
-        if (fired_sound.getStatus() == 0) fired_sound.play();
+        if (sounds->fired_sound.getStatus() == 0) sounds->fired_sound.play();
     }
 }
 
-void Dariu::update(Tilemap *tilemap) {
+void Dariu::update(Tilemap *tilemap, Sounds *sounds) {
     switch (state) {
         case (States::Normal): {
-            Actor::update(tilemap);
+            Actor::update(tilemap, sounds);
             break;
         }
         case (States::DieStart): {
@@ -98,8 +98,8 @@ void Dariu::draw(sf::RenderWindow *w, int phase) {
     w->draw(text_score);
 }
 
-void Dariu::on_collide(std::string where, int i, int j, Tilemap *tilemap) {
-    Actor::on_collide(where, i, j, tilemap);
+void Dariu::on_collide(std::string where, int i, int j, Tilemap *tilemap, Sounds *sounds) {
+    Actor::on_collide(where, i, j, tilemap, sounds);
 
     const float j32 = pos.left / 32;
     int left_block = Tools::floor_special(j32 + 1, 0.71);
@@ -108,27 +108,27 @@ void Dariu::on_collide(std::string where, int i, int j, Tilemap *tilemap) {
     if (where == "top") {
         if (tilemap->map[i][j] == 'b') {
             tilemap->map[i][j] = ' ';
-            if (crash_sound.getStatus() == 0) crash_sound.play();
+            if (sounds->crash_sound.getStatus() == 0) sounds->crash_sound.play();
             cout << "crash_sound.play()" << endl;
         };
     }
     if (tilemap->map[i][left_block] == 'R') {  // Fire
 
         cout << "COMECOU L\n";
-        die();
+        die(sounds);
     } else if (tilemap->map[i][right_block] == 'R') {  // Fire
         cout << "COMECOU R\n";
-        die();
+        die(sounds);
     }
 }
 
-void Dariu::on_collide_other(int i, int j, Tilemap *tilemap) {
-    Actor::on_collide_other(i, j, tilemap);
+void Dariu::on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds) {
+    Actor::on_collide_other(i, j, tilemap, sounds);
 
     if (score.darius >= 0) {
         if (score.thophy >= score.thophy_total) {
             if (tilemap->map[21][114] != 'x') {
-                if (dooropen_sound.getStatus() == 0) dooropen_sound.play();
+                if (sounds->dooropen_sound.getStatus() == 0) sounds->dooropen_sound.play();
                 cout << "dooropen_sound.play()" << endl;
                 tilemap->map[21][114] = 'x';
             }
@@ -137,7 +137,7 @@ void Dariu::on_collide_other(int i, int j, Tilemap *tilemap) {
 
     if (tilemap->map[i][j] == '.') {
         tilemap->map[i][j] = ' ';
-        play_sound_pop();
+        play_sound_pop(sounds);
         score.bananas++;
         if (score.bananas % 30 == 0) {
             score.bananas -= 30;

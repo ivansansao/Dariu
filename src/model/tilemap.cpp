@@ -50,8 +50,8 @@ Tilemap::Tilemap() {
     trophy.setTexture(trophy_tex);
     trophy.setTextureRect(sf::IntRect(0, 0, 64, 64));
 
-    background_tex.loadFromFile("./asset/Redwood.jpg");
-    background.setTexture(background_tex);
+    // background_tex.loadFromFile("./asset/Redwood.jpg");
+    // background.setTexture(background_tex);
 
     sf::RectangleShape block(sf::Vector2f(height_floor, height_floor));
 }

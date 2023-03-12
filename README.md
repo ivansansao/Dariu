@@ -52,6 +52,12 @@ Done, dariu.exe has created! I believe!
 
 Create a shortcut on Desktop for dariu.exe and put Workdir at dariu\src\
 
+If is missing openal32.dll, download installer from oficial page: https://www.openal.org/downloads/
+
+# Run?
+
+Just download from Releases at this page!
+
 # Links
 
 https://www.bensound.com/ <br>

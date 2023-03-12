@@ -8,18 +8,16 @@ using namespace std;
  * Base class for enimies
  */
 
-Enimy::Enimy() {
-    enimydie.loadFromFile("./asset/sound/enimydie.ogg");
-    enimydie_sound.setBuffer(enimydie);
-    enimydie_sound.setVolume(100.f);
+Enimy::Enimy(){
+
 };
 
-void Enimy::update(Tilemap *tilemap) {
+void Enimy::update(Tilemap *tilemap, Sounds *sounds) {
     switch (state) {
         case (States::Normal): {
             // ---------------- Y ----------------
             add_gravity();
-            collision_y(tilemap);
+            collision_y(tilemap, sounds);
 
             // ---------------- X ----------------
 
@@ -28,7 +26,7 @@ void Enimy::update(Tilemap *tilemap) {
 
             pos.left += velocity.x;
 
-            collision_x(tilemap);
+            collision_x(tilemap, sounds);
             break;
         }
         case (States::DieStart): {
@@ -69,7 +67,7 @@ void Enimy::draw(sf::RenderWindow *w) {
     w->draw(actor_spr);
 }
 
-void Enimy::on_collide(std::string where, int i, int j, Tilemap *tilemap) {
+void Enimy::on_collide(std::string where, int i, int j, Tilemap *tilemap, Sounds *sounds) {
     const float j32 = pos.left / 32;
     int left_block = Tools::floor_special(j32 + 1, 0.71);
     int right_block = Tools::ceil_special(j32, 0.39);
@@ -84,13 +82,13 @@ void Enimy::on_collide(std::string where, int i, int j, Tilemap *tilemap) {
     }
 }
 
-void Enimy::die() {
+void Enimy::die(Sounds *sounds) {
     if (state == States::Normal) {
         cout << "*die (eminy)\n";
         state = States::DieStart;
-        if (enimydie_sound.getStatus() == 0) {
-            enimydie_sound.play();
-            cout << "play() => " << enimydie_sound.getStatus();
+        if (sounds->enimydie_sound.getStatus() == 0) {
+            sounds->enimydie_sound.play();
+            cout << "play() => " << sounds->enimydie_sound.getStatus();
         };
     }
 }
@@ -99,22 +97,24 @@ void Enimy::die() {
  */
 
 Catraca::Catraca() {
+    cout << "Catraca 1.0\n";
     actor_tex_fall.loadFromFile("./asset/Free/Main Characters/Mask Dude/Fall (32x32).png");
     actor_tex.loadFromFile("./asset/Free/Main Characters/Mask Dude/Run (32x32).png");
     actor_tex_idle.loadFromFile("./asset/Free/Main Characters/Mask Dude/Idle (32x32).png");
+    cout << "Catraca 2.0\n";
 };
 
-void Catraca::update(Tilemap *tilemap) {
-    Enimy::update(tilemap);
+void Catraca::update(Tilemap *tilemap, Sounds *sounds) {
+    Enimy::update(tilemap, sounds);
 }
 void Catraca::draw(sf::RenderWindow *w) {
     Enimy::draw(w);
 }
-void Catraca::on_collide(std::string where, int i, int j, Tilemap *tilemap) {
-    Enimy::on_collide(where, i, j, tilemap);
+void Catraca::on_collide(std::string where, int i, int j, Tilemap *tilemap, Sounds *sounds) {
+    Enimy::on_collide(where, i, j, tilemap, sounds);
 }
-void Catraca::die() {
-    Enimy::die();
+void Catraca::die(Sounds *sounds) {
+    Enimy::die(sounds);
 }
 /**
  * Sova is enimy
@@ -126,8 +126,8 @@ Sova::Sova() {
     actor_tex_idle.loadFromFile("./asset/Free/sova.png");
 };
 
-void Sova::update(Tilemap *tilemap) {
-    Enimy::update(tilemap);
+void Sova::update(Tilemap *tilemap, Sounds *sounds) {
+    Enimy::update(tilemap, sounds);
 }
 void Sova::draw(sf::RenderWindow *w) {
     if (on_ground) {
@@ -136,11 +136,11 @@ void Sova::draw(sf::RenderWindow *w) {
     }
     w->draw(actor_spr);
 }
-void Sova::on_collide(std::string where, int i, int j, Tilemap *tilemap) {
-    Enimy::on_collide(where, i, j, tilemap);
+void Sova::on_collide(std::string where, int i, int j, Tilemap *tilemap, Sounds *sounds) {
+    Enimy::on_collide(where, i, j, tilemap, sounds);
 }
-void Sova::die() {
-    Enimy::die();
+void Sova::die(Sounds *sounds) {
+    Enimy::die(sounds);
 }
 /**
  * Cannon is enimy
@@ -152,12 +152,12 @@ Cannon::Cannon() {
     actor_tex_idle.loadFromFile("./asset/Free/cannon.png");
 };
 
-void Cannon::update(Tilemap *tilemap) {
+void Cannon::update(Tilemap *tilemap, Sounds *sounds) {
     switch (state) {
         case (States::Normal): {
             // ---------------- Y ----------------
             add_gravity();
-            collision_y(tilemap);
+            collision_y(tilemap, sounds);
 
             // ---------------- X ----------------
 
@@ -202,11 +202,11 @@ void Cannon::draw(sf::RenderWindow *w) {
     }
     w->draw(actor_spr);
 }
-void Cannon::on_collide(std::string where, int i, int j, Tilemap *tilemap) {
-    Enimy::on_collide(where, i, j, tilemap);
+void Cannon::on_collide(std::string where, int i, int j, Tilemap *tilemap, Sounds *sounds) {
+    Enimy::on_collide(where, i, j, tilemap, sounds);
 }
-void Cannon::die() {
-    Enimy::die();
+void Cannon::die(Sounds *sounds) {
+    Enimy::die(sounds);
 }
 /**
  * Bulletc is enimy
@@ -280,9 +280,9 @@ void Bulletc::draw(sf::RenderWindow *w) {
     }
     w->draw(actor_spr);
 }
-void Bulletc::on_collide(std::string where, int i, int j, Tilemap *tilemap) {
-    Enimy::on_collide(where, i, j, tilemap);
+void Bulletc::on_collide(std::string where, int i, int j, Tilemap *tilemap, Sounds *sounds) {
+    Enimy::on_collide(where, i, j, tilemap, sounds);
 }
-void Bulletc::die() {
-    Enimy::die();
+void Bulletc::die(Sounds *sounds) {
+    Enimy::die(sounds);
 }

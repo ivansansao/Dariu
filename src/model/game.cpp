@@ -18,7 +18,7 @@ Game::Game() {
     window.setMouseCursorVisible(true);
     music.openFromFile("./asset/sound/track1.ogg");
     music.setLoop(true);
-    music.setVolume(9.f);  // 0 to 100
+    music.setVolume(3.f);  // 0 to 100
     music.play();
     cout << "music.play()" << endl;
 
@@ -55,14 +55,14 @@ void Game::play() {
 
     auto position = sf::Mouse::getPosition(window);
 
-    this->dariu.update(&tilemap);
+    this->dariu.update(&tilemap, &sounds);
     this->tilemap.update();
 
     for (auto& catraca : catracas) {
-        catraca->update(&tilemap);
+        catraca->update(&tilemap, &sounds);
     }
     for (auto& sova : sovas) {
-        sova->update(&tilemap);
+        sova->update(&tilemap, &sounds);
     }
     // for (auto& cannon : cannons) {
     //     cannon->update(&tilemap);
@@ -73,7 +73,7 @@ void Game::play() {
 
     int i1 = 0;
     for (auto& cannon : cannons) {
-        cannon->update(&tilemap);
+        cannon->update(&tilemap, &sounds);
         bulletcs[i1]->update(&tilemap);
         bulletcs[i1]->start_pos.left = cannons[i1]->pos.left;
         bulletcs[i1]->start_pos.top = cannons[i1]->pos.top;
@@ -273,16 +273,22 @@ void Game::load_phase() {
     cout << "Fase carregada!\n";
 }
 void Game::load_enimies() {
+    cout << "Load 1.0\n";
+
     catracas.clear();
     for (int i{}; i < tilemap.H; ++i) {
         for (int j{}; j < tilemap.W; j++) {
             if (tilemap.map[i][j] == 'Z') {
+                cout << "Load 1.1 Error happens here\n";
                 Catraca* catraca = new Catraca();
+                cout << "Load 1.2\n";
                 catraca->set_position(j * 32, i * 32);
                 catracas.push_back(catraca);
+                cout << "Load 1.3\n";
             }
         }
     }
+    cout << "Load 2.0\n";
     sovas.clear();
     for (int i{}; i < tilemap.H; ++i) {
         for (int j{}; j < tilemap.W; j++) {
@@ -293,6 +299,7 @@ void Game::load_enimies() {
             }
         }
     }
+    cout << "Load 3.0\n";
     cannons.clear();
     for (int i{}; i < tilemap.H; ++i) {
         for (int j{}; j < tilemap.W; j++) {
@@ -303,6 +310,7 @@ void Game::load_enimies() {
             }
         }
     }
+    cout << "Load 4.0\n";
     bulletcs.clear();
     for (int i{}; i < tilemap.H; ++i) {
         for (int j{}; j < tilemap.W; j++) {
@@ -313,6 +321,7 @@ void Game::load_enimies() {
             }
         }
     }
+    cout << "Load 5.0\n";
 };
 
 void Game::check_collisions_enimies() {
@@ -325,10 +334,10 @@ void Game::check_collisions_enimies() {
                         cout << "   CATRACA DIES\n";
                         // catracas.erase(catracas.begin() + i);
                         dariu.jump();
-                        catraca->die();
+                        catraca->die(&sounds);
                     } else {
                         cout << "   DARIU DIES\n";
-                        dariu.die();
+                        dariu.die(&sounds);
                     }
                 }
             }
@@ -340,10 +349,10 @@ void Game::check_collisions_enimies() {
                     if (dariu.velocity.y > 0) {
                         cout << "   sova DIES\n";
                         dariu.jump();
-                        sova->die();
+                        sova->die(&sounds);
                     } else {
                         cout << "   DARIU DIES\n";
-                        dariu.die();
+                        dariu.die(&sounds);
                     }
                 }
             }
@@ -355,10 +364,10 @@ void Game::check_collisions_enimies() {
                     if (dariu.velocity.y > 0) {
                         cout << "   bulletc DIES\n";
                         dariu.jump();
-                        bulletc->die();
+                        bulletc->die(&sounds);
                     } else {
                         cout << "   DARIU DIES\n";
-                        dariu.die();
+                        dariu.die(&sounds);
                     }
                 }
             }

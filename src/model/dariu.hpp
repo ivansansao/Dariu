@@ -19,11 +19,11 @@ class Dariu : public Actor {
     bool over;
 
     // Override
-    void update(Tilemap *tilemap);
+    void update(Tilemap *tilemap, Sounds *sounds);
     void reset_position();
     void draw(sf::RenderWindow *w, int phase);
-    void on_collide(std::string where, int i, int j, Tilemap *tilemap);
-    void on_collide_other(int i, int j, Tilemap *tilemap);
-    void die();
+    void on_collide(std::string where, int i, int j, Tilemap *tilemap, Sounds *sounds);
+    void on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds);
+    void die(Sounds *sounds);
 };
 #endif
