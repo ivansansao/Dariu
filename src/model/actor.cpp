@@ -46,7 +46,19 @@ void Actor::reset_position() {
 void Actor::update(Tilemap *tilemap, Sounds *sounds) {
     // ---------------- Y ----------------
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+    if (sf::Joystick::isButtonPressed(0, 2)) {
+    }
+    // cout << "isButtonPressed " << sf::Joystick::getButtonCount(0) << "\n";
+
+    /*
+     *  [Letter My_control]
+     *
+     *      [X1]
+     *  []        []
+     *      [Z3]
+     */
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Joystick::isButtonPressed(0, sf::Joystick::Z)) {
         if (up_released) {
             if (on_ground) {
                 if (sounds->jump_sound.getStatus() == 0) {
@@ -63,14 +75,25 @@ void Actor::update(Tilemap *tilemap, Sounds *sounds) {
 
     // ---------------- X ----------------
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-        velocity.x += 1;
-        direction_x = 1;
-    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-        velocity.x -= 1;
-        direction_x = -1;
+    float controll_x = sf::Joystick::getAxisPosition(0, sf::Joystick::X);  // -100 to 100
+
+    if (controll_x != 0) {
+        velocity.x = (controll_x / 100) * 5;
+        if (controll_x > 0) {
+            direction_x = 1;
+        } else if (controll_x < 0) {
+            direction_x = -1;
+        }
     } else {
-        velocity.x = 0;
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+            velocity.x += 1;
+            direction_x = 1;
+        } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+            velocity.x -= 1;
+            direction_x = -1;
+        } else {
+            velocity.x = 0;
+        }
     }
     if (velocity.x > 5) velocity.x = 5;
     if (velocity.x < -5) velocity.x = -5;
@@ -84,7 +107,6 @@ void Actor::update(Tilemap *tilemap, Sounds *sounds) {
     collision_other(tilemap, sounds);
 
     actor_spr.setPosition(pos.left, pos.top);
-
 }
 
 void Actor::collision_y(Tilemap *tilemap, Sounds *sounds) {
@@ -103,7 +125,7 @@ void Actor::collision_y(Tilemap *tilemap, Sounds *sounds) {
                     pos.top = i * 32 + 32;
                 }
                 velocity.y = 0;
-                break; 
+                break;
             }
         }
     }

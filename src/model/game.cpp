@@ -204,12 +204,11 @@ void Game::loop_events() {
     sf::Event event;
     sf::Clock clock;
     while (window.pollEvent(event)) {
-
         if (event.type == sf::Event::Closed) {
             window.close();
         }
         if (playing) {
-            if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Up) {
+            if ((event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Up) || (event.type == sf::Event::JoystickButtonReleased)) {
                 this->dariu.up_released = true;
             }
         }
@@ -248,10 +247,8 @@ void Game::load_phase() {
             }
         }
     }
-
 }
 void Game::load_enimies() {
-
     catracas.clear();
     for (int i{}; i < tilemap.H; ++i) {
         for (int j{}; j < tilemap.W; j++) {
