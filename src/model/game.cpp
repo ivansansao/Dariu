@@ -293,11 +293,13 @@ void Game::load_enimies() {
 
 void Game::check_collisions_enimies() {
     if (dariu.is_alive()) {
+        bool dariuJump = false;
+
         for (auto& catraca : catracas) {
             if (catraca->is_alive()) {
                 if (catraca->pos.intersects(dariu.pos)) {
                     if (dariu.velocity.y > 0) {
-                        dariu.jump();
+                        dariuJump = true;
                         catraca->die(&sounds);
                     } else {
                         dariu.die(&sounds);
@@ -305,11 +307,12 @@ void Game::check_collisions_enimies() {
                 }
             }
         }
+
         for (auto& sova : sovas) {
             if (sova->is_alive()) {
                 if (sova->pos.intersects(dariu.pos)) {
                     if (dariu.velocity.y > 0) {
-                        dariu.jump();
+                        dariuJump = true;
                         sova->die(&sounds);
                     } else {
                         dariu.die(&sounds);
@@ -321,7 +324,7 @@ void Game::check_collisions_enimies() {
             if (bulletc->is_alive()) {
                 if (bulletc->pos.intersects(dariu.pos)) {
                     if (dariu.velocity.y > 0) {
-                        dariu.jump();
+                        dariuJump = true;
                         bulletc->die(&sounds);
                     } else {
                         dariu.die(&sounds);
@@ -329,6 +332,8 @@ void Game::check_collisions_enimies() {
                 }
             }
         }
+
+        if (dariuJump) dariu.jump();
     }
 }
 
