@@ -28,16 +28,29 @@ class Game {
     sf::Text text_gameover;
 
     sf::Music music_gameover;
-    bool gameover = false;
     bool gameover_loaded = false;
     int phase_current = 0;
     int phase_total = 0;
 
     sf::Music music_gamewin;
     sf::Text text_gamewin;
+    sf::Text text_generic;
+
+    enum pages {
+        GAME_PLAY,
+        GAME_OVER,
+        GAME_WIN,
+        GAME_PAUSE,
+        GAME_RESUME,
+        GAME_CLOSE,
+        MENU,
+        MENU_VOLUME
+    };
+    int page = pages::GAME_PLAY;
+
     bool gamewin = false;
     bool gamewin_loaded = false;
-    void game_win();
+    bool gamepause_loaded = false;
 
     bool game_loaded = false;
 
@@ -47,7 +60,6 @@ class Game {
     float fireworks_j;
 
     bool paused = false;
-    bool playing = false;
 
     std::vector<Catraca *> catracas;
     std::vector<Sova *> sovas;
@@ -60,8 +72,11 @@ class Game {
 
     void play();
     void pause();
-    void game_over();
-    void game_load();
+    void resume();
+    void close();
+    void win();
+    void over();
+    void load();
     void loop_events();
     void run();
     bool is_fullscreen();

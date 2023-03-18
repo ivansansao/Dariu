@@ -29,7 +29,6 @@ Game::Game() {
     music_gamewin.setVolume(8.f);
 
     view.reset(sf::FloatRect(0.f, 0.f, 1280.f, 736.f));
-    gameover = false;
     gameover_loaded = false;
 
     font_roboto.loadFromFile("./asset/fonts/RobotoFlex-Regular.ttf");
@@ -44,7 +43,7 @@ Game::Game() {
 }
 void Game::play() {
     if (!game_loaded) {
-        game_load();
+        load();
     }
     if (phase_current == 0) {
         const char* initial_phase = std::getenv("DARIU_INITIAL_PHASE");
@@ -95,12 +94,15 @@ void Game::play() {
         view.reset(sf::FloatRect(2400.f, 0.f, 1280, 736.f));
     }
 
-    gamewin = dariu.win;
-    gameover = dariu.over;
+    if (dariu.win) {
+        page = pages::GAME_WIN;
+    } else if (dariu.over) {
+        page = pages::GAME_OVER;
+    }
 
-    if (gamewin) {
+    if (page == pages::GAME_WIN) {
         if (phase_current < phase_total) {
-            gamewin = false;
+            page = pages::GAME_PLAY;
             dariu.win = false;
             dariu.reset_position();
             load_phase();
@@ -132,8 +134,38 @@ void Game::play() {
     ss << "Mouse (" << position.x << "," << position.y << ") Dariu (" << dariu.pos.top << "," << dariu.pos.left << ") i/32,j/32 (" << i << " , " << j << ") Bloco da esquerda: " << (int)Tools::floor_special(j + 1, 0.71) << " Bloco da direita: " << (int)Tools::ceil_special(j, 0.39);
     window.setTitle(ss.str());
 }
-void Game::pause() { music.pause(); };
-void Game::game_win() {
+void Game::pause() {
+    if (!gamepause_loaded) {
+        gamepause_loaded = true;
+        music.pause();
+        view.reset(sf::FloatRect(0.f, 0.f, 1280.f, 736.f));
+        window.setView(view);
+        text_generic.setFont(font_greatvibes);
+        text_generic.setCharacterSize(60);
+        text_generic.setFillColor(sf::Color::White);
+    }
+
+    window.clear(sf::Color(62, 49, 60, 255));
+
+    text_generic.setString(L"Dariu");
+    text_generic.setPosition(sf::Vector2f(600 - text_generic.getGlobalBounds().width / 2, window.getSize().y / 3 - text_generic.getGlobalBounds().height / 2));
+    window.draw(text_generic);
+
+    text_generic.setString(L"Pausa!");
+    text_generic.setPosition(sf::Vector2f(600 - text_generic.getGlobalBounds().width / 2, window.getSize().y / 2 - text_generic.getGlobalBounds().height / 2));
+    window.draw(text_generic);
+
+    window.display();
+};
+void Game::resume() {
+    music.play();
+    gamepause_loaded = false;
+    page = pages::GAME_PLAY;
+};
+void Game::close() {
+    window.close();
+};
+void Game::win() {
     if (!gamewin_loaded) {
         view.reset(sf::FloatRect(0.f, 0.f, 1280, 736.f));
         window.setView(view);
@@ -170,7 +202,7 @@ void Game::game_win() {
     window.draw(text_gamewin);
     window.display();
 };
-void Game::game_over() {
+void Game::over() {
     if (!gameover_loaded) {
         view.reset(sf::FloatRect(0.f, 0.f, 1280, 736.f));
         window.setView(view);
@@ -187,7 +219,7 @@ void Game::game_over() {
     window.draw(text_gameover);
     window.display();
 };
-void Game::game_load() {
+void Game::load() {
     game_loaded = true;
 
     // Read total phases in the game
@@ -206,21 +238,6 @@ void Game::game_load() {
         std::cerr << "Could not open directory" << std::endl;
     }
 }
-void Game::loop_events() {
-    sf::Event event;
-    sf::Clock clock;
-    while (window.pollEvent(event)) {
-        if (event.type == sf::Event::Closed) {
-            window.close();
-        }
-        if (playing) {
-            if ((event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Up) || (event.type == sf::Event::JoystickButtonReleased)) {
-                this->dariu.up_released = true;
-            }
-        }
-    }
-}
-
 bool Game::is_fullscreen() {
     return window.getSize().x == sf::VideoMode::getDesktopMode().width;
 }
@@ -352,23 +369,48 @@ void Game::check_collisions_enimies() {
     }
 }
 
+void Game::loop_events() {
+    sf::Event event;
+    sf::Clock clock;
+    while (window.pollEvent(event)) {
+        if (event.type == sf::Event::Closed) {
+            window.close();
+        }
+        if (page == pages::GAME_PLAY) {
+            if ((event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Up) || (event.type == sf::Event::JoystickButtonReleased)) {
+                this->dariu.up_released = true;
+            }
+        }
+        if (event.type == sf::Event::KeyReleased) {
+            if (event.key.code == sf::Keyboard::Escape) {
+                if (page == pages::GAME_PLAY) {
+                    page = pages::GAME_PAUSE;
+                } else {
+                    page = pages::GAME_RESUME;
+                }
+            } else if (event.key.code == sf::Keyboard::Q) {
+                this->close();
+            }
+        }
+    }
+}
+
 void Game::run() {
-    playing = true;
     while (window.isOpen()) {
         this->loop_events();
 
-        if (this->gameover) {
-            this->game_over();
-        } else if (this->gamewin) {
-            this->game_win();
-        } else if (this->paused) {
-            this->pause();
-        } else {
+        if (this->page == pages::GAME_PLAY) {
             this->play();
-        }
-
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
-            window.close();
+        } else if (this->page == pages::GAME_OVER) {
+            this->over();
+        } else if (this->page == pages::GAME_WIN) {
+            this->win();
+        } else if (this->page == pages::GAME_PAUSE) {
+            this->pause();
+        } else if (this->page == pages::GAME_RESUME) {
+            this->resume();
+        } else if (this->page == pages::GAME_CLOSE) {
+            this->close();
         }
     }
 }
