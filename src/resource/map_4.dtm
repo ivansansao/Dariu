@@ -1,17 +1,17 @@
 EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
 E   Z                            E                                  ..........                              T     E
 E                                E                                  ..........                                 V  E
-E   ABC  Y H                     E                                  ..........                            ABBC    E
-E      BBBBBBB                   E                ...........       ABBBBBBBBC                                    E
-E             BBB                .                ...........  ABBC      E                                        E
-E                                .                ...........            E   bBbb                                 E
-E                                .               ABBC T  ABBBC           E        ......    .....                 E
-E         .                      .Z                  Z.                  E                  . T .                 E
-E   > V   .            Z         B.....              ABBC                E        ABBBBC    .. ..                 E
-E         .        ..... ABC     E.H...                            V     EH....             ABBBC                 E
-E        BBBB     .......        EBBBBB.                                 EBBBBC               T                   E
-E              H B.......B       E.....B.                                E                                        E 
-E             BBBEBBBBBBBEBBBB . E......B.        .   .                  E      .....        ABC                  E
+E   ABC  Y H                     E                                  ..........                            BBBC    E
+E      BBBBBBB                   E                ...........       ABBBBBBBBC                            E       E
+E             BBB                .                ...........  ABBC      E                                E       E
+E                                .                ...........            E   bBbb                     ABBBE       E
+E                                .               ABBC T  ABBBC           E        ......    .....     D   E       E
+E         .                      .Z                  Z.                  E                  . T .     D   E       E
+E   > V   .            Z         B.....              ABBC                E        ABBBBC    .. ..     D   E       E
+E         .        ..... ABC     E.H...                            V     EH....             ABBBC     D           E
+E        BBBB     .......        EBBBBB.                                 EBBBBC               T       DC          E
+E              H B.......B       E.....B.                                E                            DX          E 
+E             BBBEBBBBBBBEBBBB . E......B.        .   .                  E      .....        ABC      DBBBBBC     E
 E                                E.......B        . . .    .....         E      ABBBC              V              E
 E > ^                         ABBE........BBB     . . .               ABBE.....                                   E
 E                                E bbbb         Y                       TEBBBBB                                   E
@@ -19,5 +19,5 @@ E ^ M <        ..                E bbbb        AbRbC                    HE      
 E              AC         H.     EBbbbbABBC............AC         H    ABEBC     ABBBBBC          M^              E
 E      AZ YC   DF         AC     ......DF....H.........DF ....... M^   Z                                      M^  E
 E  ABC DEEEF B DF         DF     ....T.DF....B.........DF ....... AC                                    Y         E
-E  DEF DEEEF E DF B..H....DF  Y  ......DF....E.........DF ...H... DF ..............H........    >M          <B    X
-EBBEEEEEEEEERERDFREBRBRBBBEEBBRRBBRBRBBEEBBBBEBBBBBBBBBEEBBBBBBBBBEEBBBBBBBBBBBBBBBBBBBBBBBBRRRRRRRRRRRRRRRRREBBBBB
+E@ DEF DEEEF E DF B..H....DF  Y  ......DF....E.........DF ...H... DF ..............H........    >M          <B    E
+EBBEEEEEEEEERERDFREBRBRBBBEEBBRRBBRBRBBEEBBBBEBBBBBBBBBEEBBBBBBBBBEEBBBBBBBBBBBBBBBBBBBBBBBBRRRRRRRRRRRRRRRRREBBBBE

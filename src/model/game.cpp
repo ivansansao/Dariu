@@ -90,7 +90,9 @@ void Game::play() {
     if (dariu.pos.left < 2500) {
         if (wLeft < 0) wLeft = 0.f;
         view.reset(sf::FloatRect(wLeft, 0.f, 1280, 736.f));
-        dariu.text_score.setPosition(wLeft + 8, 8);
+        dariu.text_score.setPosition(wLeft + 7, 7);
+    } else {
+        view.reset(sf::FloatRect(2400.f, 0.f, 1280, 736.f));
     }
 
     gamewin = dariu.win;
