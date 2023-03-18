@@ -133,7 +133,6 @@ void Tilemap::draw(sf::RenderWindow* w) {
     }
 }
 void Tilemap::load_from_file(int phase) {
-
     int i;
     string line;
 
@@ -155,6 +154,16 @@ void Tilemap::load_plataforms() {
                 plataform->pos.top = i * 32;
                 plataform->pos.left = j * 32;
                 plataforms.push_back(plataform);
+            }
+        }
+    }
+}
+
+void Tilemap::replaceAll(char a, char b) {
+    for (int i{}; i < this->H; ++i) {
+        for (int j{}; j < this->W; j++) {
+            if (this->map[i][j] == a) {
+                this->map[i][j] = b;
             }
         }
     }

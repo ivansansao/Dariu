@@ -57,5 +57,6 @@ class Tilemap {
     void draw(sf::RenderWindow *w);
     void load_from_file(int phase);
     void load_plataforms();
+    void replaceAll(char a, char b);
 };
 #endif

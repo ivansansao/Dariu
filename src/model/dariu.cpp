@@ -13,6 +13,7 @@ Dariu::Dariu() {
     text_score.setFont(font_vibes);
     text_score.setCharacterSize(14);
     text_score.setFillColor(sf::Color::White);
+    start_pos = sf::FloatRect(32.f, 672.f, 32.f, 32.f);
     reset_position();
     score.bananas = 0;
     score.bananas_total = 0;
@@ -21,12 +22,11 @@ Dariu::Dariu() {
     score.thophy_total = 3;
     win = false;
     over = false;
-
 }
 Dariu::~Dariu() {
 }
 void Dariu::reset_position() {
-    pos = sf::FloatRect(32.f, 672.f, 32.f, 32.f);
+    Actor::reset_position();
 }
 void Dariu::die(Sounds *sounds) {
     if (state == States::Normal) {
@@ -120,10 +120,11 @@ void Dariu::on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds) {
 
     if (score.darius >= 0) {
         if (score.thophy >= score.thophy_total) {
-            if (tilemap->map[21][114] != 'x') {
-                if (sounds->dooropen_sound.getStatus() == 0) sounds->dooropen_sound.play();
-                tilemap->map[21][114] = 'x';
-            }
+            if (sounds->dooropen_sound.getStatus() == 0) sounds->dooropen_sound.play();
+            tilemap->replaceAll('X', 'x');
+            // if (tilemap->map[21][114] != 'x') {
+            // tilemap->map[21][114] = 'x';
+            // }
         }
     }
 

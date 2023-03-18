@@ -47,6 +47,10 @@ void Game::play() {
         game_load();
     }
     if (phase_current == 0) {
+        const char* initial_phase = std::getenv("DARIU_INITIAL_PHASE");
+        if (initial_phase) {
+            phase_current = std::stoi(initial_phase) - 1;
+        }
         load_phase();
     }
     std::stringstream ss;
@@ -86,7 +90,7 @@ void Game::play() {
     if (dariu.pos.left < 2500) {
         if (wLeft < 0) wLeft = 0.f;
         view.reset(sf::FloatRect(wLeft, 0.f, 1280, 736.f));
-        dariu.text_score.setPosition(wLeft + 36, 36);
+        dariu.text_score.setPosition(wLeft + 8, 8);
     }
 
     gamewin = dariu.win;
@@ -244,6 +248,15 @@ void Game::load_phase() {
         for (int j{}; j < tilemap.W; j++) {
             if (tilemap.map[i][j] == 'T') {
                 dariu.score.thophy_total += 1;
+            }
+        }
+    }
+    // Search for start position of Dariu
+    for (int i{}; i < tilemap.H; ++i) {
+        for (int j{}; j < tilemap.W; j++) {
+            if (tilemap.map[i][j] == '@') {
+                dariu.set_position(j * 32, i * 32);
+                break;
             }
         }
     }
