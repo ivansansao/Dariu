@@ -396,6 +396,7 @@ void Game::loop_events() {
 }
 
 void Game::run() {
+    window.setMouseCursorVisible(false);
     while (window.isOpen()) {
         this->loop_events();
 
