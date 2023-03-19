@@ -43,16 +43,16 @@ class Game {
         GAME_PAUSE,
         GAME_RESUME,
         GAME_CLOSE,
-        MENU,
+        MENU_MAIN,
         MENU_VOLUME
     };
-    int page = pages::GAME_PLAY;
+    int page = pages::MENU_MAIN;
 
     bool gamewin = false;
     bool gamewin_loaded = false;
     bool gamepause_loaded = false;
-
     bool game_loaded = false;
+    bool menumain_loaded = false;
 
     sf::Texture fireworks_tex;
     sf::Sprite fireworks_spr;
@@ -66,10 +66,21 @@ class Game {
     std::vector<Cannon *> cannons;
     std::vector<Bulletc *> bulletcs;
 
+    static const int menuopc_size = 2;
+    static std::string menuopc[menuopc_size];
+    int menuopc_selected = 0;
+    bool key_released = true;
+
+    struct profile {
+        int phases = 0;
+        int lifes = 0;
+    } profile;
+
     Dariu dariu;
     Tilemap tilemap;
     Sounds sounds;
-
+    void load_profile();
+    void save_profile();
     void play();
     void pause();
     void resume();
@@ -84,5 +95,6 @@ class Game {
     void check_collisions_mobiles();
     void check_collisions_enimies();
     void load_phase();
+    void menu_main();
 };
 #endif
