@@ -15,7 +15,7 @@ Game::Game() {
     // window.create(sf::VideoMode(1280, 736), "Dariu - 0.6", sf::Style::Titlebar | sf::Style::Close);
     window.setFramerateLimit(60);
     window.setPosition(sf::Vector2i(0, 0));
-    window.setMouseCursorVisible(true);
+    window.setMouseCursorVisible(false);
 
     view.reset(sf::FloatRect(0.f, 0.f, 1280.f, 736.f));
     gameover_loaded = false;
@@ -32,8 +32,8 @@ Game::Game() {
 }
 
 std::string Game::menuopc[menuopc_size] = {"Jogar",
-                                           "+ Volume",
-                                           "- Volume",
+                                           "Volume ambiente",
+                                           "Volume de efeitos",
                                            "Sair"};
 
 void Game::play() {
@@ -375,7 +375,6 @@ void Game::load_profile() {
 }
 void Game::menu_main() {
     if (!menumain_loaded) {
-        window.setMouseCursorVisible(true);
         menumain_loaded = true;
         sounds.music.pause();
         view.reset(sf::FloatRect(0.f, 0.f, 1280.f, 736.f));
@@ -400,18 +399,28 @@ void Game::menu_main() {
             menuopc_selected++;
             if (menuopc_selected > menuopc_size - 1) menuopc_selected = 0;
             key_released = false;
+        } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+            if (menuopc_selected == 1) {
+                sounds.music_up();
+                menuopc[1] = "Volume ambiente " + to_string((int)sounds.volume_music);
+            } else if (menuopc_selected == 2) {
+                sounds.effect_up();
+                menuopc[2] = "Volume de efeitos " + to_string((int)sounds.volume_effect);
+            }
+        } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+            if (menuopc_selected == 1) {
+                sounds.music_down();
+                menuopc[1] = "Volume ambiente " + to_string((int)sounds.volume_music);
+            } else if (menuopc_selected == 2) {
+                sounds.effect_down();
+                menuopc[2] = "Volume de efeitos " + to_string((int)sounds.volume_effect);
+            }
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
             if (menuopc_selected == 0) {
                 page = pages::GAME_RESUME;
                 menumain_loaded = false;
-            } else if (menuopc_selected == 1) {
-                sounds.pop_sound9.play();
-                sounds.up();
-            } else if (menuopc_selected == 2) {
-                sounds.down();
-                sounds.pop_sound9.play();
             } else if (menuopc_selected == 3) {
                 window.close();
             }
@@ -448,7 +457,7 @@ void Game::menu_main() {
 
     // Profile
 
-    if (profile.lifes > 0) {
+    if (profile.lifes > 0 || profile.phases > 0) {
         text_generic.setFont(font_roboto);
         text_generic.setCharacterSize(32);
 
@@ -500,7 +509,6 @@ void Game::loop_events() {
 }
 
 void Game::run() {
-    window.setMouseCursorVisible(false);
     while (window.isOpen()) {
         this->loop_events();
 

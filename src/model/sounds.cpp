@@ -5,7 +5,8 @@
 using namespace std;
 
 Sounds::Sounds() {
-    volume = 7.f;
+    volume_music = 7.f;
+    volume_effect = 7.f;
 
     // Music
 
@@ -50,33 +51,46 @@ Sounds::Sounds() {
     levelcomplete_sound.setBuffer(levelcomplete);
     applyVolume();
 }
-void Sounds::up() {
-    if (volume < 100.f) volume += 1.f;
+void Sounds::music_up() {
+    pop_sound9.play();
+    if (volume_music < 100.f) volume_music += 1.f;
     applyVolume();
 }
-void Sounds::down() {
-    if (volume > 0.f) volume -= 1.f;
+void Sounds::music_down() {
+    pop_sound9.play();
+    if (volume_music > 0.f) volume_music -= 1.f;
+    applyVolume();
+}
+void Sounds::effect_up() {
+    pop_sound9.play();
+    if (volume_effect < 100.f) volume_effect += 1.f;
+    applyVolume();
+}
+void Sounds::effect_down() {
+    pop_sound9.play();
+    if (volume_effect > 0.f) volume_effect -= 1.f;
     applyVolume();
 }
 
 void Sounds::applyVolume() {
-    music.setVolume(volume);
-    music_gameover.setVolume(volume);
-    music_gamewin.setVolume(volume);
-    jump_sound.setVolume(volume);
-    dooropen_sound.setVolume(volume);
-    fired_sound.setVolume(volume);
-    crash_sound.setVolume(volume);
-    pop_sound0.setVolume(volume);
-    pop_sound1.setVolume(volume);
-    pop_sound2.setVolume(volume);
-    pop_sound3.setVolume(volume);
-    pop_sound4.setVolume(volume);
-    pop_sound5.setVolume(volume);
-    pop_sound6.setVolume(volume);
-    pop_sound7.setVolume(volume);
-    pop_sound8.setVolume(volume);
-    pop_sound9.setVolume(volume);
+    music.setVolume(volume_music);
+    music_gameover.setVolume(volume_music);
+    music_gamewin.setVolume(volume_music);
+
+    jump_sound.setVolume(volume_effect);
+    dooropen_sound.setVolume(volume_effect);
+    fired_sound.setVolume(volume_effect);
+    crash_sound.setVolume(volume_effect);
+    pop_sound0.setVolume(volume_effect);
+    pop_sound1.setVolume(volume_effect);
+    pop_sound2.setVolume(volume_effect);
+    pop_sound3.setVolume(volume_effect);
+    pop_sound4.setVolume(volume_effect);
+    pop_sound5.setVolume(volume_effect);
+    pop_sound6.setVolume(volume_effect);
+    pop_sound7.setVolume(volume_effect);
+    pop_sound8.setVolume(volume_effect);
+    pop_sound9.setVolume(volume_effect);
     enimydie_sound.setVolume(100.f);
-    levelcomplete_sound.setVolume(volume);
+    levelcomplete_sound.setVolume(volume_effect);
 }

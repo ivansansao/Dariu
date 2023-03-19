@@ -9,7 +9,8 @@ class Sounds {
    public:
     Sounds();
 
-    float volume = 7.f;
+    float volume_music = 7.f;
+    float volume_effect = 7.f;
 
     // Music
 
@@ -49,8 +50,10 @@ class Sounds {
     sf::SoundBuffer levelcomplete;
     sf::Sound levelcomplete_sound;
 
-    void up();
-    void down();
+    void music_up();
+    void music_down();
+    void effect_up();
+    void effect_down();
     void applyVolume();
 };
 #endif
