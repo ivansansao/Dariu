@@ -21,18 +21,15 @@ class Game {
 
     sf::RenderWindow window;
 
-    sf::Music music;
     sf::View view;
     sf::Font font_roboto;
     sf::Font font_greatvibes;
     sf::Text text_gameover;
 
-    sf::Music music_gameover;
     bool gameover_loaded = false;
     int phase_current = 0;
     int phase_total = 0;
 
-    sf::Music music_gamewin;
     sf::Text text_gamewin;
     sf::Text text_generic;
 
@@ -66,7 +63,7 @@ class Game {
     std::vector<Cannon *> cannons;
     std::vector<Bulletc *> bulletcs;
 
-    static const int menuopc_size = 2;
+    static const int menuopc_size = 4;
     static std::string menuopc[menuopc_size];
     int menuopc_selected = 0;
     bool key_released = true;

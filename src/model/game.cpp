@@ -16,17 +16,6 @@ Game::Game() {
     window.setFramerateLimit(60);
     window.setPosition(sf::Vector2i(0, 0));
     window.setMouseCursorVisible(true);
-    music.openFromFile("./asset/sound/track1.ogg");
-    music.setLoop(true);
-    music.setVolume(8.f);
-    music.play();
-
-    music_gameover.openFromFile("./asset/sound/gameover.ogg");
-    music_gameover.setVolume(8.f);
-
-    music_gamewin.openFromFile("./asset/sound/gamewin.ogg");
-    music_gamewin.setLoop(true);
-    music_gamewin.setVolume(8.f);
 
     view.reset(sf::FloatRect(0.f, 0.f, 1280.f, 736.f));
     gameover_loaded = false;
@@ -42,8 +31,10 @@ Game::Game() {
     fireworks_j = 0;
 }
 
-std::string Game::menuopc[2] = {"Jogar",
-                                "Sair"};
+std::string Game::menuopc[menuopc_size] = {"Jogar",
+                                           "+ Volume",
+                                           "- Volume",
+                                           "Sair"};
 
 void Game::play() {
     if (!game_loaded) {
@@ -141,7 +132,7 @@ void Game::play() {
 }
 
 void Game::resume() {
-    music.play();
+    sounds.music.play();
     gamepause_loaded = false;
     page = pages::GAME_PLAY;
 };
@@ -152,8 +143,8 @@ void Game::win() {
     if (!gamewin_loaded) {
         view.reset(sf::FloatRect(0.f, 0.f, 1280, 736.f));
         window.setView(view);
-        music.stop();
-        music_gamewin.play();
+        sounds.music.stop();
+        sounds.music_gamewin.play();
 
         gamewin_loaded = true;
     }
@@ -189,8 +180,8 @@ void Game::over() {
     if (!gameover_loaded) {
         view.reset(sf::FloatRect(0.f, 0.f, 1280, 736.f));
         window.setView(view);
-        music.stop();
-        music_gameover.play();
+        sounds.music.stop();
+        sounds.music_gameover.play();
         gameover_loaded = true;
     }
     window.clear(sf::Color(62, 49, 60, 255));
@@ -386,7 +377,7 @@ void Game::menu_main() {
     if (!menumain_loaded) {
         window.setMouseCursorVisible(true);
         menumain_loaded = true;
-        music.pause();
+        sounds.music.pause();
         view.reset(sf::FloatRect(0.f, 0.f, 1280.f, 736.f));
         window.setView(view);
         text_generic.setFont(font_greatvibes);
@@ -398,12 +389,16 @@ void Game::menu_main() {
 
     if (key_released) {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+            sounds.jump_sound.play();
             menuopc_selected--;
-            if (menuopc_selected < 0) menuopc_selected = 0;
+            if (menuopc_selected < 0) {
+                menuopc_selected = menuopc_size - 1;
+            }
             key_released = false;
         } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+            sounds.jump_sound.play();
             menuopc_selected++;
-            if (menuopc_selected > menuopc_size - 1) menuopc_selected = menuopc_size - 1;
+            if (menuopc_selected > menuopc_size - 1) menuopc_selected = 0;
             key_released = false;
         }
 
@@ -412,6 +407,12 @@ void Game::menu_main() {
                 page = pages::GAME_RESUME;
                 menumain_loaded = false;
             } else if (menuopc_selected == 1) {
+                sounds.pop_sound9.play();
+                sounds.up();
+            } else if (menuopc_selected == 2) {
+                sounds.down();
+                sounds.pop_sound9.play();
+            } else if (menuopc_selected == 3) {
                 window.close();
             }
         }
@@ -424,7 +425,7 @@ void Game::menu_main() {
     text_generic.setCharacterSize(60);
 
     int i = 0;
-    int offset_y = 300;
+    int offset_y = 200;
     int top = 0;
     int left = 0;
 

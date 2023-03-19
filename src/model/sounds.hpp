@@ -9,6 +9,16 @@ class Sounds {
    public:
     Sounds();
 
+    float volume = 7.f;
+
+    // Music
+
+    sf::Music music;
+    sf::Music music_gameover;
+    sf::Music music_gamewin;
+
+    // Effects
+
     sf::SoundBuffer jump_buffer;
     sf::Sound jump_sound;
 
@@ -39,5 +49,8 @@ class Sounds {
     sf::SoundBuffer levelcomplete;
     sf::Sound levelcomplete_sound;
 
+    void up();
+    void down();
+    void applyVolume();
 };
 #endif
