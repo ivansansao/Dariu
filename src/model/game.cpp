@@ -427,6 +427,14 @@ void Game::menu_main() {
         }
     }
 
+    if (menuopc_selected == 1) {
+        if (sounds.music.getStatus() == sf::Music::Paused)
+            sounds.music.play();
+    } else {
+        if (sounds.music.getStatus() == sf::Music::Playing)
+            sounds.music.pause();
+    }
+
     // Draw
 
     window.clear(sf::Color(62, 49, 60, 255));
@@ -457,29 +465,27 @@ void Game::menu_main() {
 
     // Profile
 
-    if (profile.lifes > 0 || profile.phases > 0) {
-        text_generic.setFont(font_roboto);
-        text_generic.setCharacterSize(32);
+    text_generic.setFont(font_roboto);
+    text_generic.setCharacterSize(32);
 
-        text_generic.setString("Meu recorde:");
-        left = 600 + 350;
-        top = 64;
-        text_generic.setPosition(sf::Vector2f(left, top));
-        window.draw(text_generic);
+    text_generic.setString("Meu recorde:");
+    left = 600 + 350;
+    top = 64;
+    text_generic.setPosition(sf::Vector2f(left, top));
+    window.draw(text_generic);
 
-        text_generic.setFont(font_roboto);
-        text_generic.setCharacterSize(22);
+    text_generic.setFont(font_roboto);
+    text_generic.setCharacterSize(22);
 
-        text_generic.setString("Fases: " + to_string(profile.phases));
-        top = 64 + (40 * 2);
-        text_generic.setPosition(sf::Vector2f(left, top));
-        window.draw(text_generic);
+    text_generic.setString("Fases: " + to_string(profile.phases));
+    top = 64 + (40 * 2);
+    text_generic.setPosition(sf::Vector2f(left, top));
+    window.draw(text_generic);
 
-        text_generic.setString("Vidas: " + to_string(profile.lifes));
-        top = 64 + (40 * 3);
-        text_generic.setPosition(sf::Vector2f(left, top));
-        window.draw(text_generic);
-    }
+    text_generic.setString("Vidas: " + to_string(profile.lifes));
+    top = 64 + (40 * 3);
+    text_generic.setPosition(sf::Vector2f(left, top));
+    window.draw(text_generic);
 
     window.display();
 }
