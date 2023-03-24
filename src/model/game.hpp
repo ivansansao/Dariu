@@ -33,6 +33,9 @@ class Game {
     sf::Text text_gamewin;
     sf::Text text_generic;
 
+    std::chrono::_V2::system_clock::time_point starttime_play;
+    std::chrono::_V2::system_clock::time_point endtime_play;
+
     enum pages {
         GAME_PLAY,
         GAME_OVER,
@@ -71,6 +74,7 @@ class Game {
     struct profile {
         int phases = 0;
         int lifes = 0;
+        int seconds_playing = 0;
     } profile;
 
     Dariu dariu;

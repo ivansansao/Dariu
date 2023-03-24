@@ -196,6 +196,9 @@ void Game::over() {
 void Game::load() {
     game_loaded = true;
 
+    // Start time
+    starttime_play = std::chrono::high_resolution_clock::now();
+
     // Read total phases in the game
 
     phase_total = 0;
@@ -344,18 +347,26 @@ void Game::check_collisions_enimies() {
 }
 void Game::pause(){};
 void Game::save_profile() {
+    this->endtime_play = std::chrono::high_resolution_clock::now();
+    int seconds_playing = Tools::time_dif_in_seconds(this->starttime_play, this->endtime_play);
+    bool save = false;
+
     if (phase_current > profile.phases) {
+        save = true;
+    } else if (phase_current == profile.phases) {
+        if (dariu.score.darius > profile.lifes) {
+            save = true;
+        } else if (seconds_playing < profile.seconds_playing) {
+            save = true;
+        }
+    }
+
+    if (save) {
         ofstream MyFile("./resource/profile.dat");
         MyFile << "phases:" + to_string(phase_current) << endl;
         MyFile << "lifes:" + to_string(dariu.score.darius) << endl;
+        MyFile << "seconds_playing:" + to_string(seconds_playing) << endl;
         MyFile.close();
-    } else if (phase_current == profile.phases) {
-        if (dariu.score.darius > profile.lifes) {
-            ofstream MyFile("./resource/profile.dat");
-            MyFile << "phases:" + to_string(phase_current) << endl;
-            MyFile << "lifes:" + to_string(dariu.score.darius) << endl;
-            MyFile.close();
-        }
     }
 }
 void Game::load_profile() {
@@ -368,6 +379,8 @@ void Game::load_profile() {
             profile.phases = stoi(line.substr(line.find(":") + 1, 80));
         } else if (line.find("lifes") != std::string::npos) {
             profile.lifes = stoi(line.substr(line.find(":") + 1, 80));
+        } else if (line.find("seconds_playing") != std::string::npos) {
+            profile.seconds_playing = stoi(line.substr(line.find(":") + 1, 80));
         }
         i++;
     }
@@ -445,6 +458,7 @@ void Game::menu_main() {
     int offset_y = 200;
     int top = 0;
     int left = 0;
+    int line = 2;
 
     text_generic.setString("Dariu");
     left = 600 - text_generic.getGlobalBounds().width / 2;
@@ -478,12 +492,17 @@ void Game::menu_main() {
     text_generic.setCharacterSize(22);
 
     text_generic.setString("Fases: " + to_string(profile.phases));
-    top = 64 + (40 * 2);
+    top = 64 + (40 * line++);
     text_generic.setPosition(sf::Vector2f(left, top));
     window.draw(text_generic);
 
     text_generic.setString("Vidas: " + to_string(profile.lifes));
-    top = 64 + (40 * 3);
+    top = 64 + (40 * line++);
+    text_generic.setPosition(sf::Vector2f(left, top));
+    window.draw(text_generic);
+
+    text_generic.setString("Tempo: " + Tools::seconds_to_hour(profile.seconds_playing));
+    top = 64 + (40 * line++);
     text_generic.setPosition(sf::Vector2f(left, top));
     window.draw(text_generic);
 
