@@ -168,3 +168,7 @@ void Tilemap::replaceAll(char a, char b) {
         }
     }
 }
+
+void Tilemap::clear() {
+    this->door_opened = false;
+}

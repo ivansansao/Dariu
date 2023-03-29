@@ -18,6 +18,7 @@ class Tilemap {
     const int q_banana = 17;
     float i_trophy = 0;
     const int q_trophy = 8;
+    bool door_opened = false;
 
     Animation ban(int q_frame, float step, std::string file);
 
@@ -58,5 +59,6 @@ class Tilemap {
     void load_from_file(int phase);
     void load_plataforms();
     void replaceAll(char a, char b);
+    void clear();
 };
 #endif

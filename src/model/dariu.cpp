@@ -118,13 +118,13 @@ void Dariu::on_collide(std::string where, int i, int j, Tilemap *tilemap, Sounds
 void Dariu::on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds) {
     Actor::on_collide_other(i, j, tilemap, sounds);
 
-    if (score.darius >= 0) {
-        if (score.thophy >= score.thophy_total) {
-            if (sounds->dooropen_sound.getStatus() == 0) sounds->dooropen_sound.play();
-            tilemap->replaceAll('X', 'x');
-            // if (tilemap->map[21][114] != 'x') {
-            // tilemap->map[21][114] = 'x';
-            // }
+    if (score.thophy >= score.thophy_total) {
+        if (!tilemap->door_opened) {
+            if (score.darius >= 0) {
+                if (sounds->dooropen_sound.getStatus() == 0) sounds->dooropen_sound.play();
+                tilemap->replaceAll('X', 'x');
+                tilemap->door_opened = true;
+            }
         }
     }
 

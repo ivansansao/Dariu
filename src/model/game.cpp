@@ -221,6 +221,7 @@ bool Game::is_fullscreen() {
 
 void Game::load_phase() {
     phase_current++;
+    tilemap.clear();
     tilemap.load_from_file(phase_current);
     tilemap.load_plataforms();
 
@@ -441,7 +442,7 @@ void Game::menu_main() {
     }
 
     if (menuopc_selected == 1) {
-        if (sounds.music.getStatus() == sf::Music::Paused)
+        if (sounds.music.getStatus() == sf::Music::Paused || sounds.music.getStatus() == sf::Music::Stopped)
             sounds.music.play();
     } else {
         if (sounds.music.getStatus() == sf::Music::Playing)

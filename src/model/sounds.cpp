@@ -12,7 +12,6 @@ Sounds::Sounds() {
 
     music.openFromFile("./asset/sound/track1.ogg");
     music.setLoop(true);
-    music.play();
 
     music_gameover.openFromFile("./asset/sound/gameover.ogg");
 
@@ -91,6 +90,6 @@ void Sounds::applyVolume() {
     pop_sound7.setVolume(volume_effect);
     pop_sound8.setVolume(volume_effect);
     pop_sound9.setVolume(volume_effect);
-    enimydie_sound.setVolume(100.f);
+    enimydie_sound.setVolume(volume_effect);
     levelcomplete_sound.setVolume(volume_effect);
 }
