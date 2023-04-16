@@ -65,9 +65,8 @@ void Enimy::draw(sf::RenderWindow *w) {
 }
 
 void Enimy::on_collide(std::string where, int i, int j, Tilemap *tilemap, Sounds *sounds) {
-
     if (where == "left") direction_x = 1;
-    if (where == "right") direction_x = -1;    
+    if (where == "right") direction_x = -1;
 }
 
 void Enimy::die(Sounds *sounds) {
@@ -139,7 +138,6 @@ Cannon::Cannon() {
 void Cannon::update(Tilemap *tilemap, Sounds *sounds) {
     switch (state) {
         case (States::Normal): {
-
             add_gravity();
             collision_y(tilemap, sounds);
 
@@ -202,7 +200,6 @@ Bulletc::Bulletc() {
 void Bulletc::update(Tilemap *tilemap) {
     switch (state) {
         case (States::Normal): {
-
             if (direction_x == 1) velocity.x = 0.9;
             if (direction_x == -1) velocity.x = -0.9;
 

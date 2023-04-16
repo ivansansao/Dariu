@@ -44,7 +44,7 @@ std::string Tools::seconds_to_hour(int seconds) {
     return addZero(hours) + ":" + addZero(minutes) + ":" + addZero(remainingSeconds);
 }
 
-int Tools::time_dif_in_seconds(std::chrono::_V2::system_clock::time_point start, std::chrono::_V2::system_clock::time_point end) {
+int Tools::time_dif_in_seconds(std::chrono::system_clock::time_point start, std::chrono::system_clock::time_point end) {
     auto duration = std::chrono::duration_cast<std::chrono::seconds>(end - start);
     return duration.count();
 }

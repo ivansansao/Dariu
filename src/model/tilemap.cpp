@@ -140,6 +140,7 @@ void Tilemap::load_from_file(int phase) {
 
     i = 0;
     while (getline(map_file, line)) {
+        this->W = line.length();
         this->map[i] = line;
         i++;
     }

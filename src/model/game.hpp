@@ -33,8 +33,8 @@ class Game {
     sf::Text text_gamewin;
     sf::Text text_generic;
 
-    std::chrono::_V2::system_clock::time_point starttime_play;
-    std::chrono::_V2::system_clock::time_point endtime_play;
+    std::chrono::system_clock::time_point starttime_play;
+    std::chrono::system_clock::time_point endtime_play;
 
     enum pages {
         GAME_PLAY,
