@@ -24,6 +24,20 @@ Actor::Actor() {
     reset_position();
 }
 
+point Actor::coord(Tilemap *tilemap, int offset_i, int offset_j) {
+    point coord;
+    coord.i = (int)(pos.top + offset_i) / pos.height;
+    coord.j = (int)(pos.left + offset_j) / pos.width;
+
+    if (coord.i < 0) coord.i = 0;
+    if (coord.i > tilemap->H - 1) coord.i = tilemap->H - 1;
+
+    if (coord.j < 0) coord.j = 0;
+    if (coord.j > tilemap->W) coord.j = tilemap->W - 1;
+
+    return coord;
+}
+
 void Actor::jump() {
     velocity.y = lift;
 }
@@ -231,6 +245,25 @@ void Actor::play_sound_pop(Sounds *sounds) {
 void Actor::on_collide(std::string where, int i, int j, Tilemap *tilemap, Sounds *sounds) {
 }
 void Actor::on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds) {
+    auto posMap = coord(tilemap, pos.height / 2, pos.width / 2);
+
+    if (onPortal) {
+        if (!tilemap->isPortal(posMap.i, posMap.j)) {
+            onPortal = false;
+        }
+    } else {
+        if (tilemap->isPortal(posMap.i, posMap.j)) {
+            onPortal = true;
+            play_sound_pop(sounds);
+            auto point = tilemap->getMapOppositPortal(posMap.i, posMap.j);
+
+            if (point.found) {
+                this->pos.top = point.i * this->pos.height;
+                this->pos.left = point.j * this->pos.width;
+                this->velocity.y = this->velocity.y * -1;
+            }
+        }
+    }
 }
 
 void Actor::die(Sounds *sounds) {

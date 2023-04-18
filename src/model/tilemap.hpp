@@ -8,6 +8,13 @@
 #include "animation.hpp"
 #include "plataform.hpp"
 
+struct point {
+    int i;
+    int j;
+    char l;
+    bool found = false;
+};
+
 class Tilemap {
    public:
     Tilemap();
@@ -19,6 +26,12 @@ class Tilemap {
     float i_trophy = 0;
     const int q_trophy = 8;
     bool door_opened = false;
+
+    bool isPortal(int i, int j);
+
+    int getPortalNumber(int i, int j);
+
+    point getMapOppositPortal(int i, int j);
 
     Animation ban(int q_frame, float step, std::string file);
 
@@ -45,6 +58,14 @@ class Tilemap {
     sf::Sprite ground_left2;
     sf::Sprite ground_mid2;
     sf::Sprite ground_right2;
+
+    sf::Texture portalP_tex;
+    sf::Sprite portalP;
+    sf::Texture portalQ_tex;
+    sf::Sprite portalQ;
+
+    sf::Texture start_tex;
+    sf::Sprite start;
 
     sf::Texture fire_tex;
     sf::Sprite fire;

@@ -40,6 +40,8 @@ class Actor {
     bool on_ground;
     bool up_released = true;
 
+    bool onPortal = false;
+
     virtual void draw(sf::RenderWindow *w);
     virtual void update(Tilemap *tilemap, Sounds *sounds);
     virtual void on_collide(std::string where, int i, int j, Tilemap *tilemap, Sounds *sounds);
@@ -58,5 +60,6 @@ class Actor {
     void play_sound_pop(Sounds *sounds);
     bool is_block(char el);
     bool is_alive();
+    point coord(Tilemap *tilemap, int offset_i, int offset_j);
 };
 #endif

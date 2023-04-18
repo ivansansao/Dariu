@@ -42,6 +42,18 @@ Tilemap::Tilemap() {
     banana.setTexture(banana_tex);
     banana.setTextureRect(sf::IntRect(0, 0, 32, 32));
 
+    portalP_tex.loadFromFile("./asset/Free/PortalP.png");
+    portalP.setTexture(portalP_tex);
+    portalP.setTextureRect(sf::IntRect(0, 0, 32, 32));
+
+    portalQ_tex.loadFromFile("./asset/Free/PortalQ.png");
+    portalQ.setTexture(portalQ_tex);
+    portalQ.setTextureRect(sf::IntRect(0, 0, 32, 32));
+
+    start_tex.loadFromFile("./asset/Free/Start.png");
+    start.setTexture(start_tex);
+    start.setTextureRect(sf::IntRect(0, 0, 32, 32));
+
     fire_tex.loadFromFile("./asset/Free/fire1.png");
     fire.setTexture(fire_tex);
     fire.setTextureRect(sf::IntRect(0, 0, 32, 32));
@@ -54,6 +66,37 @@ Tilemap::Tilemap() {
 }
 
 std::string Tilemap::map[H] = {};
+
+bool Tilemap::isPortal(int i, int j) {
+    return map[i][j] == 'P' || map[i][j] == 'Q';
+};
+int Tilemap::getPortalNumber(int i, int j) {
+    char charNum = map[i][j + 1];
+    int intNum = (int)charNum;
+    return intNum;
+};
+
+point Tilemap::getMapOppositPortal(int i, int j) {
+    char currentLetter = map[i][j];
+    int currentNumber = this->getPortalNumber(i, j);
+
+    point op;
+
+    // Search opossit side
+    for (int i{}; i < this->H; ++i) {
+        for (int j{}; j < this->W; j++) {
+            if (this->map[i][j] != currentLetter) {
+                if (currentNumber == this->getPortalNumber(i, j)) {
+                    op.i = i;
+                    op.j = j;
+                    op.l = this->map[i][j];
+                    op.found = true;
+                }
+            }
+        }
+    }
+    return op;
+};
 
 void Tilemap::update() {
     std::string e;
@@ -81,6 +124,9 @@ void Tilemap::draw(sf::RenderWindow* w) {
         for (int j{}; j < W; ++j) {
             if (map[i][j] == ' ') {
                 continue;
+            } else if (map[i][j] == '@') {
+                start.setPosition(j * 32, i * 32);
+                w->draw(start);
             } else if (map[i][j] == '.') {
                 banana.setTextureRect(sf::IntRect(((int)i_banana % q_banana) * 32, 0, 32, 32));
                 banana.setPosition(j * 32, i * 32);
@@ -114,6 +160,12 @@ void Tilemap::draw(sf::RenderWindow* w) {
                 fire.setTextureRect(sf::IntRect(((int)i_fire % q_fire) * 32, 0, 32, 32));
                 fire.setPosition(j * 32, i * 32);
                 w->draw(fire);
+            } else if (map[i][j] == 'P') {
+                portalP.setPosition(j * 32, i * 32);
+                w->draw(portalP);
+            } else if (map[i][j] == 'Q') {
+                portalQ.setPosition(j * 32, i * 32);
+                w->draw(portalQ);
             } else if (map[i][j] == 'X') {
                 ground_door_closed.setPosition(j * 32, i * 32);
                 w->draw(ground_door_closed);

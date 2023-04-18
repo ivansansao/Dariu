@@ -49,7 +49,7 @@ void Enimy::update(Tilemap *tilemap, Sounds *sounds) {
             break;
         }
     }
-
+    collision_other(tilemap, sounds);
     actor_spr.setPosition(pos.left, pos.top);
 }
 void Enimy::draw(sf::RenderWindow *w) {
@@ -68,7 +68,9 @@ void Enimy::on_collide(std::string where, int i, int j, Tilemap *tilemap, Sounds
     if (where == "left") direction_x = 1;
     if (where == "right") direction_x = -1;
 }
-
+void Enimy::on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds) {
+    Actor::on_collide_other(i, j, tilemap, sounds);
+}
 void Enimy::die(Sounds *sounds) {
     if (state == States::Normal) {
         state = States::DieStart;
@@ -96,6 +98,9 @@ void Catraca::draw(sf::RenderWindow *w) {
 void Catraca::on_collide(std::string where, int i, int j, Tilemap *tilemap, Sounds *sounds) {
     Enimy::on_collide(where, i, j, tilemap, sounds);
 }
+void Catraca::on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds) {
+    Enimy::on_collide_other(i, j, tilemap, sounds);
+}
 void Catraca::die(Sounds *sounds) {
     Enimy::die(sounds);
 }
@@ -121,6 +126,9 @@ void Sova::draw(sf::RenderWindow *w) {
 }
 void Sova::on_collide(std::string where, int i, int j, Tilemap *tilemap, Sounds *sounds) {
     Enimy::on_collide(where, i, j, tilemap, sounds);
+}
+void Sova::on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds) {
+    Enimy::on_collide_other(i, j, tilemap, sounds);
 }
 void Sova::die(Sounds *sounds) {
     Enimy::die(sounds);
@@ -181,6 +189,9 @@ void Cannon::draw(sf::RenderWindow *w) {
 }
 void Cannon::on_collide(std::string where, int i, int j, Tilemap *tilemap, Sounds *sounds) {
     Enimy::on_collide(where, i, j, tilemap, sounds);
+}
+void Cannon::on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds) {
+    Enimy::on_collide_other(i, j, tilemap, sounds);
 }
 void Cannon::die(Sounds *sounds) {
     Enimy::die(sounds);
@@ -252,6 +263,9 @@ void Bulletc::draw(sf::RenderWindow *w) {
 }
 void Bulletc::on_collide(std::string where, int i, int j, Tilemap *tilemap, Sounds *sounds) {
     Enimy::on_collide(where, i, j, tilemap, sounds);
+}
+void Bulletc::on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds) {
+    Enimy::on_collide_other(i, j, tilemap, sounds);
 }
 void Bulletc::die(Sounds *sounds) {
     Enimy::die(sounds);
