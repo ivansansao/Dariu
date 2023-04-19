@@ -172,7 +172,6 @@ void Tilemap::draw(sf::RenderWindow* w) {
             } else if (map[i][j] == 'x') {
                 ground_door_opened.setPosition(j * 32, i * 32);
                 w->draw(ground_door_opened);
-            } else {
             }
         }
     }

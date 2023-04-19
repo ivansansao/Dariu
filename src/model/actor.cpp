@@ -254,7 +254,6 @@ void Actor::on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds) {
     } else {
         if (tilemap->isPortal(posMap.i, posMap.j)) {
             onPortal = true;
-            play_sound_pop(sounds);
             auto point = tilemap->getMapOppositPortal(posMap.i, posMap.j);
 
             if (point.found) {
