@@ -5,8 +5,10 @@
 #include "iostream"
 
 Tilemap::Tilemap() {
-    Animation ban(17, 0.5f, "./asset/Free/Terrain/Terrain (16x16).png");
-    ban.setTextureRect(sf::IntRect(0, 0, 32, 32));
+    banana.init(17, 0.5f, "./asset/Free/Items/Fruits/Bananas.png", sf::IntRect(0, 0, 32, 32), true);
+    portalP.init(0, 0.f, "./asset/Free/PortalP.png", sf::IntRect(0, 0, 32, 32), true);
+    portalQ.init(0, 0.f, "./asset/Free/PortalQ.png", sf::IntRect(0, 0, 32, 32), true);
+    trophy.init(8, 0.2f, "./asset/Free/Items/Checkpoints/End/End (Pressed) (64x64).png", sf::IntRect(0, 0, 64, 64), false);
 
     terrain_tex.loadFromFile("./asset/Free/Terrain/Terrain (16x16).png");
     terrain2_tex.loadFromFile("./asset/Free/Terrain/Terrain (32x32).png");
@@ -38,18 +40,6 @@ Tilemap::Tilemap() {
     ground_right2.setTexture(terrain2_tex);
     ground_right2.setTextureRect(sf::IntRect(64, 32, 32, 32));
 
-    banana_tex.loadFromFile("./asset/Free/Items/Fruits/Bananas.png");
-    banana.setTexture(banana_tex);
-    banana.setTextureRect(sf::IntRect(0, 0, 32, 32));
-
-    portalP_tex.loadFromFile("./asset/Free/PortalP.png");
-    portalP.setTexture(portalP_tex);
-    portalP.setTextureRect(sf::IntRect(0, 0, 32, 32));
-
-    portalQ_tex.loadFromFile("./asset/Free/PortalQ.png");
-    portalQ.setTexture(portalQ_tex);
-    portalQ.setTextureRect(sf::IntRect(0, 0, 32, 32));
-
     start_tex.loadFromFile("./asset/Free/Start.png");
     start.setTexture(start_tex);
     start.setTextureRect(sf::IntRect(0, 0, 32, 32));
@@ -57,12 +47,6 @@ Tilemap::Tilemap() {
     fire_tex.loadFromFile("./asset/Free/fire1.png");
     fire.setTexture(fire_tex);
     fire.setTextureRect(sf::IntRect(0, 0, 32, 32));
-
-    trophy_tex.loadFromFile("./asset/Free/Items/Checkpoints/End/End (Pressed) (64x64).png");
-    trophy.setTexture(trophy_tex);
-    trophy.setTextureRect(sf::IntRect(0, 0, 64, 64));
-
-    sf::RectangleShape block(sf::Vector2f(height_floor, height_floor));
 }
 
 std::string Tilemap::map[H] = {};
@@ -128,13 +112,9 @@ void Tilemap::draw(sf::RenderWindow* w) {
                 start.setPosition(j * 32, i * 32);
                 w->draw(start);
             } else if (map[i][j] == '.') {
-                banana.setTextureRect(sf::IntRect(((int)i_banana % q_banana) * 32, 0, 32, 32));
-                banana.setPosition(j * 32, i * 32);
-                w->draw(banana);
+                banana.draw(j * 32, i * 32, w);
             } else if (map[i][j] == 'T') {
-                trophy.setTextureRect(sf::IntRect(((int)i_trophy % q_trophy) * 64, 0, 64, 64));
-                trophy.setPosition(j * 32, i * 32);
-                w->draw(trophy);
+                trophy.draw(j * 32, i * 32, w);
             } else if (map[i][j] == 'A') {
                 ground_left.setPosition(j * 32, i * 32);
                 w->draw(ground_left);
@@ -161,11 +141,9 @@ void Tilemap::draw(sf::RenderWindow* w) {
                 fire.setPosition(j * 32, i * 32);
                 w->draw(fire);
             } else if (map[i][j] == 'P') {
-                portalP.setPosition(j * 32, i * 32);
-                w->draw(portalP);
+                portalP.draw(j * 32, i * 32, w);
             } else if (map[i][j] == 'Q') {
-                portalQ.setPosition(j * 32, i * 32);
-                w->draw(portalQ);
+                portalQ.draw(j * 32, i * 32, w);
             } else if (map[i][j] == 'X') {
                 ground_door_closed.setPosition(j * 32, i * 32);
                 w->draw(ground_door_closed);
@@ -175,8 +153,9 @@ void Tilemap::draw(sf::RenderWindow* w) {
             }
         }
     }
-    i_banana += 0.5f;
-    i_trophy += 0.1f;
+    banana.anime(sf::IntRect(banana.getFrame() * 32, 0, 32, 32));
+    trophy.anime(sf::IntRect(trophy.getFrame() * 64, 0, 64, 64));
+
     i_fire += 0.5f;
 
     for (auto& plataform : plataforms) {
