@@ -51,9 +51,10 @@ void Enimy::update(Tilemap *tilemap, Sounds *sounds) {
     }
     collision_other(tilemap, sounds);
     collision_portal(tilemap, sounds);
-    actor_spr.setPosition(pos.left, pos.top);
 }
 void Enimy::draw(sf::RenderWindow *w) {
+    actor_spr.setPosition(pos.left, pos.top);
+
     if (velocity.x == 0) {
         actor_spr.setTexture(actor_tex_idle);
         actor_spr.setTextureRect(sf::IntRect(Tools::getStartSprite((int)i_idle_sprite % 11, direction_x) * 32, 0, direction_x * 32, 32));
@@ -119,6 +120,7 @@ void Sova::update(Tilemap *tilemap, Sounds *sounds) {
     Enimy::update(tilemap, sounds);
 }
 void Sova::draw(sf::RenderWindow *w) {
+    actor_spr.setPosition(pos.left, pos.top);
     if (on_ground) {
         actor_spr.setTexture(actor_tex);
         actor_spr.setTextureRect(sf::IntRect(Tools::getStartSprite((int)pos.left % 6, direction_x * -1) * 32, 0, (direction_x * -1) * 32, 32));
@@ -178,10 +180,9 @@ void Cannon::update(Tilemap *tilemap, Sounds *sounds) {
             break;
         }
     }
-
-    actor_spr.setPosition(pos.left, pos.top);
 }
 void Cannon::draw(sf::RenderWindow *w) {
+    actor_spr.setPosition(pos.left, pos.top);
     if (on_ground) {
         actor_spr.setTexture(actor_tex);
         actor_spr.setTextureRect(sf::IntRect(Tools::getStartSprite((int)pos.left % 2, direction_x * -1) * 32, 0, (direction_x * -1) * 32, 32));
@@ -252,10 +253,9 @@ void Bulletc::update(Tilemap *tilemap) {
             break;
         }
     }
-
-    actor_spr.setPosition(pos.left, pos.top);
 }
 void Bulletc::draw(sf::RenderWindow *w) {
+    actor_spr.setPosition(pos.left, pos.top);
     if (on_ground) {
         actor_spr.setTexture(actor_tex);
         actor_spr.setTextureRect(sf::IntRect(Tools::getStartSprite((int)pos.left % 5, direction_x * -1) * 32, 0, (direction_x * -1) * 32, 32));

@@ -121,8 +121,6 @@ void Actor::update(Tilemap *tilemap, Sounds *sounds) {
     collision_other(tilemap, sounds);
 
     collision_portal(tilemap, sounds);
-
-    actor_spr.setPosition(pos.left, pos.top);
 }
 
 void Actor::collision_y(Tilemap *tilemap, Sounds *sounds) {
@@ -201,6 +199,7 @@ void Actor::collision_other(Tilemap *tilemap, Sounds *sounds) {
     }
 }
 void Actor::draw(sf::RenderWindow *w) {
+    actor_spr.setPosition(pos.left, pos.top);
     if (on_ground) {
         if (velocity.x == 0) {
             actor_spr.setTexture(actor_tex_idle);
