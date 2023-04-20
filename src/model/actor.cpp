@@ -24,7 +24,7 @@ Actor::Actor() {
     reset_position();
 }
 
-point Actor::coord(Tilemap *tilemap, int offset_i, int offset_j) {
+point Actor::getCoord(Tilemap *tilemap, int offset_i, int offset_j) {
     point coord;
     coord.i = (int)(pos.top + offset_i) / pos.height;
     coord.j = (int)(pos.left + offset_j) / pos.width;
@@ -119,6 +119,8 @@ void Actor::update(Tilemap *tilemap, Sounds *sounds) {
     // -----------------------------------
 
     collision_other(tilemap, sounds);
+
+    collision_portal(tilemap, sounds);
 
     actor_spr.setPosition(pos.left, pos.top);
 }
@@ -245,7 +247,10 @@ void Actor::play_sound_pop(Sounds *sounds) {
 void Actor::on_collide(std::string where, int i, int j, Tilemap *tilemap, Sounds *sounds) {
 }
 void Actor::on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds) {
-    auto posMap = coord(tilemap, pos.height / 2, pos.width / 2);
+}
+
+void Actor::collision_portal(Tilemap *tilemap, Sounds *sounds) {
+    auto posMap = getCoord(tilemap, pos.height / 2, pos.width / 2);
 
     if (onPortal) {
         if (!tilemap->isPortal(posMap.i, posMap.j)) {
@@ -264,7 +269,6 @@ void Actor::on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds) {
         }
     }
 }
-
 void Actor::die(Sounds *sounds) {
 }
 

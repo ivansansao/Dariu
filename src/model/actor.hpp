@@ -57,9 +57,10 @@ class Actor {
     void collision_x(Tilemap *, Sounds *sounds);
     void collision_y(Tilemap *, Sounds *sounds);
     void collision_other(Tilemap *, Sounds *sounds);
+    void collision_portal(Tilemap *tilemap, Sounds *sounds);
     void play_sound_pop(Sounds *sounds);
     bool is_block(char el);
     bool is_alive();
-    point coord(Tilemap *tilemap, int offset_i, int offset_j);
+    point getCoord(Tilemap *tilemap, int offset_i, int offset_j);
 };
 #endif

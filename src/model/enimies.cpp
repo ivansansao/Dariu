@@ -50,6 +50,7 @@ void Enimy::update(Tilemap *tilemap, Sounds *sounds) {
         }
     }
     collision_other(tilemap, sounds);
+    collision_portal(tilemap, sounds);
     actor_spr.setPosition(pos.left, pos.top);
 }
 void Enimy::draw(sf::RenderWindow *w) {
