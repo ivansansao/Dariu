@@ -2,6 +2,8 @@
 
 A plataform game
 
+![Alt Text](src/asset/show2.gif)
+
 ![Alt Text](src/asset/show1.gif)
 
 ## Compile Linux
