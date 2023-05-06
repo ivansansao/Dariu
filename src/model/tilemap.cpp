@@ -153,8 +153,8 @@ void Tilemap::draw(sf::RenderWindow* w) {
             }
         }
     }
-    banana.anime(sf::IntRect(banana.getFrame() * 32, 0, 32, 32));
-    trophy.anime(sf::IntRect(trophy.getFrame() * 64, 0, 64, 64));
+    banana.anime(sf::IntRect(banana.getFrame() * 32, 0, 32, 32), 1);
+    trophy.anime(sf::IntRect(trophy.getFrame() * 64, 0, 64, 64), 1);
 
     i_fire += 0.5f;
 

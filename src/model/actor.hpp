@@ -11,6 +11,9 @@
 class Actor {
    public:
     Actor();
+    Animation actorRun;
+    Animation actorIdle;
+    Animation actorJump;
 
     sf::RenderWindow window;
 

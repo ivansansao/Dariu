@@ -2,6 +2,7 @@
 
 #include <cmath>
 
+#include "animation.hpp"
 #include "iostream"
 #include "tilemap.hpp"
 #include "tools.hpp"
@@ -9,10 +10,14 @@
 using namespace std;
 
 Actor::Actor() {
-    actor_tex_fall.loadFromFile("./asset/Free/Dariu-run.png");
+    actorRun.init(8, 0.5f, "./asset/Free/Dariu-run.png", sf::IntRect(0, 0, 32, 32), true);
+    actorIdle.init(1, 0.f, "./asset/Free/Dariu-idle.png", sf::IntRect(0, 0, 32, 32), true);
+    actorJump.init(1, 0.f, "./asset/Free/Dariu-jump.png", sf::IntRect(0, 0, 32, 32), true);
+
+    actor_tex.loadFromFile("./asset/Free/Dariu-run.png");
     actor_tex_idle.loadFromFile("./asset/Free/Dariu-idle.png");
     actor_tex_jump.loadFromFile("./asset/Free/Dariu-jump.png");
-    actor_tex.loadFromFile("./asset/Free/Dariu-run.png");
+    actor_tex_fall.loadFromFile("./asset/Free/Dariu-run.png");
     actor_spr.setTexture(actor_tex_fall);
     start_pos = sf::FloatRect(672.f, 32.f, 32.f, 32.f);
     abs_pos = pos;
@@ -200,18 +205,18 @@ void Actor::collision_other(Tilemap *tilemap, Sounds *sounds) {
     }
 }
 void Actor::draw(sf::RenderWindow *w) {
-    actor_spr.setPosition(pos.left, pos.top);
     if (on_ground) {
         if (velocity.x == 0) {
-            actor_spr.setTexture(actor_tex_idle);
-            actor_spr.setTextureRect(sf::IntRect(Tools::getStartSprite((int)i_idle_sprite % 1, direction_x) * pos.width, 0, direction_x * pos.width, pos.height));
+            actorIdle.anime(sf::IntRect(Tools::getStartSprite(0, actorIdle.direction_x) * pos.width, 0, direction_x * pos.width, pos.height), direction_x);
+            actorIdle.draw(pos.left, pos.top, w);
+
         } else {
-            actor_spr.setTexture(actor_tex);
-            actor_spr.setTextureRect(sf::IntRect(Tools::getStartSprite((int)pos.left % 8, direction_x) * pos.width, 0, direction_x * pos.width, pos.height));
+            actorRun.anime(sf::IntRect(Tools::getStartSprite((int)pos.left % actorRun.q_frame, actorRun.direction_x) * pos.width, 0, direction_x * pos.width, pos.height), direction_x);
+            actorRun.draw(pos.left, pos.top, w);
         }
     } else {
-        actor_spr.setTexture(actor_tex_jump);
-        actor_spr.setTextureRect(sf::IntRect(Tools::getStartSprite((int)i_idle_sprite % 1, direction_x) * pos.width, 0, direction_x * pos.width, pos.height));
+        actorJump.anime(sf::IntRect(Tools::getStartSprite(0, actorJump.direction_x) * pos.width, 0, direction_x * pos.width, pos.height), direction_x);
+        actorJump.draw(pos.left, pos.top, w);
     }
 
     if (false) {
@@ -221,7 +226,6 @@ void Actor::draw(sf::RenderWindow *w) {
         rectangle.setPosition(sf::Vector2f(pos.left, pos.top));
         w->draw(rectangle);
     }
-    w->draw(actor_spr);
 }
 void Actor::play_sound_pop(Sounds *sounds) {
     if (sounds->pop_sound0.getStatus() == 0) {

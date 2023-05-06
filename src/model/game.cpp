@@ -22,7 +22,6 @@ Game::Game() {
 
     font_roboto.loadFromFile("./asset/fonts/RobotoFlex-Regular.ttf");
     font_greatvibes.loadFromFile("./asset/fonts/GreatVibes-Regular.ttf");
-    std::vector<Inimigo> inimigos;
     std::vector<Catraca> catracas;
 
     fireworks_tex.loadFromFile("./asset/Free/fireworks.png");
