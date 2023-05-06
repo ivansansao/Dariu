@@ -9,9 +9,10 @@
 using namespace std;
 
 Actor::Actor() {
-    actor_tex_fall.loadFromFile("./asset/Free/Main Characters/Virtual Guy/Fall (32x32).png");
-    actor_tex_idle.loadFromFile("./asset/Free/Main Characters/Virtual Guy/Idle (32x32).png");
-    actor_tex.loadFromFile("./asset/Free/Main Characters/Virtual Guy/Run (32x32).png");
+    actor_tex_fall.loadFromFile("./asset/Free/Dariu-run.png");
+    actor_tex_idle.loadFromFile("./asset/Free/Dariu-idle.png");
+    actor_tex_jump.loadFromFile("./asset/Free/Dariu-jump.png");
+    actor_tex.loadFromFile("./asset/Free/Dariu-run.png");
     actor_spr.setTexture(actor_tex_fall);
     start_pos = sf::FloatRect(672.f, 32.f, 32.f, 32.f);
     abs_pos = pos;
@@ -203,12 +204,14 @@ void Actor::draw(sf::RenderWindow *w) {
     if (on_ground) {
         if (velocity.x == 0) {
             actor_spr.setTexture(actor_tex_idle);
-            actor_spr.setTextureRect(sf::IntRect(Tools::getStartSprite((int)i_idle_sprite % 11, direction_x) * pos.width, 0, direction_x * pos.width, pos.height));
-            i_idle_sprite += 0.2;
+            actor_spr.setTextureRect(sf::IntRect(Tools::getStartSprite((int)i_idle_sprite % 1, direction_x) * pos.width, 0, direction_x * pos.width, pos.height));
         } else {
             actor_spr.setTexture(actor_tex);
-            actor_spr.setTextureRect(sf::IntRect(Tools::getStartSprite((int)pos.left % 12, direction_x) * pos.width, 0, direction_x * pos.width, pos.height));
+            actor_spr.setTextureRect(sf::IntRect(Tools::getStartSprite((int)pos.left % 8, direction_x) * pos.width, 0, direction_x * pos.width, pos.height));
         }
+    } else {
+        actor_spr.setTexture(actor_tex_jump);
+        actor_spr.setTextureRect(sf::IntRect(Tools::getStartSprite((int)i_idle_sprite % 1, direction_x) * pos.width, 0, direction_x * pos.width, pos.height));
     }
 
     if (false) {

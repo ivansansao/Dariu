@@ -16,6 +16,7 @@ class Actor {
 
     sf::Texture actor_tex_fall;
     sf::Texture actor_tex_idle;
+    sf::Texture actor_tex_jump;
     sf::Texture actor_tex;
     sf::Sprite actor_spr;
 
