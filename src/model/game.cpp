@@ -523,20 +523,18 @@ void Game::loop_events() {
             window.close();
         }
 
-        if (event.type == sf::Event::KeyReleased || (event.type == sf::Event::JoystickButtonReleased)) {
+        if (event.type == sf::Event::KeyReleased || event.type == sf::Event::JoystickButtonReleased) {
             key_released = true;
             this->dariu.key_released = true;
-        }
 
-        if ((event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Up) || (event.type == sf::Event::JoystickButtonReleased)) {
-            this->dariu.up_released = true;
-        }
-
-        if (event.type == sf::Event::KeyReleased) {
             if (event.key.code == sf::Keyboard::Escape) {
                 if (page == pages::GAME_PLAY) {
                     page = pages::MENU_MAIN;
                 }
+            } else if (event.key.code == sf::Keyboard::Up) {
+                this->dariu.up_released = true;
+            } else if (event.key.code == sf::Keyboard::Space) {
+                this->dariu.space_released = true;
             }
         }
     }

@@ -71,8 +71,8 @@ void Actor::update(Tilemap *tilemap, Sounds *sounds) {
         this->updateWalk(tilemap, sounds);
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Joystick::isButtonPressed(0, sf::Joystick::X)) {
-        if (key_released) {
-            key_released = false;
+        if (space_released) {
+            space_released = false;
             if (this->jetPack) {
                 this->jetPack = false;
             } else if (this->jetPackTimeout != this->jetPackTimemax) {

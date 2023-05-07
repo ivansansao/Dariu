@@ -57,6 +57,7 @@ void Dariu::update(Tilemap *tilemap, Sounds *sounds) {
             score.darius--;
             actor_spr.setPosition(pos.left, pos.top);
             tilemap->replaceAll('j', 'J');
+            this->jetPackTimeout = this->jetPackTimemax;
             break;
         }
         case (States::ReviveStart): {
@@ -91,6 +92,9 @@ void Dariu::draw(sf::RenderWindow *w, int phase) {
     xscore += L" Troféus: ";
     xscore += to_string(score.thophy) + "/" + to_string(score.thophy_total);
     xscore += "    Fase: " + to_string(phase);
+    if (this->jetPackTimeout != this->jetPackTimemax) {
+        xscore += "    Mochila a jato: " + to_string((int)this->jetPackTimeout);
+    }
 
     text_score.setString(xscore);
     w->draw(text_score);
@@ -149,7 +153,7 @@ void Dariu::on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds) {
         tilemap->map[i][j] = 'B';
     }
     if (tilemap->map[i][j] == 'J') {
-        if (!this->jetPack) {
+        if (this->jetPackTimeout == this->jetPackTimemax) {
             tilemap->map[i][j] = 'j';
             this->jetPack = true;
         }
