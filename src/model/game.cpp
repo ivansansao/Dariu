@@ -536,6 +536,11 @@ void Game::loop_events() {
             } else if (event.key.code == sf::Keyboard::Space) {
                 this->dariu.space_released = true;
             }
+
+            if (event.type == sf::Event::JoystickButtonReleased) {
+                this->dariu.up_released = true;
+                this->dariu.space_released = true;
+            }
         }
     }
 }
