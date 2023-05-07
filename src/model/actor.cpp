@@ -70,6 +70,16 @@ void Actor::update(Tilemap *tilemap, Sounds *sounds) {
     } else {
         this->updateWalk(tilemap, sounds);
     }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Joystick::isButtonPressed(0, sf::Joystick::X)) {
+        if (key_released) {
+            key_released = false;
+            if (this->jetPack) {
+                this->jetPack = false;
+            } else if (this->jetPackTimeout != this->jetPackTimemax) {
+                this->jetPack = true;
+            }
+        }
+    }
 }
 void Actor::updateWalk(Tilemap *tilemap, Sounds *sounds) {
     // ---------------- Y ----------------
@@ -87,13 +97,13 @@ void Actor::updateWalk(Tilemap *tilemap, Sounds *sounds) {
      */
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Joystick::isButtonPressed(0, sf::Joystick::Z)) {
-        if (key_released) {
+        if (up_released) {
             if (on_ground) {
                 if (sounds->jump_sound.getStatus() == 0) {
                     sounds->jump_sound.play();
                 }
                 jump();
-                key_released = false;
+                up_released = false;
             }
         }
     }

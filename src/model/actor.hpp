@@ -46,7 +46,10 @@ class Actor {
     float jetPackTimeout = 10;
     float jetPackTimemax = 10;
     bool on_ground;
+
     bool key_released = true;
+    bool up_released = true;
+    bool space_released = true;
 
     bool onPortal = false;
 
