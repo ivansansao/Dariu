@@ -75,7 +75,7 @@ void Actor::update(Tilemap *tilemap, Sounds *sounds) {
             space_released = false;
             if (this->jetPack) {
                 this->jetPack = false;
-            } else if (this->jetPackTimeout != this->jetPackTimemax) {
+            } else if (this->jetPackFuel > 0) {
                 this->jetPack = true;
             }
         }
@@ -147,10 +147,11 @@ void Actor::updateWalk(Tilemap *tilemap, Sounds *sounds) {
     collision_portal(tilemap, sounds);
 }
 void Actor::updateFly(Tilemap *tilemap, Sounds *sounds) {
-    if (this->jetPackTimeout > 0) {
-        this->jetPackTimeout -= 0.01f;
-    } else if (this->jetPackTimeout < 0) {
-        this->jetPackTimeout = this->jetPackTimemax;
+    if (this->jetPackFuel > 0) {
+        this->jetPackFuel -= this->jetPackConsume;
+    }
+    if (this->jetPackFuel < 0) {
+        this->jetPackFuel = 0;
         this->jetPack = false;
     }
 
@@ -366,19 +367,21 @@ bool Actor::is_alive() {
 }
 void Actor::drawJetpackTime(sf::RenderWindow *w) {
     float xLeft = pos.left + pos.width;
+    float barTotal = this->jetPackCapacity * 0.1;
+    float barFuel = this->jetPackFuel * 0.1;
 
     if (direction_x > 0)
-        xLeft = pos.left - 10;
+        xLeft = pos.left - barTotal;
 
     sf::RectangleShape border(sf::Vector2f(pos.left, pos.top));
     border.setFillColor(sf::Color(255, 0, 0, 255));
-    border.setPosition(sf::Vector2f(xLeft, pos.top + 10));
+    border.setPosition(sf::Vector2f(xLeft, pos.top + barTotal));
     border.setSize(sf::Vector2f(10, 3));
     w->draw(border);
 
     sf::RectangleShape rectangle(sf::Vector2f(pos.left, pos.top));
     rectangle.setFillColor(sf::Color(255, 255, 255, 255));
-    rectangle.setPosition(sf::Vector2f(xLeft, pos.top + 10));
-    rectangle.setSize(sf::Vector2f(this->jetPackTimeout, 3));
+    rectangle.setPosition(sf::Vector2f(xLeft, pos.top + barTotal));
+    rectangle.setSize(sf::Vector2f(barFuel, 3));
     w->draw(rectangle);
 }
