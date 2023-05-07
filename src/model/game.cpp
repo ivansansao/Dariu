@@ -523,7 +523,7 @@ void Game::loop_events() {
             window.close();
         }
         if ((event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Up) || (event.type == sf::Event::JoystickButtonReleased)) {
-            this->dariu.up_released = true;
+            this->dariu.key_released = true;
             key_released = true;
         }
         if ((event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Down) || (event.type == sf::Event::JoystickButtonReleased)) {

@@ -44,8 +44,9 @@ class Actor {
     float lift;
     bool jetPack = false;
     float jetPackTimeout = 10;
+    float jetPackTimemax = 10;
     bool on_ground;
-    bool up_released = true;
+    bool key_released = true;
 
     bool onPortal = false;
 

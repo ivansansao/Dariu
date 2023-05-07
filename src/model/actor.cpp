@@ -87,13 +87,13 @@ void Actor::updateWalk(Tilemap *tilemap, Sounds *sounds) {
      */
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Joystick::isButtonPressed(0, sf::Joystick::Z)) {
-        if (up_released) {
+        if (key_released) {
             if (on_ground) {
                 if (sounds->jump_sound.getStatus() == 0) {
                     sounds->jump_sound.play();
                 }
                 jump();
-                up_released = false;
+                key_released = false;
             }
         }
     }
@@ -140,7 +140,7 @@ void Actor::updateFly(Tilemap *tilemap, Sounds *sounds) {
     if (this->jetPackTimeout > 0) {
         this->jetPackTimeout -= 0.01f;
     } else if (this->jetPackTimeout < 0) {
-        this->jetPackTimeout = 10;
+        this->jetPackTimeout = this->jetPackTimemax;
         this->jetPack = false;
     }
 
