@@ -5,6 +5,7 @@
 #include "iostream"
 
 Tilemap::Tilemap() {
+    jetpack.init(4, 0.5f, "./asset/Free/Jetpack.png", sf::IntRect(0, 0, 32, 32), true);
     banana.init(17, 0.5f, "./asset/Free/Items/Fruits/Bananas.png", sf::IntRect(0, 0, 32, 32), true);
     portalP.init(0, 0.f, "./asset/Free/PortalP.png", sf::IntRect(0, 0, 32, 32), true);
     portalQ.init(0, 0.f, "./asset/Free/PortalQ.png", sf::IntRect(0, 0, 32, 32), true);
@@ -113,6 +114,8 @@ void Tilemap::draw(sf::RenderWindow* w) {
                 w->draw(start);
             } else if (map[i][j] == '.') {
                 banana.draw(j * 32, i * 32, w);
+            } else if (map[i][j] == 'J') {
+                jetpack.draw(j * 32, i * 32, w);
             } else if (map[i][j] == 'T') {
                 trophy.draw(j * 32, i * 32, w);
             } else if (map[i][j] == 'A') {
@@ -153,6 +156,7 @@ void Tilemap::draw(sf::RenderWindow* w) {
             }
         }
     }
+    jetpack.anime(sf::IntRect(jetpack.getFrame() * 32, 0, 32, 32), 1);
     banana.anime(sf::IntRect(banana.getFrame() * 32, 0, 32, 32), 1);
     trophy.anime(sf::IntRect(trophy.getFrame() * 64, 0, 64, 64), 1);
 

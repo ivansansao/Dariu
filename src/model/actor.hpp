@@ -14,6 +14,7 @@ class Actor {
     Animation actorRun;
     Animation actorIdle;
     Animation actorJump;
+    Animation actorJetpack;
 
     sf::RenderWindow window;
 
@@ -41,6 +42,8 @@ class Actor {
     float i_idle_sprite;
     float gravity;
     float lift;
+    bool jetPack = false;
+    float jetPackTimeout = 10;
     bool on_ground;
     bool up_released = true;
 
@@ -48,11 +51,14 @@ class Actor {
 
     virtual void draw(sf::RenderWindow *w);
     virtual void update(Tilemap *tilemap, Sounds *sounds);
+    virtual void updateWalk(Tilemap *tilemap, Sounds *sounds);
+    virtual void updateFly(Tilemap *tilemap, Sounds *sounds);
     virtual void on_collide(std::string where, int i, int j, Tilemap *tilemap, Sounds *sounds);
     virtual void on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds);
     virtual void set_position(float left, float top);
     virtual void reset_position();
     virtual void die(Sounds *sounds);
+    virtual void drawJetpackTime(sf::RenderWindow *w);
 
     void jump();
     void jump(bool little);

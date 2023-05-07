@@ -30,6 +30,7 @@ class Tilemap {
 
     point getMapOppositPortal(int i, int j);
 
+    Animation jetpack;
     Animation banana;
     Animation portalP;
     Animation portalQ;

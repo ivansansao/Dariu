@@ -56,6 +56,7 @@ void Dariu::update(Tilemap *tilemap, Sounds *sounds) {
             state = States::ReviveStart;
             score.darius--;
             actor_spr.setPosition(pos.left, pos.top);
+            tilemap->replaceAll('j', 'J');
             break;
         }
         case (States::ReviveStart): {
@@ -146,6 +147,12 @@ void Dariu::on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds) {
     }
     if (tilemap->map[i][j] == 'b') {
         tilemap->map[i][j] = 'B';
+    }
+    if (tilemap->map[i][j] == 'J') {
+        if (!this->jetPack) {
+            tilemap->map[i][j] = 'j';
+            this->jetPack = true;
+        }
     }
     if (tilemap->map[i][j] == 'x') {
         if (sounds->levelcomplete_sound.getStatus() == 0) {

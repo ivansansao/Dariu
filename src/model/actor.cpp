@@ -10,6 +10,7 @@
 using namespace std;
 
 Actor::Actor() {
+    actorJetpack.init(3, 0.5f, "./asset/Free/Dariu-jetpack.png", sf::IntRect(0, 0, 32, 32), true);
     actorRun.init(8, 0.5f, "./asset/Free/Dariu-run.png", sf::IntRect(0, 0, 32, 32), true);
     actorIdle.init(1, 0.f, "./asset/Free/Dariu-idle.png", sf::IntRect(0, 0, 32, 32), true);
     actorJump.init(1, 0.f, "./asset/Free/Dariu-jump.png", sf::IntRect(0, 0, 32, 32), true);
@@ -64,6 +65,13 @@ void Actor::reset_position() {
     pos = sf::FloatRect(start_pos.left, start_pos.top, 32.f, 32.f);
 }
 void Actor::update(Tilemap *tilemap, Sounds *sounds) {
+    if (this->jetPack) {
+        this->updateFly(tilemap, sounds);
+    } else {
+        this->updateWalk(tilemap, sounds);
+    }
+}
+void Actor::updateWalk(Tilemap *tilemap, Sounds *sounds) {
     // ---------------- Y ----------------
 
     if (sf::Joystick::isButtonPressed(0, 2)) {
@@ -128,7 +136,63 @@ void Actor::update(Tilemap *tilemap, Sounds *sounds) {
 
     collision_portal(tilemap, sounds);
 }
+void Actor::updateFly(Tilemap *tilemap, Sounds *sounds) {
+    if (this->jetPackTimeout > 0) {
+        this->jetPackTimeout -= 0.01f;
+    } else if (this->jetPackTimeout < 0) {
+        this->jetPackTimeout = 10;
+        this->jetPack = false;
+    }
 
+    // ---------------- Y ----------------
+    float controll_y = sf::Joystick::getAxisPosition(0, sf::Joystick::Y);  // -100 to 100
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || controll_y < 0) {
+        velocity.y = -5;
+    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || controll_y > 0) {
+        velocity.y = 5;
+    } else {
+        velocity.y = 0;
+    }
+
+    pos.top += velocity.y;
+    collision_y(tilemap, sounds);
+
+    // ---------------- X ----------------
+
+    float controll_x = sf::Joystick::getAxisPosition(0, sf::Joystick::X);  // -100 to 100
+
+    if (controll_x != 0) {
+        velocity.x = (controll_x / 100) * 5;
+        if (controll_x > 0) {
+            direction_x = 1;
+        } else if (controll_x < 0) {
+            direction_x = -1;
+        }
+    } else {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+            velocity.x += 1;
+            direction_x = 1;
+        } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+            velocity.x -= 1;
+            direction_x = -1;
+        } else {
+            velocity.x = 0;
+        }
+    }
+    if (velocity.x > 5) velocity.x = 5;
+    if (velocity.x < -5) velocity.x = -5;
+
+    pos.left += velocity.x;
+
+    collision_x(tilemap, sounds);
+
+    // -----------------------------------
+
+    collision_other(tilemap, sounds);
+
+    collision_portal(tilemap, sounds);
+}
 void Actor::collision_y(Tilemap *tilemap, Sounds *sounds) {
     on_ground = false;
 
@@ -205,18 +269,24 @@ void Actor::collision_other(Tilemap *tilemap, Sounds *sounds) {
     }
 }
 void Actor::draw(sf::RenderWindow *w) {
-    if (on_ground) {
-        if (velocity.x == 0) {
-            actorIdle.anime(sf::IntRect(Tools::getStartSprite(0, actorIdle.direction_x) * pos.width, 0, direction_x * pos.width, pos.height), direction_x);
-            actorIdle.draw(pos.left, pos.top, w);
-
-        } else {
-            actorRun.anime(sf::IntRect(Tools::getStartSprite((int)pos.left % actorRun.q_frame, actorRun.direction_x) * pos.width, 0, direction_x * pos.width, pos.height), direction_x);
-            actorRun.draw(pos.left, pos.top, w);
-        }
+    if (this->jetPack) {
+        actorJetpack.anime(sf::IntRect(Tools::getStartSprite(actorJetpack.getFrame(), direction_x) * pos.width, 0, direction_x * pos.width, pos.height), direction_x);
+        actorJetpack.draw(pos.left, pos.top, w);
+        this->drawJetpackTime(w);
     } else {
-        actorJump.anime(sf::IntRect(Tools::getStartSprite(0, actorJump.direction_x) * pos.width, 0, direction_x * pos.width, pos.height), direction_x);
-        actorJump.draw(pos.left, pos.top, w);
+        if (on_ground) {
+            if (velocity.x == 0) {
+                actorIdle.anime(sf::IntRect(Tools::getStartSprite(0, direction_x) * pos.width, 0, direction_x * pos.width, pos.height), direction_x);
+                actorIdle.draw(pos.left, pos.top, w);
+
+            } else {
+                actorRun.anime(sf::IntRect(Tools::getStartSprite((int)pos.left % actorRun.q_frame, direction_x) * pos.width, 0, direction_x * pos.width, pos.height), direction_x);
+                actorRun.draw(pos.left, pos.top, w);
+            }
+        } else {
+            actorJump.anime(sf::IntRect(Tools::getStartSprite(0, direction_x) * pos.width, 0, direction_x * pos.width, pos.height), direction_x);
+            actorJump.draw(pos.left, pos.top, w);
+        }
     }
 
     if (false) {
@@ -283,4 +353,22 @@ bool Actor::is_block(char el) {
 }
 bool Actor::is_alive() {
     return state == States::Normal;
+}
+void Actor::drawJetpackTime(sf::RenderWindow *w) {
+    float xLeft = pos.left + pos.width;
+
+    if (direction_x > 0)
+        xLeft = pos.left - 10;
+
+    sf::RectangleShape border(sf::Vector2f(pos.left, pos.top));
+    border.setFillColor(sf::Color(255, 0, 0, 255));
+    border.setPosition(sf::Vector2f(xLeft, pos.top + 10));
+    border.setSize(sf::Vector2f(10, 3));
+    w->draw(border);
+
+    sf::RectangleShape rectangle(sf::Vector2f(pos.left, pos.top));
+    rectangle.setFillColor(sf::Color(255, 255, 255, 255));
+    rectangle.setPosition(sf::Vector2f(xLeft, pos.top + 10));
+    rectangle.setSize(sf::Vector2f(this->jetPackTimeout, 3));
+    w->draw(rectangle);
 }
