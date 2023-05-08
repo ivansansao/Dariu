@@ -11,8 +11,8 @@
 pwd
 rm -f dariu > /dev/null
 rm -f *.o > /dev/null
-cd src
+# cd src
 make
-cd ..
+# cd ..
 rm -f *.o > /dev/null
 

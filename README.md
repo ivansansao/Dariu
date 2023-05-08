@@ -47,12 +47,10 @@ C:\mingw64\bin
 C:\SFML\bin
 
 Git clone lalalalal-dariu.git
-cd dariu\src
-dariu\src\make
+cd dariu
+dariu>make
 
 Done, dariu.exe has created! I believe!
-
-Create a shortcut on Desktop for dariu.exe and put Workdir at dariu\src\
 
 If is missing openal32.dll, download installer from oficial page: https://www.openal.org/downloads/
 

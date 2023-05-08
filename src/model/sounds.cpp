@@ -10,28 +10,28 @@ Sounds::Sounds() {
 
     // Music
 
-    music.openFromFile("./asset/sound/track1.ogg");
+    music.openFromFile("./src/asset/sound/track1.ogg");
     music.setLoop(true);
 
-    music_gameover.openFromFile("./asset/sound/gameover.ogg");
+    music_gameover.openFromFile("./src/asset/sound/gameover.ogg");
 
-    music_gamewin.openFromFile("./asset/sound/gamewin.ogg");
+    music_gamewin.openFromFile("./src/asset/sound/gamewin.ogg");
     music_gamewin.setLoop(true);
 
     // Effects
-    jump_buffer.loadFromFile("./asset/sound/jump.ogg");
+    jump_buffer.loadFromFile("./src/asset/sound/jump.ogg");
     jump_sound.setBuffer(jump_buffer);
 
-    dooropen.loadFromFile("./asset/sound/dooropen.ogg");
+    dooropen.loadFromFile("./src/asset/sound/dooropen.ogg");
     dooropen_sound.setBuffer(dooropen);
 
-    fired.loadFromFile("./asset/sound/fired.ogg");
+    fired.loadFromFile("./src/asset/sound/fired.ogg");
     fired_sound.setBuffer(fired);
 
-    crash.loadFromFile("./asset/sound/crash.ogg");
+    crash.loadFromFile("./src/asset/sound/crash.ogg");
     crash_sound.setBuffer(crash);
 
-    pop.loadFromFile("./asset/sound/pop.ogg");
+    pop.loadFromFile("./src/asset/sound/pop.ogg");
     pop_sound0.setBuffer(pop);
     pop_sound1.setBuffer(pop);
     pop_sound2.setBuffer(pop);
@@ -43,10 +43,10 @@ Sounds::Sounds() {
     pop_sound8.setBuffer(pop);
     pop_sound9.setBuffer(pop);
 
-    enimydie.loadFromFile("./asset/sound/enimydie.ogg");
+    enimydie.loadFromFile("./src/asset/sound/enimydie.ogg");
     enimydie_sound.setBuffer(enimydie);
 
-    levelcomplete.loadFromFile("./asset/sound/levelcomplete.ogg");
+    levelcomplete.loadFromFile("./src/asset/sound/levelcomplete.ogg");
     levelcomplete_sound.setBuffer(levelcomplete);
     applyVolume();
 }

@@ -20,11 +20,11 @@ Game::Game() {
     view.reset(sf::FloatRect(0.f, 0.f, 1280.f, 736.f));
     gameover_loaded = false;
 
-    font_roboto.loadFromFile("./asset/fonts/RobotoFlex-Regular.ttf");
-    font_greatvibes.loadFromFile("./asset/fonts/GreatVibes-Regular.ttf");
+    font_roboto.loadFromFile("./src/asset/fonts/RobotoFlex-Regular.ttf");
+    font_greatvibes.loadFromFile("./src/asset/fonts/GreatVibes-Regular.ttf");
     std::vector<Catraca> catracas;
 
-    fireworks_tex.loadFromFile("./asset/Free/fireworks.png");
+    fireworks_tex.loadFromFile("./src/asset/Free/fireworks.png");
     fireworks_spr.setTexture(fireworks_tex);
     fireworks_i = 0;
     fireworks_j = 0;
@@ -209,7 +209,7 @@ void Game::load() {
     phase_total = 0;
     DIR* dir;
     struct dirent* ent;
-    if ((dir = opendir("./resource")) != nullptr) {
+    if ((dir = opendir("./src/resource")) != nullptr) {
         while ((ent = readdir(dir)) != nullptr) {
             if (std::string(ent->d_name).find("map_") != std::string::npos) {
                 phase_total++;
@@ -368,7 +368,7 @@ void Game::save_profile() {
     }
 
     if (save) {
-        ofstream MyFile("./resource/profile.dat");
+        ofstream MyFile("./src/resource/profile.dat");
         MyFile << "phases:" + to_string(phase_current) << endl;
         MyFile << "lifes:" + to_string(dariu.score.darius) << endl;
         MyFile << "seconds_playing:" + to_string(seconds_playing) << endl;
@@ -378,7 +378,7 @@ void Game::save_profile() {
 void Game::load_profile() {
     int i;
     string line;
-    ifstream file("./resource/profile.dat");
+    ifstream file("./src/resource/profile.dat");
     i = 0;
     while (getline(file, line)) {
         if (line.find("phase") != std::string::npos) {

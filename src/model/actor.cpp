@@ -10,15 +10,15 @@
 using namespace std;
 
 Actor::Actor() {
-    actorJetpack.init(3, 0.5f, "./asset/Free/Dariu-jetpack.png", sf::IntRect(0, 0, 32, 32), true);
-    actorRun.init(8, 0.5f, "./asset/Free/Dariu-run.png", sf::IntRect(0, 0, 32, 32), true);
-    actorIdle.init(1, 0.f, "./asset/Free/Dariu-idle.png", sf::IntRect(0, 0, 32, 32), true);
-    actorJump.init(1, 0.f, "./asset/Free/Dariu-jump.png", sf::IntRect(0, 0, 32, 32), true);
+    actorJetpack.init(3, 0.5f, "./src/asset/Free/Dariu-jetpack.png", sf::IntRect(0, 0, 32, 32), true);
+    actorRun.init(8, 0.5f, "./src/asset/Free/Dariu-run.png", sf::IntRect(0, 0, 32, 32), true);
+    actorIdle.init(1, 0.f, "./src/asset/Free/Dariu-idle.png", sf::IntRect(0, 0, 32, 32), true);
+    actorJump.init(1, 0.f, "./src/asset/Free/Dariu-jump.png", sf::IntRect(0, 0, 32, 32), true);
 
-    actor_tex.loadFromFile("./asset/Free/Dariu-run.png");
-    actor_tex_idle.loadFromFile("./asset/Free/Dariu-idle.png");
-    actor_tex_jump.loadFromFile("./asset/Free/Dariu-jump.png");
-    actor_tex_fall.loadFromFile("./asset/Free/Dariu-run.png");
+    actor_tex.loadFromFile("./src/asset/Free/Dariu-run.png");
+    actor_tex_idle.loadFromFile("./src/asset/Free/Dariu-idle.png");
+    actor_tex_jump.loadFromFile("./src/asset/Free/Dariu-jump.png");
+    actor_tex_fall.loadFromFile("./src/asset/Free/Dariu-run.png");
     actor_spr.setTexture(actor_tex_fall);
     start_pos = sf::FloatRect(672.f, 32.f, 32.f, 32.f);
     abs_pos = pos;

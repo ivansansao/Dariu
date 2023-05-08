@@ -7,7 +7,7 @@ int main() {
 
     DIR *dir;
     struct dirent *ent;
-    if ((dir = opendir("../resource")) != nullptr) {
+    if ((dir = opendir("../src/resource")) != nullptr) {
         while ((ent = readdir(dir)) != nullptr) {
             if (std::string(ent->d_name).find("map_") != std::string::npos) {
                 phase_total++;
