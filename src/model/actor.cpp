@@ -150,9 +150,9 @@ void Actor::updateFly(Tilemap *tilemap, Sounds *sounds) {
     if (this->jetPackFuel > 0) {
         this->jetPackFuel -= this->jetPackConsume;
     }
-    if (this->jetPackFuel < 0) {
-        this->jetPackFuel = 0;
+    if (this->jetPackFuel <= 0) {
         this->jetPack = false;
+        this->jetPackFuel = 0;
     }
 
     // ---------------- Y ----------------
