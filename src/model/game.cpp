@@ -234,6 +234,7 @@ void Game::load_phase() {
 
     dariu.score.bananas = 0;
     dariu.score.thophy = 0;
+    dariu.jetPack = false;
 
     // Read quantity of bananas from tilemap.
     dariu.score.bananas_total = 0;
