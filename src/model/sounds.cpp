@@ -5,8 +5,8 @@
 using namespace std;
 
 Sounds::Sounds() {
-    volume_music = 7.f;
-    volume_effect = 7.f;
+    volume_music = 50.f;
+    volume_effect = 50.f;
 
     // Music
 

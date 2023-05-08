@@ -158,6 +158,15 @@ void Game::win() {
     text_gamewin.setCharacterSize(60);
     text_gamewin.setFillColor(sf::Color::White);
     text_gamewin.setString(L"Parabéns, você ganhou!!!");
+    text_gamewin.setPosition(sf::Vector2f(600 - text_gamewin.getGlobalBounds().width / 2, window.getSize().y / 2 - text_gamewin.getGlobalBounds().height / 2));
+    window.draw(text_gamewin);
+
+    text_gamewin.setFont(font_roboto);
+    text_gamewin.setCharacterSize(16);
+    text_gamewin.setFillColor(sf::Color::White);
+    text_gamewin.setString(L"ESC - Voltar ao menu");
+    text_gamewin.setPosition(sf::Vector2f(600 - text_gamewin.getGlobalBounds().width / 2, window.getSize().y / 2 - text_gamewin.getGlobalBounds().height / 2 + 120));
+    window.draw(text_gamewin);
 
     // Show fireworks
 
@@ -173,13 +182,24 @@ void Game::win() {
         fireworks_i = 0;
     }
 
-    // Show congratulations
-
-    text_gamewin.setPosition(sf::Vector2f(600 - text_gamewin.getGlobalBounds().width / 2, window.getSize().y / 2 - text_gamewin.getGlobalBounds().height / 2));
-
     window.draw(fireworks_spr);
-    window.draw(text_gamewin);
+
     window.display();
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+        gamewin_loaded = false;
+        sounds.music_gamewin.stop();
+        game_loaded = false;
+        menumain_loaded = false;
+        phase_current = 0;
+        this->dariu.score.darius = 3;
+        this->dariu.score.bananas = 0;
+        this->dariu.score.thophy = 0;
+        this->dariu.over = false;
+        this->dariu.win = false;
+        this->dariu.jetPackFuel = 0;
+        page = pages::MENU_MAIN;
+    }
 };
 void Game::over() {
     if (!gameover_loaded) {
@@ -196,7 +216,30 @@ void Game::over() {
     text_gameover.setString(L"VOCÊ PERDEU!");
     text_gameover.setPosition(sf::Vector2f(600 - text_gameover.getGlobalBounds().width / 2, window.getSize().y / 2 - text_gameover.getGlobalBounds().height / 2));
     window.draw(text_gameover);
+
+    text_gameover.setFont(font_roboto);
+    text_gameover.setCharacterSize(16);
+    text_gameover.setFillColor(sf::Color::White);
+    text_gameover.setString(L"ESC - Voltar ao menu");
+    text_gameover.setPosition(sf::Vector2f(600 - text_gameover.getGlobalBounds().width / 2, window.getSize().y / 2 - text_gameover.getGlobalBounds().height / 2 + 120));
+    window.draw(text_gameover);
+
     window.display();
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+        gameover_loaded = false;
+        sounds.music_gameover.stop();
+        game_loaded = false;
+        menumain_loaded = false;
+        phase_current = 0;
+        this->dariu.score.darius = 3;
+        this->dariu.score.bananas = 0;
+        this->dariu.score.thophy = 0;
+        this->dariu.over = false;
+        this->dariu.win = false;
+        this->dariu.jetPackFuel = 0;
+        page = pages::MENU_MAIN;
+    }
 };
 void Game::load() {
     game_loaded = true;
