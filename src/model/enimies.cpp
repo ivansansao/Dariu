@@ -86,9 +86,9 @@ void Enimy::die(Sounds *sounds) {
  */
 
 Catraca::Catraca() {
-    actor_tex_fall.loadFromFile("./src/asset/Free/Main Characters/Mask Dude/Fall (32x32).png");
-    actor_tex.loadFromFile("./src/asset/Free/Main Characters/Mask Dude/Run (32x32).png");
-    actor_tex_idle.loadFromFile("./src/asset/Free/Main Characters/Mask Dude/Idle (32x32).png");
+    actor_tex_fall.loadFromFile("./src/asset/image/Main Characters/Mask Dude/Fall (32x32).png");
+    actor_tex.loadFromFile("./src/asset/image/Main Characters/Mask Dude/Run (32x32).png");
+    actor_tex_idle.loadFromFile("./src/asset/image/Main Characters/Mask Dude/Idle (32x32).png");
 };
 
 void Catraca::update(Tilemap *tilemap, Sounds *sounds) {
@@ -111,9 +111,9 @@ void Catraca::die(Sounds *sounds) {
  */
 
 Sova::Sova() {
-    actor_tex_fall.loadFromFile("./src/asset/Free/sova.png");
-    actor_tex.loadFromFile("./src/asset/Free/sova.png");
-    actor_tex_idle.loadFromFile("./src/asset/Free/sova.png");
+    actor_tex_fall.loadFromFile("./src/asset/image/sova.png");
+    actor_tex.loadFromFile("./src/asset/image/sova.png");
+    actor_tex_idle.loadFromFile("./src/asset/image/sova.png");
 };
 
 void Sova::update(Tilemap *tilemap, Sounds *sounds) {
@@ -141,9 +141,9 @@ void Sova::die(Sounds *sounds) {
  */
 
 Cannon::Cannon() {
-    actor_tex_fall.loadFromFile("./src/asset/Free/cannon.png");
-    actor_tex.loadFromFile("./src/asset/Free/cannon.png");
-    actor_tex_idle.loadFromFile("./src/asset/Free/cannon.png");
+    actor_tex_fall.loadFromFile("./src/asset/image/cannon.png");
+    actor_tex.loadFromFile("./src/asset/image/cannon.png");
+    actor_tex_idle.loadFromFile("./src/asset/image/cannon.png");
 };
 
 void Cannon::update(Tilemap *tilemap, Sounds *sounds) {
@@ -203,9 +203,9 @@ void Cannon::die(Sounds *sounds) {
  */
 
 Bulletc::Bulletc() {
-    actor_tex_fall.loadFromFile("./src/asset/Free/bulletc.png");
-    actor_tex.loadFromFile("./src/asset/Free/bulletc.png");
-    actor_tex_idle.loadFromFile("./src/asset/Free/bulletc.png");
+    actor_tex_fall.loadFromFile("./src/asset/image/bulletc.png");
+    actor_tex.loadFromFile("./src/asset/image/bulletc.png");
+    actor_tex_idle.loadFromFile("./src/asset/image/bulletc.png");
     on_ground = true;
     direction_x = -1;
 };

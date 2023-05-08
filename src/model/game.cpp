@@ -24,7 +24,7 @@ Game::Game() {
     font_greatvibes.loadFromFile("./src/asset/fonts/GreatVibes-Regular.ttf");
     std::vector<Catraca> catracas;
 
-    fireworks_tex.loadFromFile("./src/asset/Free/fireworks.png");
+    fireworks_tex.loadFromFile("./src/asset/image/fireworks.png");
     fireworks_spr.setTexture(fireworks_tex);
     fireworks_i = 0;
     fireworks_j = 0;

@@ -8,7 +8,7 @@
 using namespace std;
 
 Plataform::Plataform() {
-    textura.loadFromFile("./src/asset/Free/plataform.png");
+    textura.loadFromFile("./src/asset/image/plataform.png");
     sprite.setTexture(textura);
     pos = sf::FloatRect(672.f, 672.f, 32.f, 32.f);
     vel_step = 0.9f;
