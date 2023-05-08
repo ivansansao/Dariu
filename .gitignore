@@ -3,6 +3,8 @@
 !/**/
 !*.*
 
+!Makefile
+
 profile.dat
 CMakeFiles
 cmake_install.cmake
