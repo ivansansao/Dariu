@@ -21,3 +21,7 @@ E   P1 AZ YC   DF         AC     ......DF....H.........DF ....... M^   Z        
 E  ABC DEEEF B DF         DF     ....T.DF....B.........DF ....... AC                                    Y         E
 E@ DEF DEEEF E DF B..H....DFJ Y  ......DF....E.........DF ...H... DF ..............H........    >M          <B    E
 EBBEEEEEEEEERERDFREBRBRBBBEEBBRRBBRBRBBEEBBBBEBBBBBBBBBEEBBBBBBBBBEEBBBBBBBBBBBBBBBBBBBBBBBBRRRRRRRRRRRRRRRRREBBBBE
+[ENDBLOCK]
+[TERRAIN]
+TerrainBlue
+[ENDBLOCK]
