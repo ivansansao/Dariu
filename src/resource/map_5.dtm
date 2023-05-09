@@ -21,3 +21,7 @@ E                                                                    B . B......
 E                           H               P1    Y   Z    Z    Y      B EBBBBBBBBBBBBBE M^        E        M^ BBBE
 E                           M^     M^            B...............B                                 EBBBBBBBBBBBEEEE
 ERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRREBBBBBBBBBBBBBBBERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRE
+[ENDBLOCK]
+[TERRAIN]
+Terrain2
+[ENDBLOCK]

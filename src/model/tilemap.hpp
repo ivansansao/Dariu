@@ -7,6 +7,7 @@
 
 #include "animation.hpp"
 #include "plataform.hpp"
+#include "tools.hpp"
 
 struct point {
     int i;
@@ -69,6 +70,8 @@ class Tilemap {
     void update();
     void draw(sf::RenderWindow *w);
     void load_from_file(int phase);
+    void load_map_from_file(int phase);
+    void load_texture_from_file(int phase);
     void load_plataforms();
     void replaceAll(char a, char b);
     void clear();

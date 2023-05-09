@@ -4,6 +4,9 @@
 #define TOOLS_H
 
 #include <chrono>
+#include <fstream>
+#include <iostream>
+#include <regex>
 #include <string>
 
 class Tools {
@@ -16,5 +19,8 @@ class Tools {
     static std::string addZero(int seconds);
     static std::string seconds_to_hour(int seconds);
     static int time_dif_in_seconds(std::chrono::system_clock::time_point, std::chrono::system_clock::time_point);
+    static int wordOccurrence(std::string sentence, std::string word);
+    static bool hasString(std::string line, std::string str);
+    static std::string get_lines_from_dtm(std::string filename, std::string tag, std::string endLine);
 };
 #endif

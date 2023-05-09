@@ -10,9 +10,32 @@ Tilemap::Tilemap() {
     portalP.init(0, 0.f, "./src/asset/image/PortalP.png", sf::IntRect(0, 0, 32, 32), true);
     portalQ.init(0, 0.f, "./src/asset/image/PortalQ.png", sf::IntRect(0, 0, 32, 32), true);
     trophy.init(8, 0.2f, "./src/asset/image/Items/Checkpoints/End/End (Pressed) (64x64).png", sf::IntRect(0, 0, 64, 64), false);
+}
 
-    terrain_tex.loadFromFile("./src/asset/image/Terrain/Terrain (16x16).png");
-    terrain2_tex.loadFromFile("./src/asset/image/Terrain/Terrain (32x32).png");
+std::string Tilemap::map[H] = {};
+
+void Tilemap::load_from_file(int phase) {
+    this->load_map_from_file(phase);
+    this->load_texture_from_file(phase);
+}
+void Tilemap::load_map_from_file(int phase) {
+    std::string lines = Tools::get_lines_from_dtm("./src/resource/map_" + to_string(phase) + ".dtm", "", "\n");
+    std::stringstream ss(lines);
+    std::string line;
+    int i = 0;
+
+    while (getline(ss, line, '\n')) {
+        this->W = line.length();
+        this->map[i] = line;
+        i++;
+    }
+}
+void Tilemap::load_texture_from_file(int phase) {
+    std::string terrain = Tools::get_lines_from_dtm("./src/resource/map_" + to_string(phase) + ".dtm", "[TERRAIN]", "");
+    if (terrain.empty()) terrain = "Terrain";
+
+    terrain_tex.loadFromFile("./src/asset/image/" + terrain + "/Terrain (16x16).png");
+    terrain2_tex.loadFromFile("./src/asset/image/" + terrain + "/Terrain (32x32).png");
     door_tex.loadFromFile("./src/asset/image/door.png");
 
     ground.setTexture(terrain_tex);
@@ -49,8 +72,6 @@ Tilemap::Tilemap() {
     fire.setTexture(fire_tex);
     fire.setTextureRect(sf::IntRect(0, 0, 32, 32));
 }
-
-std::string Tilemap::map[H] = {};
 
 bool Tilemap::isPortal(int i, int j) {
     return map[i][j] == 'P' || map[i][j] == 'Q';
@@ -166,20 +187,21 @@ void Tilemap::draw(sf::RenderWindow* w) {
         plataform->draw(w);
     }
 }
-void Tilemap::load_from_file(int phase) {
-    int i;
-    string line;
+// void Tilemap::load_from_file(int phase) {
+//     int i;
+//     string line;
 
-    ifstream map_file("./src/resource/map_" + to_string(phase) + ".dtm");
+//     ifstream map_file("./src/resource/map_" + to_string(phase) + ".dtm");
 
-    i = 0;
-    while (getline(map_file, line)) {
-        this->W = line.length();
-        this->map[i] = line;
-        i++;
-    }
-    map_file.close();
-}
+//     i = 0;
+//     while (getline(map_file, line)) {
+//         this->W = line.length();
+//         this->map[i] = line;
+//         i++;
+//     }
+//     map_file.close();
+// }
+
 void Tilemap::load_plataforms() {
     plataforms.clear();
     for (int i{}; i < this->H; ++i) {

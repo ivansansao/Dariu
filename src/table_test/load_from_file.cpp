@@ -28,7 +28,7 @@ bool hasString(std::string line, std::string str) {
     return i_string > -1;
 }
 
-std::string get_lines_from_file(std::string filename, std::string tag, std::string endLine) {
+std::string get_lines_from_dtm(std::string filename, std::string tag, std::string endLine) {
     bool recording = tag.empty() || tag == "[]";
     std::string chunk = "";
     std::string line;
@@ -43,7 +43,6 @@ std::string get_lines_from_file(std::string filename, std::string tag, std::stri
             continue;
         }
         if (recording) {
-            // chunk += line.substr(0, 10) + "\n";
             chunk += line + endLine;
         }
     }
@@ -53,7 +52,7 @@ std::string get_lines_from_file(std::string filename, std::string tag, std::stri
 }
 
 void load_from_file(int phase) {
-    std::string lines = get_lines_from_file("../resource/map_" + std::to_string(phase) + ".dtm", "", "\n");
+    std::string lines = get_lines_from_dtm("../resource/map_" + std::to_string(phase) + ".dtm", "", "\n");
     std::stringstream ss(lines);
     std::string line;
     int q_lines = wordOccurrence(lines, "\n");
