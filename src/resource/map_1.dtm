@@ -1,25 +1,25 @@
 EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-E    ....                                                                                            Z            E
-E    ABBC                                                                                             T           E
-E       E                                                                                            .....        E
-E       E                                                                                            ABBBC        E
-E...    E                                                                                                         E
-EBBC    E                                                                                                  .......E
-E       E  Z     Z     Z                                                                                   ABBBBBBE
+E    ....                                                                                            Z      D.... E
+E    ABBC                                                                                             T     D.... E
+E       E                                                                                            .....  D.... E
+E       E                                                                                            ABBBC  D.... E
+E...    E                                                                                                   D  T  E
+EBBC    E                                                                                                  .DQ6...X
+E       E  Z     Z     Z                                                                                   AEBBBBBE
 E       E                                                                                                         E
 E    ...E........Q3........C    .          ..          ..          ..    ..    J.          .......B...............E
 E    ABBEBBBBBBBBBBBBBBBBBBF    B     .    BB     ..   BB    ..    BB    BB    BB          BBBBBBBEBBBBBBBBBBBBBBBE
-E       E                       E     B    EE     BB   EE    BB    EE    EE    EE                                 E
-E       E                       E     EC   EE     EE   EE    EE    EE    EE    EE    Q2                           E
-E...    E                       EC   AE    EE     EE   EE    EE    EE    EE    EE                                 E
-EBBC    E                       E     E    EE     EE   EE    EE    EE    EE    EE                                 E
+E       E         ......F       E     B    EE     BB   EE    BB    EE    EE    EE               D                 E
+E       E       T ......F       E     EC   EE     EE   EE    EE    EE    EE    EE    Q2         D Q4            P6E
+E...    E         ....P4F       EC   AE    EE     EE   EE    EE    EE    EE    EE               DBBBBBBBBBBBBBBBBBE
+EBBC    E       ABBBBBBBF       E     E    EE     EE   EE    EE    EE    EE    EE                                 E
 E       E                       E     E    EE     EE   EE    EE    EE    EE    EE                                 E
 E       E                       E     E    EE     EE   EE    EE    EE    EE    EE                                 E
 E    ...E                       E     E    EE     EE   EE    EE    EE    EE    EE                                 E
 E    ABBE                   Z   E     E    EE     EE   EE    EE    EE    EE    EE                                 E
 E                               E     E    EE     EE   EE    EE    EE    EE    EE P2    Q1                        E
-E                P1                                                                                               E
-E@       P3              ABC                                                                 .........  B         X
+E           P1                                                                                                    E
+E@               P3      ABC                                                                 .........  B         E
 EBBBBBBBBBBBBBBBBBBBBBBBBEEEBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBEBBBBBBBBBE
 [ENDBLOCK]
 [TERRAIN]

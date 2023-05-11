@@ -14,7 +14,7 @@ else
 endif
 CXXFLAGS=$(DEBUG) $(OPT) $(WARN) $(SFML) $(CPPVERSION)
 LD=g++
-OBJS= main.o game.o dariu.o tilemap.o tools.o actor.o animation.o score.o enimies.o plataform.o sounds.o
+OBJS= main.o game.o dariu.o tilemap.o tools.o actor.o animation.o score.o enimies.o plataform.o sounds.o bulletgun.o 
 all: $(OBJS)
 	$(LD) -o $(TARGET) $(OBJS) $(CXXFLAGS)
 	@$(REMOVE)
@@ -29,5 +29,6 @@ actor.o: ./src/model/actor.cpp ; $(CXX) -c $(CXXFLAGS) ./src/model/actor.cpp -o 
 animation.o: ./src/model/animation.cpp ; $(CXX) -c $(CXXFLAGS) ./src/model/animation.cpp -o animation.o
 score.o: ./src/model/score.cpp ; $(CXX) -c $(CXXFLAGS) ./src/model/score.cpp -o score.o
 enimies.o: ./src/model/enimies.cpp ; $(CXX) -c $(CXXFLAGS) ./src/model/enimies.cpp -o enimies.o
+bulletgun.o: ./src/model/bulletgun.cpp ; $(CXX) -c $(CXXFLAGS) ./src/model/bulletgun.cpp -o bulletgun.o
 plataform.o: ./src/model/plataform.cpp ; $(CXX) -c $(CXXFLAGS) ./src/model/plataform.cpp -o plataform.o
 sounds.o: ./src/model/sounds.cpp ; $(CXX) -c $(CXXFLAGS) ./src/model/sounds.cpp -o sounds.o

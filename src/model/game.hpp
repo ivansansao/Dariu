@@ -69,6 +69,7 @@ class Game {
     static std::string menuopc[menuopc_size];
     int menuopc_selected = 0;
     bool key_released = true;
+    bool editing = false;
 
     struct profile {
         int phases = 0;

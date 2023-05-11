@@ -15,7 +15,6 @@ Game::Game() {
     // window.create(sf::VideoMode(1280, 736), "Dariu", sf::Style::Titlebar | sf::Style::Close);
     window.setFramerateLimit(60);
     window.setPosition(sf::Vector2i(0, 0));
-    window.setMouseCursorVisible(false);
 
     view.reset(sf::FloatRect(0.f, 0.f, 1280.f, 736.f));
     gameover_loaded = false;
@@ -28,6 +27,8 @@ Game::Game() {
     fireworks_spr.setTexture(fireworks_tex);
     fireworks_i = 0;
     fireworks_j = 0;
+    editing = (std::string)std::getenv("DARIU_EDITING") == "1";
+    window.setMouseCursorVisible(editing);
 }
 
 std::string Game::menuopc[menuopc_size] = {"Jogar",
@@ -45,6 +46,7 @@ void Game::play() {
             phase_current = std::stoi(initial_phase) - 1;
         }
         load_phase();
+        std::cout << "Editing: " << this->editing << std::endl;
     }
     std::stringstream ss;
 
@@ -275,7 +277,7 @@ void Game::load_phase() {
 
     load_enimies();
 
-    dariu.score.bananas = 0;
+    // dariu.score.bananas = 0;
     dariu.score.thophy = 0;
     dariu.jetPack = false;
 
