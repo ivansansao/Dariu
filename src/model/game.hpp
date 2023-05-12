@@ -70,6 +70,7 @@ class Game {
     int menuopc_selected = 0;
     bool key_released = true;
     bool editing = false;
+    int editing_framecount = 1;
 
     struct profile {
         int phases = 0;

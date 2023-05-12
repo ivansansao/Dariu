@@ -63,9 +63,11 @@ class Tilemap {
     sf::Sprite fire;
     float i_fire = 0;
     const int q_fire = 4;
+    char edit_current_char;
 
     static std::string map[H];
     std::vector<Plataform *> plataforms;
+    std::string mapfile = "";
 
     void update();
     void draw(sf::RenderWindow *w);
@@ -75,5 +77,9 @@ class Tilemap {
     void load_plataforms();
     void replaceAll(char a, char b);
     void clear();
+    void edit(sf::RenderWindow *w, sf::Event event, sf::View view);
+    void edit_click();
+    void edit_save();
+    point getTileFromPixel(int x, int y, int heigh, int width);
 };
 #endif

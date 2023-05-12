@@ -27,8 +27,19 @@ Game::Game() {
     fireworks_spr.setTexture(fireworks_tex);
     fireworks_i = 0;
     fireworks_j = 0;
-    editing = (std::string)std::getenv("DARIU_EDITING") == "1";
-    window.setMouseCursorVisible(editing);
+    if (std::getenv("DARIU_EDITING")) {
+        editing = (std::string)std::getenv("DARIU_EDITING") == "1";
+        window.setMouseCursorVisible(editing);
+    }
+    if (std::getenv("DARIU_VOLUME_MUSIC")) {
+        const int vol_music = std::stoi(std::getenv("DARIU_VOLUME_MUSIC"));
+        sounds.volume_music = vol_music;
+    }
+    if (std::getenv("DARIU_VOLUME_EFFECT")) {
+        const int vol_effect = std::stoi(std::getenv("DARIU_VOLUME_EFFECT"));
+        sounds.volume_effect = vol_effect;
+    }
+    sounds.applyVolume();
 }
 
 std::string Game::menuopc[menuopc_size] = {"Jogar",
@@ -51,6 +62,14 @@ void Game::play() {
     std::stringstream ss;
 
     auto position = sf::Mouse::getPosition(window);
+
+    if (this->editing) {
+        if ((editing_framecount % 60) == 0) {
+            this->tilemap.load_from_file(this->phase_current);
+            std::cout << "Update\n";
+        }
+        editing_framecount++;
+    }
 
     this->dariu.update(&tilemap, &sounds);
     this->tilemap.update();
@@ -131,6 +150,7 @@ void Game::play() {
     }
 
     window.display();
+
     const float i = dariu.pos.top / 32;
     const float j = dariu.pos.left / 32;
 
@@ -363,7 +383,7 @@ void Game::check_collisions_enimies() {
                         dariuJump = true;
                         catraca->die(&sounds);
                     } else {
-                        dariu.die(&sounds);
+                        if (!this->editing) dariu.die(&sounds);
                     }
                 }
             }
@@ -376,7 +396,7 @@ void Game::check_collisions_enimies() {
                         dariuJump = true;
                         sova->die(&sounds);
                     } else {
-                        dariu.die(&sounds);
+                        if (!this->editing) dariu.die(&sounds);
                     }
                 }
             }
@@ -388,7 +408,7 @@ void Game::check_collisions_enimies() {
                         dariuJump = true;
                         bulletc->die(&sounds);
                     } else {
-                        dariu.die(&sounds);
+                        if (!this->editing) dariu.die(&sounds);
                     }
                 }
             }
@@ -588,6 +608,15 @@ void Game::loop_events() {
                 this->dariu.space_released = true;
             }
         }
+
+        // if (this->editing) {
+        //     // this->tilemap.edit(&window, event, view);
+        //     if ((editing_framecount % 10) == 0) {
+        //         this->tilemap.load_from_file(this->phase_current);
+        //         std::cout << "Update\n";
+        //     }
+        //     editing_framecount++;
+        // }
     }
 }
 

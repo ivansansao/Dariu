@@ -62,7 +62,7 @@ void Actor::set_position(float left, float top) {
     start_pos.top = top;
 }
 void Actor::reset_position() {
-    pos = sf::FloatRect(start_pos.left, start_pos.top, 32.f, 32.f);
+    this->pos = sf::FloatRect(start_pos.left, start_pos.top, 32.f, 32.f);
 }
 void Actor::update(Tilemap *tilemap, Sounds *sounds) {
     if (this->jetPack) {

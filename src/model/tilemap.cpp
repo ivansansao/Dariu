@@ -19,7 +19,8 @@ void Tilemap::load_from_file(int phase) {
     this->load_texture_from_file(phase);
 }
 void Tilemap::load_map_from_file(int phase) {
-    std::string lines = Tools::get_lines_from_dtm("./src/resource/map_" + to_string(phase) + ".dtm", "", "\n");
+    this->mapfile = "./src/resource/map_" + to_string(phase) + ".dtm";
+    std::string lines = Tools::get_lines_from_dtm(this->mapfile, "", "\n");
     std::stringstream ss(lines);
     std::string line;
     int i = 0;
@@ -229,3 +230,68 @@ void Tilemap::replaceAll(char a, char b) {
 void Tilemap::clear() {
     this->door_opened = false;
 }
+point Tilemap::getTileFromPixel(int x, int y, int height, int width) {
+    point coord;
+    coord.i = (int)y / height;
+    coord.j = (int)x / width;
+    coord.l = this->map[coord.i][coord.j];
+    return coord;
+}
+void Tilemap::edit(sf::RenderWindow* w, sf::Event event, sf::View view) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+        this->edit_current_char = 'A';
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::B))
+        this->edit_current_char = 'B';
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::N))
+        this->edit_current_char = 'b';
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::C))
+        this->edit_current_char = 'C';
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+        this->edit_current_char = 'D';
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
+        this->edit_current_char = 'E';
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
+        this->edit_current_char = 'F';
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::H))
+        this->edit_current_char = 'H';
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))
+        this->edit_current_char = 'P';
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
+        this->edit_current_char = 'Q';
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
+        this->edit_current_char = 'R';
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::J))
+        this->edit_current_char = 'J';
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::T))
+        this->edit_current_char = 'T';
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Y))
+        this->edit_current_char = 'Y';
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::X))
+        this->edit_current_char = 'X';
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
+        this->edit_current_char = 'Z';
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Period))
+        this->edit_current_char = '.';
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+        this->edit_current_char = ' ';
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::F2))
+        this->edit_save();
+
+    if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
+        sf::Vector2i mousePos = sf::Mouse::getPosition(*w);
+        sf::Vector2f worldPos = w->mapPixelToCoords(mousePos);
+        point p = this->getTileFromPixel(worldPos.x, worldPos.y, 32, 32);
+        this->map[p.i][p.j] = this->edit_current_char;
+    }
+};
+void Tilemap::edit_click(){
+
+};
+void Tilemap::edit_save() {
+    for (int i{}; i < this->H; ++i) {
+        for (int j{}; j < this->W; j++) {
+            std::cout << this->map[i][j];
+        }
+        std::cout << endl;
+    }
+};

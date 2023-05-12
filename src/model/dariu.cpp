@@ -49,13 +49,11 @@ void Dariu::update(Tilemap *tilemap, Sounds *sounds) {
         case (States::Dieing): {
             add_gravity();
             if (pos.top > (tilemap->H * 32) + 32) state = States::Died;
-            actor_spr.setPosition(pos.left, pos.top);
             break;
         }
         case (States::Died): {
             state = States::ReviveStart;
             score.darius--;
-            actor_spr.setPosition(pos.left, pos.top);
             tilemap->replaceAll('j', 'J');
             this->jetPackFuel = 0;
             break;
@@ -63,20 +61,19 @@ void Dariu::update(Tilemap *tilemap, Sounds *sounds) {
         case (States::ReviveStart): {
             state = States::Reviving;
             reset_position();
-            jump();
+            jump(true);
+
             break;
         }
         case (States::Reviving): {
             add_gravity();
-            if (velocity.y == 0) {
-                state = States::Revived;
-            }
-            actor_spr.setPosition(pos.left, pos.top);
+            state = States::Revived;
+
             break;
         }
         case (States::Revived): {
             state = States::Normal;
-            actor_spr.setPosition(pos.left, pos.top);
+
             break;
         }
     }
@@ -84,6 +81,7 @@ void Dariu::update(Tilemap *tilemap, Sounds *sounds) {
     if (score.darius < 0) {
         over = true;
     }
+    actor_spr.setPosition(pos.left, pos.top);
 }
 void Dariu::draw(sf::RenderWindow *w, int phase) {
     Actor::draw(w);
