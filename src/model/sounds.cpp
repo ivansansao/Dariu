@@ -26,6 +26,10 @@ Sounds::Sounds() {
     jump_buffer.loadFromFile("./src/asset/sound/jump.ogg");
     jump_sound.setBuffer(jump_buffer);
 
+    jetpack_buffer.loadFromFile("./src/asset/sound/Jetpack.ogg");
+    jetpack_sound.setBuffer(jetpack_buffer);
+    jetpack_sound.setLoop(true);
+
     dooropen.loadFromFile("./src/asset/sound/dooropen.ogg");
     dooropen_sound.setBuffer(dooropen);
 
@@ -80,6 +84,7 @@ void Sounds::applyVolume() {
     music_gameover.setVolume(volume_music);
     music_gamewin.setVolume(volume_music);
 
+    jetpack_sound.setVolume(volume_effect);
     jump_sound.setVolume(volume_effect);
     dooropen_sound.setVolume(volume_effect);
     fired_sound.setVolume(volume_effect);

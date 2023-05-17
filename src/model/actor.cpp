@@ -68,6 +68,9 @@ void Actor::update(Tilemap *tilemap, Sounds *sounds) {
     if (this->jetPack) {
         this->updateFly(tilemap, sounds);
     } else {
+        if (sounds->jetpack_sound.Playing == sf::Sound::Status::Playing) {
+            sounds->jetpack_sound.pause();
+        }
         this->updateWalk(tilemap, sounds);
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Joystick::isButtonPressed(0, sf::Joystick::X)) {
@@ -149,6 +152,10 @@ void Actor::updateWalk(Tilemap *tilemap, Sounds *sounds) {
 void Actor::updateFly(Tilemap *tilemap, Sounds *sounds) {
     if (this->jetPackFuel > 0) {
         this->jetPackFuel -= this->jetPackConsume;
+        if (sounds->jetpack_sound.getStatus() == sf::Sound::Status::Stopped ||
+            sounds->jetpack_sound.getStatus() == sf::Sound::Status::Paused) {
+            sounds->jetpack_sound.play();
+        }
     }
     if (this->jetPackFuel <= 0) {
         this->jetPack = false;
