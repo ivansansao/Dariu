@@ -5,9 +5,9 @@ A plataform game
 Veja gameplay no Youtube 🚀 
 https://youtu.be/lxCaeRWEStc
 
-![Alt Text](src/asset/show2.gif)
-
 ![Alt Text](src/asset/show1.gif)
+
+![Alt Text](src/asset/show2.gif)
 
 ## Compile Linux
 
