@@ -439,9 +439,7 @@ void Game::save_profile() {
     if (phase_current > profile.phases) {
         save = true;
     } else if (phase_current == profile.phases) {
-        if (dariu.score.darius > profile.lifes) {
-            save = true;
-        } else if (seconds_playing < profile.seconds_playing) {
+        if (seconds_playing < profile.seconds_playing) {
             save = true;
         }
     }
