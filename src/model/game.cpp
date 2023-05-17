@@ -11,8 +11,16 @@
 using namespace std;
 
 Game::Game() {
-    window.create(sf::VideoMode(sf::VideoMode::getDesktopMode().width, sf::VideoMode::getDesktopMode().height, 32), "Dariu", sf::Style::Fullscreen);
-    // window.create(sf::VideoMode(1280, 736), "Dariu", sf::Style::Titlebar | sf::Style::Close);
+    bool fullscreen = true;
+    if (std::getenv("DARIU_FULLSCREEN")) {
+        fullscreen = (std::string)std::getenv("DARIU_FULLSCREEN") == "1";
+    }
+
+    if (fullscreen) {
+        window.create(sf::VideoMode(sf::VideoMode::getDesktopMode().width, sf::VideoMode::getDesktopMode().height, 32), "Dariu", sf::Style::Fullscreen);
+    } else {
+        window.create(sf::VideoMode(1280, 736), "Dariu", sf::Style::Titlebar | sf::Style::Close);
+    }
     window.setFramerateLimit(60);
     window.setPosition(sf::Vector2i(0, 0));
 
@@ -27,6 +35,7 @@ Game::Game() {
     fireworks_spr.setTexture(fireworks_tex);
     fireworks_i = 0;
     fireworks_j = 0;
+    window.setMouseCursorVisible(false);
     if (std::getenv("DARIU_EDITING")) {
         editing = (std::string)std::getenv("DARIU_EDITING") == "1";
         window.setMouseCursorVisible(editing);
@@ -61,7 +70,7 @@ void Game::play() {
     }
     std::stringstream ss;
 
-    auto position = sf::Mouse::getPosition(window);
+    // auto position = sf::Mouse::getPosition(window);
 
     if (this->editing) {
         if ((editing_framecount % 60) == 0) {
@@ -113,6 +122,10 @@ void Game::play() {
         } else {
             view.reset(sf::FloatRect(2400.f, 0.f, 1280, 736.f));
         }
+    } else {
+        if (dariu.pos.left > 2000) {
+            view.reset(sf::FloatRect(2400.f, 0.f, 1280, 736.f));
+        }
     }
 
     if (dariu.win) {
@@ -151,10 +164,10 @@ void Game::play() {
 
     window.display();
 
-    const float i = dariu.pos.top / 32;
-    const float j = dariu.pos.left / 32;
+    // const float i = dariu.pos.top / 32;
+    // const float j = dariu.pos.left / 32;
 
-    ss << "Mouse (" << position.x << "," << position.y << ") Dariu (" << dariu.pos.top << "," << dariu.pos.left << ") i/32,j/32 (" << i << " , " << j << ") Bloco da esquerda: " << (int)Tools::floor_special(j + 1, 0.71) << " Bloco da direita: " << (int)Tools::ceil_special(j, 0.39);
+    // ss << "Mouse (" << position.x << "," << position.y << ") Dariu (" << dariu.pos.top << "," << dariu.pos.left << ") i/32,j/32 (" << i << " , " << j << ") Bloco da esquerda: " << (int)Tools::floor_special(j + 1, 0.71) << " Bloco da direita: " << (int)Tools::ceil_special(j, 0.39);
     window.setTitle(ss.str());
 }
 
