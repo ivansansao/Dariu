@@ -19,6 +19,10 @@ Sounds::Sounds() {
     music_gamewin.setLoop(true);
 
     // Effects
+
+    chain_buffer.loadFromFile("./src/asset/sound/chain.ogg");
+    chain_sound.setBuffer(chain_buffer);
+
     jump_buffer.loadFromFile("./src/asset/sound/jump.ogg");
     jump_sound.setBuffer(jump_buffer);
 

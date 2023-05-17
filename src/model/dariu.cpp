@@ -170,6 +170,7 @@ void Dariu::on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds) {
             if (gate.found) {
                 tilemap->map[i][j] = 'k';
                 tilemap->map[gate.i][gate.j] = 'g';
+                sounds->chain_sound.play();
             } else {
                 break;
             }

@@ -23,6 +23,9 @@ class Sounds {
     sf::SoundBuffer jump_buffer;
     sf::Sound jump_sound;
 
+    sf::SoundBuffer chain_buffer;
+    sf::Sound chain_sound;
+
     sf::SoundBuffer fired;
     sf::Sound fired_sound;
 
