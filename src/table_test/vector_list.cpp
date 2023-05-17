@@ -10,6 +10,11 @@ class Student {
 };
 
 int main() {
+    char charNum = '2';
+    int intNum = std::atoi(&charNum);
+    cout << intNum;
+    cout << "end\n";
+
     // Vector of class objects
     vector<Student> v;
     Student s;

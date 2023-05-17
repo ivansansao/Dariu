@@ -346,7 +346,7 @@ void Actor::collision_portal(Tilemap *tilemap, Sounds *sounds) {
     } else {
         if (tilemap->isPortal(posMap.i, posMap.j)) {
             onPortal = true;
-            auto point = tilemap->getMapOppositPortal(posMap.i, posMap.j);
+            const auto point = tilemap->getMapOppositPortal(posMap.i, posMap.j);
 
             if (point.found) {
                 this->pos.top = point.i * this->pos.height;

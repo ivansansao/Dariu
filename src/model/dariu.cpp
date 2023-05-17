@@ -162,4 +162,17 @@ void Dariu::on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds) {
         }
         win = true;
     }
+    if (tilemap->map[i][j] == 'K') {
+        for (int t = 0; t <= 999; t++) {
+            const int number = tilemap->getTileNumber(i, j);
+            const auto gate = tilemap->getTileByNameNumber('G', number);
+
+            if (gate.found) {
+                tilemap->map[i][j] = 'k';
+                tilemap->map[gate.i][gate.j] = 'g';
+            } else {
+                break;
+            }
+        }
+    }
 }

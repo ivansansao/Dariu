@@ -10,6 +10,8 @@ Tilemap::Tilemap() {
     portalP.init(0, 0.f, "./src/asset/image/PortalP.png", sf::IntRect(0, 0, 32, 32), true);
     portalQ.init(0, 0.f, "./src/asset/image/PortalQ.png", sf::IntRect(0, 0, 32, 32), true);
     trophy.init(8, 0.2f, "./src/asset/image/Items/Checkpoints/End/End (Pressed) (64x64).png", sf::IntRect(0, 0, 64, 64), false);
+    gate.init(0, 0.f, "./src/asset/image/gate.png", sf::IntRect(0, 0, 32, 32), true);
+    gatekey.init(0, 0.f, "./src/asset/image/gatekey.png", sf::IntRect(0, 0, 32, 32), true);
 }
 
 std::string Tilemap::map[H] = {};
@@ -77,23 +79,20 @@ void Tilemap::load_texture_from_file(int phase) {
 bool Tilemap::isPortal(int i, int j) {
     return map[i][j] == 'P' || map[i][j] == 'Q';
 };
-int Tilemap::getPortalNumber(int i, int j) {
+int Tilemap::getTileNumber(int i, int j) {
     char charNum = map[i][j + 1];
-    int intNum = (int)charNum;
+    // int intNum = (int)charNum;
+    int intNum = std::atoi(&charNum);
     return intNum;
 };
 
-point Tilemap::getMapOppositPortal(int i, int j) {
-    char currentLetter = map[i][j];
-    int currentNumber = this->getPortalNumber(i, j);
-
+point Tilemap::getTileByNameNumber(char name, int number) {
     point op;
 
-    // Search opossit side
     for (int i{}; i < this->H; ++i) {
         for (int j{}; j < this->W; j++) {
-            if (this->map[i][j] != currentLetter) {
-                if (currentNumber == this->getPortalNumber(i, j)) {
+            if (this->map[i][j] == name) {
+                if (number == this->getTileNumber(i, j)) {
                     op.i = i;
                     op.j = j;
                     op.l = this->map[i][j];
@@ -102,6 +101,13 @@ point Tilemap::getMapOppositPortal(int i, int j) {
             }
         }
     }
+    return op;
+};
+
+point Tilemap::getMapOppositPortal(int i, int j) {
+    const char name = map[i][j] == 'P' ? 'Q' : 'P';
+    const int number = this->getTileNumber(i, j);
+    const auto op = this->getTileByNameNumber(name, number);
     return op;
 };
 
@@ -169,6 +175,10 @@ void Tilemap::draw(sf::RenderWindow* w) {
                 portalP.draw(j * 32, i * 32, w);
             } else if (map[i][j] == 'Q') {
                 portalQ.draw(j * 32, i * 32, w);
+            } else if (map[i][j] == 'G') {
+                gate.draw(j * 32, i * 32, w);
+            } else if (map[i][j] == 'K') {
+                gatekey.draw(j * 32, i * 32, w);
             } else if (map[i][j] == 'X') {
                 ground_door_closed.setPosition(j * 32, i * 32);
                 w->draw(ground_door_closed);

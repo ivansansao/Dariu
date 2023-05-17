@@ -27,8 +27,8 @@ class Tilemap {
 
     bool isPortal(int i, int j);
 
-    int getPortalNumber(int i, int j);
-
+    int getTileNumber(int i, int j);
+    point getTileByNameNumber(char name, int number);
     point getMapOppositPortal(int i, int j);
 
     Animation jetpack;
@@ -36,6 +36,8 @@ class Tilemap {
     Animation portalP;
     Animation portalQ;
     Animation trophy;
+    Animation gate;
+    Animation gatekey;
 
     sf::RenderWindow window;
     sf::Texture terrain_tex;

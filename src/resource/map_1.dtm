@@ -12,14 +12,14 @@ E    ABBEBBBBBBBBBBBBBBBBBBF    B     .    BB     ..   BB    ..    BB    BB    B
 E       E         ......F       E     B    EE     BB   EE    BB    EE    EE    EE               D                 E
 E       E       T ......F       E     EC   EE     EE   EE    EE    EE    EE    EE    Q2         D Q4            P6E
 E...    E         ....P4F       EC   AE    EE     EE   EE    EE    EE    EE    EE               DBBBBBBBBBBBBBBBBBE
-EBBC    E       ABBBBBBBF       E     E    EE     EE   EE    EE    EE    EE    EE                                 E
-E       E                       E     E    EE     EE   EE    EE    EE    EE    EE                                 E
-E       E                       E     E    EE     EE   EE    EE    EE    EE    EE                                 E
-E    ...E                       E     E    EE     EE   EE    EE    EE    EE    EE                                 E
-E    ABBE                   Z   E     E    EE     EE   EE    EE    EE    EE    EE                                 E
-E                               E     E    EE     EE   EE    EE    EE    EE    EE P2    Q1                        E
-E           P1                                                                                                    E
-E@               P3      ABC                                                                 .........  B         E
+EBBC    E       ABBBBBBBF       E     E    EE     EE   EE    EE    EE    EE    EE                 D    D     D    E
+E       E                       E     E    EE     EE   EE    EE    EE    EE    EE                 D    D     D    E
+E       E                       E     E    EE     EE   EE    EE    EE    EE    EE                 D    D     D    E
+E    ...E                       E     E    EE     EE   EE    EE    EE    EE    EE                 D    D     D    E
+E    ABBE                   Z   E     E    EE     EE   EE    EE    EE    EE    EE                 D    D     D    E
+E                               E     E    EE     EE   EE    EE    EE    EE    EE P2    Q1        D    D     D    E
+E           P1                                                                                    D    G1    D    E
+E@               P3      ABC                                                                        K1 G1 K2 G2   E
 EBBBBBBBBBBBBBBBBBBBBBBBBEEEBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBEBBBBBBBBBE
 [ENDBLOCK]
 [TERRAIN]
