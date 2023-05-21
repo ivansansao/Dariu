@@ -151,7 +151,7 @@ void Dariu::on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds) {
         tilemap->map[i][j] = 'B';
     }
     if (tilemap->map[i][j] == 'J') {
-        if (this->jetPackFuel == 0) {
+        if (this->jetPackFuel < this->jetPackCapacity) {
             this->jetPackFuel = this->jetPackCapacity;
             tilemap->map[i][j] = 'j';
         }
