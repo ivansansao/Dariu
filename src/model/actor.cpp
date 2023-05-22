@@ -88,7 +88,7 @@ void Actor::update(Tilemap *tilemap, Sounds *sounds) {
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)) {
         if (controll_released) {
-            shot();
+            shot(sounds);
             controll_released = false;
         }
     }
@@ -404,7 +404,7 @@ void Actor::drawJetpackTime(sf::RenderWindow *w) {
     rectangle.setSize(sf::Vector2f(barFuel, 3));
     w->draw(rectangle);
 }
-void Actor::shot() {
+void Actor::shot(Sounds *sounds) {
     if (this->is_alive()) {
         auto bullet = new BulletGun();
         bullet->pos.top = this->pos.top + (this->pos.height / 4);

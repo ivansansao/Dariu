@@ -69,7 +69,7 @@ class Actor {
     virtual void reset_position();
     virtual void die(Sounds *sounds);
     virtual void drawJetpackTime(sf::RenderWindow *w);
-    virtual void shot();
+    virtual void shot(Sounds *sounds);
     virtual void update_bullets(Tilemap *tilemap, Sounds *sounds);
     virtual void draw_bullets(sf::RenderWindow *w);
 

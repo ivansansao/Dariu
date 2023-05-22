@@ -119,7 +119,7 @@ Sova::Sova() {
 void Sova::update(Tilemap *tilemap, Sounds *sounds) {
     Enimy::update(tilemap, sounds);
     if (this->updates % 150 == 0) {
-        Enimy::shot();
+        Enimy::shot(sounds);
     }
     Enimy::update_bullets(tilemap, sounds);
     this->updates++;

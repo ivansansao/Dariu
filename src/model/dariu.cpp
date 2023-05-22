@@ -177,3 +177,8 @@ void Dariu::on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds) {
         }
     }
 }
+
+void Dariu::shot(Sounds *sounds) {
+    Actor::shot(sounds);
+    sounds->shot_sound.play();
+}

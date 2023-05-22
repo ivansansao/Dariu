@@ -25,5 +25,6 @@ class Dariu : public Actor {
     void on_collide(std::string where, int i, int j, Tilemap *tilemap, Sounds *sounds);
     void on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds);
     void die(Sounds *sounds);
+    void shot(Sounds *sounds);
 };
 #endif

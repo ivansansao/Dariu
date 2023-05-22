@@ -23,6 +23,9 @@ Sounds::Sounds() {
     chain_buffer.loadFromFile("./src/asset/sound/chain.ogg");
     chain_sound.setBuffer(chain_buffer);
 
+    shot_buffer.loadFromFile("./src/asset/sound/shot.ogg");
+    shot_sound.setBuffer(shot_buffer);
+
     jump_buffer.loadFromFile("./src/asset/sound/jump.ogg");
     jump_sound.setBuffer(jump_buffer);
 
@@ -101,4 +104,6 @@ void Sounds::applyVolume() {
     pop_sound9.setVolume(volume_effect);
     enimydie_sound.setVolume(volume_effect);
     levelcomplete_sound.setVolume(volume_effect);
+    chain_sound.setVolume(volume_effect);
+    shot_sound.setVolume(volume_effect);
 }

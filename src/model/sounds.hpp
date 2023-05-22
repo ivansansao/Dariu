@@ -26,6 +26,9 @@ class Sounds {
     sf::SoundBuffer chain_buffer;
     sf::Sound chain_sound;
 
+    sf::SoundBuffer shot_buffer;
+    sf::Sound shot_sound;
+
     sf::SoundBuffer jetpack_buffer;
     sf::Sound jetpack_sound;
 
