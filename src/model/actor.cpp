@@ -426,11 +426,16 @@ void Actor::draw_bullets(sf::RenderWindow *w) {
 }
 void Actor::update_bullets(Tilemap *tilemap, Sounds *sounds) {
     int index = 0;
+    bool found = false;
     for (auto &bullet : this->bulletguns) {
         bullet->update(tilemap, sounds);
         if (bullet->collided) {
-            this->bulletguns.erase(this->bulletguns.begin() + index);
+            found = true;
+            break;
         }
         index++;
+    }
+    if (found) {
+        this->bulletguns.erase(this->bulletguns.begin() + index);
     }
 }

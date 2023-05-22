@@ -85,5 +85,7 @@ class Tilemap {
     point getTileFromPixel(int x, int y, int heigh, int width);
     bool free_path(int i, int j);
     bool free_path_bullet(int i, int j);
+    // char *tile(int i, int j);
+    bool is_valid(int i, int j);
 };
 #endif
