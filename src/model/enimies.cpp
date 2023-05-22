@@ -118,6 +118,12 @@ Sova::Sova() {
 
 void Sova::update(Tilemap *tilemap, Sounds *sounds) {
     Enimy::update(tilemap, sounds);
+    if (this->updates % 150 == 0) {
+        Enimy::shot();
+    }
+    Enimy::update_bullets(tilemap, sounds);
+    this->updates++;
+    if (this->updates > 9999) this->updates = 0;
 }
 void Sova::draw(sf::RenderWindow *w) {
     actor_spr.setPosition(pos.left, pos.top);
@@ -126,6 +132,7 @@ void Sova::draw(sf::RenderWindow *w) {
         actor_spr.setTextureRect(sf::IntRect(Tools::getStartSprite((int)pos.left % 6, direction_x * -1) * 32, 0, (direction_x * -1) * 32, 32));
     }
     w->draw(actor_spr);
+    Enimy::draw_bullets(w);
 }
 void Sova::on_collide(std::string where, int i, int j, Tilemap *tilemap, Sounds *sounds) {
     Enimy::on_collide(where, i, j, tilemap, sounds);

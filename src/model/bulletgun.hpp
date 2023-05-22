@@ -13,6 +13,8 @@ class BulletGun {
    public:
     BulletGun();
     Animation bulletGun;
+    sf::FloatRect pos;
+    bool collided = false;
     virtual void draw(sf::RenderWindow *w);
     virtual void update(Tilemap *tilemap, Sounds *sounds);
 };

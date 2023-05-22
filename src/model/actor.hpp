@@ -5,6 +5,7 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 
+#include "bulletgun.hpp"
 #include "sounds.hpp"
 #include "tilemap.hpp"
 
@@ -30,6 +31,8 @@ class Actor {
     sf::FloatRect abs_pos;
     sf::Vector2f velocity;
 
+    std::vector<BulletGun *> bulletguns;
+
     enum States { Normal,
                   DieStart,
                   Dieing,
@@ -38,6 +41,7 @@ class Actor {
                   Reviving,
                   Revived } state = Normal;
 
+    int updates = 0;
     int direction_x;
     float i_idle_sprite;
     float gravity;
@@ -51,6 +55,7 @@ class Actor {
     bool key_released = true;
     bool up_released = true;
     bool space_released = true;
+    bool controll_released = true;
 
     bool onPortal = false;
 
@@ -64,6 +69,9 @@ class Actor {
     virtual void reset_position();
     virtual void die(Sounds *sounds);
     virtual void drawJetpackTime(sf::RenderWindow *w);
+    virtual void shot();
+    virtual void update_bullets(Tilemap *tilemap, Sounds *sounds);
+    virtual void draw_bullets(sf::RenderWindow *w);
 
     void jump();
     void jump(bool little);

@@ -70,8 +70,6 @@ void Game::play() {
     }
     std::stringstream ss;
 
-    // auto position = sf::Mouse::getPosition(window);
-
     if (this->editing) {
         if ((editing_framecount % 60) == 0) {
             this->tilemap.load_from_file(this->phase_current);
@@ -162,13 +160,22 @@ void Game::play() {
         cannon->draw(&window);
     }
 
-    window.display();
+    window.setMouseCursorVisible(false);
 
+    // auto mouse = sf::Mouse::getPosition(window);
     // const float i = dariu.pos.top / 32;
     // const float j = dariu.pos.left / 32;
-
     // ss << "Mouse (" << position.x << "," << position.y << ") Dariu (" << dariu.pos.top << "," << dariu.pos.left << ") i/32,j/32 (" << i << " , " << j << ") Bloco da esquerda: " << (int)Tools::floor_special(j + 1, 0.71) << " Bloco da direita: " << (int)Tools::ceil_special(j, 0.39);
-    window.setTitle(ss.str());
+    // ss << "Mouse (" << mouse.x << "," << mouse.y << ") " << mouse.x / 32 << tilemap.map[mouse.y / 32][mouse.x / 32];
+    // window.setTitle(ss.str());
+    // sf::RectangleShape rectangle;
+    // rectangle.setSize(sf::Vector2f(1, 1));
+    // rectangle.setOutlineColor(sf::Color::Red);
+    // // rectangle.setOutlineThickness(5);
+    // rectangle.setPosition(mouse.x, mouse.y);
+    // window.draw(rectangle);
+
+    window.display();
 }
 
 void Game::resume() {
@@ -399,6 +406,11 @@ void Game::check_collisions_enimies() {
                         if (!this->editing) dariu.die(&sounds);
                     }
                 }
+                for (auto& bullet : dariu.bulletguns) {
+                    if (bullet->pos.intersects(catraca->pos)) {
+                        catraca->die(&sounds);
+                    }
+                }
             }
         }
 
@@ -412,6 +424,16 @@ void Game::check_collisions_enimies() {
                         if (!this->editing) dariu.die(&sounds);
                     }
                 }
+                for (auto& bullet : sova->bulletguns) {
+                    if (bullet->pos.intersects(dariu.pos)) {
+                        if (!this->editing) dariu.die(&sounds);
+                    }
+                }
+                for (auto& bullet : dariu.bulletguns) {
+                    if (bullet->pos.intersects(sova->pos)) {
+                        sova->die(&sounds);
+                    }
+                }
             }
         }
         for (auto& bulletc : bulletcs) {
@@ -422,6 +444,11 @@ void Game::check_collisions_enimies() {
                         bulletc->die(&sounds);
                     } else {
                         if (!this->editing) dariu.die(&sounds);
+                    }
+                }
+                for (auto& bullet : dariu.bulletguns) {
+                    if (bullet->pos.intersects(bulletc->pos)) {
+                        bulletc->die(&sounds);
                     }
                 }
             }
@@ -610,6 +637,8 @@ void Game::loop_events() {
                 }
             } else if (event.key.code == sf::Keyboard::Up) {
                 this->dariu.up_released = true;
+            } else if (event.key.code == sf::Keyboard::LControl) {
+                this->dariu.controll_released = true;
             } else if (event.key.code == sf::Keyboard::Space) {
                 this->dariu.space_released = true;
             }
@@ -617,6 +646,7 @@ void Game::loop_events() {
             if (event.type == sf::Event::JoystickButtonReleased) {
                 this->dariu.up_released = true;
                 this->dariu.space_released = true;
+                this->dariu.controll_released = true;
             }
         }
 

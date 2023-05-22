@@ -65,6 +65,9 @@ void Actor::reset_position() {
     this->pos = sf::FloatRect(start_pos.left, start_pos.top, 32.f, 32.f);
 }
 void Actor::update(Tilemap *tilemap, Sounds *sounds) {
+    updates++;
+    if (updates > 9999) updates = 0;
+
     if (this->jetPack) {
         this->updateFly(tilemap, sounds);
     } else {
@@ -83,6 +86,7 @@ void Actor::update(Tilemap *tilemap, Sounds *sounds) {
             }
         }
     }
+    update_bullets(tilemap, sounds);
 }
 void Actor::updateWalk(Tilemap *tilemap, Sounds *sounds) {
     // ---------------- Y ----------------
@@ -108,6 +112,12 @@ void Actor::updateWalk(Tilemap *tilemap, Sounds *sounds) {
                 jump();
                 up_released = false;
             }
+        }
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)) {
+        if (controll_released) {
+            shot();
+            controll_released = false;
         }
     }
 
@@ -314,6 +324,8 @@ void Actor::draw(sf::RenderWindow *w) {
         rectangle.setPosition(sf::Vector2f(pos.left, pos.top));
         w->draw(rectangle);
     }
+
+    this->draw_bullets(w);
 }
 void Actor::play_sound_pop(Sounds *sounds) {
     if (sounds->pop_sound0.getStatus() == 0) {
@@ -391,4 +403,34 @@ void Actor::drawJetpackTime(sf::RenderWindow *w) {
     rectangle.setPosition(sf::Vector2f(xLeft, pos.top + barTotal));
     rectangle.setSize(sf::Vector2f(barFuel, 3));
     w->draw(rectangle);
+}
+void Actor::shot() {
+    if (this->is_alive()) {
+        auto bullet = new BulletGun();
+        bullet->pos.top = this->pos.top + (this->pos.height / 4);
+        if (this->direction_x > 0) {
+            bullet->pos.left = this->pos.left + this->pos.width - (bullet->bulletGun.sprite.getLocalBounds().width);
+        } else {
+            bullet->pos.left = this->pos.left;
+        }
+        bullet->pos.width = bullet->bulletGun.sprite.getLocalBounds().width;
+        bullet->pos.height = bullet->bulletGun.sprite.getLocalBounds().height;
+        bullet->bulletGun.direction_x = this->direction_x;
+        this->bulletguns.push_back(bullet);
+    }
+}
+void Actor::draw_bullets(sf::RenderWindow *w) {
+    for (auto &bullet : this->bulletguns) {
+        bullet->draw(w);
+    }
+}
+void Actor::update_bullets(Tilemap *tilemap, Sounds *sounds) {
+    int index = 0;
+    for (auto &bullet : this->bulletguns) {
+        bullet->update(tilemap, sounds);
+        if (bullet->collided) {
+            this->bulletguns.erase(this->bulletguns.begin() + index);
+        }
+        index++;
+    }
 }

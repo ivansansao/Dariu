@@ -83,5 +83,7 @@ class Tilemap {
     void edit_click();
     void edit_save();
     point getTileFromPixel(int x, int y, int heigh, int width);
+    bool free_path(int i, int j);
+    bool free_path_bullet(int i, int j);
 };
 #endif
