@@ -206,7 +206,7 @@ void Game::win() {
     text_gamewin.setFont(font_roboto);
     text_gamewin.setCharacterSize(16);
     text_gamewin.setFillColor(sf::Color::White);
-    text_gamewin.setString(L"ESC - Voltar ao menu");
+    text_gamewin.setString(L"V - Voltar ao menu");
     text_gamewin.setPosition(sf::Vector2f(600 - text_gamewin.getGlobalBounds().width / 2, window.getSize().y / 2 - text_gamewin.getGlobalBounds().height / 2 + 120));
     window.draw(text_gamewin);
 
@@ -228,7 +228,7 @@ void Game::win() {
 
     window.display();
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::V)) {
         gamewin_loaded = false;
         sounds.music_gamewin.stop();
         game_loaded = false;
@@ -262,13 +262,13 @@ void Game::over() {
     text_gameover.setFont(font_roboto);
     text_gameover.setCharacterSize(16);
     text_gameover.setFillColor(sf::Color::White);
-    text_gameover.setString(L"ESC - Voltar ao menu");
+    text_gameover.setString(L"V - Voltar ao menu");
     text_gameover.setPosition(sf::Vector2f(600 - text_gameover.getGlobalBounds().width / 2, window.getSize().y / 2 - text_gameover.getGlobalBounds().height / 2 + 120));
     window.draw(text_gameover);
 
     window.display();
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::V)) {
         gameover_loaded = false;
         sounds.music_gameover.stop();
         game_loaded = false;
@@ -320,6 +320,7 @@ void Game::load_phase() {
     // dariu.score.bananas = 0;
     dariu.score.thophy = 0;
     dariu.jetPack = false;
+    dariu.jetPackFuel = 0;
 
     // Read quantity of bananas from tilemap.
     dariu.score.bananas_total = 0;
