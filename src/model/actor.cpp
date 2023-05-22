@@ -86,6 +86,12 @@ void Actor::update(Tilemap *tilemap, Sounds *sounds) {
             }
         }
     }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)) {
+        if (controll_released) {
+            shot();
+            controll_released = false;
+        }
+    }
     update_bullets(tilemap, sounds);
 }
 void Actor::updateWalk(Tilemap *tilemap, Sounds *sounds) {
@@ -112,12 +118,6 @@ void Actor::updateWalk(Tilemap *tilemap, Sounds *sounds) {
                 jump();
                 up_released = false;
             }
-        }
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)) {
-        if (controll_released) {
-            shot();
-            controll_released = false;
         }
     }
 

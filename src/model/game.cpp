@@ -408,6 +408,7 @@ void Game::check_collisions_enimies() {
                 }
                 for (auto& bullet : dariu.bulletguns) {
                     if (bullet->pos.intersects(catraca->pos)) {
+                        bullet->collided = true;
                         catraca->die(&sounds);
                     }
                 }
@@ -431,6 +432,7 @@ void Game::check_collisions_enimies() {
                 }
                 for (auto& bullet : dariu.bulletguns) {
                     if (bullet->pos.intersects(sova->pos)) {
+                        bullet->collided = true;
                         sova->die(&sounds);
                     }
                 }
@@ -448,6 +450,7 @@ void Game::check_collisions_enimies() {
                 }
                 for (auto& bullet : dariu.bulletguns) {
                     if (bullet->pos.intersects(bulletc->pos)) {
+                        bullet->collided = true;
                         bulletc->die(&sounds);
                     }
                 }
