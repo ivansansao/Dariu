@@ -61,6 +61,16 @@ If is missing openal32.dll, download installer from oficial page: https://www.op
 
 Just download from Releases at this page!
 
+# Controlls
+
+CTRL -> Shot
+SPACE -> Active Jetpack
+ARROWS -> Move
+
+# More phases?
+
+If you want to create more phases, create .dtm text file at src/resource folder and send me if you want!
+
 # Links
 
 https://www.bensound.com/ <br>
