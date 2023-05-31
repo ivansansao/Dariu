@@ -145,7 +145,7 @@ void Game::play() {
 
     window.clear(sf::Color(62, 49, 60, 255));
     this->tilemap.draw(&window);
-    this->dariu.draw(&window, phase_current);
+    this->dariu.draw(&window, phase_current, phase_total);
 
     for (auto& catraca : catracas) {
         catraca->draw(&window);

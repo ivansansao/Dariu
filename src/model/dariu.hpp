@@ -21,7 +21,7 @@ class Dariu : public Actor {
 
     void update(Tilemap *tilemap, Sounds *sounds);
     void reset_position();
-    void draw(sf::RenderWindow *w, int phase);
+    void draw(sf::RenderWindow *w, int phase, int phase_total);
     void on_collide(std::string where, int i, int j, Tilemap *tilemap, Sounds *sounds);
     void on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds);
     void die(Sounds *sounds);
