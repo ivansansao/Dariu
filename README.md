@@ -2,7 +2,7 @@
 
 A plataform game
 
-Veja gameplay no Youtube 🚀 
+See gameplay on Youtube 🚀 
 https://youtu.be/lxCaeRWEStc
 
 ![Alt Text](src/asset/show1.gif)
