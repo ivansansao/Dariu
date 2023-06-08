@@ -14,6 +14,7 @@ class BulletGun {
     BulletGun();
     Animation bulletGun;
     sf::FloatRect pos;
+    bool onPortal = false;
     bool collided = false;
     virtual void draw(sf::RenderWindow *w);
     virtual void update(Tilemap *tilemap, Sounds *sounds);

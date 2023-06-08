@@ -16,15 +16,36 @@ void BulletGun::draw(sf::RenderWindow *w) {
 }
 void BulletGun::update(Tilemap *tilemap, Sounds *sounds) {
     if (!this->collided) {
-        // const int offset = 16 * direction_x;
         const float sprite_w = this->bulletGun.sprite.getGlobalBounds().width;
         const float sprite_h = this->bulletGun.sprite.getGlobalBounds().height;
+
+        const int topm = this->pos.top + (sprite_h * 0.5);
+        const int leftm = this->pos.left + (sprite_w * 0.5);
+
         const int i = (this->pos.top) / 32;
         const int j = (this->pos.left) / 32;
         const int i2 = (this->pos.top + sprite_h - 1) / 32;
         const int j2 = (this->pos.left + sprite_w - 1) / 32;
+        const int im = topm / 32;
+        const int jm = leftm / 32;
 
-        // std::cout << j << " bl: " << this->pos.left << " tile1: " << tilemap->map[i][j] << " tile2: " << tilemap->map[i][j2] << " tile3: " << tilemap->map[i2][j] << " sprite_w: " << sprite_w << "\n";
+        if (onPortal) {
+            if (!tilemap->isPortal(im, jm)) {
+                onPortal = false;
+            }
+        } else {
+            if (tilemap->isPortal(im, jm)) {
+                onPortal = true;
+                const auto point = tilemap->getMapOppositPortal(im, jm);
+
+                if (point.found) {
+                    this->bulletGun.direction_x = -this->bulletGun.direction_x;
+                    this->pos.top = (point.i * 32) + (topm % 32);
+                    this->pos.left = (point.j * 32) + (leftm % 32 * this->bulletGun.direction_x);
+                }
+            }
+        }
+
         if (tilemap->free_path_bullet(i, j) && tilemap->free_path_bullet(i, j2) && tilemap->free_path_bullet(i2, j) && tilemap->free_path_bullet(i2, j2)) {
             this->pos.left += 10 * this->bulletGun.direction_x;
         } else {
