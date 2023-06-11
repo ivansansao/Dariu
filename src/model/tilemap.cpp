@@ -9,7 +9,7 @@ Tilemap::Tilemap() {
     banana.init(17, 0.5f, "./src/asset/image/Items/Fruits/Bananas.png", sf::IntRect(0, 0, 32, 32), true);
     portalP.init(0, 0.f, "./src/asset/image/PortalP.png", sf::IntRect(0, 0, 32, 32), true);
     portalQ.init(0, 0.f, "./src/asset/image/PortalQ.png", sf::IntRect(0, 0, 32, 32), true);
-    trophy.init(8, 0.2f, "./src/asset/image/Items/Checkpoints/End/End (Pressed) (64x64).png", sf::IntRect(0, 0, 64, 64), false);
+    trophy.init(12, 0.05f, "./src/asset/image/Items/Checkpoints/End/Olho.png", sf::IntRect(0, 0, 32, 32), false);
     gate.init(0, 0.f, "./src/asset/image/gate.png", sf::IntRect(0, 0, 32, 32), true);
     gatekey.init(0, 0.f, "./src/asset/image/gatekey.png", sf::IntRect(0, 0, 32, 32), true);
 }
@@ -190,7 +190,7 @@ void Tilemap::draw(sf::RenderWindow* w) {
     }
     jetpack.anime(sf::IntRect(jetpack.getFrame() * 32, 0, 32, 32), 1);
     banana.anime(sf::IntRect(banana.getFrame() * 32, 0, 32, 32), 1);
-    trophy.anime(sf::IntRect(trophy.getFrame() * 64, 0, 64, 64), 1);
+    trophy.anime(sf::IntRect(trophy.getFrame() * 32, 0, 32, 32), 1);
 
     i_fire += 0.5f;
 
