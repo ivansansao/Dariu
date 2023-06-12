@@ -265,7 +265,7 @@ void Bulletc::draw(sf::RenderWindow *w) {
     actor_spr.setPosition(pos.left, pos.top);
     if (on_ground) {
         actor_spr.setTexture(actor_tex);
-        actor_spr.setTextureRect(sf::IntRect(Tools::getStartSprite((int)pos.left % 5, direction_x * -1) * 32, 0, (direction_x * -1) * 32, 32));
+        actor_spr.setTextureRect(sf::IntRect(Tools::getStartSprite((int)pos.left % 4, direction_x * -1) * 32, 0, (direction_x * -1) * 32, 32));
     }
     w->draw(actor_spr);
 }
