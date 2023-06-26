@@ -17,8 +17,9 @@ Tilemap::Tilemap() {
 std::string Tilemap::map[H] = {};
 
 void Tilemap::load_from_file(int phase) {
-    this->load_map_from_file(phase);
-    this->load_texture_from_file(phase);
+    const int fileNumber = phase;
+    this->load_map_from_file(fileNumber);
+    this->load_texture_from_file(fileNumber);
 }
 void Tilemap::load_map_from_file(int phase) {
     this->mapfile = "./src/resource/map_" + to_string(phase) + ".dtm";
@@ -198,20 +199,6 @@ void Tilemap::draw(sf::RenderWindow* w) {
         plataform->draw(w);
     }
 }
-// void Tilemap::load_from_file(int phase) {
-//     int i;
-//     string line;
-
-//     ifstream map_file("./src/resource/map_" + to_string(phase) + ".dtm");
-
-//     i = 0;
-//     while (getline(map_file, line)) {
-//         this->W = line.length();
-//         this->map[i] = line;
-//         i++;
-//     }
-//     map_file.close();
-// }
 
 void Tilemap::load_plataforms() {
     plataforms.clear();

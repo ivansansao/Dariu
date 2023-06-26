@@ -73,7 +73,7 @@ class Game {
     int editing_framecount = 1;
 
     struct profile {
-        int phases = 0;
+        int completed_phases = 0;
         int lifes = 0;
         int seconds_playing = 0;
     } profile;

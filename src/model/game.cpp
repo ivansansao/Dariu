@@ -65,7 +65,7 @@ enum menuopcs { Play,
 void Game::play() {
     if (!this->game_loaded) {
         load();
-        phase_current = (int)profile.phases - 1;
+        phase_current = (int)profile.completed_phases + 1;
         load_phase();
     }
     std::stringstream ss;
@@ -134,6 +134,7 @@ void Game::play() {
     if (page == pages::GAME_WIN) {
         save_profile_if_good();
         if (phase_current < phase_total) {
+            phase_current++;
             page = pages::GAME_PLAY;
             dariu.win = false;
             dariu.reset_position();
@@ -183,10 +184,10 @@ void Game::resume() {
     page = pages::GAME_PLAY;
 };
 void Game::reset() {
-    this->profile.lifes = 0;
-    this->profile.phases = 1;
+    this->profile.lifes = 3;
+    this->profile.completed_phases = 0;
     this->profile.seconds_playing = 0;
-    this->phase_current = 1;
+    this->phase_current = 0;
     this->game_loaded = false;
     this->save_profile(0);
 };
@@ -317,7 +318,6 @@ bool Game::is_fullscreen() {
 }
 
 void Game::load_phase() {
-    phase_current++;
     tilemap.clear();
     tilemap.load_from_file(phase_current);
     tilemap.load_plataforms();
@@ -475,9 +475,9 @@ void Game::save_profile_if_good() {
 
     int save = false;
 
-    if (phase_current > profile.phases) {
+    if (phase_current > profile.completed_phases) {
         save = true;
-    } else if (phase_current == profile.phases) {
+    } else if (phase_current == profile.completed_phases) {
         if (seconds_playing < profile.seconds_playing) {
             save = true;
         }
@@ -489,7 +489,7 @@ void Game::save_profile_if_good() {
 }
 void Game::save_profile(int seconds_playing) {
     ofstream MyFile("./src/resource/profile.dat");
-    MyFile << "phases:" + to_string(phase_current) << endl;
+    MyFile << "completed_phases:" + to_string(phase_current) << endl;
     MyFile << "lifes:" + to_string(dariu.score.darius) << endl;
     MyFile << "seconds_playing:" + to_string(seconds_playing) << endl;
     MyFile.close();
@@ -500,8 +500,8 @@ void Game::load_profile() {
     ifstream file("./src/resource/profile.dat");
     i = 0;
     while (getline(file, line)) {
-        if (line.find("phase") != std::string::npos) {
-            profile.phases = stoi(line.substr(line.find(":") + 1, 80));
+        if (line.find("completed_phases") != std::string::npos) {
+            profile.completed_phases = stoi(line.substr(line.find(":") + 1, 80));
         } else if (line.find("lifes") != std::string::npos) {
             profile.lifes = stoi(line.substr(line.find(":") + 1, 80));
         } else if (line.find("seconds_playing") != std::string::npos) {
@@ -620,7 +620,7 @@ void Game::menu_main() {
     text_generic.setFont(font_roboto);
     text_generic.setCharacterSize(22);
 
-    text_generic.setString("Fases: " + to_string(profile.phases));
+    text_generic.setString("Fases: " + to_string(profile.completed_phases));
     top = 64 + (40 * line++);
     text_generic.setPosition(sf::Vector2f(left, top));
     window.draw(text_generic);
