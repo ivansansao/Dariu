@@ -54,26 +54,25 @@ Game::Game() {
 std::string Game::menuopc[menuopc_size] = {"Jogar",
                                            "Volume ambiente",
                                            "Volume de efeitos",
+                                           "Iniciar do zero (y)",
                                            "Sair"};
+enum menuopcs { Play,
+                Env_volumn,
+                Effects_volumn,
+                Reset,
+                Exit };
 
 void Game::play() {
-    if (!game_loaded) {
+    if (!this->game_loaded) {
         load();
-    }
-    if (phase_current == 0) {
-        const char* initial_phase = std::getenv("DARIU_INITIAL_PHASE");
-        if (initial_phase) {
-            phase_current = std::stoi(initial_phase) - 1;
-        }
+        phase_current = (int)profile.phases - 1;
         load_phase();
-        std::cout << "Editing: " << this->editing << std::endl;
     }
     std::stringstream ss;
 
     if (this->editing) {
         if ((editing_framecount % 60) == 0) {
             this->tilemap.load_from_file(this->phase_current);
-            std::cout << "Update\n";
         }
         editing_framecount++;
     }
@@ -133,7 +132,7 @@ void Game::play() {
     }
 
     if (page == pages::GAME_WIN) {
-        save_profile();
+        save_profile_if_good();
         if (phase_current < phase_total) {
             page = pages::GAME_PLAY;
             dariu.win = false;
@@ -182,6 +181,14 @@ void Game::resume() {
     sounds.music.play();
     gamepause_loaded = false;
     page = pages::GAME_PLAY;
+};
+void Game::reset() {
+    this->profile.lifes = 0;
+    this->profile.phases = 1;
+    this->profile.seconds_playing = 0;
+    this->phase_current = 1;
+    this->game_loaded = false;
+    this->save_profile(0);
 };
 void Game::close() {
     window.close();
@@ -462,10 +469,11 @@ void Game::check_collisions_enimies() {
     }
 }
 void Game::pause(){};
-void Game::save_profile() {
+void Game::save_profile_if_good() {
     this->endtime_play = std::chrono::high_resolution_clock::now();
     int seconds_playing = Tools::time_dif_in_seconds(this->starttime_play, this->endtime_play);
-    bool save = false;
+
+    int save = false;
 
     if (phase_current > profile.phases) {
         save = true;
@@ -476,12 +484,15 @@ void Game::save_profile() {
     }
 
     if (save) {
-        ofstream MyFile("./src/resource/profile.dat");
-        MyFile << "phases:" + to_string(phase_current) << endl;
-        MyFile << "lifes:" + to_string(dariu.score.darius) << endl;
-        MyFile << "seconds_playing:" + to_string(seconds_playing) << endl;
-        MyFile.close();
+        this->save_profile(seconds_playing);
     }
+}
+void Game::save_profile(int seconds_playing) {
+    ofstream MyFile("./src/resource/profile.dat");
+    MyFile << "phases:" + to_string(phase_current) << endl;
+    MyFile << "lifes:" + to_string(dariu.score.darius) << endl;
+    MyFile << "seconds_playing:" + to_string(seconds_playing) << endl;
+    MyFile.close();
 }
 void Game::load_profile() {
     int i;
@@ -527,34 +538,38 @@ void Game::menu_main() {
             if (menuopc_selected > menuopc_size - 1) menuopc_selected = 0;
             key_released = false;
         } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-            if (menuopc_selected == 1) {
+            if (menuopc_selected == menuopcs::Env_volumn) {
                 sounds.music_up();
                 menuopc[1] = "Volume ambiente " + to_string((int)sounds.volume_music);
-            } else if (menuopc_selected == 2) {
+            } else if (menuopc_selected == menuopcs::Effects_volumn) {
                 sounds.effect_up();
                 menuopc[2] = "Volume de efeitos " + to_string((int)sounds.volume_effect);
             }
         } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-            if (menuopc_selected == 1) {
+            if (menuopc_selected == menuopcs::Env_volumn) {
                 sounds.music_down();
                 menuopc[1] = "Volume ambiente " + to_string((int)sounds.volume_music);
-            } else if (menuopc_selected == 2) {
+            } else if (menuopc_selected == menuopcs::Effects_volumn) {
                 sounds.effect_down();
                 menuopc[2] = "Volume de efeitos " + to_string((int)sounds.volume_effect);
+            }
+        } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Y)) {
+            if (menuopc_selected == menuopcs::Reset) {
+                this->reset();
             }
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
-            if (menuopc_selected == 0) {
+            if (menuopc_selected == menuopcs::Play) {
                 page = pages::GAME_RESUME;
                 menumain_loaded = false;
-            } else if (menuopc_selected == 3) {
+            } else if (menuopc_selected == menuopcs::Exit) {
                 window.close();
             }
         }
     }
 
-    if (menuopc_selected == 1) {
+    if (menuopc_selected == menuopcs::Env_volumn) {
         if (sounds.music.getStatus() == sf::Music::Paused || sounds.music.getStatus() == sf::Music::Stopped)
             sounds.music.play();
     } else {
@@ -580,7 +595,7 @@ void Game::menu_main() {
     window.draw(text_generic);
 
     for (auto opc : menuopc) {
-        top = offset_y + (i * 120);
+        top = offset_y + (i * 100);
         if (menuopc_selected == i)
             text_generic.setString("[  " + opc + "  ]");
         else
@@ -641,6 +656,8 @@ void Game::loop_events() {
                 }
             } else if (event.key.code == sf::Keyboard::Up) {
                 this->dariu.up_released = true;
+            } else if (event.key.code == sf::Keyboard::Z) {
+                this->dariu.z_released = true;
             } else if (event.key.code == sf::Keyboard::LControl) {
                 this->dariu.controll_released = true;
             } else if (event.key.code == sf::Keyboard::Space) {
@@ -649,19 +666,11 @@ void Game::loop_events() {
 
             if (event.type == sf::Event::JoystickButtonReleased) {
                 this->dariu.up_released = true;
+                this->dariu.z_released = true;
                 this->dariu.space_released = true;
                 this->dariu.controll_released = true;
             }
         }
-
-        // if (this->editing) {
-        //     // this->tilemap.edit(&window, event, view);
-        //     if ((editing_framecount % 10) == 0) {
-        //         this->tilemap.load_from_file(this->phase_current);
-        //         std::cout << "Update\n";
-        //     }
-        //     editing_framecount++;
-        // }
     }
 }
 

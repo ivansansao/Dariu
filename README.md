@@ -65,7 +65,11 @@ Just download from Releases at this page!
 
 CTRL -> Shot
 SPACE -> Active Jetpack
-ARROWS -> Move
+LEFT ARROW -> Left
+RIGHT ARROW -> Right
+UP ARROW -> Jump
+Z -> Jump
+
 
 # More phases?
 

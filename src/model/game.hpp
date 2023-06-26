@@ -65,7 +65,7 @@ class Game {
     std::vector<Cannon *> cannons;
     std::vector<Bulletc *> bulletcs;
 
-    static const int menuopc_size = 4;
+    static const int menuopc_size = 5;
     static std::string menuopc[menuopc_size];
     int menuopc_selected = 0;
     bool key_released = true;
@@ -82,10 +82,12 @@ class Game {
     Tilemap tilemap;
     Sounds sounds;
     void load_profile();
-    void save_profile();
+    void save_profile_if_good();
+    void save_profile(int seconds_playing);
     void play();
     void pause();
     void resume();
+    void reset();
     void close();
     void win();
     void over();

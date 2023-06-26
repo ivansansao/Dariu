@@ -99,7 +99,6 @@ void Actor::updateWalk(Tilemap *tilemap, Sounds *sounds) {
 
     if (sf::Joystick::isButtonPressed(0, 2)) {
     }
-    // cout << "isButtonPressed " << sf::Joystick::getButtonCount(0) << "\n";
 
     /*
      *  [Letter My_control]
@@ -117,6 +116,16 @@ void Actor::updateWalk(Tilemap *tilemap, Sounds *sounds) {
                 }
                 jump();
                 up_released = false;
+            }
+        }
+    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) {
+        if (z_released) {
+            if (on_ground) {
+                if (sounds->jump_sound.getStatus() == 0) {
+                    sounds->jump_sound.play();
+                }
+                jump();
+                z_released = false;
             }
         }
     }

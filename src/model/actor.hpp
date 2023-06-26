@@ -54,6 +54,7 @@ class Actor {
 
     bool key_released = true;
     bool up_released = true;
+    bool z_released = true;
     bool space_released = true;
     bool controll_released = true;
 

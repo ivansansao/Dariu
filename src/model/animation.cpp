@@ -36,7 +36,6 @@ void Animation::next() {
             i_frame++;
             step = step * -1;
         }
-        // cout << "Float: " << i_frame << "    Int: " << (int)i_frame << endl;
     }
 }
 void Animation::draw(float i, float j, sf::RenderWindow *w) {
