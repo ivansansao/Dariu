@@ -9,6 +9,19 @@ https://youtu.be/lxCaeRWEStc
 
 ![Alt Text](src/asset/show2.gif)
 
+# Run?
+
+Just download from Releases at this page!
+
+# Controlls
+
+CTRL -> Shot  
+SPACE -> Active Jetpack  
+LEFT ARROW -> Left  
+RIGHT ARROW -> Right  
+UP ARROW -> Jump  
+Z -> Jump  
+
 ## Compile Linux
 
 Here we are using Makefile.
@@ -56,20 +69,6 @@ dariu>make
 Done, dariu.exe has created! I believe!
 
 If is missing openal32.dll, download installer from oficial page: https://www.openal.org/downloads/
-
-# Run?
-
-Just download from Releases at this page!
-
-# Controlls
-
-CTRL -> Shot
-SPACE -> Active Jetpack
-LEFT ARROW -> Left
-RIGHT ARROW -> Right
-UP ARROW -> Jump
-Z -> Jump
-
 
 # More phases?
 
