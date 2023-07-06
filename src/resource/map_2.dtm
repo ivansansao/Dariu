@@ -7,10 +7,10 @@ E   B     B   EBBBBBBBEF    DBBBBBBEF       E      DRR           P4RREF  V      
 E   E     E   E                     DBB     E      DR               REF  >                            V   DEF   DEE
 E  B       B  E        T            G       G      DQ3     B Y   Z Y EF                                   DEF   DEE
 E  E  Y    E  E      .....          G Y Q6  G      DBBBBBBBEBBBBBBBBBEF                                   DEF   DEE
-E  E       E  E      ABBBB          DBBBBBBBEE      EEEE                                                  DEF   DEE
-E  EP2.....E  E          E                   E       EEE                                                  DEF   DEE
-E  EEEE. DEE  EY         EBBC                E        EE                                                          E
-E     D.F     EBBBC      E                   G2        E                             M^               >    M  ^   E
+E  E       E  E      ABBBB          DBBBBBBBEE      EEEEQ8         RREF                                   DEF   DEE
+E  EP2.....E  E          E                   E       EEE            REF                                   DEF   DEE
+E  EEEE. DEE  EY         EBBC                E        EER      Y     XG                                           E
+E     D.F     EBBBC      E                   G2        EBBBBBBBBBBBBBBF              M^               >    M  ^   E
 E    ...F     E    bb....E      ...          G2 K2 Y  JE                                                          E
 E    ...F     E      ABBBE      ABC         DBBBBBBBBBBE  H                      ....T......                      E
 E   ..DEF     E          E      DEF                    EBBBC                    DEEEEEEEEEEEEF                    E
@@ -19,7 +19,7 @@ EP3........ T EBBBCbb    EBBBBBBEEEBB  BC  ....        EZ T  Y     Z          DE
 EEEEEEEEEEEEEEE      ....E          FBBEF  ABBC        EBBBBBBBBBBBBBBBBBBBBBBE       K3       EFbbbbBBBbbbbbbbbbbE
 EEEEEEEEEEEEEEEbbbbbbABBBE            DEFRRDEEF                                                        G1         E
 E                        E      DEF   DEF  DEEF        .................                               G1         E
-E@...................P1  EQ7  Y DEF Y        XF H      .................     >M                 M<     G1Y  AC  P6E
+E@...................P1  EQ7  Y DEF Y      P8EF H      .................     >M   Y             M<     G1Y  AC  P6E
 EBBBBBBBBBBBBBBBBBBBBBBBBEBBBBBBEEEBBBEEEBBEEEEBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBRRRRRRRRRRRRRRRRRRRBBBBBBBBBBBEEBBBBE
 [ENDBLOCK]
 [TERRAIN]
