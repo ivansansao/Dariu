@@ -9,20 +9,22 @@ https://youtu.be/lxCaeRWEStc
 
 ![Alt Text](src/asset/show2.gif)
 
-# Run?
+# Download
 
-Just download from Releases at this page!
+Just download zip file from Releases at this page em run dariu.exe
 
 # Controlls
 
-CTRL -> Shot  
-SPACE -> Active Jetpack  
-LEFT ARROW -> Left  
-RIGHT ARROW -> Right  
-UP ARROW -> Jump  
-Z -> Jump  
+Key    | Action
+-------|-----------------
+CTRL   |Shot  
+SPACE  |Active Jetpack  
+LEFT ARROW |Left  
+RIGHT ARROW |Right  
+UP ARROW |Jump  
+Z |Jump  
 
-## Compile Linux
+## Compile on Linux
 
 Here we are using Makefile.
 
@@ -33,23 +35,26 @@ sudo apt install libsfml-dev
 ~~~
 
 ~~~bash
+mkdir games
+cd games
+git clone https://github.com/ivansansao/Dariu.git 
 chmod +x compileAndRun.sh # Just first time
 ./compileAndRun.sh
 ~~~
 
-### Compile if Windows OS (Using g++)
+### Compile on Windows (Using g++)
 
-1 - Download cmake installer for Windows like: cmake-3.26.0-rc5-windows-x86_64.msi
+#### 1 - Download cmake installer for Windows like: cmake-3.26.0-rc5-windows-x86_64.msi
 
 	Just intall it
 
-2 - Download SFML zip for Windows like: SFML-2.5.1-windows-gcc-7.3.0-mingw-64-bit.zip
+#### 2 - Download SFML zip for Windows like: SFML-2.5.1-windows-gcc-7.3.0-mingw-64-bit.zip
 
 	Link: https://www.sfml-dev.org/download.php
 
 	Put in: C:\SFML (Needed to stay like C:\SFML\bin,C:\SFML\include,C:\SFML\lib)
 
-3 - Download Ming for Windows like: x86_64-7.3.0-release-posix-seh-rt_v5-rev0.7z
+#### 3 - Download Ming for Windows like: x86_64-7.3.0-release-posix-seh-rt_v5-rev0.7z
 
 	Hey? PAY ATTENTION ;) look for: "Here are links to the specific MinGW compiler versions used to build the provided packages"	
 	And choose: MinGW Builds 7.3.0 (64-bit)
@@ -58,13 +63,19 @@ chmod +x compileAndRun.sh # Just first time
 	Rename C:\mingw64\bin\mingw32-make.exe to C:\mingw64\bin\make.exe
 	If you already have Ming, make sure is most recently g++, if not, delete all and download again!
 
-Close all screen command lines, go to Variable Windows and add it below to PATH of system
-C:\mingw64\bin
-C:\SFML\bin
+Close all screen command lines, go to Variable Windows and add it below to PATH of system  
+C:\mingw64\bin  
+C:\SFML\bin  
 
-Git clone lalalalal-dariu.git
-cd dariu
-dariu>make
+#### 4 - Compile
+
+~~~bash
+mkdir games
+cd games
+git clone https://github.com/ivansansao/Dariu.git 
+cd Dariu  
+make  
+~~~
 
 Done, dariu.exe has created! I believe!
 
@@ -85,6 +96,6 @@ https://itch.io/game-assets/genre-platformer <br>
 https://craftpix.net/?s=threes&category=124 <br>
 https://convertio.co/pt/wav-ogg/ <br>
 
-#Licence
+# Licence
 
-This project has sprites and sounds free from third part sites.
+This project has free sprites and sounds from third part sites.
