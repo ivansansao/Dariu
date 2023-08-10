@@ -160,7 +160,7 @@ void Game::play() {
         cannon->draw(&window);
     }
 
-    window.setMouseCursorVisible(false);
+    // window.setMouseCursorVisible(false);
 
     // auto mouse = sf::Mouse::getPosition(window);
     // const float i = dariu.pos.top / 32;

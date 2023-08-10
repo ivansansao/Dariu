@@ -1,26 +1,26 @@
 EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-E                        EE                                     G1          EY       T          E                 E
-E   Y                    GG                                     G1   K2     E         .         E                 E
-EbbbbbbbbbbbbbbbbbbbbbbbbEE                                     G1B     Y   E         B         E                 E
-E                        EE  Q2                                 BBEBBBBBBBBBE...     AE         E  Z    A         E
-E                        EE  AC                                             EBBC      E         EbbbbbbbD       P2E
-E                        EE  DF      Y                                      EZ        E                 DBBBBBBBBBE
+E                        EE                                     G1          EY       T      E                     E
+E   Y                    GG                                     G1   K2     E         .     E                     E
+EbbbbbbbbbbbbbbbbbbbbbbbbEE                                     G1B     Y   E         B     E   E                 E
+E                        EE  Q2                                 BBEBBBBBBBBBE...     AE     EZ TE  Z    A         E
+E                        EE  AC                                             EBBC      E     EbbbEbbbbbbbD Y     P2E
+E                        EE  DF                                             EZ        E                 DBBBBBBBBBE
 E   Y     R       R  Z   ABBBEEbbbbbbbbbbbbbbbbbBBBC                        E...   ...E                           E
-EQ5      RRR  K1 RRR     G2.....................XEEF     RRR    Z         P3Ebbb   ABBE    ABBBBBBBBBBBBBBBBBBC   E
+EQ5      RRR  K1 RRR     G2..........Y..........XEEF     RRR    Z         P3Ebbb   ABBE    ABBBBBBBBBBBBBBBBBBC   E
 EBBBBBBBEEEEEBBBEEEEEBBBBEEEEEEEEEEEEEEEEEEEEEEEEEEEBBBBEEEEEBBBBBBBBBBBBBBBE         E    DEEEEEEEEEEEEEEEEEEF   E
 EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE         E    DERR   RRR      Q4EF   E
-E                                                                           E...      E    DER     R         EF   E
-E                                Y                                          EBBC      E    DE................EF   E
-E                                                                                  Y  E    DE...............REF   E
+E                                                                     MV    E...      E    DER     R         EF   E
+E                                Y                                Y M V     EBBC      E    DE................EF   E
+E                                                                 M  V             Y  E    DE...............REF   E
 E                              ......H......                                       ...E    DEP5..B.........RREF   E
-E                              ABBBBBBBBBBBC              .   .   .                ABBE    DEEEEEEEEEEEEEEEEEEF   E
-E  @              R            DEEEEEEEEEEEF              .   .   .          T        E                           E
-E  B Y    P1   Y RRR Z     C   DEEP4     EEF    .......   .   .   . Y   Z   ....      E                           E
-E  EbbbBBBBBBBBBBBBbbbbBBBBF   DEE       EEF    ABBBBBC   B   B   B         ABBC      E                           E
-E                          F   DEE       EEF    DEEEEEF   E   E   E         D         E                           E
-E            Z    Y    Z   EC  DEE     T EEF    DEEEEEF   E   E   E.........D                     M> <            E
-E .........................F   DEEQ3     EEF    DEEEEEF   E   E H E.........D   Q1          Z.    .  .           JE
-EBBBBBBBBBBBBBBBBBBBBBBBBBBEBBBEEEEEEEEEEEEEBBBBEEEEEEFRRRERRRERRREBBBBBBBBBERRRRRRRABBBBBBBBBBBRRBRRBRRRBBBBBBBBBE
+E                      ABBBC   ABBBBBBBBBBBC              .   .   .                ABBE    DEEEEEEEEEEEEEEEEEEF   E
+E  @              R    D   F   DEEEEEEEEEEEF              .   .   .          T        E                           E
+E  B Y    P1   Y RRR Z DZ TFB  DEEP4     EEF    .......   .   .   .         ....      E                           E
+E  EbbbBBBBBBBBBBBBbbbbbbbBFR  DEE       EEF    ABBBBBC   B   B   B         ABBC      E                           E
+E                      E   F   DEE       EEF    DEEEEEF   E   E   E  ^  Z   D         E                           E
+E            Z    Y  Z E   EBBBDEE     T EEF    DEEEEEF   E   E   E.. ^ ....D                     M> <            E
+E .....................E          Q3     EEF    DEEEEEF   E   E H E..  ^....D   Q1          Z.    .  .           JE
+EBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBEEEEEEEEEEEEEBBBBEEEEEEFRRRERRRERRREBBBBBBBBBERRRRRRRABBBBBBBBBBBRRBRRBRRRBBBBBBBBBE
 [ENDBLOCK]
 [TERRAIN]
 TerrainFire
