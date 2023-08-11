@@ -118,9 +118,15 @@ Sova::Sova() {
 
 void Sova::update(Tilemap *tilemap, Sounds *sounds) {
     Enimy::update(tilemap, sounds);
+    if ((this->updates + (this->id * 10)) % 300 == 0) {
+        if (this->state == States::Normal) {
+            Enimy::jump();
+        }
+    }
     if (this->updates % 150 == 0) {
         Enimy::shot(sounds);
     }
+
     Enimy::update_bullets(tilemap, sounds);
     this->updates++;
     if (this->updates > 9999) this->updates = 0;

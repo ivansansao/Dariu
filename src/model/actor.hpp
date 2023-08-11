@@ -41,6 +41,7 @@ class Actor {
                   Reviving,
                   Revived } state = Normal;
 
+    int id = 0;
     int updates = 0;
     int direction_x;
     float i_idle_sprite;

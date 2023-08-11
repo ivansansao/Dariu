@@ -369,11 +369,13 @@ void Game::load_enimies() {
         }
     }
     sovas.clear();
+    int id = 0;
     for (int i{}; i < tilemap.H; ++i) {
         for (int j{}; j < tilemap.W; j++) {
             if (tilemap.map[i][j] == 'Y') {
                 Sova* sova = new Sova();
                 sova->set_position(j * 32, i * 32);
+                sova->id = ++id;
                 sovas.push_back(sova);
             }
         }
