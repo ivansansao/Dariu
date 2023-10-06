@@ -127,8 +127,10 @@ void Enimy::on_collide(std::string where, int i, int j, Tilemap *tilemap, Sounds
     if (where == "left") direction_x = 1;
     if (where == "right") direction_x = -1;
 
-    this->jetPack = false;
-    this->jetPackFuel = 0;
+    if (this->updates % 2 == 0) {
+        this->jetPack = false;
+        this->jetPackFuel = 0;
+    }
 }
 void Enimy::on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds) {
     Actor::on_collide_other(i, j, tilemap, sounds);
