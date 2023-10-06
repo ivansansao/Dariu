@@ -13,6 +13,13 @@ Enimy::Enimy(){
 };
 
 void Enimy::update(Tilemap *tilemap, Sounds *sounds) {
+    if (this->jetPack) {
+        this->updateFly(tilemap, sounds);
+    } else {
+        this->updateWalk(tilemap, sounds);
+    }
+}
+void Enimy::updateWalk(Tilemap *tilemap, Sounds *sounds) {
     switch (state) {
         case (States::Normal): {
             add_gravity();
@@ -52,6 +59,56 @@ void Enimy::update(Tilemap *tilemap, Sounds *sounds) {
     collision_other(tilemap, sounds);
     collision_portal(tilemap, sounds);
 }
+
+void Enimy::updateFly(Tilemap *tilemap, Sounds *sounds) {
+    if (this->jetPackFuel > 0) {
+        this->jetPackFuel -= this->jetPackConsume;
+    }
+    if (this->jetPackFuel <= 0) {
+        this->jetPack = false;
+        this->jetPackFuel = 0;
+    }
+    switch (state) {
+        case (States::Normal): {
+            // add_gravity();
+            velocity.y = 1;
+            collision_y(tilemap, sounds);
+
+            if (direction_x == 1) velocity.x = 1;
+            if (direction_x == -1) velocity.x = -1;
+
+            pos.left += velocity.x;
+
+            collision_x(tilemap, sounds);
+            break;
+        }
+        case (States::DieStart): {
+            state = States::Dieing;
+            jump(true);
+            break;
+        }
+        case (States::Dieing): {
+            add_gravity();
+            if (pos.top > (tilemap->H * 32) + 32) state = States::Died;
+            break;
+        }
+        case (States::Died): {
+            break;
+        }
+        case (States::ReviveStart): {
+            break;
+        }
+        case (States::Reviving): {
+            break;
+        }
+        case (States::Revived): {
+            break;
+        }
+    }
+    collision_other(tilemap, sounds);
+    collision_portal(tilemap, sounds);
+}
+
 void Enimy::draw(sf::RenderWindow *w) {
     actor_spr.setPosition(pos.left, pos.top);
 
@@ -69,6 +126,9 @@ void Enimy::draw(sf::RenderWindow *w) {
 void Enimy::on_collide(std::string where, int i, int j, Tilemap *tilemap, Sounds *sounds) {
     if (where == "left") direction_x = 1;
     if (where == "right") direction_x = -1;
+
+    this->jetPack = false;
+    this->jetPackFuel = 0;
 }
 void Enimy::on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds) {
     Actor::on_collide_other(i, j, tilemap, sounds);
@@ -114,6 +174,7 @@ Sova::Sova() {
     actor_tex_fall.loadFromFile("./src/asset/image/sova.png");
     actor_tex.loadFromFile("./src/asset/image/sova.png");
     actor_tex_idle.loadFromFile("./src/asset/image/sova.png");
+    actorJetpack.init(3, 0.5f, "./src/asset/image/Sova-jetpack.png", sf::IntRect(0, 0, 32, 32), true);
 };
 
 void Sova::update(Tilemap *tilemap, Sounds *sounds) {
@@ -123,8 +184,17 @@ void Sova::update(Tilemap *tilemap, Sounds *sounds) {
             Enimy::jump();
         }
     }
-    if (this->updates % 150 == 0) {
-        Enimy::shot(sounds);
+
+    if (this->updates > 0) {
+        if (this->updates % 150 == 0) {
+            Enimy::shot(sounds);
+        }
+        if (this->updates % 155 == 0 && this->jetPackFuel <= 0) {
+            if (!this->on_ground) {
+                this->jetPack = true;
+                this->jetPackFuel = 100;
+            }
+        }
     }
 
     Enimy::update_bullets(tilemap, sounds);
@@ -133,11 +203,18 @@ void Sova::update(Tilemap *tilemap, Sounds *sounds) {
 }
 void Sova::draw(sf::RenderWindow *w) {
     actor_spr.setPosition(pos.left, pos.top);
-    if (on_ground) {
+
+    if (this->jetPack) {
+        actorJetpack.anime(sf::IntRect(Tools::getStartSprite(actorJetpack.getFrame(), direction_x) * pos.width, 0, direction_x * pos.width, pos.height), direction_x);
+        actorJetpack.draw(pos.left, pos.top, w);
+        this->drawJetpackTime(w);
+    } else {
+        // if (on_ground) {
         actor_spr.setTexture(actor_tex);
         actor_spr.setTextureRect(sf::IntRect(Tools::getStartSprite((int)pos.left % 6, direction_x * -1) * 32, 0, (direction_x * -1) * 32, 32));
+        // }
+        w->draw(actor_spr);
     }
-    w->draw(actor_spr);
     Enimy::draw_bullets(w);
 }
 void Sova::on_collide(std::string where, int i, int j, Tilemap *tilemap, Sounds *sounds) {

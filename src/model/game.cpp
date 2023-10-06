@@ -376,6 +376,8 @@ void Game::load_enimies() {
                 Sova* sova = new Sova();
                 sova->set_position(j * 32, i * 32);
                 sova->id = ++id;
+                sova->jetPack = false;
+                sova->jetPackFuel = 0;
                 sovas.push_back(sova);
             }
         }
