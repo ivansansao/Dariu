@@ -249,11 +249,11 @@ void Sova::draw(sf::RenderWindow *w) {
 void Sova::on_collide(std::string where, int i, int j, Tilemap *tilemap, Sounds *sounds) {
     Enimy::on_collide(where, i, j, tilemap, sounds);
 
-    // if (where == "top") {
-    //     direction_y = this->updates % 2;
-    // } else if (where == "ground") {
-    //     direction_y = -1;
-    // };
+    if (where == "top") {
+        direction_y = this->updates % 2;
+    } else if (where == "ground") {
+        direction_y = -1;
+    };
 }
 void Sova::on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds) {
     Enimy::on_collide_other(i, j, tilemap, sounds);
