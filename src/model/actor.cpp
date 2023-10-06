@@ -24,6 +24,7 @@ Actor::Actor() {
     abs_pos = pos;
     velocity = sf::Vector2f(0.f, 0.f);
     direction_x = 1;
+    direction_y = 1;
     i_idle_sprite = 1;
     on_ground = false;
     gravity = 1.0;

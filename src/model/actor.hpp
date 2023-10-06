@@ -44,6 +44,7 @@ class Actor {
     int id = 0;
     int updates = 0;
     int direction_x;
+    int direction_y;
     float i_idle_sprite;
     float gravity;
     float lift;

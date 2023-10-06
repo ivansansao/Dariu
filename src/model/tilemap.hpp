@@ -28,6 +28,7 @@ class Tilemap {
     bool isPortal(int i, int j);
 
     int getTileNumber(int i, int j);
+    char getTileName(int i, int j);
     point getTileByNameNumber(char name, int number);
     point getMapOppositPortal(int i, int j);
 

@@ -8,8 +8,8 @@ using namespace std;
  * Base class for enimies
  */
 
-Enimy::Enimy(){
-
+Enimy::Enimy() {
+    direction_y = -1;
 };
 
 void Enimy::update(Tilemap *tilemap, Sounds *sounds) {
@@ -70,8 +70,28 @@ void Enimy::updateFly(Tilemap *tilemap, Sounds *sounds) {
     }
     switch (state) {
         case (States::Normal): {
-            // add_gravity();
-            velocity.y = 1;
+            velocity.y = 0;
+            if (direction_y == 1) velocity.y = 0.5;
+            if (direction_y == -1) velocity.y = -0.5;
+            // const int ver = pos.top + 32;
+            // const int hor = pos.left + 16;
+            // const int x = ver / 32;
+            // const int y = hor / 32;
+            // const int previous = 1;
+
+            // const char frontRightBlock = tilemap->getTileName(x, y + previous);
+            // const char frontLeftBlock = tilemap->getTileName(x, y - previous);
+
+            // const char upRightBlock = tilemap->getTileName(x - 1, y + previous);
+            // const char upLeftBlock = tilemap->getTileName(x - 1, y - previous);
+
+            // if (direction_x == 1 && frontRightBlock != ' ')
+            //     velocity.y = -5;
+            // else if (direction_x == -1 && frontLeftBlock != ' ')
+            //     velocity.y = -5;
+
+            pos.top += velocity.y;
+
             collision_y(tilemap, sounds);
 
             if (direction_x == 1) velocity.x = 1;
@@ -124,13 +144,18 @@ void Enimy::draw(sf::RenderWindow *w) {
 }
 
 void Enimy::on_collide(std::string where, int i, int j, Tilemap *tilemap, Sounds *sounds) {
-    if (where == "left") direction_x = 1;
-    if (where == "right") direction_x = -1;
-
-    if (this->updates % 2 == 0) {
-        this->jetPack = false;
-        this->jetPackFuel = 0;
-    }
+    if (where == "left") {
+        direction_x = 1;
+        if (this->updates % 2 == 0) {
+            this->jetPack = false;
+        }
+    };
+    if (where == "right") {
+        direction_x = -1;
+        if (this->updates % 2 == 0) {
+            this->jetPack = false;
+        }
+    };
 }
 void Enimy::on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds) {
     Actor::on_collide_other(i, j, tilemap, sounds);
@@ -191,10 +216,12 @@ void Sova::update(Tilemap *tilemap, Sounds *sounds) {
         if (this->updates % 150 == 0) {
             Enimy::shot(sounds);
         }
-        if (this->updates % 155 == 0 && this->jetPackFuel <= 0) {
-            if (!this->on_ground) {
+        if (this->updates % 50 == 0) {
+            if (this->on_ground) {
+                if (this->jetPackFuel <= 0)
+                    this->jetPackFuel = 100;
+            } else {
                 this->jetPack = true;
-                this->jetPackFuel = 100;
             }
         }
     }
@@ -221,6 +248,12 @@ void Sova::draw(sf::RenderWindow *w) {
 }
 void Sova::on_collide(std::string where, int i, int j, Tilemap *tilemap, Sounds *sounds) {
     Enimy::on_collide(where, i, j, tilemap, sounds);
+
+    // if (where == "top") {
+    //     direction_y = this->updates % 2;
+    // } else if (where == "ground") {
+    //     direction_y = -1;
+    // };
 }
 void Sova::on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds) {
     Enimy::on_collide_other(i, j, tilemap, sounds);

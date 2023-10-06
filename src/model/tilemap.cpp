@@ -79,6 +79,14 @@ void Tilemap::load_texture_from_file(int phase) {
 
 bool Tilemap::isPortal(int i, int j) {
     return map[i][j] == 'P' || map[i][j] == 'Q';
+    // return getTileName(i, j) == 'P' || getTileName(i, j) == 'Q';
+};
+char Tilemap::getTileName(int i, int j) {
+    char rs = ' ';
+    if (i >= 0 && i < this->W && j >= 0 && j < this->H) {
+        rs = map[i][j];
+    }
+    return rs;
 };
 int Tilemap::getTileNumber(int i, int j) {
     char charNum = map[i][j + 1];
