@@ -4,7 +4,7 @@ E                  G Y   G       G1     EE               EE         ..........  
 E   ABC  Y H       GGGGGGD      EG1     Y     G   Y      XE         ..........         EQ2B P3E           BBBC    E
 E      BBBBBBB           DBC   AEBBBBBBBEEBBBBBBBBBBBBBBBBE         ABBBBBBBBC         EBBBBBBB           E       E
 E             BBB                .                ...........  ABBC      E                                E       E
-E                                .                ...........            E   bBbb                     ABBBE       E
+EBBC                             .                ...........            E   bBbb                     ABBBE       E
 E                                .               ABBC T  ABBBC           E        .......   .....     D   E       E
 E         .                      .Z                  Z.                  E                  . T .     D   E       E
 E   > V   .            Z         B.....              ABBC                E        ABBBBBC   .. ..     D   E       E
@@ -18,9 +18,9 @@ E                                E bbbb         Y                       TEBBBBB 
 E ^ M <        ..                E bbbb        AbRbC   Q1               HE       .......                          E
 E              AC         H.     EBbbbbABBC............AC              ABEBC     ABBBBBC          M^              E
 E   P1 AZ YC   DF         AC     ......DF....H.........DF ....... M^   Z                                      M^  E
-E  ABC DbbbF B DF         DF     ....T.DF....B.........DF ....... AC                                    Y         E
-E@ DEF DQ3JF E DF B..H....DF  Y  ......DF....E.........DF ....... DF ..............H........    >M          <B    E
-EBBEEEEEEEEERERDFREBRBRBBBEEBBRRBBRBRBBEEBBBBEBBBBBBBBBEEBBBBBBBBBEEBBBBBBBBBBBBBBBBBBBBBBBBRRRRRRRRRRRRRRRRREBBBBE
+E@ ABC DbbbF B DF         DF     ....T.DF....B.........DF ....... AC                                    Y         E
+EB DEF DQ3JF E DF B..H....DF  Y  ......DF....E.........DF ....... DF ..............H........    >M          <B    E
+EEBEEEEEEEEERERDFREBRBRBBBEEBBRRBBRBRBBEEBBBBEBBBBBBBBBEEBBBBBBBBBEEBBBBBBBBBBBBBBBBBBBBBBBBRRRRRRRRRRRRRRRRREBBBBE
 [ENDBLOCK]
 [TERRAIN]
 TerrainBlue
