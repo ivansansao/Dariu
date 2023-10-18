@@ -125,6 +125,11 @@ void Game::play() {
         }
     }
 
+    // Test new behivier from screen.
+    // if (dariu.pos.left < 1280) view.reset(sf::FloatRect(0.f, 0.f, 1280, 736.f));
+    // if (dariu.pos.left >= 1280) view.reset(sf::FloatRect(1280.f, 0.f, 1280, 736.f));
+    // if (dariu.pos.left >= 2560) view.reset(sf::FloatRect(2560.f, 0.f, 1280, 736.f));
+
     if (dariu.win) {
         page = pages::GAME_WIN;
     } else if (dariu.over) {

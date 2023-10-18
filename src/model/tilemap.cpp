@@ -37,9 +37,10 @@ void Tilemap::load_map_from_file(int phase) {
 void Tilemap::load_texture_from_file(int phase) {
     std::string terrain = Tools::get_lines_from_dtm("./src/resource/map_" + to_string(phase) + ".dtm", "[TERRAIN]", "");
     if (terrain.empty()) terrain = "Terrain";
+    std::string root = "./src/asset/image/" + terrain + "/";
 
-    terrain_tex.loadFromFile("./src/asset/image/" + terrain + "/Terrain (16x16).png");
-    terrain2_tex.loadFromFile("./src/asset/image/" + terrain + "/Terrain (32x32).png");
+    terrain_tex.loadFromFile(root + "Terrain (16x16).png");
+    terrain2_tex.loadFromFile(root + "Terrain (32x32).png");
     door_tex.loadFromFile("./src/asset/image/door.png");
 
     ground.setTexture(terrain_tex);
@@ -75,6 +76,8 @@ void Tilemap::load_texture_from_file(int phase) {
     fire_tex.loadFromFile("./src/asset/image/fire1.png");
     fire.setTexture(fire_tex);
     fire.setTextureRect(sf::IntRect(0, 0, 32, 32));
+
+    water.init(5, 0.1f, root + "Water.png", sf::IntRect(0, 0, 32, 32), true);
 }
 
 bool Tilemap::isPortal(int i, int j) {
@@ -188,6 +191,8 @@ void Tilemap::draw(sf::RenderWindow* w) {
                 gate.draw(j * 32, i * 32, w);
             } else if (map[i][j] == 'K') {
                 gatekey.draw(j * 32, i * 32, w);
+            } else if (map[i][j] == 'W') {
+                water.draw(j * 32, i * 32, w);
             } else if (map[i][j] == 'X') {
                 ground_door_closed.setPosition(j * 32, i * 32);
                 w->draw(ground_door_closed);
@@ -199,6 +204,7 @@ void Tilemap::draw(sf::RenderWindow* w) {
     }
     jetpack.anime(sf::IntRect(jetpack.getFrame() * 32, 0, 32, 32), 1);
     banana.anime(sf::IntRect(banana.getFrame() * 32, 0, 32, 32), 1);
+    water.anime(sf::IntRect(water.getFrame() * 32, 0, 32, 32), 1);
     trophy.anime(sf::IntRect(trophy.getFrame() * 32, 0, 32, 32), 1);
 
     i_fire += 0.5f;

@@ -89,7 +89,7 @@ void Dariu::draw(sf::RenderWindow *w, int phase, int phase_total) {
     xscore += to_string(score.darius) + " Bananas: " + to_string(score.bananas) + "/" + to_string(score.bananas_total);
     xscore += L" Troféus: ";
     xscore += to_string(score.thophy) + "/" + to_string(score.thophy_total);
-    xscore += "    Fase: " + to_string(phase) + " / " + to_string(phase_total);
+    xscore += "    Fase: " + to_string(phase) + " / " + to_string(phase_total) + " debug " + to_string(this->pos.left);
     if (this->jetPackFuel > 0) {
         xscore += "    Mochila a jato: " + to_string((int)this->jetPackFuel) + " / 100";
     }
@@ -116,10 +116,18 @@ void Dariu::on_collide(std::string where, int i, int j, Tilemap *tilemap, Sounds
     } else if (tilemap->map[i][right_block] == 'R') {
         die(sounds);
     }
+
+    // if (tilemap->map[i][j] == 'W') {
+    //     die(sounds);
+    // }
 }
 
 void Dariu::on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds) {
     Actor::on_collide_other(i, j, tilemap, sounds);
+
+    const float j32 = pos.left / 32;
+    int left_block = Tools::floor_special(j32 + 1, 0.71);
+    int right_block = Tools::ceil_special(j32, 0.39);
 
     if (score.thophy >= score.thophy_total) {
         if (!tilemap->door_opened) {
@@ -129,6 +137,12 @@ void Dariu::on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds) {
                 tilemap->door_opened = true;
             }
         }
+    }
+
+    if (tilemap->map[i][left_block] == 'W') {
+        die(sounds);
+    } else if (tilemap->map[i][right_block] == 'W') {
+        die(sounds);
     }
 
     if (tilemap->map[i][j] == '.') {

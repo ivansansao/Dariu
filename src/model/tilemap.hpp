@@ -34,6 +34,7 @@ class Tilemap {
 
     Animation jetpack;
     Animation banana;
+    Animation water;
     Animation portalP;
     Animation portalQ;
     Animation trophy;
