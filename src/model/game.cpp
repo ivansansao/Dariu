@@ -107,28 +107,36 @@ void Game::play() {
 
     const int tiles_at_right = tilemap.W - (dariu.pos.left / dariu.pos.width);
 
-    if (tiles_at_right > 14) {
-        // Width 40 tiles x 32 = 1280 per page
-        // 115 tiles x 32 = 3680
-        const int width = 800;
-        float wLeft = floor((dariu.pos.left) / width) * width;
-        dariu.text_score.setPosition(wLeft + 7, 7);
-        if (dariu.pos.left < 2500) {
-            if (wLeft < 0) wLeft = 0.f;
-            view.reset(sf::FloatRect(wLeft, 0.f, 1280, 736.f));
-        } else {
-            view.reset(sf::FloatRect(2400.f, 0.f, 1280, 736.f));
-        }
-    } else {
-        if (dariu.pos.left > 2000) {
-            view.reset(sf::FloatRect(2400.f, 0.f, 1280, 736.f));
-        }
-    }
+    // if (tiles_at_right > 14) {
+    //     // Width 40 tiles x 32 = 1280 per page
+    //     // 115 tiles x 32 = 3680
+    //     const int width = 800;
+    //     float wLeft = floor((dariu.pos.left) / width) * width;
+    //     dariu.text_score.setPosition(wLeft + 7, 7);
+    //     if (dariu.pos.left < 2500) {
+    //         if (wLeft < 0) wLeft = 0.f;
+    //         view.reset(sf::FloatRect(wLeft, 0.f, 1280, 736.f));
+    //     } else {
+    //         view.reset(sf::FloatRect(2400.f, 0.f, 1280, 736.f));
+    //     }
+    // } else {
+    //     if (dariu.pos.left > 2000) {
+    //         view.reset(sf::FloatRect(2400.f, 0.f, 1280, 736.f));
+    //     }
+    // }
 
     // Test new behivier from screen.
-    // if (dariu.pos.left < 1280) view.reset(sf::FloatRect(0.f, 0.f, 1280, 736.f));
-    // if (dariu.pos.left >= 1280) view.reset(sf::FloatRect(1280.f, 0.f, 1280, 736.f));
-    // if (dariu.pos.left >= 2560) view.reset(sf::FloatRect(2560.f, 0.f, 1280, 736.f));
+
+    if (dariu.pos.left > 2496) {
+        view.reset(sf::FloatRect(2496.f, 0.f, 1280, 736.f));
+        dariu.text_score.setPosition(2496.f + 7, 7);
+    } else if (dariu.pos.left > 1248) {
+        dariu.text_score.setPosition(1248.f + 7, 7);
+        view.reset(sf::FloatRect(1248.f, 0.f, 1280, 736.f));
+    } else {
+        dariu.text_score.setPosition(0.f + 7, 7);
+        view.reset(sf::FloatRect(0.f, 0.f, 1280, 736.f));
+    }
 
     if (dariu.win) {
         page = pages::GAME_WIN;
