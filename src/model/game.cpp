@@ -105,7 +105,7 @@ void Game::play() {
 
     check_collisions_enimies();
 
-    const int tiles_at_right = tilemap.W - (dariu.pos.left / dariu.pos.width);
+    // const int tiles_at_right = tilemap.W - (dariu.pos.left / dariu.pos.width);
 
     // if (tiles_at_right > 14) {
     //     // Width 40 tiles x 32 = 1280 per page
