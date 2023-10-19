@@ -676,7 +676,9 @@ void Game::loop_events() {
             } else if (event.key.code == sf::Keyboard::Z) {
                 this->dariu.z_released = true;
             } else if (event.key.code == sf::Keyboard::LControl) {
-                this->dariu.controll_released = true;
+                this->dariu.lcontroll_released = true;
+            } else if (event.key.code == sf::Keyboard::Numpad0) {
+                this->dariu.zerokey_released = true;
             } else if (event.key.code == sf::Keyboard::Space) {
                 this->dariu.space_released = true;
             }
@@ -685,7 +687,8 @@ void Game::loop_events() {
                 this->dariu.up_released = true;
                 this->dariu.z_released = true;
                 this->dariu.space_released = true;
-                this->dariu.controll_released = true;
+                this->dariu.lcontroll_released = true;
+                this->dariu.zerokey_released = true;
             }
         }
     }

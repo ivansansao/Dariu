@@ -58,7 +58,9 @@ class Actor {
     bool up_released = true;
     bool z_released = true;
     bool space_released = true;
-    bool controll_released = true;
+    bool lcontroll_released = true;
+    bool rcontroll_released = true;
+    bool zerokey_released = true;
 
     bool onPortal = false;
 

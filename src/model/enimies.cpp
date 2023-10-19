@@ -266,9 +266,9 @@ void Sova::die(Sounds *sounds) {
  */
 
 Cannon::Cannon() {
-    actor_tex_fall.loadFromFile("./src/asset/image/cannon.png");
-    actor_tex.loadFromFile("./src/asset/image/cannon.png");
-    actor_tex_idle.loadFromFile("./src/asset/image/cannon.png");
+    actor_tex_fall.loadFromFile("./src/asset/image/nest.png");
+    actor_tex.loadFromFile("./src/asset/image/nest.png");
+    actor_tex_idle.loadFromFile("./src/asset/image/nest.png");
 };
 
 void Cannon::update(Tilemap *tilemap, Sounds *sounds) {
@@ -310,7 +310,7 @@ void Cannon::draw(sf::RenderWindow *w) {
     actor_spr.setPosition(pos.left, pos.top);
     if (on_ground) {
         actor_spr.setTexture(actor_tex);
-        actor_spr.setTextureRect(sf::IntRect(Tools::getStartSprite((int)pos.left % 2, direction_x * -1) * 32, 0, (direction_x * -1) * 32, 32));
+        actor_spr.setTextureRect(sf::IntRect(0, 0, 32, 32));
     }
     w->draw(actor_spr);
 }
@@ -328,9 +328,10 @@ void Cannon::die(Sounds *sounds) {
  */
 
 Bulletc::Bulletc() {
-    actor_tex_fall.loadFromFile("./src/asset/image/bulletc.png");
-    actor_tex.loadFromFile("./src/asset/image/bulletc.png");
-    actor_tex_idle.loadFromFile("./src/asset/image/bulletc.png");
+    actorRun.init(9, 0.2f, "./src/asset/image/arara.png", sf::IntRect(0, 0, 32, 32), true);
+    actor_tex_fall.loadFromFile("./src/asset/image/arara.png");
+    actor_tex.loadFromFile("./src/asset/image/arara.png");
+    actor_tex_idle.loadFromFile("./src/asset/image/arara.png");
     on_ground = true;
     direction_x = -1;
 };
@@ -380,12 +381,16 @@ void Bulletc::update(Tilemap *tilemap) {
     }
 }
 void Bulletc::draw(sf::RenderWindow *w) {
-    actor_spr.setPosition(pos.left, pos.top);
-    if (on_ground) {
-        actor_spr.setTexture(actor_tex);
-        actor_spr.setTextureRect(sf::IntRect(Tools::getStartSprite((int)pos.left % 4, direction_x * -1) * 32, 0, (direction_x * -1) * 32, 32));
-    }
-    w->draw(actor_spr);
+    actorRun.anime(sf::IntRect(Tools::getStartSprite(actorRun.getFrame(), direction_x) * pos.width, 0, direction_x * pos.width, pos.height), direction_x);
+    actorRun.draw(pos.left, pos.top, w);
+
+    // actor_spr.setPosition(pos.left, pos.top);
+    // if (on_ground) {
+    //     int vel = (int)pos.left * 0.3;
+    //     actor_spr.setTexture(actor_tex);
+    //     actor_spr.setTextureRect(sf::IntRect(Tools::getStartSprite(8 - (vel % 9), direction_x) * 32, 0, direction_x * 32, 32));
+    // }
+    // w->draw(actor_spr);
 }
 void Bulletc::on_collide(std::string where, int i, int j, Tilemap *tilemap, Sounds *sounds) {
     Enimy::on_collide(where, i, j, tilemap, sounds);

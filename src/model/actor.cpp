@@ -88,9 +88,14 @@ void Actor::update(Tilemap *tilemap, Sounds *sounds) {
         }
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)) {
-        if (controll_released) {
+        if (lcontroll_released) {
             shot(sounds);
-            controll_released = false;
+            lcontroll_released = false;
+        }
+    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad0)) {
+        if (zerokey_released) {
+            shot(sounds);
+            zerokey_released = false;
         }
     }
     update_bullets(tilemap, sounds);
