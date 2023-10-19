@@ -17,7 +17,7 @@ Dariu::Dariu() {
     reset_position();
     score.bananas = 0;
     score.bananas_total = 0;
-    score.darius = 3;
+    score.darius = 10;
     score.thophy = 0;
     score.thophy_total = 3;
     win = false;

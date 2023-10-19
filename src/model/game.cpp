@@ -197,7 +197,7 @@ void Game::resume() {
     page = pages::GAME_PLAY;
 };
 void Game::reset() {
-    this->profile.lifes = 3;
+    this->profile.lifes = 10;
     this->profile.completed_phases = 0;
     this->profile.seconds_playing = 0;
     this->phase_current = 0;
@@ -255,7 +255,7 @@ void Game::win() {
         game_loaded = false;
         menumain_loaded = false;
         phase_current = 0;
-        this->dariu.score.darius = 3;
+        this->dariu.score.darius = 10;
         this->dariu.score.bananas = 0;
         this->dariu.score.thophy = 0;
         this->dariu.over = false;
@@ -295,7 +295,7 @@ void Game::over() {
         game_loaded = false;
         menumain_loaded = false;
         phase_current = 0;
-        this->dariu.score.darius = 3;
+        this->dariu.score.darius = 10;
         this->dariu.score.bananas = 0;
         this->dariu.score.thophy = 0;
         this->dariu.over = false;
