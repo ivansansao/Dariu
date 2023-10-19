@@ -1,9 +1,9 @@
 EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
 EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE.................G1         EEEEEEEEEEE                                      E
-E   ..........R..........R............YE.               .G1Y            EEEEEEE                                   Y  E
-E   .......... .......... ............ZE.ABC   Y    ABC .bEEEEEEEEEE    EEEEEEE            Y                         E
-E   .......... .......... ............ E.      AC       .bEEEEEE      EEEEEEEEE        bbb b b bbb  RRR R R RR   B   E
-E@ B....R...........R..........R.....P2E.               .bEE       EEEEEEEEEEEE         b  bbb b    R   RRR R R  E   E
+EP3G3     ....R..........R............YE.               .G1Y            EEEEEEE                                   Y  E
+E..G3     .... .......... ............ZE.ABC   Y    ABC .bEEEEEEEEEE    EEEEEEE            Y                         E
+E..B3     .... .......... ............ E.      AC       .bEEEEEE      EEEEEEEEE        bbb b b bbb  RRR R R RR   B   E
+E..E@    B..........R..........R.....P2E.               .bEE       EEEEEEEEEEEE         b  bbb b    R   RRR R R  E   E
 EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE. ABC      ABC  .bE     EEEERRRRRREEEEE         b  b b b    R   R R R R      E
 EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEK1              .bE                   E         b  b b bbb  RRR R R RR   T   E
 EEEEE                                P1EC..... AC       .bEE>M            <E  E                                      E
@@ -18,9 +18,9 @@ EE    EEEEE    EE. ABC       ABC      .EE     ABC        EE        EEEEEE    EEB
 EE       EE   EEE.       T         T  .EEEE            ACEE        EEEE      EEWWWWWC   RBBWWB   E W W W W W W   W W E
 EE       EE    EE.      ABC       ABC .E  EBC     ABBBBEEEE        EE      EEEEWWWWWF     RBWE  AE W W WWW WW  W W W E
 EEQ2EEEE       EE.  T        YT       .E  EEWWWWWWWEEEEEE     AC    EE    EEEEEBBBBBEBC    EBE   E WW  W W W W W WWW E
-EEEEEEEEEEEEEEEEE. ABC       ABC      .E    EEEEEEE          EEEE    EE     EEER                RE                   E
-E               E......................G2             B     EEEEEEE   Y    EEEET  ABBBBBBBBBBBBBBX      Y   J       JE
-EBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBEEEEBBBEWWWWWWWWWWWWWWEBBBBBBBBBBBBBBBBBBBE
+EEEEEEEEEEEEEEEEE. ABC       ABC      .E    EEEEEEE          EEEE    EE     EEER   K3           RE                   E
+E               E......................G2             B     EEEEEEE   Y    EEEEQ3T ABBBBBBBBBBBBBX      Y   J       JE
+EBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBEEEEBBBBEWWWWWWWWWWWWWEBBBBBBBBBBBBBBBBBBBE
 [ENDBLOCK]
 [TERRAIN]
 Terrain
