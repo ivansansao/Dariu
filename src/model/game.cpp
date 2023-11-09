@@ -21,7 +21,10 @@ Game::Game() {
     } else {
         window.create(sf::VideoMode(1280, 736), "Dariu", sf::Style::Titlebar | sf::Style::Close);
     }
-    window.setFramerateLimit(60);
+    // window.UseVerticalSync(false);
+    window.setVerticalSyncEnabled(true);  // Don't allow more FPS than your monitor support.
+    window.setFramerateLimit(60);         // There is a relation between framerate and setVerticalSyncEnabled.
+
     window.setPosition(sf::Vector2i(0, 0));
 
     view.reset(sf::FloatRect(0.f, 0.f, 1280.f, 736.f));
@@ -689,6 +692,19 @@ void Game::loop_events() {
                 this->dariu.space_released = true;
                 this->dariu.lcontroll_released = true;
                 this->dariu.zerokey_released = true;
+            }
+            if (0) {
+                if (event.key.code == sf::Keyboard::PageUp) {
+                    window.setVerticalSyncEnabled(false);  // Don't allow more FPS than your monitor support.
+                    window.setFramerateLimit(0);
+                    sounds.jump_sound.play();
+                    std::cout << "Sincronismo vertical desativado!" << std::endl;
+                } else if (event.key.code == sf::Keyboard::PageDown) {
+                    window.setVerticalSyncEnabled(true);  // Don't allow more FPS than your monitor support.
+                    window.setFramerateLimit(60);
+                    sounds.jump_sound.play();
+                    std::cout << "Sincronismo vertical ativado!" << std::endl;
+                }
             }
         }
     }
