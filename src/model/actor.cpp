@@ -390,7 +390,7 @@ void Actor::collision_portal(Tilemap *tilemap, Sounds *sounds) {
         }
     }
 }
-void Actor::die(Sounds *sounds) {
+void Actor::die(Tilemap *tilemap, Sounds *sounds) {
 }
 
 bool Actor::is_block(char el) {

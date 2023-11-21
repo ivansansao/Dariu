@@ -160,7 +160,7 @@ void Enimy::on_collide(std::string where, int i, int j, Tilemap *tilemap, Sounds
 void Enimy::on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds) {
     Actor::on_collide_other(i, j, tilemap, sounds);
 }
-void Enimy::die(Sounds *sounds) {
+void Enimy::die(Tilemap *tilemap, Sounds *sounds) {
     if (state == States::Normal) {
         state = States::DieStart;
         if (sounds->enimydie_sound.getStatus() == 0) {
@@ -190,8 +190,8 @@ void Catraca::on_collide(std::string where, int i, int j, Tilemap *tilemap, Soun
 void Catraca::on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds) {
     Enimy::on_collide_other(i, j, tilemap, sounds);
 }
-void Catraca::die(Sounds *sounds) {
-    Enimy::die(sounds);
+void Catraca::die(Tilemap *tilemap, Sounds *sounds) {
+    Enimy::die(tilemap, sounds);
 }
 /**
  * Sova is enimy
@@ -258,8 +258,8 @@ void Sova::on_collide(std::string where, int i, int j, Tilemap *tilemap, Sounds 
 void Sova::on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds) {
     Enimy::on_collide_other(i, j, tilemap, sounds);
 }
-void Sova::die(Sounds *sounds) {
-    Enimy::die(sounds);
+void Sova::die(Tilemap *tilemap, Sounds *sounds) {
+    Enimy::die(tilemap, sounds);
 }
 /**
  * Cannon is enimy
@@ -320,8 +320,8 @@ void Cannon::on_collide(std::string where, int i, int j, Tilemap *tilemap, Sound
 void Cannon::on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds) {
     Enimy::on_collide_other(i, j, tilemap, sounds);
 }
-void Cannon::die(Sounds *sounds) {
-    Enimy::die(sounds);
+void Cannon::die(Tilemap *tilemap, Sounds *sounds) {
+    Enimy::die(tilemap, sounds);
 }
 /**
  * Bulletc is enimy
@@ -398,6 +398,6 @@ void Bulletc::on_collide(std::string where, int i, int j, Tilemap *tilemap, Soun
 void Bulletc::on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds) {
     Enimy::on_collide_other(i, j, tilemap, sounds);
 }
-void Bulletc::die(Sounds *sounds) {
-    Enimy::die(sounds);
+void Bulletc::die(Tilemap *tilemap, Sounds *sounds) {
+    Enimy::die(tilemap, sounds);
 }

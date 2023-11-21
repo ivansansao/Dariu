@@ -429,15 +429,15 @@ void Game::check_collisions_enimies() {
                 if (catraca->pos.intersects(dariu.pos)) {
                     if (dariu.velocity.y > 0) {
                         dariuJump = true;
-                        catraca->die(&sounds);
+                        catraca->die(&tilemap, &sounds);
                     } else {
-                        if (!this->editing) dariu.die(&sounds);
+                        if (!this->editing) dariu.die(&tilemap, &sounds);
                     }
                 }
                 for (auto& bullet : dariu.bulletguns) {
                     if (bullet->pos.intersects(catraca->pos)) {
                         bullet->collided = true;
-                        catraca->die(&sounds);
+                        catraca->die(&tilemap, &sounds);
                     }
                 }
             }
@@ -448,20 +448,20 @@ void Game::check_collisions_enimies() {
                 if (sova->pos.intersects(dariu.pos)) {
                     if (dariu.velocity.y > 0) {
                         dariuJump = true;
-                        sova->die(&sounds);
+                        sova->die(&tilemap, &sounds);
                     } else {
-                        if (!this->editing) dariu.die(&sounds);
+                        if (!this->editing) dariu.die(&tilemap, &sounds);
                     }
                 }
                 for (auto& bullet : sova->bulletguns) {
                     if (bullet->pos.intersects(dariu.pos)) {
-                        if (!this->editing) dariu.die(&sounds);
+                        if (!this->editing) dariu.die(&tilemap, &sounds);
                     }
                 }
                 for (auto& bullet : dariu.bulletguns) {
                     if (bullet->pos.intersects(sova->pos)) {
                         bullet->collided = true;
-                        sova->die(&sounds);
+                        sova->die(&tilemap, &sounds);
                     }
                 }
             }
@@ -471,15 +471,15 @@ void Game::check_collisions_enimies() {
                 if (bulletc->pos.intersects(dariu.pos)) {
                     if (dariu.velocity.y > 0) {
                         dariuJump = true;
-                        bulletc->die(&sounds);
+                        bulletc->die(&tilemap, &sounds);
                     } else {
-                        if (!this->editing) dariu.die(&sounds);
+                        if (!this->editing) dariu.die(&tilemap, &sounds);
                     }
                 }
                 for (auto& bullet : dariu.bulletguns) {
                     if (bullet->pos.intersects(bulletc->pos)) {
                         bullet->collided = true;
-                        bulletc->die(&sounds);
+                        bulletc->die(&tilemap, &sounds);
                     }
                 }
             }

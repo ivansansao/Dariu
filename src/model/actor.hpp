@@ -72,7 +72,7 @@ class Actor {
     virtual void on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds);
     virtual void set_position(float left, float top);
     virtual void reset_position();
-    virtual void die(Sounds *sounds);
+    virtual void die(Tilemap *tilemap, Sounds *sounds);
     virtual void drawJetpackTime(sf::RenderWindow *w);
     virtual void shot(Sounds *sounds);
     virtual void update_bullets(Tilemap *tilemap, Sounds *sounds);

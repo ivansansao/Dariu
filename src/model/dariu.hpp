@@ -24,7 +24,7 @@ class Dariu : public Actor {
     void draw(sf::RenderWindow *w, int phase, int phase_total);
     void on_collide(std::string where, int i, int j, Tilemap *tilemap, Sounds *sounds);
     void on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds);
-    void die(Sounds *sounds);
+    void die(Tilemap *tilemap, Sounds *sounds);
     void shot(Sounds *sounds);
 };
 #endif

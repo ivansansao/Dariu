@@ -16,7 +16,7 @@ class Enimy : public Actor {
     void draw(sf::RenderWindow *w);
     void on_collide(std::string where, int i, int j, Tilemap *tilemap, Sounds *sounds);
     void on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds);
-    void die(Sounds *sounds);
+    void die(Tilemap *tilemap, Sounds *sounds);
 };
 class Catraca : public Enimy {
    public:
@@ -26,7 +26,7 @@ class Catraca : public Enimy {
     void draw(sf::RenderWindow *w);
     void on_collide(std::string where, int i, int j, Tilemap *tilemap, Sounds *sounds);
     void on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds);
-    void die(Sounds *sounds);
+    void die(Tilemap *tilemap, Sounds *sounds);
 };
 class Sova : public Enimy {
    public:
@@ -36,7 +36,7 @@ class Sova : public Enimy {
     void draw(sf::RenderWindow *w);
     void on_collide(std::string where, int i, int j, Tilemap *tilemap, Sounds *sounds);
     void on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds);
-    void die(Sounds *sounds);
+    void die(Tilemap *tilemap, Sounds *sounds);
 };
 class Cannon : public Enimy {
    public:
@@ -46,7 +46,7 @@ class Cannon : public Enimy {
     void draw(sf::RenderWindow *w);
     void on_collide(std::string where, int i, int j, Tilemap *tilemap, Sounds *sounds);
     void on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds);
-    void die(Sounds *sounds);
+    void die(Tilemap *tilemap, Sounds *sounds);
 };
 class Bulletc : public Enimy {
    public:
@@ -56,7 +56,7 @@ class Bulletc : public Enimy {
     void draw(sf::RenderWindow *w);
     void on_collide(std::string where, int i, int j, Tilemap *tilemap, Sounds *sounds);
     void on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds);
-    void die(Sounds *sounds);
+    void die(Tilemap *tilemap, Sounds *sounds);
 };
 
 #endif

@@ -28,10 +28,14 @@ Dariu::~Dariu() {
 void Dariu::reset_position() {
     Actor::reset_position();
 }
-void Dariu::die(Sounds *sounds) {
+void Dariu::die(Tilemap *tilemap, Sounds *sounds) {
     if (state == States::Normal) {
-        state = States::DieStart;
-        if (sounds->fired_sound.getStatus() == 0) sounds->fired_sound.play();
+        const uint16_t i = this->pos.top / 32;
+        const uint16_t j = this->pos.left / 32;
+        if (tilemap->map[i][j] != '@') {
+            state = States::DieStart;
+            if (sounds->fired_sound.getStatus() == 0) sounds->fired_sound.play();
+        }
     }
 }
 
@@ -112,13 +116,13 @@ void Dariu::on_collide(std::string where, int i, int j, Tilemap *tilemap, Sounds
         };
     }
     if (tilemap->map[i][left_block] == 'R') {
-        die(sounds);
+        die(tilemap, sounds);
     } else if (tilemap->map[i][right_block] == 'R') {
-        die(sounds);
+        die(tilemap, sounds);
     }
 
     // if (tilemap->map[i][j] == 'W') {
-    //     die(sounds);
+    //     die(tilemap, sounds);
     // }
 }
 
@@ -140,9 +144,9 @@ void Dariu::on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds) {
     }
 
     if (tilemap->map[i][left_block] == 'W') {
-        die(sounds);
+        die(tilemap, sounds);
     } else if (tilemap->map[i][right_block] == 'W') {
-        die(sounds);
+        die(tilemap, sounds);
     }
 
     if (tilemap->map[i][j] == '.') {
