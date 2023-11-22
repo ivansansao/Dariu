@@ -17,7 +17,7 @@ Game::Game() {
     }
 
     if (fullscreen) {
-        window.create(sf::VideoMode(sf::VideoMode::getDesktopMode().width, sf::VideoMode::getDesktopMode().height, 32), "Dariu", sf::Style::Fullscreen);
+        window.create(sf::VideoMode::getDesktopMode(), "Dariu", sf::Style::Fullscreen);
     } else {
         window.create(sf::VideoMode(1280, 736), "Dariu", sf::Style::Titlebar | sf::Style::Close);
     }
