@@ -210,7 +210,7 @@ void Tilemap::draw(sf::RenderWindow* w) {
                 leaf1.draw(j * 32, i * 32, w);
             } else if (map[i][j] == 'f') {
                 leaf2.draw(j * 32, i * 32, w);
-            } else if (map[i][j] == 'g') {
+            } else if (map[i][j] == 's') {
                 leaf3.draw(j * 32, i * 32, w);
             } else if (map[i][j] == 'h') {
                 leaf4.draw(j * 32, i * 32, w);
@@ -345,7 +345,7 @@ bool Tilemap::free_path(int i, int j) {
 }
 bool Tilemap::free_path_bullet(int i, int j) {
     if (this->is_valid(i, j)) {
-        return this->map[i][j] == ' ' || this->map[i][j] == '@' || this->map[i][j] == 'P' || this->map[i][j] == 'Q' || this->map[i][j] == 'G' || this->map[i][j] == 'R' || this->map[i][j] == '^' || this->map[i][j] == 'V' || this->map[i][j] == '>' || this->map[i][j] == '<' || this->map[i][j] == 'M' || this->map[i][j] == 'H' || this->map[i][j] == 'Z' || this->map[i][j] == 'k' || this->map[i][j] == 'K' || this->map[i][j] == 'g' || this->map[i][j] == 'x' || this->map[i][j] == 'j' || this->map[i][j] == 'J' || this->map[i][j] == 'Y' || this->map[i][j] == '.' || this->map[i][j] == 'T' || this->map[i][j] == '0' || this->map[i][j] == '1' || this->map[i][j] == '2' || this->map[i][j] == '3' || this->map[i][j] == '4' || this->map[i][j] == '5' || this->map[i][j] == '6' || this->map[i][j] == '7' || this->map[i][j] == '8' || this->map[i][j] == '9' || this->map[i][j] == 'g' || this->map[i][j] == 'h' || this->map[i][j] == 'i' || this->map[i][j] == 'f' || this->map[i][j] == 'd' || this->map[i][j] == 'l' || this->map[i][j] == 'e' || this->map[i][j] == 'd' || this->map[i][j] == 'm' || this->map[i][j] == 'c' || this->map[i][j] == 'n';
+        return this->map[i][j] == ' ' || this->map[i][j] == '@' || this->map[i][j] == 'P' || this->map[i][j] == 'Q' || this->map[i][j] == 'G' || this->map[i][j] == 'R' || this->map[i][j] == '^' || this->map[i][j] == 'V' || this->map[i][j] == '>' || this->map[i][j] == '<' || this->map[i][j] == 'M' || this->map[i][j] == 'H' || this->map[i][j] == 'Z' || this->map[i][j] == 'k' || this->map[i][j] == 'K' || this->map[i][j] == 'g' || this->map[i][j] == 'x' || this->map[i][j] == 'j' || this->map[i][j] == 'J' || this->map[i][j] == 'Y' || this->map[i][j] == '.' || this->map[i][j] == 'T' || this->map[i][j] == '0' || this->map[i][j] == '1' || this->map[i][j] == '2' || this->map[i][j] == '3' || this->map[i][j] == '4' || this->map[i][j] == '5' || this->map[i][j] == '6' || this->map[i][j] == '7' || this->map[i][j] == '8' || this->map[i][j] == '9' || this->map[i][j] == 's' || this->map[i][j] == 'h' || this->map[i][j] == 'i' || this->map[i][j] == 'f' || this->map[i][j] == 'd' || this->map[i][j] == 'l' || this->map[i][j] == 'e' || this->map[i][j] == 'd' || this->map[i][j] == 'm' || this->map[i][j] == 'c' || this->map[i][j] == 'n';
     }
     return false;
 }
