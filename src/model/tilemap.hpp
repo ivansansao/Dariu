@@ -40,7 +40,16 @@ class Tilemap {
     Animation trophy;
     Animation gate;
     Animation gatekey;
-
+    Animation leafc;
+    Animation leaf1;
+    Animation leaf2;
+    Animation leaf3;
+    Animation leaf4;
+    Animation leaf5;
+    Animation leaf6;
+    Animation leaf7;
+    Animation treeLog;
+    Animation treeLogSolid;
     sf::RenderWindow window;
     sf::Texture terrain_tex;
     sf::Texture terrain2_tex;
