@@ -50,6 +50,7 @@ class Tilemap {
     Animation leaf7;
     Animation treeLog;
     Animation treeLogSolid;
+    Animation woodBridge;
     sf::RenderWindow window;
     sf::Texture terrain_tex;
     sf::Texture terrain2_tex;

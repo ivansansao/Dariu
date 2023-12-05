@@ -394,7 +394,7 @@ void Actor::die(Tilemap *tilemap, Sounds *sounds) {
 }
 
 bool Actor::is_block(char el) {
-    return el == 'A' || el == 'B' || el == 'C' || el == 'D' || el == 'E' || el == 'F' || el == 'b' || el == 'R' || el == 'X' || el == 'G' || el == 'e' || el == 'i' || el == 'n';
+    return el == 'A' || el == 'B' || el == 'C' || el == 'D' || el == 'E' || el == 'F' || el == 'b' || el == 'R' || el == 'X' || el == 'G' || el == 'n' || el == 'w';
 }
 bool Actor::is_alive() {
     return state == States::Normal;

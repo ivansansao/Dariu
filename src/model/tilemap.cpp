@@ -79,16 +79,18 @@ void Tilemap::load_texture_from_file(int phase) {
 
     water.init(5, 0.1f, root + "Water.png", sf::IntRect(0, 0, 32, 32), true);
 
-    treeLog.init(1, 0.1f, root + "Treelog.png", sf::IntRect(0, 0, 32, 32), true);
-    treeLogSolid.init(1, 0.1f, root + "Treelogsolid.png", sf::IntRect(0, 0, 32, 32), true);
-    leafc.init(1, 0.1f, root + "LeafTree.png", sf::IntRect(32, 32, 32, 32), true);
-    leaf1.init(1, 0.1f, root + "LeafTree.png", sf::IntRect(0, 64, 32, 32), true);
-    leaf2.init(1, 0.1f, root + "LeafTree.png", sf::IntRect(0, 32, 32, 32), true);
-    leaf3.init(1, 0.1f, root + "LeafTree.png", sf::IntRect(0, 0, 32, 32), true);
-    leaf4.init(1, 0.1f, root + "LeafTree.png", sf::IntRect(32, 0, 32, 32), true);
-    leaf5.init(1, 0.1f, root + "LeafTree.png", sf::IntRect(64, 0, 32, 32), true);
-    leaf6.init(1, 0.1f, root + "LeafTree.png", sf::IntRect(64, 32, 32, 32), true);
-    leaf7.init(1, 0.1f, root + "LeafTree.png", sf::IntRect(64, 64, 32, 32), true);
+    treeLog.init(1, 0.1f, "./src/asset/image/Treelog.png", sf::IntRect(0, 0, 32, 32), true);
+    treeLogSolid.init(1, 0.1f, "./src/asset/image/Treelogsolid.png", sf::IntRect(0, 0, 32, 32), true);
+    leafc.init(1, 0.1f, "./src/asset/image/LeafTree.png", sf::IntRect(32, 32, 32, 32), true);
+    leaf1.init(1, 0.1f, "./src/asset/image/LeafTree.png", sf::IntRect(0, 64, 32, 32), true);
+    leaf2.init(1, 0.1f, "./src/asset/image/LeafTree.png", sf::IntRect(0, 32, 32, 32), true);
+    leaf3.init(1, 0.1f, "./src/asset/image/LeafTree.png", sf::IntRect(0, 0, 32, 32), true);
+    leaf4.init(1, 0.1f, "./src/asset/image/LeafTree.png", sf::IntRect(32, 0, 32, 32), true);
+    leaf5.init(1, 0.1f, "./src/asset/image/LeafTree.png", sf::IntRect(64, 0, 32, 32), true);
+    leaf6.init(1, 0.1f, "./src/asset/image/LeafTree.png", sf::IntRect(64, 32, 32, 32), true);
+    leaf7.init(1, 0.1f, "./src/asset/image/LeafTree.png", sf::IntRect(64, 64, 32, 32), true);
+
+    woodBridge.init(1, 0.1f, "./src/asset/image/Woodbridge.png", sf::IntRect(0, 0, 32, 32), true);
 }
 
 bool Tilemap::isPortal(int i, int j) {
@@ -224,6 +226,8 @@ void Tilemap::draw(sf::RenderWindow* w) {
                 treeLog.draw(j * 32, i * 32, w);
             } else if (map[i][j] == 'n') {
                 treeLogSolid.draw(j * 32, i * 32, w);
+            } else if (map[i][j] == 'w') {
+                woodBridge.draw(j * 32, i * 32, w);
             } else if (map[i][j] == 'X') {
                 ground_door_closed.setPosition(j * 32, i * 32);
                 w->draw(ground_door_closed);
