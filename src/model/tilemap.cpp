@@ -81,14 +81,14 @@ void Tilemap::load_texture_from_file(int phase) {
 
     treeLog.init(1, 0.1f, root + "Treelog.png", sf::IntRect(0, 0, 32, 32), true);
     treeLogSolid.init(1, 0.1f, root + "Treelogsolid.png", sf::IntRect(0, 0, 32, 32), true);
-    leafc.init(1, 0.1f, root + "Leafc.png", sf::IntRect(0, 0, 32, 32), true);
-    leaf1.init(1, 0.1f, root + "Leaf1.png", sf::IntRect(0, 0, 32, 32), true);
-    leaf2.init(1, 0.1f, root + "Leaf2.png", sf::IntRect(0, 0, 32, 32), true);
-    leaf3.init(1, 0.1f, root + "Leaf3.png", sf::IntRect(0, 0, 32, 32), true);
-    leaf4.init(1, 0.1f, root + "Leaf4.png", sf::IntRect(0, 0, 32, 32), true);
-    leaf5.init(1, 0.1f, root + "Leaf5.png", sf::IntRect(0, 0, 32, 32), true);
-    leaf6.init(1, 0.1f, root + "Leaf6.png", sf::IntRect(0, 0, 32, 32), true);
-    leaf7.init(1, 0.1f, root + "Leaf7.png", sf::IntRect(0, 0, 32, 32), true);
+    leafc.init(1, 0.1f, root + "LeafTree.png", sf::IntRect(32, 32, 32, 32), true);
+    leaf1.init(1, 0.1f, root + "LeafTree.png", sf::IntRect(0, 64, 32, 32), true);
+    leaf2.init(1, 0.1f, root + "LeafTree.png", sf::IntRect(0, 32, 32, 32), true);
+    leaf3.init(1, 0.1f, root + "LeafTree.png", sf::IntRect(0, 0, 32, 32), true);
+    leaf4.init(1, 0.1f, root + "LeafTree.png", sf::IntRect(32, 0, 32, 32), true);
+    leaf5.init(1, 0.1f, root + "LeafTree.png", sf::IntRect(64, 0, 32, 32), true);
+    leaf6.init(1, 0.1f, root + "LeafTree.png", sf::IntRect(64, 32, 32, 32), true);
+    leaf7.init(1, 0.1f, root + "LeafTree.png", sf::IntRect(64, 64, 32, 32), true);
 }
 
 bool Tilemap::isPortal(int i, int j) {
