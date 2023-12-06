@@ -67,7 +67,7 @@ void Actor::reset_position() {
 }
 void Actor::update(Tilemap *tilemap, Sounds *sounds) {
     updates++;
-    if (updates > 9999) updates = 0;
+    if (updates > 99999) updates = 0;
 
     if (this->jetPack) {
         this->updateFly(tilemap, sounds);
@@ -241,7 +241,7 @@ void Actor::collision_y(Tilemap *tilemap, Sounds *sounds) {
 
     for (int i = pos.top / 32; i <= (pos.top + pos.height) / 32; i++) {
         for (int j = pos.left / 32; j < (pos.left + pos.width) / 32; j++) {
-            if (is_block(tilemap->map[i][j])) {
+            if (is_block(tilemap->getTileName(i, j))) {
                 if (velocity.y > 0) {
                     on_collide("ground", i, j, tilemap, sounds);
                     pos.top = i * 32 - pos.height;
@@ -275,7 +275,7 @@ void Actor::collision_y(Tilemap *tilemap, Sounds *sounds) {
 void Actor::collision_x(Tilemap *tilemap, Sounds *sounds) {
     for (int i = pos.top / 32; i < (pos.top + pos.height) / 32; i++) {
         for (int j = pos.left / 32; j <= (pos.left + pos.width) / 32; j++) {
-            if (is_block(tilemap->map[i][j])) {
+            if (is_block(tilemap->getTileName(i, j))) {
                 if (velocity.x < 0) {
                     on_collide("left", i, j, tilemap, sounds);
                     const int j2 = ((int)pos.left / 32) + 1;

@@ -93,7 +93,7 @@ void Dariu::draw(sf::RenderWindow *w, int phase, int phase_total) {
     xscore += to_string(score.darius) + "          Bananas: " + to_string(score.bananas) + "/" + to_string(score.bananas_total);
     xscore += L"          Artefatos: ";
     xscore += to_string(score.thophy) + "/" + to_string(score.thophy_total);
-    xscore += "          Fase: " + to_string(phase) + " / " + to_string(phase_total);  // + " debug " + to_string(this->pos.left);
+    xscore += "          Fase: " + to_string(phase) + " / " + to_string(phase_total) + "       " + to_string(this->updates);  // + " debug " + to_string(this->pos.left);
     if (this->jetPackFuel > 0) {
         xscore += "          Mochila a jato: " + to_string((int)this->jetPackFuel) + " / 100";
     }
@@ -110,7 +110,7 @@ void Dariu::on_collide(std::string where, int i, int j, Tilemap *tilemap, Sounds
     int right_block = Tools::ceil_special(j32, 0.39);
 
     if (where == "top") {
-        if (tilemap->map[i][j] == 'b') {
+        if (tilemap->getTileName(i, j) == 'b') {
             tilemap->map[i][j] = ' ';
             if (sounds->crash_sound.getStatus() == 0) sounds->crash_sound.play();
         };
@@ -121,13 +121,14 @@ void Dariu::on_collide(std::string where, int i, int j, Tilemap *tilemap, Sounds
         die(tilemap, sounds);
     }
 
-    // if (tilemap->map[i][j] == 'W') {
+    // if (tilemap->getTileName(i, j) == 'W') {
     //     die(tilemap, sounds);
     // }
 }
 
 void Dariu::on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds) {
     Actor::on_collide_other(i, j, tilemap, sounds);
+    const char tileChar = tilemap->getTileName(i, j);
 
     const float j32 = pos.left / 32;
     int left_block = Tools::floor_special(j32 + 1, 0.71);
@@ -149,7 +150,7 @@ void Dariu::on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds) {
         die(tilemap, sounds);
     }
 
-    if (tilemap->map[i][j] == '.') {
+    if (tileChar == '.') {
         tilemap->map[i][j] = ' ';
         play_sound_pop(sounds);
         score.bananas++;
@@ -159,28 +160,28 @@ void Dariu::on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds) {
             score.darius++;
         }
     }
-    if (tilemap->map[i][j] == 'T') {
+    if (tileChar == 'T') {
         tilemap->map[i][j] = ' ';
         score.thophy++;
     }
-    if (tilemap->map[i][j] == 'R') {
+    if (tileChar == 'R') {
     }
-    if (tilemap->map[i][j] == 'b') {
+    if (tileChar == 'b') {
         tilemap->map[i][j] = 'B';
     }
-    if (tilemap->map[i][j] == 'J') {
+    if (tileChar == 'J') {
         if (this->jetPackFuel < this->jetPackCapacity) {
             this->jetPackFuel = this->jetPackCapacity;
             tilemap->map[i][j] = 'j';
         }
     }
-    if (tilemap->map[i][j] == 'x') {
+    if (tileChar == 'x') {
         if (sounds->levelcomplete_sound.getStatus() == 0) {
             sounds->levelcomplete_sound.play();
         }
         win = true;
     }
-    if (tilemap->map[i][j] == 'K') {
+    if (tileChar == 'K') {
         for (int t = 0; t <= 999; t++) {
             const int number = tilemap->getTileNumber(i, j);
             const auto gate = tilemap->getTileByNameNumber('G', number);

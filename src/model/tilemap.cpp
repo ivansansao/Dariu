@@ -94,12 +94,12 @@ void Tilemap::load_texture_from_file(int phase) {
 }
 
 bool Tilemap::isPortal(int i, int j) {
-    return map[i][j] == 'P' || map[i][j] == 'Q';
+    return getTileName(i, j) == 'P' || getTileName(i, j) == 'Q';
     // return getTileName(i, j) == 'P' || getTileName(i, j) == 'Q';
 };
 char Tilemap::getTileName(int i, int j) {
     char rs = ' ';
-    if (i >= 0 && i < this->W && j >= 0 && j < this->H) {
+    if (i >= 0 && i < this->H && j >= 0 && j < this->W) {
         rs = map[i][j];
     }
     return rs;
@@ -116,7 +116,7 @@ point Tilemap::getTileByNameNumber(char name, int number) {
 
     for (int i{}; i < this->H; ++i) {
         for (int j{}; j < this->W; j++) {
-            if (this->map[i][j] == name) {
+            if (this->getTileName(i, j) == name) {
                 if (number == this->getTileNumber(i, j)) {
                     op.i = i;
                     op.j = j;
@@ -130,7 +130,7 @@ point Tilemap::getTileByNameNumber(char name, int number) {
 };
 
 point Tilemap::getMapOppositPortal(int i, int j) {
-    const char name = map[i][j] == 'P' ? 'Q' : 'P';
+    const char name = getTileName(i, j) == 'P' ? 'Q' : 'P';
     const int number = this->getTileNumber(i, j);
     const auto op = this->getTileByNameNumber(name, number);
     return op;
@@ -160,78 +160,79 @@ void Tilemap::update() {
 void Tilemap::draw(sf::RenderWindow* w) {
     for (int i{}; i < H; ++i) {
         for (int j{}; j < W; ++j) {
-            if (map[i][j] == ' ') {
+            const char tileChar = this->getTileName(i, j);
+            if (tileChar == ' ') {
                 continue;
-            } else if (map[i][j] == '@') {
+            } else if (tileChar == '@') {
                 start.setPosition(j * 32, i * 32);
                 w->draw(start);
-            } else if (map[i][j] == '.') {
+            } else if (tileChar == '.') {
                 banana.draw(j * 32, i * 32, w);
-            } else if (map[i][j] == 'J') {
+            } else if (tileChar == 'J') {
                 jetpack.draw(j * 32, i * 32, w);
-            } else if (map[i][j] == 'T') {
+            } else if (tileChar == 'T') {
                 trophy.draw(j * 32, i * 32, w);
-            } else if (map[i][j] == 'A') {
+            } else if (tileChar == 'A') {
                 ground_left.setPosition(j * 32, i * 32);
                 w->draw(ground_left);
-            } else if (map[i][j] == 'B') {
+            } else if (tileChar == 'B') {
                 ground_mid.setPosition(j * 32, i * 32);
                 w->draw(ground_mid);
-            } else if (map[i][j] == 'C') {
+            } else if (tileChar == 'C') {
                 ground_right.setPosition(j * 32, i * 32);
                 w->draw(ground_right);
-            } else if (map[i][j] == 'D') {
+            } else if (tileChar == 'D') {
                 ground_left2.setPosition(j * 32, i * 32);
                 w->draw(ground_left2);
-            } else if (map[i][j] == 'E') {
+            } else if (tileChar == 'E') {
                 ground_mid2.setPosition(j * 32, i * 32);
                 w->draw(ground_mid2);
-            } else if (map[i][j] == 'F') {
+            } else if (tileChar == 'F') {
                 ground_right2.setPosition(j * 32, i * 32);
                 w->draw(ground_right2);
-            } else if (map[i][j] == 'b') {
+            } else if (tileChar == 'b') {
                 ground_ora.setPosition(j * 32, i * 32);
                 w->draw(ground_ora);
-            } else if (map[i][j] == 'R') {
+            } else if (tileChar == 'R') {
                 fire.setTextureRect(sf::IntRect(((int)i_fire % q_fire) * 32, 0, 32, 32));
                 fire.setPosition(j * 32, i * 32);
                 w->draw(fire);
-            } else if (map[i][j] == 'P') {
+            } else if (tileChar == 'P') {
                 portalP.draw(j * 32, i * 32, w);
-            } else if (map[i][j] == 'Q') {
+            } else if (tileChar == 'Q') {
                 portalQ.draw(j * 32, i * 32, w);
-            } else if (map[i][j] == 'G') {
+            } else if (tileChar == 'G') {
                 gate.draw(j * 32, i * 32, w);
-            } else if (map[i][j] == 'K') {
+            } else if (tileChar == 'K') {
                 gatekey.draw(j * 32, i * 32, w);
-            } else if (map[i][j] == 'W') {
+            } else if (tileChar == 'W') {
                 water.draw(j * 32, i * 32, w);
-            } else if (map[i][j] == 'd') {
+            } else if (tileChar == 'd') {
                 leafc.draw(j * 32, i * 32, w);
-            } else if (map[i][j] == 'e') {
+            } else if (tileChar == 'e') {
                 leaf1.draw(j * 32, i * 32, w);
-            } else if (map[i][j] == 'f') {
+            } else if (tileChar == 'f') {
                 leaf2.draw(j * 32, i * 32, w);
-            } else if (map[i][j] == 's') {
+            } else if (tileChar == 's') {
                 leaf3.draw(j * 32, i * 32, w);
-            } else if (map[i][j] == 'h') {
+            } else if (tileChar == 'h') {
                 leaf4.draw(j * 32, i * 32, w);
-            } else if (map[i][j] == 'i') {
+            } else if (tileChar == 'i') {
                 leaf5.draw(j * 32, i * 32, w);
-            } else if (map[i][j] == 'l') {
+            } else if (tileChar == 'l') {
                 leaf6.draw(j * 32, i * 32, w);
-            } else if (map[i][j] == 'm') {
+            } else if (tileChar == 'm') {
                 leaf7.draw(j * 32, i * 32, w);
-            } else if (map[i][j] == 'c') {
+            } else if (tileChar == 'c') {
                 treeLog.draw(j * 32, i * 32, w);
-            } else if (map[i][j] == 'n') {
+            } else if (tileChar == 'n') {
                 treeLogSolid.draw(j * 32, i * 32, w);
-            } else if (map[i][j] == 'w') {
+            } else if (tileChar == 'w') {
                 woodBridge.draw(j * 32, i * 32, w);
-            } else if (map[i][j] == 'X') {
+            } else if (tileChar == 'X') {
                 ground_door_closed.setPosition(j * 32, i * 32);
                 w->draw(ground_door_closed);
-            } else if (map[i][j] == 'x') {
+            } else if (tileChar == 'x') {
                 ground_door_opened.setPosition(j * 32, i * 32);
                 w->draw(ground_door_opened);
             }
@@ -253,7 +254,7 @@ void Tilemap::load_plataforms() {
     plataforms.clear();
     for (int i{}; i < this->H; ++i) {
         for (int j{}; j < this->W; j++) {
-            if (this->map[i][j] == 'M') {
+            if (this->getTileName(i, j) == 'M') {
                 Plataform* plataform = new Plataform();
                 plataform->pos.top = i * 32;
                 plataform->pos.left = j * 32;
@@ -266,7 +267,7 @@ void Tilemap::load_plataforms() {
 void Tilemap::replaceAll(char a, char b) {
     for (int i{}; i < this->H; ++i) {
         for (int j{}; j < this->W; j++) {
-            if (this->map[i][j] == a) {
+            if (this->getTileName(i, j) == a) {
                 this->map[i][j] = b;
             }
         }
@@ -342,16 +343,12 @@ void Tilemap::edit_save() {
     }
 };
 bool Tilemap::free_path(int i, int j) {
-    if (this->is_valid(i, j)) {
-        return this->map[i][j] == ' ' || this->map[i][j] == '@' || this->map[i][j] == '0' || this->map[i][j] == '1' || this->map[i][j] == '2' || this->map[i][j] == '3' || this->map[i][j] == '4' || this->map[i][j] == '5' || this->map[i][j] == '6' || this->map[i][j] == '7' || this->map[i][j] == '8' || this->map[i][j] == '9';
-    }
-    return false;
+    const char til = this->getTileName(i, j);
+    return til == ' ' || til == '@' || til == '0' || til == '1' || til == '2' || til == '3' || til == '4' || til == '5' || til == '6' || til == '7' || til == '8' || til == '9';
 }
 bool Tilemap::free_path_bullet(int i, int j) {
-    if (this->is_valid(i, j)) {
-        return this->map[i][j] == ' ' || this->map[i][j] == '@' || this->map[i][j] == 'P' || this->map[i][j] == 'Q' || this->map[i][j] == 'G' || this->map[i][j] == 'R' || this->map[i][j] == '^' || this->map[i][j] == 'V' || this->map[i][j] == '>' || this->map[i][j] == '<' || this->map[i][j] == 'M' || this->map[i][j] == 'H' || this->map[i][j] == 'Z' || this->map[i][j] == 'k' || this->map[i][j] == 'K' || this->map[i][j] == 'g' || this->map[i][j] == 'x' || this->map[i][j] == 'j' || this->map[i][j] == 'J' || this->map[i][j] == 'Y' || this->map[i][j] == '.' || this->map[i][j] == 'T' || this->map[i][j] == '0' || this->map[i][j] == '1' || this->map[i][j] == '2' || this->map[i][j] == '3' || this->map[i][j] == '4' || this->map[i][j] == '5' || this->map[i][j] == '6' || this->map[i][j] == '7' || this->map[i][j] == '8' || this->map[i][j] == '9' || this->map[i][j] == 's' || this->map[i][j] == 'h' || this->map[i][j] == 'i' || this->map[i][j] == 'f' || this->map[i][j] == 'd' || this->map[i][j] == 'l' || this->map[i][j] == 'e' || this->map[i][j] == 'd' || this->map[i][j] == 'm' || this->map[i][j] == 'c' || this->map[i][j] == 'n';
-    }
-    return false;
+    const char til = this->getTileName(i, j);
+    return til == ' ' || til == '@' || til == 'P' || til == 'Q' || til == 'G' || til == 'R' || til == '^' || til == 'V' || til == '>' || til == '<' || til == 'M' || til == 'H' || til == 'Z' || til == 'k' || til == 'K' || til == 'g' || til == 'x' || til == 'j' || til == 'J' || til == 'Y' || til == '.' || til == 'T' || til == '0' || til == '1' || til == '2' || til == '3' || til == '4' || til == '5' || til == '6' || til == '7' || til == '8' || til == '9' || til == 's' || til == 'h' || til == 'i' || til == 'f' || til == 'd' || til == 'l' || til == 'e' || til == 'd' || til == 'm' || til == 'c' || til == 'n';
 }
 // char* Tilemap::tile(int i, int j) {
 //     if (i >= 0 && i <= this->H && j >= 0 && j <= this->W) {
@@ -360,5 +357,5 @@ bool Tilemap::free_path_bullet(int i, int j) {
 //     return new char;
 // }
 bool Tilemap::is_valid(int i, int j) {
-    return (i >= 0 && i <= this->H && j >= 0 && j <= this->W);
+    return (i >= 0 && i < this->H && j >= 0 && j < this->W);
 }

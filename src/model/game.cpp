@@ -349,7 +349,7 @@ void Game::load_phase() {
     dariu.score.bananas_total = 0;
     for (int i{}; i < tilemap.H; ++i) {
         for (int j{}; j < tilemap.W; j++) {
-            if (tilemap.map[i][j] == '.') {
+            if (tilemap.getTileName(i, j) == '.') {
                 dariu.score.bananas_total += 1;
             }
         }
@@ -358,7 +358,7 @@ void Game::load_phase() {
     dariu.score.thophy_total = 0;
     for (int i{}; i < tilemap.H; ++i) {
         for (int j{}; j < tilemap.W; j++) {
-            if (tilemap.map[i][j] == 'T') {
+            if (tilemap.getTileName(i, j) == 'T') {
                 dariu.score.thophy_total += 1;
             }
         }
@@ -366,7 +366,7 @@ void Game::load_phase() {
     // Search for start position of Dariu
     for (int i{}; i < tilemap.H; ++i) {
         for (int j{}; j < tilemap.W; j++) {
-            if (tilemap.map[i][j] == '@') {
+            if (tilemap.getTileName(i, j) == '@') {
                 dariu.set_position(j * 32, i * 32);
                 break;
             }
@@ -377,7 +377,7 @@ void Game::load_enimies() {
     catracas.clear();
     for (int i{}; i < tilemap.H; ++i) {
         for (int j{}; j < tilemap.W; j++) {
-            if (tilemap.map[i][j] == 'Z') {
+            if (tilemap.getTileName(i, j) == 'Z') {
                 Catraca* catraca = new Catraca();
                 catraca->set_position(j * 32, i * 32);
                 catracas.push_back(catraca);
@@ -388,7 +388,7 @@ void Game::load_enimies() {
     int id = 0;
     for (int i{}; i < tilemap.H; ++i) {
         for (int j{}; j < tilemap.W; j++) {
-            if (tilemap.map[i][j] == 'Y') {
+            if (tilemap.getTileName(i, j) == 'Y') {
                 Sova* sova = new Sova();
                 sova->set_position(j * 32, i * 32);
                 sova->id = ++id;
@@ -401,7 +401,7 @@ void Game::load_enimies() {
     cannons.clear();
     for (int i{}; i < tilemap.H; ++i) {
         for (int j{}; j < tilemap.W; j++) {
-            if (tilemap.map[i][j] == 'H') {
+            if (tilemap.getTileName(i, j) == 'H') {
                 Cannon* cannon = new Cannon();
                 cannon->set_position(j * 32, i * 32);
                 cannons.push_back(cannon);
@@ -411,7 +411,7 @@ void Game::load_enimies() {
     bulletcs.clear();
     for (int i{}; i < tilemap.H; ++i) {
         for (int j{}; j < tilemap.W; j++) {
-            if (tilemap.map[i][j] == 'H') {
+            if (tilemap.getTileName(i, j) == 'H') {
                 Bulletc* bulletc = new Bulletc();
                 bulletc->set_position(j * 32, i * 32);
                 bulletcs.push_back(bulletc);
@@ -693,7 +693,7 @@ void Game::loop_events() {
                 this->dariu.lcontroll_released = true;
                 this->dariu.zerokey_released = true;
             }
-            if (0) {
+            if (1) {
                 if (event.key.code == sf::Keyboard::PageUp) {
                     window.setVerticalSyncEnabled(false);  // Don't allow more FPS than your monitor support.
                     window.setFramerateLimit(0);
