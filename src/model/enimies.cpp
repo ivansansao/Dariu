@@ -79,11 +79,11 @@ void Enimy::updateFly(Tilemap *tilemap, Sounds *sounds) {
             // const int y = hor / 32;
             // const int previous = 1;
 
-            // const char frontRightBlock = tilemap->getTileName(x, y + previous);
-            // const char frontLeftBlock = tilemap->getTileName(x, y - previous);
+            // const char frontRightBlock = tilemap->getTileChar(x, y + previous);
+            // const char frontLeftBlock = tilemap->getTileChar(x, y - previous);
 
-            // const char upRightBlock = tilemap->getTileName(x - 1, y + previous);
-            // const char upLeftBlock = tilemap->getTileName(x - 1, y - previous);
+            // const char upRightBlock = tilemap->getTileChar(x - 1, y + previous);
+            // const char upLeftBlock = tilemap->getTileChar(x - 1, y - previous);
 
             // if (direction_x == 1 && frontRightBlock != ' ')
             //     velocity.y = -5;

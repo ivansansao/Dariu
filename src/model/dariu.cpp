@@ -110,7 +110,7 @@ void Dariu::on_collide(std::string where, int i, int j, Tilemap *tilemap, Sounds
     int right_block = Tools::ceil_special(j32, 0.39);
 
     if (where == "top") {
-        if (tilemap->getTileName(i, j) == 'b') {
+        if (tilemap->getTileChar(i, j) == 'b') {
             tilemap->map[i][j] = ' ';
             if (sounds->crash_sound.getStatus() == 0) sounds->crash_sound.play();
         };
@@ -121,14 +121,14 @@ void Dariu::on_collide(std::string where, int i, int j, Tilemap *tilemap, Sounds
         die(tilemap, sounds);
     }
 
-    // if (tilemap->getTileName(i, j) == 'W') {
+    // if (tilemap->getTileChar(i, j) == 'W') {
     //     die(tilemap, sounds);
     // }
 }
 
 void Dariu::on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds) {
     Actor::on_collide_other(i, j, tilemap, sounds);
-    const char tileChar = tilemap->getTileName(i, j);
+    const char tileChar = tilemap->getTileChar(i, j);
 
     const float j32 = pos.left / 32;
     int left_block = Tools::floor_special(j32 + 1, 0.71);
