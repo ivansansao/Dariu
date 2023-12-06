@@ -693,7 +693,7 @@ void Game::loop_events() {
                 this->dariu.lcontroll_released = true;
                 this->dariu.zerokey_released = true;
             }
-            if (1) {
+            if (0) {
                 if (event.key.code == sf::Keyboard::PageUp) {
                     window.setVerticalSyncEnabled(false);  // Don't allow more FPS than your monitor support.
                     window.setFramerateLimit(0);
