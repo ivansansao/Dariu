@@ -332,10 +332,12 @@ void Actor::draw(sf::RenderWindow *w) {
         }
     }
 
-    if (false) {
-        // We can make a variable specific for sprite and turn pos minor!
-        sf::RectangleShape rectangle(sf::Vector2f(pos.left, pos.top));
+    if (0) {
+        sf::RectangleShape rectangle;
         rectangle.setSize(sf::Vector2f(pos.width, pos.height));
+        rectangle.setFillColor(sf::Color(0, 0, 0, 0));
+        rectangle.setOutlineColor(sf::Color::Red);
+        rectangle.setOutlineThickness(2.f);
         rectangle.setPosition(sf::Vector2f(pos.left, pos.top));
         w->draw(rectangle);
     }
