@@ -93,7 +93,7 @@ void Dariu::draw(sf::RenderWindow *w, int phase, int phase_total) {
     xscore += to_string(score.darius) + "          Bananas: " + to_string(score.bananas) + "/" + to_string(score.bananas_total);
     xscore += L"          Artefatos: ";
     xscore += to_string(score.thophy) + "/" + to_string(score.thophy_total);
-    xscore += "          Fase: " + to_string(phase) + " / " + to_string(phase_total) + "       " + to_string(this->updates);  // + " debug " + to_string(this->pos.left);
+    xscore += "          Fase: " + to_string(phase) + " / " + to_string(phase_total);  // + " debug " + to_string(this->pos.left);
     if (this->jetPackFuel > 0) {
         xscore += "          Mochila a jato: " + to_string((int)this->jetPackFuel) + " / 100";
     }
