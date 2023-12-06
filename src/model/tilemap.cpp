@@ -9,7 +9,7 @@ Tilemap::Tilemap() {
     banana.init(17, 0.5f, "./src/asset/image/Items/Fruits/Bananas.png", sf::IntRect(0, 0, 32, 32), true);
     portalP.init(0, 0.f, "./src/asset/image/PortalP.png", sf::IntRect(0, 0, 32, 32), true);
     portalQ.init(0, 0.f, "./src/asset/image/PortalQ.png", sf::IntRect(0, 0, 32, 32), true);
-    trophy.init(8, 0.05f, "./src/asset/image/SpinFlower.png", sf::IntRect(0, 0, 32, 32), false);
+    trophy.init(8, 0.01f, "./src/asset/image/SpinFlower.png", sf::IntRect(0, 0, 32, 32), true);
     gate.init(0, 0.f, "./src/asset/image/gate.png", sf::IntRect(0, 0, 32, 32), true);
     gatekey.init(0, 0.f, "./src/asset/image/gatekey.png", sf::IntRect(0, 0, 32, 32), true);
 }
