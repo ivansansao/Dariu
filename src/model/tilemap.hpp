@@ -54,6 +54,7 @@ class Tilemap {
     sf::RenderWindow window;
     sf::Texture terrain_tex;
     sf::Texture terrain2_tex;
+    sf::Texture terrain_mid_false_tex;
     sf::Texture door_tex;
     sf::Texture background_tex;
     sf::Sprite ground;
@@ -65,6 +66,7 @@ class Tilemap {
 
     sf::Sprite ground_left;
     sf::Sprite ground_mid;
+    sf::Sprite ground_mid_false;
     sf::Sprite ground_right;
     sf::Sprite ground_left2;
     sf::Sprite ground_mid2;

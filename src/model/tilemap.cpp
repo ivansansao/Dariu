@@ -41,6 +41,7 @@ void Tilemap::load_texture_from_file(int phase) {
 
     terrain_tex.loadFromFile(root + "Terrain (16x16).png");
     terrain2_tex.loadFromFile(root + "Terrain (32x32).png");
+    terrain_mid_false_tex.loadFromFile(root + "falseblock.png");
     door_tex.loadFromFile("./src/asset/image/door.png");
 
     ground.setTexture(terrain_tex);
@@ -57,8 +58,13 @@ void Tilemap::load_texture_from_file(int phase) {
 
     ground_left.setTexture(terrain2_tex);
     ground_left.setTextureRect(sf::IntRect(0, 0, 32, 32));
+
     ground_mid.setTexture(terrain2_tex);
     ground_mid.setTextureRect(sf::IntRect(32, 0, 32, 32));
+
+    ground_mid_false.setTexture(terrain_mid_false_tex);
+    ground_mid_false.setTextureRect(sf::IntRect(0, 0, 32, 32));
+
     ground_right.setTexture(terrain2_tex);
     ground_right.setTextureRect(sf::IntRect(64, 0, 32, 32));
 
@@ -178,6 +184,9 @@ void Tilemap::draw(sf::RenderWindow* w) {
             } else if (tileChar == 'B') {
                 ground_mid.setPosition(j * 32, i * 32);
                 w->draw(ground_mid);
+            } else if (tileChar == '-') {
+                ground_mid_false.setPosition(j * 32, i * 32);
+                w->draw(ground_mid_false);
             } else if (tileChar == 'C') {
                 ground_right.setPosition(j * 32, i * 32);
                 w->draw(ground_right);
