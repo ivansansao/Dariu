@@ -1,25 +1,25 @@
 EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
 EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE.................G1         EEEEEEEEEEE                                      E
-EP4EP3E  E....R..........R............YE.               .G1Y            EEEEEEE                                   Y  E
+EP4EP3E  E....R..........R............YE.            Y  .G1Y    Z       EEEEEEE                                   Y  E
 E  G4 G3  .... .......... ............ZE.ABC   Y    ABC .bEEEEEEEEEE    EEEEEEE            Y                         E
-E  G4 G3  .... .......... ............ E.      AC       .bEEEEEE      EEEEEEEEE                                      E
-E..B..B@ B..........R..........R.....P2E.               .bEE       EEEEEEEEEEEE                                      E
+E  G4 G3  ....Z..........Z............ E.      AC       .bEEEEEE    Y EEEEEEEEE                                      E
+E..B..B@ B..........R..........R.....P2E.  Y        Z   .bEE       EEEEEEEEEEEE                                      E
 EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE. ABC      ABC  .bE     EEEERRRRRREEEEE                                      E
-EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEK1              .bE                   E                                      E
-EEEEE                                P1EC..... AC       .bEE>M            <E  E                                      E
-EEEEE                                Y EWWWWb.          .bEEWWWWWWWWWWWWWWWEE E                                      E
+EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEK1     Z        .bE                   E                                      E
+EEEEE                                P1EC..... AC       .bEE>M            <EZ E                                      E
+EEEEE   Z            Z               Y EWWWWb.      Z   .bEEWWWWWWWWWWWWWWWEE E                                      E
 EEEEE  EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEWWWWb.     ABC  .bEEWWWWWWWWWWWWWWWE  E                                      E
 EEEEE  EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEWWWWbRRRRR.......bEEEEEEEWWWEEEEEEEE EE                                      E
 EEEEE          EE....................Q1EEEEEEEEEEEbbEEEEEEEEEEEEEEEEEEEEEEEE  E                                      E
-EEEEE          EE.K2    YT         T  .E      Y     EE                  EEEE EEWWWWWWWWWWWWB     E                   E
+EEEEE          EE.K2    YT         TZ .E      Y     EE                  EEEE EEWWWWWWWWWWWWB     E                   E
 EEEEEEEEEEE    EE.      ABC       ABC .E     ABBBBBBEE   ABBBBBBBBBBC     EE  EBBBBBBBBBBWWE     E         Z         E
-EEEEEEEEEEE    EE.  T         T       .E            EE   DEEEEEEEEEEEEE     E      Y    EWWE     E                   E
+EEEEEEEEEEE    EE. ZT         TZ      .E            EE   DEEEEEEEEEEEEE     E      Y    EWWE     E                   E
 EE    EEEEE   YEE. ABC       ABC      .EE     ABC        DE        EEEEEE    EEBBBBC   AEWWWWWC  E                   E
-EE       EE   EEE.       T         T  .EEEE            ABEE        HEEE      EEWWWWWC   RBBWWB   E                   E
+EE       EE   EEE.       T         T  .EEEE          Z ABEE        HEEE      EEWWWWWC   RBBWWB   E                   E
 EE       EE    EE.      ABC       ABC .E  EBC     ABBBBEEEE        BE      EEEEWWWWWFK4   RBWE  AE                   E
 EEQ2EEEE   Z   EE.  T        YT       .E  EEWWWWWWWEEEEEE     AC    EE    EEEEEBBBBBEBC    EBE   E                   E
-EEEEEEEEEEEEEEEEE. ABC       ABC      .EQ3  EEEEEEE          EEEE    EE     EEER                RE                   E
-E               E......................G2    K3       B     EEEEEEE   Y    EEEEQ4T ABBBBBBBBBBBBBX   J  Y         J  E
+EEEEEEEEEEEEEEEEE. ABC       ABC      .EQ3  EEEEEEE          EEEE    EE     EEER         Z      RE                   E
+E               E......................G2    K3  Z    B Z   EEEEEEE   Y Z  EEEEQ4T ABBBBBBBBBBBBBX   J  Y      Z  J  E
 EBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBEBBBBBBBBBBBBBBBBBBBBEEEEBBBBEWWWWWWWWWWWWWEBBBBBBBBBBBBBBBBBBBE
 [ENDBLOCK]
 [TERRAIN]
