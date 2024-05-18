@@ -2,10 +2,10 @@ EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
 E  Y      Z        ...........Y............                                 H>   V   -                               E
 E                 TABBBBBBBBBBBBBBBBBBBBBBB.........Z                       M^       E                               E
 EMV      ABBBBBBBBBE         V            EBBBBBBBBBBB.                              EP1  Y  E Z     E       V       E
-E   ABBBBE                                   -- P2   EB.                             EBBBBBBBEBBBBBBBE   BBB   BB....E
+E   ABBBBE                                   -- P2   EB.         Z                   EBBBBBBBEBBBBBBBE   BBB   BB....E
 E                                            EE       EB.      ABBBBBBBBC                            E          E....E
 E                                            EEQ1 T  K1EB      D     G2EF                            E          E....E
-E             H                              EEEEEEEEEEEEB    AE     G2XEB                V ABBBBY   DBBBEE     E....E
+E             H Z                            EEEEEEEEEEEEB    AE     G2XEB                V ABBBBY   DBBBEE     E....E
 E             BBBBC   >M    <  >M        <   G3          EB    D     ABEF                   D           E       E....E
 E            EE  TE. B  B         Y          G3           EB   G1Z   K2EFY                  D   ........E       E....E
 E             -   E. E  E >       M<        @G3            EBBBBBBBBBBBBBBBB                D   ABBBBBBBE       E....E
@@ -18,8 +18,8 @@ E      ...............                                         B           E    
 E     >M                <                                          .             ^          DY          E   H   E....E
 E   BBBBBBB                                                        B .                      DBBBBBbC    E   M^  E....E
 E         F                                                          B . B.............B           F          BBE....E
-EE Y     TG       Y         H                 J   Y   Z    Z    Y      B EBBBBBBBBBBBBBE M^        F          G4K4..TE
-EEEEERRREEF                 M^     M^         B..................B                                 EBBBBBBBBBBBBBBBBBE
+EE Y  Z  TG       Y         H                 J   Y   Z    Z    Y      B EBBBBBBBBBBBBBE M^        F          G4K4..TE
+EEEEERRREEF        Z        M^  Z  M^         B..................B                                 EBBBBBBBBBBBBBBBBBE
 ERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRREBBBBBBBBBBBBBBBBBBERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRE
 [ENDBLOCK]
 [TERRAIN]

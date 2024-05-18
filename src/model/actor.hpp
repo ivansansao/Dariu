@@ -49,6 +49,7 @@ class Actor {
     float gravity;
     float lift;
     bool jetPack = false;
+    bool stopped = false;
     float jetPackFuel = 0;
     float jetPackConsume = 0.1;
     float jetPackCapacity = 100;

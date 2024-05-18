@@ -374,18 +374,21 @@ void Game::load_phase() {
     }
 }
 void Game::load_enimies() {
+    int id = 0;
+
     catracas.clear();
     for (int i{}; i < tilemap.H; ++i) {
         for (int j{}; j < tilemap.W; j++) {
             if (tilemap.getTileChar(i, j) == 'Z') {
                 Catraca* catraca = new Catraca();
                 catraca->set_position(j * 32, i * 32);
+                catraca->id = (++id) * 30;
                 catracas.push_back(catraca);
             }
         }
     }
     sovas.clear();
-    int id = 0;
+    id = 0;
     for (int i{}; i < tilemap.H; ++i) {
         for (int j{}; j < tilemap.W; j++) {
             if (tilemap.getTileChar(i, j) == 'Y') {
@@ -488,7 +491,7 @@ void Game::check_collisions_enimies() {
         if (dariuJump) dariu.jump();
     }
 }
-void Game::pause(){};
+void Game::pause() {};
 void Game::save_profile_if_good() {
     this->endtime_play = std::chrono::high_resolution_clock::now();
     int seconds_playing = Tools::time_dif_in_seconds(this->starttime_play, this->endtime_play);

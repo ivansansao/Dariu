@@ -175,11 +175,65 @@ void Enimy::die(Tilemap *tilemap, Sounds *sounds) {
 Catraca::Catraca() {
     actor_tex_fall.loadFromFile("./src/asset/image/Main Characters/Mask Dude/Fall (32x32).png");
     actor_tex.loadFromFile("./src/asset/image/catraca.png");
-    actor_tex_idle.loadFromFile("./src/asset/image/Main Characters/Mask Dude/Idle (32x32).png");
+    actor_tex_idle.loadFromFile("./src/asset/image/catraca_idle.png");
 };
 
 void Catraca::update(Tilemap *tilemap, Sounds *sounds) {
     Enimy::update(tilemap, sounds);
+    this->updates++;
+    if (this->updates > 9999) this->updates = 0;
+}
+void Catraca::updateWalk(Tilemap *tilemap, Sounds *sounds) {
+    switch (state) {
+        case (States::Normal): {
+            if (this->updates % this->id == 0) {
+                if (this->state == States::Normal) {
+                    if (this->on_ground) {
+                        Enimy::jump();
+                    }
+                }
+            }
+            // if ((this->updates + (this->id * 10)) % 4000 == 0) {
+            //     if (this->state == States::Normal) {
+            //         direction_x = -direction_x;
+            //     }
+            // }
+            add_gravity();
+            collision_y(tilemap, sounds);
+
+            if (direction_x == 1) velocity.x = 0.5;
+            if (direction_x == -1) velocity.x = -0.5;
+
+            pos.left += velocity.x;
+
+            collision_x(tilemap, sounds);
+            break;
+        }
+        case (States::DieStart): {
+            state = States::Dieing;
+            jump(true);
+            break;
+        }
+        case (States::Dieing): {
+            add_gravity();
+            if (pos.top > (tilemap->H * 32) + 32) state = States::Died;
+            break;
+        }
+        case (States::Died): {
+            break;
+        }
+        case (States::ReviveStart): {
+            break;
+        }
+        case (States::Reviving): {
+            break;
+        }
+        case (States::Revived): {
+            break;
+        }
+    }
+    collision_other(tilemap, sounds);
+    collision_portal(tilemap, sounds);
 }
 void Catraca::draw(sf::RenderWindow *w) {
     actor_spr.setPosition(pos.left, pos.top);

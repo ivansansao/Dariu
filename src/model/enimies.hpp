@@ -23,6 +23,7 @@ class Catraca : public Enimy {
     Catraca();
 
     void update(Tilemap *tilemap, Sounds *sounds);
+    void updateWalk(Tilemap *tilemap, Sounds *sounds);
     void draw(sf::RenderWindow *w);
     void on_collide(std::string where, int i, int j, Tilemap *tilemap, Sounds *sounds);
     void on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds);
