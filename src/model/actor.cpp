@@ -26,6 +26,8 @@ Actor::Actor() {
     direction_x = 1;
     direction_y = 1;
     i_idle_sprite = 1;
+    i_fall_sprite = 1;
+    i_jump_sprite = 1;
     on_ground = false;
     gravity = 1.0;
     lift = -17;

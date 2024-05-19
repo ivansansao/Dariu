@@ -46,6 +46,8 @@ class Actor {
     int direction_x;
     int direction_y;
     float i_idle_sprite;
+    float i_fall_sprite;
+    float i_jump_sprite;
     float gravity;
     float lift;
     bool jetPack = false;

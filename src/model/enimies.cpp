@@ -173,7 +173,8 @@ void Enimy::die(Tilemap *tilemap, Sounds *sounds) {
  */
 
 Catraca::Catraca() {
-    actor_tex_fall.loadFromFile("./src/asset/image/Main Characters/Mask Dude/Fall (32x32).png");
+    actor_tex_fall.loadFromFile("./src/asset/image/catraca_fall.png");
+    actor_tex_jump.loadFromFile("./src/asset/image/catraca_jump.png");
     actor_tex.loadFromFile("./src/asset/image/catraca.png");
     actor_tex_idle.loadFromFile("./src/asset/image/catraca_idle.png");
 };
@@ -189,6 +190,8 @@ void Catraca::updateWalk(Tilemap *tilemap, Sounds *sounds) {
             if (this->updates % this->id == 0) {
                 if (this->state == States::Normal) {
                     if (this->on_ground) {
+                        i_jump_sprite = 0;
+                        i_fall_sprite = 0;
                         Enimy::jump();
                     }
                 }
@@ -238,13 +241,25 @@ void Catraca::updateWalk(Tilemap *tilemap, Sounds *sounds) {
 void Catraca::draw(sf::RenderWindow *w) {
     actor_spr.setPosition(pos.left, pos.top);
 
-    if (velocity.x == 0) {
-        actor_spr.setTexture(actor_tex_idle);
-        actor_spr.setTextureRect(sf::IntRect(Tools::getStartSprite((int)i_idle_sprite % 7, direction_x) * 32, 0, direction_x * 32, 32));
-        i_idle_sprite += 0.2;
+    if (on_ground) {
+        if (velocity.x == 0) {
+            actor_spr.setTexture(actor_tex_idle);
+            actor_spr.setTextureRect(sf::IntRect(Tools::getStartSprite((int)i_idle_sprite % 7, direction_x) * 32, 0, direction_x * 32, 32));
+            i_idle_sprite += 0.2;
+        } else {
+            actor_spr.setTexture(actor_tex);
+            actor_spr.setTextureRect(sf::IntRect(Tools::getStartSprite((int)pos.left % 8, direction_x) * 32, 0, direction_x * 32, 32));
+        }
     } else {
-        actor_spr.setTexture(actor_tex);
-        actor_spr.setTextureRect(sf::IntRect(Tools::getStartSprite((int)pos.left % 8, direction_x) * 32, 0, direction_x * 32, 32));
+        if (velocity.y > 0) {
+            actor_spr.setTexture(actor_tex_fall);
+            actor_spr.setTextureRect(sf::IntRect(Tools::getStartSprite((int)i_fall_sprite % 4, direction_x) * 32, 0, direction_x * 32, 32));
+            i_fall_sprite += 0.4;
+        } else {
+            actor_spr.setTexture(actor_tex_jump);
+            actor_spr.setTextureRect(sf::IntRect(Tools::getStartSprite((int)i_jump_sprite % 8, direction_x) * 32, 0, direction_x * 32, 32));
+            i_jump_sprite += 0.5;
+        }
     }
     w->draw(actor_spr);
 }
