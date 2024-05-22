@@ -251,15 +251,15 @@ void Catraca::draw(sf::RenderWindow *w) {
             actor_spr.setTextureRect(sf::IntRect(Tools::getStartSprite((int)pos.left % 8, direction_x) * 32, 0, direction_x * 32, 32));
         }
     } else {
-        if (velocity.y > 0) {
-            actor_spr.setTexture(actor_tex_fall);
-            actor_spr.setTextureRect(sf::IntRect(Tools::getStartSprite((int)i_fall_sprite % 4, direction_x) * 32, 0, direction_x * 32, 32));
-            i_fall_sprite += 0.4;
-        } else {
-            actor_spr.setTexture(actor_tex_jump);
-            actor_spr.setTextureRect(sf::IntRect(Tools::getStartSprite((int)i_jump_sprite % 8, direction_x) * 32, 0, direction_x * 32, 32));
-            i_jump_sprite += 0.5;
-        }
+        // if (velocity.y > 0) {
+        //     actor_spr.setTexture(actor_tex_fall);
+        //     actor_spr.setTextureRect(sf::IntRect(Tools::getStartSprite((int)i_fall_sprite % 1, direction_x) * 32, 0, direction_x * 32, 32));
+        //     i_fall_sprite += 0.4;
+        // } else {
+        actor_spr.setTexture(actor_tex_jump);
+        actor_spr.setTextureRect(sf::IntRect(Tools::getStartSprite((int)i_jump_sprite % 8, -direction_x) * 32, 0, -direction_x * 32, 32));
+        i_jump_sprite += 0.25;
+        // }
     }
     w->draw(actor_spr);
 }
