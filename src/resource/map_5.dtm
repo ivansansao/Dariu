@@ -1,14 +1,14 @@
 EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-E                        EE                                     G1          -Y       T      E                        E
-E   Y                    GG                                     G1   K2     E         .     E                        E
-EbbbbbbbbbbbbbbbbbbbbbbbbEE                                     G1B     Y   E         B     E   E                    E
+E                        --                                     G1          -Y       T      E                        E
+E  Z Y  Z       Z   Z    GG                                     G1   K2     E         .     E                        E
+EbbbbbbbbbbbbbbbbbbbbbbbbEE  Z                                  G1B  Z  Y   E        ZB     E   E                    E
 E                        EE  Q2                                 BBEBBBBBBBBBE...     AE     EZ TE  Z    A            E
 E                        EE  AC                                             EBBC      E     EbbbEbbbbbbbD Y        P2E
-E                        EE  DF        RRR                    K3            EZ        E                 DBBBBBBBBBBBBE
-E   Y     R       R  Z   ABBBEEbbbbbbbbbbbbbbbbbBBC                         E...   ...E                              E
-EQ5      RRR  K1 RRR     G2..........Y..........XEF                       P3Ebbb   ABBE    ABBBBBBBBBBBBBBBBBBC      E
+E                        EE  DF   Z    RRR      Z             K3            EZ        E                 DBBBBBBBBBBBBE
+E   Y     R       R  Z   ABBBEEbbbbbbbbbbbbbbbbbBBC                         E...   ...E             Z                E
+EQ5   Z  RRR  K1 RRR     G2..........Y..........XEF                 Z     P3Ebbb   ABBE    ABBBBBBBBBBBBBBBBBBC      E
 EBBBBBBBEEEEEBBBEEEEEBBBBEEEEEEEEEEEEEEEEEEEEEEEEEE    ABBBBBBBBBBBBBBBBBBBBE         E    DEEEEEEEEEEEEEEEEEEF      E
-EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE    EEEEEEEEEEEEEEEEEEEEEE         E    DERR   RRR      Q4EF      E
+EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE   ZEEEEEEEEEEEEEEEEEEEEEE         E    DERR   RRR      Q4EF      E
 ERR                                               G3  C               MV    E...      E    DER     R         EF      E
 ER                               Y                G3 C            Y M V     EBBC      E    DE................EF      E
 E                                                 BBC             M  V             Y  E    DE...............REF      E
@@ -18,8 +18,8 @@ E  @              R    D   F   DEEEEEEEEEEEF              .   .   .          T  
 E  B Y    P1   Y RRR Z G3ZTFB  DEEP4     EEEF      ....   .   .   .         ....      E                              E
 E  EbbbBBBBBBBBBBBBbbbbbbbBFR  DEE       EEF       ABBC   B   B   B         ABBC      E                              E
 E                      E   F   DEE       EEEF     DEEEF   E   E   E  ^  Z   D         E                              E
-E            Z    Y  Z E   EBBBDEE     T EEEEF   DEEEEF   E   E   E.. ^ ....D                     M>  <              E
-E .....................E          Q3     EEEEEEEEEEEEEF   E   E H E..  ^....D   Q1          Z.    B  .              JE
+E            Z    Y  Z E   EBBBDEE     T EEEEF Z DEEEEF   E   E   E.. ^ ....D                     M>  <              E
+E .....................E    Z     Q3     EEEEEEEEEEEEEF Z E   E H E..  ^....D   Q1          Z.    B  .      Z   Z   JE
 EBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBEEEEEEEEEEEEEEEEEEEEEEEFRRRERRRERRREBBBBBBBBBERRRERRRABBBBBBBBBBBRRERRBRRRBBBBBBBBBBBBE
 [ENDBLOCK]
 [TERRAIN]
