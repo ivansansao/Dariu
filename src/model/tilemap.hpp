@@ -32,6 +32,8 @@ class Tilemap {
     point getTileByNameNumber(char name, int number);
     point getMapOppositPortal(int i, int j);
 
+    Animation gun;
+    Animation munition;
     Animation jetpack;
     Animation banana;
     Animation water;

@@ -175,6 +175,12 @@ void Dariu::on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds) {
             tilemap->map[i][j] = 'j';
         }
     }
+    if (tileChar == 'L') {  // Gun
+        tilemap->map[i][j] = ' ';
+    }
+    if (tileChar == 'u') {  // Munition
+        tilemap->map[i][j] = ' ';
+    }
     if (tileChar == 'x') {
         if (sounds->levelcomplete_sound.getStatus() == 0) {
             sounds->levelcomplete_sound.play();
