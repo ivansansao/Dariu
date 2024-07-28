@@ -57,6 +57,9 @@ class Actor {
     float jetPackCapacity = 100;
     bool on_ground;
 
+    bool hasGun = true;
+    int munitions = 3;
+
     bool key_released = true;
     bool up_released = true;
     bool z_released = true;

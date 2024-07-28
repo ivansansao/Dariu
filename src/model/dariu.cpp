@@ -97,6 +97,11 @@ void Dariu::draw(sf::RenderWindow *w, int phase, int phase_total) {
     if (this->jetPackFuel > 0) {
         xscore += "          Mochila a jato: " + to_string((int)this->jetPackFuel) + " / 100";
     }
+    if (this->hasGun > 0) {
+        xscore += "          Armado!";
+        xscore += L"          Munição: ";
+        xscore += to_string((int)this->munitions);
+    }
 
     text_score.setString(xscore);
     w->draw(text_score);
@@ -177,9 +182,11 @@ void Dariu::on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds) {
     }
     if (tileChar == 'L') {  // Gun
         tilemap->map[i][j] = ' ';
+        this->hasGun = true;
     }
     if (tileChar == 'u') {  // Munition
         tilemap->map[i][j] = ' ';
+        this->munitions += 5;
     }
     if (tileChar == 'x') {
         if (sounds->levelcomplete_sound.getStatus() == 0) {
@@ -204,6 +211,9 @@ void Dariu::on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds) {
 }
 
 void Dariu::shot(Sounds *sounds) {
-    Actor::shot(sounds);
-    sounds->shot_sound.play();
+    if (this->munitions > 0) {
+        Actor::shot(sounds);
+        sounds->shot_sound.play();
+        this->munitions--;
+    }
 }
