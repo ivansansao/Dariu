@@ -31,7 +31,9 @@ Here we are using Makefile.
 Install
 ~~~bash
 sudo apt update
-sudo apt install libsfml-dev
+sudo apt install libsfml-dev -y
+sudo apt install make -y
+sudo apt install g++ -y
 ~~~
 
 ~~~bash
