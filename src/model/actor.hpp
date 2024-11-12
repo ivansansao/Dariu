@@ -96,5 +96,7 @@ class Actor {
     bool is_block(char el);
     bool is_alive();
     point getCoord(Tilemap *tilemap, int offset_i, int offset_j);
+    sf::Color setRandomColor();
+    void setColor(sf::Color color);
 };
 #endif

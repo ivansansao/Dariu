@@ -31,6 +31,13 @@ Actor::Actor() {
     on_ground = false;
     gravity = 1.0;
     lift = -17;
+
+    // sf::Color color = actorJetpack.setRandomColor();
+    // actorRun.setColor(color);
+    // actorIdle.setColor(color);
+    // actorJump.setColor(color);
+    // actor_spr.setColor(color);
+
     reset_position();
 }
 

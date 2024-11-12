@@ -4,6 +4,7 @@
 #define ANIMATION_H
 
 #include <SFML/Graphics.hpp>
+#include <random>
 
 using namespace std;
 
@@ -28,5 +29,7 @@ class Animation {
     int getFrame();
 
     void init(int q_frame, float step, std::string file, sf::IntRect rect, bool circularSprite);
+    sf::Color setRandomColor();
+    void setColor(sf::Color color);
 };
 #endif
