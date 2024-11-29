@@ -17,10 +17,10 @@ E                      ABBBC   ABBBBBBBBBBBC              .   .   .             
 E  @              R    D   FZ  DEEEEEEEEEEEF              .   .   .          T        E                              E
 E  B Y ZZ P1   Y RRR Z G3ZTFB  DEEP4     EEEF      ....   .   .   .         ....      E                              E
 E  EbbbBBBBBBBBBBBBbbbbbbbBFR  DEE       EEF       ABBC   B   B   B         ABBC      E                              E
-E    L                 E   F   DEE       EEEF    uDEEEF   E   E   E  ^  Z   D         E                              E
-E            Z    Y  Z E   EBBBDEE     T EEEEF Z DEEEEF   E   E   E.. ^ ....D                     M>  <              E
-Eu.....................E    Z     Q3ZZZZZEEEEEEEEEEEEEF Z E   E H E..  ^....D   Q1          Z.uu  B  .      Z   Z   JE
-EBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBEEEEEEEEEEEEEEEEEEEEEEEFRRRERRRERRREBBBBBBBBBERRRERRRABBBBBBBBBBBRRERRBRRRBBBBBBBBBBBBE
+E    L                 E   F   DEE       --EF    uDEEEEV  E   E   E  ^  Z   D         E                              E
+E            Z    Y  Z E   EBBBDEE     T E-EEEEEEEE----   E   E   E.. ^ ....D                     M>  <              E
+Eu.....................E    Z     Q3ZZZZZE----------EEE^M<E   E H E..  ^....D   Q1          Z.uu  B  .      Z   Z   JE
+EBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBEEEEEEEEEEEEEEEEEEEEEEEERRRERRRERRREBBBBBBBBBERRRERRRABBBBBBBBBBBRRERRBRRRBBBBBBBBBBBBE
 [ENDBLOCK]
 [TERRAIN]
 TerrainFire
