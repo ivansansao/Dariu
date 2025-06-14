@@ -9,6 +9,7 @@
 
 class Dariu : public Actor {
    public:
+    using Actor::draw;
     Dariu();
     ~Dariu();
     Score score;
@@ -21,7 +22,7 @@ class Dariu : public Actor {
 
     void update(Tilemap *tilemap, Sounds *sounds);
     void reset_position();
-    void draw(sf::RenderWindow *w, int phase, int phase_total);
+    void draw(sf::RenderWindow *w, int phase, int phase_total, int miliseconds_playtime);
     void on_collide(std::string where, int i, int j, Tilemap *tilemap, Sounds *sounds);
     void on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds);
     void die(Tilemap *tilemap, Sounds *sounds);

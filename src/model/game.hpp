@@ -32,9 +32,6 @@ class Game {
     sf::Text text_gamewin;
     sf::Text text_generic;
 
-    std::chrono::system_clock::time_point starttime_play;
-    std::chrono::system_clock::time_point endtime_play;
-
     enum pages {
         GAME_PLAY,
         GAME_OVER,
@@ -75,15 +72,14 @@ class Game {
     struct profile {
         int completed_phases = 0;
         int lifes = 0;
-        int seconds_playing = 0;
+        int miliseconds_playtime = 0;
     } profile;
 
     Dariu dariu;
     Tilemap tilemap;
     Sounds sounds;
     void load_profile();
-    void save_profile_if_good();
-    void save_profile(int seconds_playing);
+    void save_profile();
     void play();
     void pause();
     void resume();

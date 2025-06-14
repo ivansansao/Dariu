@@ -87,13 +87,15 @@ void Dariu::update(Tilemap *tilemap, Sounds *sounds) {
     }
     actor_spr.setPosition(pos.left, pos.top);
 }
-void Dariu::draw(sf::RenderWindow *w, int phase, int phase_total) {
+void Dariu::draw(sf::RenderWindow *w, int phase, int phase_total, int miliseconds_playtime) {
     Actor::draw(w);
     sf::String xscore = L"Vidas: ";
     xscore += to_string(score.darius) + "          Bananas: " + to_string(score.bananas) + "/" + to_string(score.bananas_total);
     xscore += L"          Artefatos: ";
     xscore += to_string(score.thophy) + "/" + to_string(score.thophy_total);
-    xscore += "          Fase: " + to_string(phase) + " / " + to_string(phase_total);  // + " debug " + to_string(this->pos.left);
+    xscore += "          Fase: " + to_string(phase) + " / " + to_string(phase_total);
+    xscore += "          Tempo: " + to_string(miliseconds_playtime / 60);
+
     if (this->jetPackFuel > 0) {
         xscore += "          Mochila a jato: " + to_string((int)this->jetPackFuel) + " / 100";
     }

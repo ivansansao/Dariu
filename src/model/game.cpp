@@ -68,9 +68,20 @@ enum menuopcs { Play,
 void Game::play() {
     if (!this->game_loaded) {
         load();
-        phase_current = (int)profile.completed_phases + 1;
+        if (phase_current == 0) {
+            phase_current = (int)profile.completed_phases + 1;
+        }
+
+        if (this->profile.completed_phases >= this->phase_total) {
+            page = pages::GAME_WIN;
+            return;
+        }
+
         load_phase();
     }
+
+    this->profile.miliseconds_playtime++;
+
     std::stringstream ss;
 
     if (this->editing) {
@@ -142,26 +153,24 @@ void Game::play() {
     }
 
     if (dariu.win) {
-        page = pages::GAME_WIN;
+        this->profile.completed_phases++;
+        if (phase_current < phase_total) {
+            phase_current++;
+            dariu.reset_position();
+            load_phase();
+        } else {
+            page = pages::GAME_WIN;
+        }
+        this->save_profile();
     } else if (dariu.over) {
         page = pages::GAME_OVER;
     }
 
-    if (page == pages::GAME_WIN) {
-        save_profile_if_good();
-        if (phase_current < phase_total) {
-            phase_current++;
-            page = pages::GAME_PLAY;
-            dariu.win = false;
-            dariu.reset_position();
-            load_phase();
-        }
-    }
     window.setView(this->view);
 
     window.clear(sf::Color(62, 49, 60, 255));
     this->tilemap.draw(&window);
-    this->dariu.draw(&window, phase_current, phase_total);
+    this->dariu.draw(&window, phase_current, phase_total, profile.miliseconds_playtime);
 
     for (auto& catraca : catracas) {
         catraca->draw(&window);
@@ -202,10 +211,10 @@ void Game::resume() {
 void Game::reset() {
     this->profile.lifes = 10;
     this->profile.completed_phases = 0;
-    this->profile.seconds_playing = 0;
+    this->profile.miliseconds_playtime = 0;
     this->phase_current = 0;
     this->game_loaded = false;
-    this->save_profile(0);
+    this->save_profile();
 };
 void Game::close() {
     window.close();
@@ -310,9 +319,6 @@ void Game::over() {
 void Game::load() {
     game_loaded = true;
 
-    // Start time
-    starttime_play = std::chrono::high_resolution_clock::now();
-
     // Read total phases in the game
 
     phase_total = 0;
@@ -341,6 +347,7 @@ void Game::load_phase() {
     load_enimies();
 
     // dariu.score.bananas = 0;
+    dariu.win = false;
     dariu.score.thophy = 0;
     dariu.jetPack = false;
     dariu.jetPackFuel = 0;
@@ -494,29 +501,12 @@ void Game::check_collisions_enimies() {
     }
 }
 void Game::pause() {};
-void Game::save_profile_if_good() {
-    this->endtime_play = std::chrono::high_resolution_clock::now();
-    int seconds_playing = Tools::time_dif_in_seconds(this->starttime_play, this->endtime_play);
 
-    int save = false;
-
-    if (phase_current > profile.completed_phases) {
-        save = true;
-    } else if (phase_current == profile.completed_phases) {
-        if (seconds_playing < profile.seconds_playing) {
-            save = true;
-        }
-    }
-
-    if (save) {
-        this->save_profile(seconds_playing);
-    }
-}
-void Game::save_profile(int seconds_playing) {
+void Game::save_profile() {
     ofstream MyFile("./src/resource/profile.dat");
-    MyFile << "completed_phases:" + to_string(phase_current) << endl;
+    MyFile << "completed_phases:" + to_string(this->profile.completed_phases) << endl;
     MyFile << "lifes:" + to_string(dariu.score.darius) << endl;
-    MyFile << "seconds_playing:" + to_string(seconds_playing) << endl;
+    MyFile << "miliseconds_playtime:" + to_string(profile.miliseconds_playtime) << endl;
     MyFile.close();
 }
 void Game::load_profile() {
@@ -529,8 +519,8 @@ void Game::load_profile() {
             profile.completed_phases = stoi(line.substr(line.find(":") + 1, 80));
         } else if (line.find("lifes") != std::string::npos) {
             profile.lifes = stoi(line.substr(line.find(":") + 1, 80));
-        } else if (line.find("seconds_playing") != std::string::npos) {
-            profile.seconds_playing = stoi(line.substr(line.find(":") + 1, 80));
+        } else if (line.find("miliseconds_playtime") != std::string::npos) {
+            profile.miliseconds_playtime = stoi(line.substr(line.find(":") + 1, 80));
         }
         i++;
     }
@@ -655,7 +645,7 @@ void Game::menu_main() {
     text_generic.setPosition(sf::Vector2f(left, top));
     window.draw(text_generic);
 
-    text_generic.setString("Tempo: " + Tools::seconds_to_hour(profile.seconds_playing));
+    text_generic.setString("Tempo: " + Tools::seconds_to_hour(profile.miliseconds_playtime / 60));
     top = 64 + (40 * line++);
     text_generic.setPosition(sf::Vector2f(left, top));
     window.draw(text_generic);
@@ -677,6 +667,7 @@ void Game::loop_events() {
 
             if (event.key.code == sf::Keyboard::Escape) {
                 if (page == pages::GAME_PLAY) {
+                    this->save_profile();
                     page = pages::MENU_MAIN;
                 }
             } else if (event.key.code == sf::Keyboard::Up) {
