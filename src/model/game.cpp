@@ -526,12 +526,6 @@ void Game::load_profile() {
         i++;
     }
     file.close();
-
-    // If the profile is not valid, reset it.
-    if (!this->is_valid_profile()) {
-        std::cout << "Profile is not valid, resetting it." << std::endl;
-        this->new_profile();
-    }
 }
 void Game::save_profile() {
     std::string concatedValues = to_string(this->profile.completed_phases);
@@ -559,7 +553,7 @@ bool Game::is_valid_profile() {
 
     const bool valid = this->profile.locker == Tools::crc32(concatedValues);
 
-    if (!valid && false) {
+    if (false) {
         std::cout << "bool Game::is_valid_profile()" << std::endl;
         std::cout << "this->profile.completed_phases: " << this->profile.completed_phases << std::endl;
         std::cout << "dariu.score.darius............: " << dariu.score.darius << std::endl;
@@ -587,6 +581,14 @@ void Game::menu_main() {
         text_generic.setFont(font_greatvibes);
         text_generic.setFillColor(sf::Color::White);
         load_profile();
+
+        this->dariu.score.darius = profile.lifes;
+
+        // If the profile is not valid, reset it.
+        if (!this->is_valid_profile()) {
+            std::cout << "Profile is not valid, resetting it." << std::endl;
+            this->new_profile();
+        }
     }
 
     // Update
