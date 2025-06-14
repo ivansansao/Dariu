@@ -94,3 +94,13 @@ std::string Tools::get_lines_from_dtm(std::string filename, std::string tag, std
 
     return chunk;
 }
+uint32_t Tools::crc32(const std::string& data) {
+    uint32_t crc = 0xFFFFFFFF;
+    for (unsigned char c : data) {
+        crc ^= c;
+        for (int i = 0; i < 8; i++) {
+            crc = (crc >> 1) ^ (0xEDB88320u & -(int)(crc & 1));
+        }
+    }
+    return ~crc;
+}

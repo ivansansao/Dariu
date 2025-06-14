@@ -73,6 +73,8 @@ class Game {
         int completed_phases = 0;
         int lifes = 0;
         int miliseconds_playtime = 0;
+        uint32_t locker = 0;
+        std::string password = "";
     } profile;
 
     Dariu dariu;
@@ -80,6 +82,8 @@ class Game {
     Sounds sounds;
     void load_profile();
     void save_profile();
+    bool is_valid_profile();
+    void new_profile();
     void play();
     void pause();
     void resume();

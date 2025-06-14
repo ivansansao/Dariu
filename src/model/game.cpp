@@ -212,6 +212,8 @@ void Game::reset() {
     this->profile.lifes = 10;
     this->profile.completed_phases = 0;
     this->profile.miliseconds_playtime = 0;
+    this->profile.locker = 0;
+    this->profile.password = "";
     this->phase_current = 0;
     this->game_loaded = false;
     this->save_profile();
@@ -502,13 +504,6 @@ void Game::check_collisions_enimies() {
 }
 void Game::pause() {};
 
-void Game::save_profile() {
-    ofstream MyFile("./src/resource/profile.dat");
-    MyFile << "completed_phases:" + to_string(this->profile.completed_phases) << endl;
-    MyFile << "lifes:" + to_string(dariu.score.darius) << endl;
-    MyFile << "miliseconds_playtime:" + to_string(profile.miliseconds_playtime) << endl;
-    MyFile.close();
-}
 void Game::load_profile() {
     int i;
     string line;
@@ -521,10 +516,52 @@ void Game::load_profile() {
             profile.lifes = stoi(line.substr(line.find(":") + 1, 80));
         } else if (line.find("miliseconds_playtime") != std::string::npos) {
             profile.miliseconds_playtime = stoi(line.substr(line.find(":") + 1, 80));
+        } else if (line.find("locker:") == 0) {
+            this->profile.locker = std::stoul(line.substr(line.find(":") + 1, 80));
+        } else if (line.find("password:") == 0) {
+            this->profile.password = std::string(line.substr(line.find(":") + 1, 80));
         }
         i++;
     }
     file.close();
+
+    // If the profile is not valid, reset it.
+    if (!this->is_valid_profile()) {
+        this->new_profile();
+    }
+}
+void Game::save_profile() {
+    std::string concatedValues = to_string(this->profile.completed_phases);
+    concatedValues += to_string(dariu.score.darius);
+    concatedValues += to_string(profile.miliseconds_playtime);
+
+    this->profile.locker = Tools::crc32(concatedValues);
+
+    ofstream MyFile("./src/resource/profile.dat");
+    MyFile << "completed_phases:" + to_string(this->profile.completed_phases) << endl;
+    MyFile << "lifes:" + to_string(dariu.score.darius) << endl;
+    MyFile << "miliseconds_playtime:" + to_string(profile.miliseconds_playtime) << endl;
+    MyFile << "locker:" + to_string(profile.locker) << endl;
+    MyFile << "password:" + profile.password << endl;
+    MyFile.close();
+}
+bool Game::is_valid_profile() {
+    if (this->profile.password == "EMOECUS") {
+        return true;
+    }
+
+    std::string concatedValues = to_string(this->profile.completed_phases);
+    concatedValues += to_string(dariu.score.darius);
+    concatedValues += to_string(profile.miliseconds_playtime);
+
+    return this->profile.locker == Tools::crc32(concatedValues);
+}
+void Game::new_profile() {
+    this->profile.completed_phases = 0;
+    this->profile.lifes = 10;
+    this->profile.miliseconds_playtime = 0;
+    this->profile.locker = 0;
+    this->profile.password = "";
 }
 void Game::menu_main() {
     if (!menumain_loaded) {
