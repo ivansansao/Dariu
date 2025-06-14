@@ -164,6 +164,7 @@ void Game::play() {
         this->save_profile();
     } else if (dariu.over) {
         page = pages::GAME_OVER;
+        this->save_profile();
     }
 
     window.setView(this->view);
@@ -316,6 +317,7 @@ void Game::over() {
         this->dariu.win = false;
         this->dariu.jetPackFuel = 0;
         page = pages::MENU_MAIN;
+        this->save_profile();
     }
 };
 void Game::load() {
@@ -527,6 +529,7 @@ void Game::load_profile() {
 
     // If the profile is not valid, reset it.
     if (!this->is_valid_profile()) {
+        std::cout << "Profile is not valid, resetting it." << std::endl;
         this->new_profile();
     }
 }
@@ -554,7 +557,19 @@ bool Game::is_valid_profile() {
     concatedValues += to_string(dariu.score.darius);
     concatedValues += to_string(profile.miliseconds_playtime);
 
-    return this->profile.locker == Tools::crc32(concatedValues);
+    const bool valid = this->profile.locker == Tools::crc32(concatedValues);
+
+    if (!valid && false) {
+        std::cout << "bool Game::is_valid_profile()" << std::endl;
+        std::cout << "this->profile.completed_phases: " << this->profile.completed_phases << std::endl;
+        std::cout << "dariu.score.darius............: " << dariu.score.darius << std::endl;
+        std::cout << "profile.miliseconds_playtime..: " << profile.miliseconds_playtime << std::endl;
+        std::cout << "this->profile.locker..........: " << this->profile.locker << std::endl;
+        std::cout << "Tools::crc32(concatedValues)..: " << Tools::crc32(concatedValues) << std::endl;
+        std::cout << std::endl;
+    }
+
+    return valid;
 }
 void Game::new_profile() {
     this->profile.completed_phases = 0;
