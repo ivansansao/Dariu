@@ -9,7 +9,7 @@
 using namespace std;
 
 Dariu::Dariu() {
-    font_vibes.loadFromFile("./src/asset/fonts/RobotoFlex-Regular.ttf");
+    font_vibes.loadFromFile("./src/asset/fonts/irish/IrishGrover-Regular.ttf");
     text_score.setFont(font_vibes);
     text_score.setCharacterSize(14);
     text_score.setFillColor(sf::Color::White);

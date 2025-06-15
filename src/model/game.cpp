@@ -32,6 +32,7 @@ Game::Game() {
 
     font_roboto.loadFromFile("./src/asset/fonts/RobotoFlex-Regular.ttf");
     font_greatvibes.loadFromFile("./src/asset/fonts/GreatVibes-Regular.ttf");
+    font_irishgrooverregular.loadFromFile("./src/asset/fonts/irish/IrishGrover-Regular.ttf");
     std::vector<Catraca> catracas;
 
     fireworks_tex.loadFromFile("./src/asset/image/fireworks.png");
@@ -572,8 +573,12 @@ void Game::new_profile() {
     this->profile.locker = 0;
     this->profile.password = "";
 }
+/**
+ * Todo: Make this method into menu class file.
+ */
 void Game::menu_main() {
     if (!menumain_loaded) {
+        menuDariu.init(8, 0.2f, "./src/asset/image/Dariu-run.png", sf::IntRect(0, 0, 32, 32), true);
         menumain_loaded = true;
         sounds.music.pause();
         view.reset(sf::FloatRect(0.f, 0.f, 1280.f, 736.f));
@@ -591,7 +596,9 @@ void Game::menu_main() {
         }
     }
 
-    // Update
+    /**
+     * UPDATE
+     */
 
     if (key_released) {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
@@ -646,11 +653,21 @@ void Game::menu_main() {
             sounds.music.pause();
     }
 
-    // Draw
+    menuDariu.anime(sf::IntRect(Tools::getStartSprite(menuDariu.getFrame(), 1) * 32, 0, 1 * 32, 32), 1);
+
+    /**
+     *  DRAW
+     */
 
     window.clear(sf::Color(62, 49, 60, 255));
-    text_generic.setFont(font_greatvibes);
-    text_generic.setCharacterSize(60);
+
+    text_generic.setString("Version: " + this->version);
+    text_generic.setCharacterSize(12);
+    text_generic.setPosition(sf::Vector2f(1200, 700));
+    window.draw(text_generic);
+
+    text_generic.setFont(font_irishgrooverregular);
+    text_generic.setCharacterSize(44);
 
     int i = 0;
     int offset_y = 200;
@@ -665,13 +682,18 @@ void Game::menu_main() {
 
     for (auto opc : menuopc) {
         top = offset_y + (i * 100);
-        if (menuopc_selected == i)
+        if (menuopc_selected == i) {
             text_generic.setString("[  " + opc + "  ]");
-        else
+        } else {
             text_generic.setString("   " + opc + "   ");
+        }
         left = 600 - text_generic.getGlobalBounds().width / 2;
         text_generic.setPosition(sf::Vector2f(left, top));
         window.draw(text_generic);
+
+        if (menuopc_selected == i)
+            menuDariu.draw(left - menuDariu.texture.getSize().y - 12, top + 12, &window);
+
         i++;
     }
 

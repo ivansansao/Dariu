@@ -9,6 +9,7 @@
 #include <memory>
 #include <vector>
 
+#include "animation.hpp"
 #include "dariu.hpp"
 #include "enimies.hpp"
 #include "sounds.hpp"
@@ -23,6 +24,7 @@ class Game {
     sf::View view;
     sf::Font font_roboto;
     sf::Font font_greatvibes;
+    sf::Font font_irishgrooverregular;
     sf::Text text_gameover;
 
     bool gameover_loaded = false;
@@ -50,6 +52,8 @@ class Game {
     bool game_loaded = false;
     bool menumain_loaded = false;
 
+    Animation menuDariu;
+
     sf::Texture fireworks_tex;
     sf::Sprite fireworks_spr;
     float fireworks_i;
@@ -64,6 +68,8 @@ class Game {
 
     static const int menuopc_size = 5;
     static std::string menuopc[menuopc_size];
+    const std::string version = "1.1";
+
     int menuopc_selected = 0;
     bool key_released = true;
     bool editing = false;
