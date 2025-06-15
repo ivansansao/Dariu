@@ -26,6 +26,7 @@ class Animation {
 
     void anime(sf::IntRect rect, int direction_x);
     void animeAuto();
+    void reset();
     void next();
     void draw(float i, float j, sf::RenderWindow *w);
     void setTexture(std::string file);

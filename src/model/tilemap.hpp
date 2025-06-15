@@ -42,7 +42,8 @@ class Tilemap {
     Animation trophy;
     Animation gate;
     Animation gatekey;
-    Animation exitDoor;
+    Animation exitDoorClosed;
+    Animation exitDoorOpened;
     Animation leafc;
     Animation leaf1;
     Animation leaf2;

@@ -13,7 +13,8 @@ Tilemap::Tilemap() {
     portalQ.init(0, 0.f, "./src/asset/image/PortalQ.png", sf::IntRect(0, 0, 32, 32), true, 0, 0, false);
     trophy.init(8, 0.01f, "./src/asset/image/SpinFlower.png", sf::IntRect(0, 0, 32, 32), true, 0, 0, false);
     gate.init(10, 0.2f, "./src/asset/image/gate.png", sf::IntRect(0, 0, 32, 32), false, 0, 0, true);
-    exitDoor.init(8, 0.1f, "./src/asset/image/door.png", sf::IntRect(0, 0, 32, 32), false, 0, 0, true);
+    exitDoorClosed.init(8, 0.1f, "./src/asset/image/door.png", sf::IntRect(0, 0, 32, 32), false, 0, 0, true);
+    exitDoorOpened.init(8, 0.1f, "./src/asset/image/door.png", sf::IntRect(0, 0, 32, 32), false, 0, 0, true);
     gatekey.init(0, 0.f, "./src/asset/image/gatekey.png", sf::IntRect(0, 0, 32, 32), true, 0, 0, false);
 }
 
@@ -239,14 +240,11 @@ void Tilemap::draw(sf::RenderWindow* w) {
             } else if (tileChar == 'w') {
                 woodBridge.draw(j * 32, i * 32, w);
             } else if (tileChar == 'X') {
-                exitDoor.draw(j * 32, i * 32, w);
-                // ground_door_closed.setPosition(j * 32, i * 32);
-                // w->draw(ground_door_closed);
+                exitDoorClosed.draw(j * 32, i * 32, w);
+                if (exitDoorOpened.i_frame != 0) exitDoorOpened.reset();
             } else if (tileChar == 'x') {
-                exitDoor.draw(j * 32, i * 32, w);
-                exitDoor.animeAuto();
-                // ground_door_opened.setPosition(j * 32, i * 32);
-                // w->draw(ground_door_opened);
+                exitDoorOpened.draw(j * 32, i * 32, w);
+                exitDoorOpened.animeAuto();
             }
         }
     }

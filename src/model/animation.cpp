@@ -17,6 +17,10 @@ void Animation::init(int q_frame, float step, std::string file, sf::IntRect rect
     setTexture(file);
     setTextureRect(rect);
 }
+void Animation::reset() {
+    this->i_frame = 0;
+    this->setTextureRect(this->rect);
+}
 void Animation::anime(sf::IntRect rect, int direction_x) {
     this->direction_x = direction_x;
     this->setTextureRect(rect);
