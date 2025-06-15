@@ -578,7 +578,7 @@ void Game::new_profile() {
  */
 void Game::menu_main() {
     if (!menumain_loaded) {
-        menuDariu.init(8, 0.2f, "./src/asset/image/Dariu-run.png", sf::IntRect(0, 0, 32, 32), true);
+        menuDariu.init(8, 0.2f, "./src/asset/image/Dariu-run.png", sf::IntRect(0, 0, 32, 32), true, 0, 0, false);
         menumain_loaded = true;
         sounds.music.pause();
         view.reset(sf::FloatRect(0.f, 0.f, 1280.f, 736.f));

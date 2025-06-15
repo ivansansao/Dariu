@@ -1,7 +1,7 @@
 #include "bulletgun.hpp"
 
 BulletGun::BulletGun() {
-    bulletGun.init(2, 0.5f, "./src/asset/image/bulletgun.png", sf::IntRect(0, 0, 10, 5), true);
+    bulletGun.init(2, 0.5f, "./src/asset/image/bulletgun.png", sf::IntRect(0, 0, 10, 5), true, 0, 0, false);
 }
 void BulletGun::draw(sf::RenderWindow *w) {
     bulletGun.draw(pos.left, pos.top, w);

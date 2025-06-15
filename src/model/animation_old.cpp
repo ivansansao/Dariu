@@ -1,4 +1,4 @@
-#include "animation.hpp"
+#include "animation_old.hpp"
 
 #include "iostream"
 
@@ -6,14 +6,10 @@ using namespace std;
 
 Animation::Animation() {
 }
-void Animation::init(int q_frame, float step, std::string file, sf::IntRect rect, bool circularSprite, float moveLeft, float moveTop, bool onTime) {
+void Animation::init(int q_frame, float step, std::string file, sf::IntRect rect, bool circularSprite) {
     this->q_frame = q_frame;  // Needed 'this' cause same name param and prop.
     this->step = step;
     this->circularSprite = circularSprite;
-    this->moveLeft = moveLeft;
-    this->moveTop = moveTop;
-    this->rect = rect;
-    this->oneTime = onTime;
     setTexture(file);
     setTextureRect(rect);
 }
@@ -22,18 +18,7 @@ void Animation::anime(sf::IntRect rect, int direction_x) {
     this->setTextureRect(rect);
     this->next();
 }
-void Animation::animeAuto() {
-    const float left = this->getFrame() * this->rect.width;
-    const sf::IntRect nextImage = sf::IntRect(left, this->rect.top, this->rect.width, this->rect.height);
-    this->setTextureRect(nextImage);
-    if (oneTime) {
-        if (i_frame < q_frame - 1) {
-            this->next();
-        }
-    } else {
-        this->next();
-    }
-}
+
 void Animation::next() {
     if (circularSprite) {
         // 0,1,2,3 then 0,1,2,3
@@ -54,7 +39,7 @@ void Animation::next() {
     }
 }
 void Animation::draw(float i, float j, sf::RenderWindow *w) {
-    this->setPosition(i + this->moveLeft, j + this->moveTop);
+    this->setPosition(i, j);
     w->draw(this->sprite);
 }
 void Animation::setTexture(std::string file) {

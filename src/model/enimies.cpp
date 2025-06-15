@@ -280,7 +280,7 @@ Sova::Sova() {
     actor_tex_fall.loadFromFile("./src/asset/image/sova.png");
     actor_tex.loadFromFile("./src/asset/image/sova.png");
     actor_tex_idle.loadFromFile("./src/asset/image/sova.png");
-    actorJetpack.init(3, 0.5f, "./src/asset/image/Sova-jetpack.png", sf::IntRect(0, 0, 32, 32), true);
+    actorJetpack.init(3, 0.5f, "./src/asset/image/Sova-jetpack.png", sf::IntRect(0, 0, 32, 32), true, 0, 0, false);
 };
 
 void Sova::update(Tilemap *tilemap, Sounds *sounds) {
@@ -407,7 +407,7 @@ void Cannon::die(Tilemap *tilemap, Sounds *sounds) {
  */
 
 Bulletc::Bulletc() {
-    actorRun.init(9, 0.2f, "./src/asset/image/arara.png", sf::IntRect(0, 0, 32, 32), true);
+    actorRun.init(9, 0.2f, "./src/asset/image/arara.png", sf::IntRect(0, 0, 32, 32), true, 0, 0, false);
     actor_tex_fall.loadFromFile("./src/asset/image/arara.png");
     actor_tex.loadFromFile("./src/asset/image/arara.png");
     actor_tex_idle.loadFromFile("./src/asset/image/arara.png");

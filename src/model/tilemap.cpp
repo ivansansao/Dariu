@@ -5,15 +5,16 @@
 #include "iostream"
 
 Tilemap::Tilemap() {
-    gun.init(4, 0.2f, "./src/asset/image/Gun.png", sf::IntRect(0, 0, 32, 32), false);
-    munition.init(3, 0.2f, "./src/asset/image/Munition.png", sf::IntRect(0, 0, 32, 32), true);
-    jetpack.init(4, 0.5f, "./src/asset/image/Jetpack.png", sf::IntRect(0, 0, 32, 32), true);
-    banana.init(17, 0.5f, "./src/asset/image/Items/Fruits/Bananas.png", sf::IntRect(0, 0, 32, 32), true);
-    portalP.init(0, 0.f, "./src/asset/image/PortalP.png", sf::IntRect(0, 0, 32, 32), true);
-    portalQ.init(0, 0.f, "./src/asset/image/PortalQ.png", sf::IntRect(0, 0, 32, 32), true);
-    trophy.init(8, 0.01f, "./src/asset/image/SpinFlower.png", sf::IntRect(0, 0, 32, 32), true);
-    gate.init(0, 0.f, "./src/asset/image/gate.png", sf::IntRect(0, 0, 32, 32), true);
-    gatekey.init(0, 0.f, "./src/asset/image/gatekey.png", sf::IntRect(0, 0, 32, 32), true);
+    gun.init(4, 0.2f, "./src/asset/image/Gun.png", sf::IntRect(0, 0, 32, 32), false, 0, 0, false);
+    munition.init(3, 0.2f, "./src/asset/image/Munition.png", sf::IntRect(0, 0, 32, 32), true, 0, 0, false);
+    jetpack.init(4, 0.5f, "./src/asset/image/Jetpack.png", sf::IntRect(0, 0, 32, 32), true, 0, 0, false);
+    banana.init(17, 0.5f, "./src/asset/image/Items/Fruits/Bananas.png", sf::IntRect(0, 0, 32, 32), true, 0, 0, false);
+    portalP.init(0, 0.f, "./src/asset/image/PortalP.png", sf::IntRect(0, 0, 32, 32), true, 0, 0, false);
+    portalQ.init(0, 0.f, "./src/asset/image/PortalQ.png", sf::IntRect(0, 0, 32, 32), true, 0, 0, false);
+    trophy.init(8, 0.01f, "./src/asset/image/SpinFlower.png", sf::IntRect(0, 0, 32, 32), true, 0, 0, false);
+    gate.init(10, 0.2f, "./src/asset/image/gate.png", sf::IntRect(0, 0, 32, 32), false, 0, 0, true);
+    exitDoor.init(8, 0.1f, "./src/asset/image/door.png", sf::IntRect(0, 0, 32, 32), false, 0, 0, true);
+    gatekey.init(0, 0.f, "./src/asset/image/gatekey.png", sf::IntRect(0, 0, 32, 32), true, 0, 0, false);
 }
 
 std::string Tilemap::map[H] = {};
@@ -44,19 +45,12 @@ void Tilemap::load_texture_from_file(int phase) {
     terrain_tex.loadFromFile(root + "Terrain (16x16).png");
     terrain2_tex.loadFromFile(root + "Terrain (32x32).png");
     terrain_mid_false_tex.loadFromFile(root + "falseblock.png");
-    door_tex.loadFromFile("./src/asset/image/door.png");
 
     ground.setTexture(terrain_tex);
     ground.setTextureRect(sf::IntRect(96, 0, 32, 32));
 
     ground_ora.setTexture(terrain_tex);
     ground_ora.setTextureRect(sf::IntRect(272, 64, 32, 32));
-
-    ground_door_closed.setTexture(door_tex);
-    ground_door_closed.setTextureRect(sf::IntRect(0, 0, 32, 32));
-
-    ground_door_opened.setTexture(door_tex);
-    ground_door_opened.setTextureRect(sf::IntRect(32, 0, 32, 32));
 
     ground_left.setTexture(terrain2_tex);
     ground_left.setTextureRect(sf::IntRect(0, 0, 32, 32));
@@ -85,20 +79,20 @@ void Tilemap::load_texture_from_file(int phase) {
     fire.setTexture(fire_tex);
     fire.setTextureRect(sf::IntRect(0, 0, 32, 32));
 
-    water.init(5, 0.1f, root + "Water.png", sf::IntRect(0, 0, 32, 32), true);
+    water.init(5, 0.1f, root + "Water.png", sf::IntRect(0, 0, 32, 32), true, 0, 0, false);
 
-    treeLog.init(1, 0.1f, "./src/asset/image/Treelog.png", sf::IntRect(0, 0, 32, 32), true);
-    treeLogSolid.init(1, 0.1f, "./src/asset/image/Treelogsolid.png", sf::IntRect(0, 0, 32, 32), true);
-    leafc.init(1, 0.1f, "./src/asset/image/LeafTree.png", sf::IntRect(32, 32, 32, 32), true);
-    leaf1.init(1, 0.1f, "./src/asset/image/LeafTree.png", sf::IntRect(0, 64, 32, 32), true);
-    leaf2.init(1, 0.1f, "./src/asset/image/LeafTree.png", sf::IntRect(0, 32, 32, 32), true);
-    leaf3.init(1, 0.1f, "./src/asset/image/LeafTree.png", sf::IntRect(0, 0, 32, 32), true);
-    leaf4.init(1, 0.1f, "./src/asset/image/LeafTree.png", sf::IntRect(32, 0, 32, 32), true);
-    leaf5.init(1, 0.1f, "./src/asset/image/LeafTree.png", sf::IntRect(64, 0, 32, 32), true);
-    leaf6.init(1, 0.1f, "./src/asset/image/LeafTree.png", sf::IntRect(64, 32, 32, 32), true);
-    leaf7.init(1, 0.1f, "./src/asset/image/LeafTree.png", sf::IntRect(64, 64, 32, 32), true);
+    treeLog.init(1, 0.1f, "./src/asset/image/Treelog.png", sf::IntRect(0, 0, 32, 32), true, 0, 0, false);
+    treeLogSolid.init(1, 0.1f, "./src/asset/image/Treelogsolid.png", sf::IntRect(0, 0, 32, 32), true, 0, 0, false);
+    leafc.init(1, 0.1f, "./src/asset/image/LeafTree.png", sf::IntRect(32, 32, 32, 32), true, 0, 0, false);
+    leaf1.init(1, 0.1f, "./src/asset/image/LeafTree.png", sf::IntRect(0, 64, 32, 32), true, 0, 0, false);
+    leaf2.init(1, 0.1f, "./src/asset/image/LeafTree.png", sf::IntRect(0, 32, 32, 32), true, 0, 0, false);
+    leaf3.init(1, 0.1f, "./src/asset/image/LeafTree.png", sf::IntRect(0, 0, 32, 32), true, 0, 0, false);
+    leaf4.init(1, 0.1f, "./src/asset/image/LeafTree.png", sf::IntRect(32, 0, 32, 32), true, 0, 0, false);
+    leaf5.init(1, 0.1f, "./src/asset/image/LeafTree.png", sf::IntRect(64, 0, 32, 32), true, 0, 0, false);
+    leaf6.init(1, 0.1f, "./src/asset/image/LeafTree.png", sf::IntRect(64, 32, 32, 32), true, 0, 0, false);
+    leaf7.init(1, 0.1f, "./src/asset/image/LeafTree.png", sf::IntRect(64, 64, 32, 32), true, 0, 0, false);
 
-    woodBridge.init(1, 0.1f, "./src/asset/image/Woodbridge.png", sf::IntRect(0, 0, 32, 32), true);
+    woodBridge.init(1, 0.1f, "./src/asset/image/Woodbridge.png", sf::IntRect(0, 0, 32, 32), true, 0, 0, false);
 }
 
 bool Tilemap::isPortal(int i, int j) {
@@ -245,11 +239,14 @@ void Tilemap::draw(sf::RenderWindow* w) {
             } else if (tileChar == 'w') {
                 woodBridge.draw(j * 32, i * 32, w);
             } else if (tileChar == 'X') {
-                ground_door_closed.setPosition(j * 32, i * 32);
-                w->draw(ground_door_closed);
+                exitDoor.draw(j * 32, i * 32, w);
+                // ground_door_closed.setPosition(j * 32, i * 32);
+                // w->draw(ground_door_closed);
             } else if (tileChar == 'x') {
-                ground_door_opened.setPosition(j * 32, i * 32);
-                w->draw(ground_door_opened);
+                exitDoor.draw(j * 32, i * 32, w);
+                exitDoor.animeAuto();
+                // ground_door_opened.setPosition(j * 32, i * 32);
+                // w->draw(ground_door_opened);
             }
         }
     }

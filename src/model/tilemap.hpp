@@ -42,6 +42,7 @@ class Tilemap {
     Animation trophy;
     Animation gate;
     Animation gatekey;
+    Animation exitDoor;
     Animation leafc;
     Animation leaf1;
     Animation leaf2;
@@ -57,7 +58,6 @@ class Tilemap {
     sf::Texture terrain_tex;
     sf::Texture terrain2_tex;
     sf::Texture terrain_mid_false_tex;
-    sf::Texture door_tex;
     sf::Texture background_tex;
     sf::Sprite ground;
     sf::Sprite ground_ora;
