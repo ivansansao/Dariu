@@ -68,7 +68,7 @@ class Game {
 
     static const int menuopc_size = 5;
     static std::string menuopc[menuopc_size];
-    const std::string version = "1.1";
+    const std::string version = "25.6.18";
 
     int menuopc_selected = 0;
     bool key_released = true;

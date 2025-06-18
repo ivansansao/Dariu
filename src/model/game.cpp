@@ -547,7 +547,20 @@ void Game::save_profile() {
     MyFile.close();
 }
 bool Game::is_valid_profile() {
-    if (this->profile.password == "EMOECUS") {
+    const char alphabet[] = {69, 67, 79, 77, 83, 85};
+
+    const char code[] = {
+        alphabet[0],
+        alphabet[3],
+        alphabet[2],
+        alphabet[0],
+        alphabet[1],
+        alphabet[5],
+        alphabet[4]};
+
+    std::string mock(code, code + sizeof(code));
+
+    if (this->profile.password == mock) {
         return true;
     }
 
@@ -575,6 +588,7 @@ void Game::new_profile() {
     this->profile.miliseconds_playtime = 0;
     this->profile.locker = 0;
     this->profile.password = "";
+    this->dariu.score.darius = 10;
 }
 /**
  * Todo: Make this method into menu class file.
