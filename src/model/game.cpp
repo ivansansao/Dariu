@@ -218,6 +218,9 @@ void Game::reset() {
     this->profile.password = "";
     this->phase_current = 0;
     this->game_loaded = false;
+
+    this->dariu.score.darius = this->profile.lifes;
+
     this->save_profile();
 };
 void Game::close() {
