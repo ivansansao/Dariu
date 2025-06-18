@@ -680,7 +680,7 @@ void Game::menu_main() {
 
     text_generic.setString("Version: " + this->version);
     text_generic.setCharacterSize(12);
-    text_generic.setPosition(sf::Vector2f(1200, 700));
+    text_generic.setPosition(sf::Vector2f(1160, 700));
     window.draw(text_generic);
 
     text_generic.setFont(font_irishgrooverregular);
