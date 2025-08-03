@@ -23,5 +23,6 @@ class Tools {
     static bool hasString(std::string line, std::string str);
     static std::string get_lines_from_dtm(std::string filename, std::string tag, std::string endLine);
     static uint32_t crc32(const std::string& data);
+    static int getRandInt(int from, int to);
 };
 #endif

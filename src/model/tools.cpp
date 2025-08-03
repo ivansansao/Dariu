@@ -1,6 +1,7 @@
 #include "tools.hpp"
 
 #include <chrono>
+#include <random>
 
 Tools::Tools() {
 }
@@ -103,4 +104,11 @@ uint32_t Tools::crc32(const std::string& data) {
         }
     }
     return ~crc;
+}
+
+int Tools::getRandInt(int from, int to) {
+    static std::random_device rd;
+    static std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(from, to);
+    return dis(gen);
 }

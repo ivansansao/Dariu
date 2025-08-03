@@ -360,7 +360,7 @@ bool Tilemap::free_path(int i, int j) {
 }
 bool Tilemap::free_path_bullet(int i, int j) {
     const char til = this->getTileChar(i, j);
-    return til == ' ' || til == '@' || til == 'P' || til == 'Q' || til == 'G' || til == 'R' || til == '^' || til == 'V' || til == '>' || til == '<' || til == 'M' || til == 'H' || til == 'Z' || til == 'k' || til == 'K' || til == 'g' || til == 'x' || til == 'j' || til == 'L' || til == 'u' || til == 'J' || til == 'Y' || til == '.' || til == 'T' || til == '0' || til == '1' || til == '2' || til == '3' || til == '4' || til == '5' || til == '6' || til == '7' || til == '8' || til == '9' || til == 's' || til == 'h' || til == 'i' || til == 'f' || til == 'd' || til == 'l' || til == 'e' || til == 'd' || til == 'm' || til == 'c' || til == 'n';
+    return til == ' ' || til == '@' || til == 'P' || til == 'Q' || til == 'G' || til == 'X' || til == 'R' || til == '^' || til == 'V' || til == '>' || til == '<' || til == 'M' || til == 'H' || til == 'Z' || til == 'k' || til == 'K' || til == 'g' || til == 'x' || til == 'j' || til == 'L' || til == 'u' || til == 'J' || til == 'Y' || til == '.' || til == 'T' || til == '0' || til == '1' || til == '2' || til == '3' || til == '4' || til == '5' || til == '6' || til == '7' || til == '8' || til == '9' || til == 's' || til == 'h' || til == 'i' || til == 'f' || til == 'd' || til == 'l' || til == 'e' || til == 'd' || til == 'm' || til == 'c' || til == 'n';
 }
 // char* Tilemap::tile(int i, int j) {
 //     if (i >= 0 && i <= this->H && j >= 0 && j <= this->W) {

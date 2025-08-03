@@ -163,11 +163,18 @@ void Enimy::on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds) {
 void Enimy::die(Tilemap *tilemap, Sounds *sounds) {
     if (state == States::Normal) {
         state = States::DieStart;
-        if (sounds->enimydie_sound.getStatus() == 0) {
-            sounds->enimydie_sound.play();
-        };
+        if (sounds->enimydie_sound.getStatus() == 0) sounds->enimydie_sound.play();
+
+        int selected = Tools::getRandInt(0, 5);
+
+        if (selected == 1 && sounds->enimydieinfernu_sound.getStatus() == 0) sounds->enimydieinfernu_sound.play();
+        if (selected == 2 && sounds->enimydiedemoin_sound.getStatus() == 0) sounds->enimydiedemoin_sound.play();
+        if (selected == 3 && sounds->enimydiein321_sound.getStatus() == 0) sounds->enimydiein321_sound.play();
+        if (selected == 4 && sounds->enimydieraul_sound.getStatus() == 0) sounds->enimydieraul_sound.play();
+        if (selected == 5 && sounds->enimydievendoluz_sound.getStatus() == 0) sounds->enimydievendoluz_sound.play();
     }
 }
+
 /**
  * Catraca is enimy
  */

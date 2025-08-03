@@ -56,6 +56,16 @@ class Sounds {
     sf::SoundBuffer enimydie;
     sf::Sound enimydie_sound;
 
+    sf::SoundBuffer enimydiedemoin;
+    sf::Sound enimydiedemoin_sound;
+    sf::SoundBuffer enimydiein321;
+    sf::Sound enimydiein321_sound;
+    sf::SoundBuffer enimydieinfernu;
+    sf::Sound enimydieinfernu_sound;
+    sf::SoundBuffer enimydieraul;
+    sf::Sound enimydieraul_sound;
+    sf::SoundBuffer enimydievendoluz;
+    sf::Sound enimydievendoluz_sound;
     sf::SoundBuffer levelcomplete;
     sf::Sound levelcomplete_sound;
 

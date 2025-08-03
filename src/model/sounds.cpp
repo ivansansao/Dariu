@@ -57,6 +57,17 @@ Sounds::Sounds() {
     enimydie.loadFromFile("./src/asset/sound/enimydie.ogg");
     enimydie_sound.setBuffer(enimydie);
 
+    enimydiedemoin.loadFromFile("./src/asset/sound/enimydiedemoin.ogg");
+    enimydiedemoin_sound.setBuffer(enimydiedemoin);
+    enimydiein321.loadFromFile("./src/asset/sound/enimydiein321.ogg");
+    enimydiein321_sound.setBuffer(enimydiein321);
+    enimydieinfernu.loadFromFile("./src/asset/sound/enimydieinfernu.ogg");
+    enimydieinfernu_sound.setBuffer(enimydieinfernu);
+    enimydieraul.loadFromFile("./src/asset/sound/enimydieraul.ogg");
+    enimydieraul_sound.setBuffer(enimydieraul);
+    enimydievendoluz.loadFromFile("./src/asset/sound/enimydievendoluz.ogg");
+    enimydievendoluz_sound.setBuffer(enimydievendoluz);
+
     levelcomplete.loadFromFile("./src/asset/sound/levelcomplete.ogg");
     levelcomplete_sound.setBuffer(levelcomplete);
     applyVolume();
