@@ -104,7 +104,9 @@ class Tilemap {
     point getTileFromPixel(int x, int y, int heigh, int width);
     bool free_path(int i, int j);
     bool free_path_bullet(int i, int j);
+    bool free_path_water(int i, int j);
     // char *tile(int i, int j);
     bool is_valid(int i, int j);
+    void swapBlock(int i1, int j1, int i2, int j2);
 };
 #endif

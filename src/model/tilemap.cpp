@@ -163,25 +163,28 @@ void Tilemap::update() {
         plataform->update();
     }
 
-    if (this->updates % 4 == 0) {
+    if (this->updates % 10 == 0) {
         // MOVE WATER
-        // for (int i = H - 2; i >= 0; --i) {  // de baixo pra cima, evita reprocessar quem acabou de cair
-        //     for (int j = 0; j < W; ++j) {
-        //         if (this->map[i][j] == 'W') {
-        //             if (this->map[i + 1][j] == ' ') {  // Está livre à baixo?
-        //                 this->map[i][j] = ' ';
-        //                 this->map[i + 1][j] = 'W';
-        //             } else if (this->map[i][j - 1] == ' ') {  // Está livre à esquerda?
-        //                 this->map[i][j] = ' ';
-        //                 this->map[i][j - 1] = 'W';
-        //             } else if (this->map[i][j + 1] == ' ') {  // Está livre à direita?
-        //                 this->map[i][j] = ' ';
-        //                 this->map[i][j + 1] = 'W';
-        //             }
-        //         }
-        //     }
-        // }
+        for (int i = H - 2; i >= 0; --i) {  // de baixo pra cima, evita reprocessar quem acabou de cair
+            for (int j = 0; j < W; ++j) {
+                if (this->map[i][j] == 'a') {
+                    if (this->free_path_water(i + 1, j)) {  // Está livre à baixo?
+                        this->swapBlock(i, j, i + 1, j);
+                    } else if (this->free_path_water(i, j - 1)) {  // Está livre à esquerda?
+                        this->swapBlock(i, j, i, j - 1);
+                    } else if (this->free_path_water(i, j + 1)) {  // Está livre à direita?
+                        this->swapBlock(i, j, i, j + 1);
+                    }
+                }
+            }
+        }
     }
+}
+
+void Tilemap::swapBlock(int i1, int j1, int i2, int j2) {
+    const char tileChar = this->getTileChar(i1, j1);
+    this->map[i1][j1] = this->map[i2][j2];
+    this->map[i2][j2] = tileChar;
 }
 
 void Tilemap::draw(sf::RenderWindow* w) {
@@ -383,6 +386,10 @@ void Tilemap::edit_save() {
 bool Tilemap::free_path(int i, int j) {
     const char til = this->getTileChar(i, j);
     return til == ' ' || til == '@' || til == '0' || til == '1' || til == '2' || til == '3' || til == '4' || til == '5' || til == '6' || til == '7' || til == '8' || til == '9';
+}
+bool Tilemap::free_path_water(int i, int j) {
+    const char til = this->getTileChar(i, j);
+    return til == ' ' || til == 'Z' || til == 'Y';
 }
 bool Tilemap::free_path_bullet(int i, int j) {
     const char til = this->getTileChar(i, j);

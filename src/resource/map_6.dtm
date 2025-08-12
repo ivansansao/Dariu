@@ -7,10 +7,10 @@ E..B..B@ B..........R..........R.....P2E.  YZ       Z   .bEE     Z ABBEEEBBBBEE 
 EBBEBBEBBEBBBBBBBBBBBBBBBBBBBBBBBBBBBBBE. ABC      ABC  .bE     ABBERRRRRREEEEE     T..........................u     E
 EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEK1     Z        .bEZ Z                EC    ABBBBBBBBBBBBBBBBBBBBBBBBBBC     E
 EEEEE                                P1EC..... AC       .bEB>M            <BZ E     ..............T.............     E
-EEEEE   Z            Z      u        Y EWWWWb.     uZ   .bEEWWWWWWWWWWWWWWWEC E     ABBBBBBBBBBBBBBBBBBBBBBBBBBC    AE
-EEEEE  ABBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBEWWWWb.     ABC  .bEEWWWWWWWWWWWWWWWE  E                                      E
-EEEEE  DEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEWWWWbRRRRR.......bEEEEEEEWWWEEEEEEEE BE                                    ABE
-EEEEE          EE....................Q1EEEEEEBBBBCbbABBBBEEEEEEEEEEEEEEEEEEE EE                  ....ABBBBBBBBBBBBBEEE
+EEEEE   Z            Z      u        Y EWWWWb.     uZ   .bEEaaaaaaaaaaaaaaaEC E     ABBBBBBBBBBBBBBBBBBBBBBBBBBC    AE
+EEEEE  ABBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBEWWWWb.     ABC  .bEEaaaaaaaaaaaaaaaE  E                                      E
+EEEEE  DEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEWWWWbRRRRR.......bEEaaEEEEEEEEEEEEEE BE                                    ABE
+EEEEE          EE....................Q1EEEEEEBBBBCbbABBBBEEEbbEEEEEEEEEEEEEE EE                  ....ABBBBBBBBBBBBBEEE
 EEEEEu         EE.K2    YT         TZ .E      Y Z   EE                  EEEE EEWWWWWWWWWWWWB.....B            .      E
 EEEEEBBBBBC    EE.      ABC       ABC .E     ABBBBBBEE   ABBBBBBBBBBC     EE  EBBBBBBBBBBWWE     E         Z  .      E
 EEEEEEEEEEF    EE. ZT         TZ      .E            EE   DEEEEEEEEEEEBC     B      Y    EWWW     E            ABBBBBBE
@@ -19,7 +19,7 @@ E-E      EF   BEE.       T         T  .EEBC          Z ABEE        HEEE      EEW
 E-E      EF   --E.      ABC       ABC .E  EBC     ABBBBEEEE        BE      ABEEWWWWWFK4   RBWE  AE            DE....EE
 E-EQ2ABC   Z  E-E.  T        YT       .E  EEWWWWWWWEEEEEE     AC    EC    AEEEEBBBBBEBC    EBE   E            DE....EE
 E-EBBEEEBBBBBBE-E. ABC       ABC      .EQ3  EEEEEEE          AEEC    EC     EEER      u  Z      RE            DEBBBBEE
-E...............E......................G2 u  K3  Z    B Z   AEEEEBC   Y Z  AEEEQ4T ABBBBBBBBBBBBBX   J  Y  Z  DEEEEEEE
+E...u...u...u...E......................G2 u  K3  Z    B Z   AEEEEBC   Y Z  AEEEQ4T ABBBBBBBBBBBBBX   J  Y  Z  DEEEEEEE
 EBBBBBBBBBBBBBBBEBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBEBBBBBBBBBBBBBBBBBBBBEEEEBBBBEWWWWWWWWWWWWWBBBBBBBBBBBBBEEEEEEEE
 [ENDBLOCK]
 [TERRAIN]
