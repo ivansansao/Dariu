@@ -156,6 +156,10 @@ void Dariu::on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds) {
         die(tilemap, sounds);
     } else if (tilemap->map[i][right_block] == 'W') {
         die(tilemap, sounds);
+    } else if (tilemap->map[i][left_block] == 'a') {
+        die(tilemap, sounds);
+    } else if (tilemap->map[i][right_block] == 'a') {
+        die(tilemap, sounds);
     }
 
     if (tileChar == '.') {

@@ -241,6 +241,8 @@ void Tilemap::draw(sf::RenderWindow* w) {
                 gatekey.draw(j * 32, i * 32, w);
             } else if (tileChar == 'W') {
                 water.draw(j * 32, i * 32, w);
+            } else if (tileChar == 'a') {
+                water.draw(j * 32, i * 32, w);
             } else if (tileChar == 'd') {
                 leafc.draw(j * 32, i * 32, w);
             } else if (tileChar == 'e') {
