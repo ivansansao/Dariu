@@ -140,6 +140,10 @@ point Tilemap::getMapOppositPortal(int i, int j) {
 };
 
 void Tilemap::update() {
+    this->updates++;
+
+    if (this->updates > 999999) this->updates = 0;
+
     std::string e;
     for (auto& plataform : plataforms) {
         e = map[(int)plataform->pos.top / 32][(int)plataform->pos.left / 32];
@@ -157,6 +161,26 @@ void Tilemap::update() {
             plataform->velocity.y = plataform->vel_step;
         }
         plataform->update();
+    }
+
+    if (this->updates % 4 == 0) {
+        // MOVE WATER
+        // for (int i = H - 2; i >= 0; --i) {  // de baixo pra cima, evita reprocessar quem acabou de cair
+        //     for (int j = 0; j < W; ++j) {
+        //         if (this->map[i][j] == 'W') {
+        //             if (this->map[i + 1][j] == ' ') {  // Está livre à baixo?
+        //                 this->map[i][j] = ' ';
+        //                 this->map[i + 1][j] = 'W';
+        //             } else if (this->map[i][j - 1] == ' ') {  // Está livre à esquerda?
+        //                 this->map[i][j] = ' ';
+        //                 this->map[i][j - 1] = 'W';
+        //             } else if (this->map[i][j + 1] == ' ') {  // Está livre à direita?
+        //                 this->map[i][j] = ' ';
+        //                 this->map[i][j + 1] = 'W';
+        //             }
+        //         }
+        //     }
+        // }
     }
 }
 

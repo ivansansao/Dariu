@@ -27,6 +27,8 @@ class Tilemap {
 
     bool isPortal(int i, int j);
 
+    int updates = 0;
+
     int getTileNumber(int i, int j);
     char getTileChar(int i, int j);
     point getTileByNameNumber(char name, int number);
