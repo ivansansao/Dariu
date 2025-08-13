@@ -5,7 +5,7 @@
 using namespace std;
 
 Sounds::Sounds() {
-    volume_music = 50.f;
+    volume_music = 30.f;
     volume_effect = 50.f;
 
     // Music
@@ -65,6 +65,14 @@ Sounds::Sounds() {
     enimydieinfernu_sound.setBuffer(enimydieinfernu);
     enimydieraul.loadFromFile("./src/asset/sound/enimydieraul.ogg");
     enimydieraul_sound.setBuffer(enimydieraul);
+    enimydievendoluz.loadFromFile("./src/asset/sound/enimydievendoluz.ogg");
+    enimydievendoluz_sound.setBuffer(enimydievendoluz);
+
+    grabammo.loadFromFile("./src/asset/sound/grabammo.ogg");
+    grabammo_sound.setBuffer(grabammo);
+    grabflower.loadFromFile("./src/asset/sound/grabflower.ogg");
+    grabflower_sound.setBuffer(grabflower);
+
     enimydievendoluz.loadFromFile("./src/asset/sound/enimydievendoluz.ogg");
     enimydievendoluz_sound.setBuffer(enimydievendoluz);
 

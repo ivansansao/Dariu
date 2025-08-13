@@ -32,7 +32,20 @@ void Dariu::die(Tilemap *tilemap, Sounds *sounds) {
     if (state == States::Normal) {
         const uint16_t i = this->pos.top / 32;
         const uint16_t j = this->pos.left / 32;
-        if (tilemap->map[i][j] != '@') {
+
+        const char lt = tilemap->map[i - 1][j - 1];
+        const char lc = tilemap->map[i][j - 1];
+        const char lb = tilemap->map[i + 1][j - 1];
+
+        const char ct = tilemap->map[i - 1][j];
+        const char cc = tilemap->map[i][j];
+        const char cb = tilemap->map[i + 1][j];
+
+        const char rt = tilemap->map[i - 1][j + 1];
+        const char rc = tilemap->map[i][j + 1];
+        const char rb = tilemap->map[i + 1][j + 1];
+
+        if (lt != '@' && lc != '@' && lb != '@' && ct != '@' && cc != '@' && cb != '@' && rt != '@' && rc != '@' && rb != '@') {
             state = States::DieStart;
             if (sounds->fired_sound.getStatus() == 0) sounds->fired_sound.play();
         }
@@ -72,12 +85,10 @@ void Dariu::update(Tilemap *tilemap, Sounds *sounds) {
         case (States::Reviving): {
             add_gravity();
             state = States::Revived;
-
             break;
         }
         case (States::Revived): {
             state = States::Normal;
-
             break;
         }
     }
@@ -173,6 +184,7 @@ void Dariu::on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds) {
         }
     }
     if (tileChar == 'T') {
+        if (sounds->grabflower_sound.getStatus() == 0) sounds->grabflower_sound.play();
         tilemap->map[i][j] = ' ';
         score.thophy++;
     }
@@ -192,6 +204,7 @@ void Dariu::on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds) {
         this->hasGun = true;
     }
     if (tileChar == 'u') {  // Munition
+        if (sounds->grabammo_sound.getStatus() == 0) sounds->grabammo_sound.play();
         tilemap->map[i][j] = ' ';
         this->munitions += 5;
     }

@@ -66,6 +66,12 @@ class Sounds {
     sf::Sound enimydieraul_sound;
     sf::SoundBuffer enimydievendoluz;
     sf::Sound enimydievendoluz_sound;
+
+    sf::SoundBuffer grabammo;
+    sf::Sound grabammo_sound;
+    sf::SoundBuffer grabflower;
+    sf::Sound grabflower_sound;
+
     sf::SoundBuffer levelcomplete;
     sf::Sound levelcomplete_sound;
 
