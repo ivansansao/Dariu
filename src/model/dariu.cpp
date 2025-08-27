@@ -197,11 +197,13 @@ void Dariu::on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds) {
         if (this->jetPackFuel < this->jetPackCapacity) {
             this->jetPackFuel = this->jetPackCapacity;
             tilemap->map[i][j] = 'j';
+            sounds->getjetpack_sound.play();
         }
     }
     if (tileChar == 'L') {  // Gun
         tilemap->map[i][j] = ' ';
         this->hasGun = true;
+        sounds->getgun_sound.play();
     }
     if (tileChar == 'u') {  // Munition
         if (sounds->grabammo_sound.getStatus() == 0) sounds->grabammo_sound.play();

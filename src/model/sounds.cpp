@@ -39,7 +39,7 @@ Sounds::Sounds() {
     fired.loadFromFile("./src/asset/sound/fired.ogg");
     fired_sound.setBuffer(fired);
 
-    crash.loadFromFile("./src/asset/sound/crash.ogg");
+    crash.loadFromFile("./src/asset/sound/brickbreak.ogg");
     crash_sound.setBuffer(crash);
 
     pop.loadFromFile("./src/asset/sound/pop.ogg");
@@ -73,8 +73,10 @@ Sounds::Sounds() {
     grabflower.loadFromFile("./src/asset/sound/grabflower.ogg");
     grabflower_sound.setBuffer(grabflower);
 
-    enimydievendoluz.loadFromFile("./src/asset/sound/enimydievendoluz.ogg");
-    enimydievendoluz_sound.setBuffer(enimydievendoluz);
+    getjetpack.loadFromFile("./src/asset/sound/getjetpack.ogg");
+    getjetpack_sound.setBuffer(getjetpack);
+    getgun.loadFromFile("./src/asset/sound/getgun.ogg");
+    getgun_sound.setBuffer(getgun);
 
     levelcomplete.loadFromFile("./src/asset/sound/levelcomplete.ogg");
     levelcomplete_sound.setBuffer(levelcomplete);
@@ -125,4 +127,14 @@ void Sounds::applyVolume() {
     levelcomplete_sound.setVolume(volume_effect);
     chain_sound.setVolume(volume_effect);
     shot_sound.setVolume(volume_effect);
+
+    enimydiedemoin_sound.setVolume(volume_effect);
+    enimydiein321_sound.setVolume(volume_effect);
+    enimydieinfernu_sound.setVolume(volume_effect);
+    enimydieraul_sound.setVolume(volume_effect);
+    enimydievendoluz_sound.setVolume(volume_effect);
+    grabammo_sound.setVolume(volume_effect);
+    grabflower_sound.setVolume(volume_effect);
+    getjetpack_sound.setVolume(volume_effect);
+    getgun_sound.setVolume(volume_effect);
 }

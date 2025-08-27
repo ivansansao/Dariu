@@ -67,6 +67,12 @@ class Sounds {
     sf::SoundBuffer enimydievendoluz;
     sf::Sound enimydievendoluz_sound;
 
+    sf::SoundBuffer getjetpack;
+    sf::Sound getjetpack_sound;
+
+    sf::SoundBuffer getgun;
+    sf::Sound getgun_sound;
+
     sf::SoundBuffer grabammo;
     sf::Sound grabammo_sound;
     sf::SoundBuffer grabflower;
