@@ -28,7 +28,7 @@ Dariu::~Dariu() {
 void Dariu::reset_position() {
     Actor::reset_position();
 }
-void Dariu::die(Tilemap *tilemap, Sounds *sounds) {
+void Dariu::die(Tilemap* tilemap, Sounds* sounds) {
     if (state == States::Normal) {
         const uint16_t i = this->pos.top / 32;
         const uint16_t j = this->pos.left / 32;
@@ -52,7 +52,7 @@ void Dariu::die(Tilemap *tilemap, Sounds *sounds) {
     }
 }
 
-void Dariu::update(Tilemap *tilemap, Sounds *sounds) {
+void Dariu::update(Tilemap* tilemap, Sounds* sounds) {
     switch (state) {
         case (States::Normal): {
             Actor::update(tilemap, sounds);
@@ -98,7 +98,7 @@ void Dariu::update(Tilemap *tilemap, Sounds *sounds) {
     }
     actor_spr.setPosition(pos.left, pos.top);
 }
-void Dariu::draw(sf::RenderWindow *w, int phase, int phase_total, int miliseconds_playtime) {
+void Dariu::draw(sf::RenderWindow* w, int phase, int phase_total, int curr_miliseconds_playtime) {
     Actor::draw(w);
     sf::String xscore = L"Vidas: ";
     xscore += to_string(score.darius) + "          Bananas: " + to_string(score.bananas) + "/" + to_string(score.bananas_total);
@@ -121,7 +121,7 @@ void Dariu::draw(sf::RenderWindow *w, int phase, int phase_total, int milisecond
     w->draw(text_score);
 }
 
-void Dariu::on_collide(std::string where, int i, int j, Tilemap *tilemap, Sounds *sounds) {
+void Dariu::on_collide(std::string where, int i, int j, Tilemap* tilemap, Sounds* sounds) {
     Actor::on_collide(where, i, j, tilemap, sounds);
 
     const float j32 = pos.left / 32;
@@ -145,7 +145,7 @@ void Dariu::on_collide(std::string where, int i, int j, Tilemap *tilemap, Sounds
     // }
 }
 
-void Dariu::on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds) {
+void Dariu::on_collide_other(int i, int j, Tilemap* tilemap, Sounds* sounds) {
     Actor::on_collide_other(i, j, tilemap, sounds);
     const char tileChar = tilemap->getTileChar(i, j);
 
@@ -232,7 +232,7 @@ void Dariu::on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds) {
     }
 }
 
-void Dariu::shot(Sounds *sounds) {
+void Dariu::shot(Sounds* sounds) {
     if (this->hasGun && this->munitions > 0) {
         Actor::shot(sounds);
         sounds->shot_sound.play();

@@ -81,7 +81,7 @@ void Game::play() {
         load_phase();
     }
 
-    this->profile.miliseconds_playtime++;
+    this->profile.curr_miliseconds_playtime++;
 
     std::stringstream ss;
 
@@ -161,6 +161,9 @@ void Game::play() {
             load_phase();
         } else {
             page = pages::GAME_WIN;
+            if (this->profile.curr_miliseconds_playtime < this->profile.best_miliseconds_playtime || !this->profile.best_miliseconds_playtime) {
+                this->profile.best_miliseconds_playtime = this->profile.curr_miliseconds_playtime;
+            }
         }
         this->save_profile();
     } else if (dariu.over) {
@@ -172,7 +175,7 @@ void Game::play() {
 
     window.clear(sf::Color(62, 49, 60, 255));
     this->tilemap.draw(&window);
-    this->dariu.draw(&window, phase_current, phase_total, profile.miliseconds_playtime);
+    this->dariu.draw(&window, phase_current, phase_total, profile.curr_miliseconds_playtime);
 
     for (auto& catraca : catracas) {
         catraca->draw(&window);
@@ -213,7 +216,7 @@ void Game::resume() {
 void Game::reset() {
     this->profile.lifes = 10;
     this->profile.completed_phases = 0;
-    this->profile.miliseconds_playtime = 0;
+    this->profile.curr_miliseconds_playtime = 0;
     this->profile.locker = 0;
     this->profile.password = "";
     this->phase_current = 0;
@@ -520,8 +523,10 @@ void Game::load_profile() {
             profile.completed_phases = stoi(line.substr(line.find(":") + 1, 80));
         } else if (line.find("lifes") != std::string::npos) {
             profile.lifes = stoi(line.substr(line.find(":") + 1, 80));
-        } else if (line.find("miliseconds_playtime") != std::string::npos) {
-            profile.miliseconds_playtime = stoi(line.substr(line.find(":") + 1, 80));
+        } else if (line.find("curr_miliseconds_playtime") != std::string::npos) {
+            profile.curr_miliseconds_playtime = stoi(line.substr(line.find(":") + 1, 80));
+        } else if (line.find("best_miliseconds_playtime") != std::string::npos) {
+            profile.best_miliseconds_playtime = stoi(line.substr(line.find(":") + 1, 80));
         } else if (line.find("locker:") == 0) {
             this->profile.locker = std::stoul(line.substr(line.find(":") + 1, 80));
         } else if (line.find("password:") == 0) {
@@ -534,14 +539,16 @@ void Game::load_profile() {
 void Game::save_profile() {
     std::string concatedValues = to_string(this->profile.completed_phases);
     concatedValues += to_string(dariu.score.darius);
-    concatedValues += to_string(profile.miliseconds_playtime);
+    concatedValues += to_string(profile.curr_miliseconds_playtime);
+    concatedValues += to_string(profile.best_miliseconds_playtime);
 
     this->profile.locker = Tools::crc32(concatedValues);
 
     ofstream MyFile("./src/resource/profile.dat");
     MyFile << "completed_phases:" + to_string(this->profile.completed_phases) << endl;
     MyFile << "lifes:" + to_string(dariu.score.darius) << endl;
-    MyFile << "miliseconds_playtime:" + to_string(profile.miliseconds_playtime) << endl;
+    MyFile << "curr_miliseconds_playtime:" + to_string(profile.curr_miliseconds_playtime) << endl;
+    MyFile << "best_miliseconds_playtime:" + to_string(profile.best_miliseconds_playtime) << endl;
     MyFile << "locker:" + to_string(profile.locker) << endl;
     MyFile << "password:" + profile.password << endl;
     MyFile.close();
@@ -566,7 +573,8 @@ bool Game::is_valid_profile() {
 
     std::string concatedValues = to_string(this->profile.completed_phases);
     concatedValues += to_string(dariu.score.darius);
-    concatedValues += to_string(profile.miliseconds_playtime);
+    concatedValues += to_string(profile.curr_miliseconds_playtime);
+    concatedValues += to_string(profile.best_miliseconds_playtime);
 
     const bool valid = this->profile.locker == Tools::crc32(concatedValues);
 
@@ -574,7 +582,8 @@ bool Game::is_valid_profile() {
         std::cout << "bool Game::is_valid_profile()" << std::endl;
         std::cout << "this->profile.completed_phases: " << this->profile.completed_phases << std::endl;
         std::cout << "dariu.score.darius............: " << dariu.score.darius << std::endl;
-        std::cout << "profile.miliseconds_playtime..: " << profile.miliseconds_playtime << std::endl;
+        std::cout << "profile.curr_miliseconds_playtime..: " << profile.curr_miliseconds_playtime << std::endl;
+        std::cout << "profile.best_miliseconds_playtime..: " << profile.best_miliseconds_playtime << std::endl;
         std::cout << "this->profile.locker..........: " << this->profile.locker << std::endl;
         std::cout << "Tools::crc32(concatedValues)..: " << Tools::crc32(concatedValues) << std::endl;
         std::cout << std::endl;
@@ -585,7 +594,8 @@ bool Game::is_valid_profile() {
 void Game::new_profile() {
     this->profile.completed_phases = 0;
     this->profile.lifes = 10;
-    this->profile.miliseconds_playtime = 0;
+    this->profile.curr_miliseconds_playtime = 0;
+    this->profile.best_miliseconds_playtime = 0;
     this->profile.locker = 0;
     this->profile.password = "";
     this->dariu.score.darius = 10;
@@ -738,7 +748,12 @@ void Game::menu_main() {
     text_generic.setPosition(sf::Vector2f(left, top));
     window.draw(text_generic);
 
-    text_generic.setString("Tempo: " + Tools::seconds_to_hour(profile.miliseconds_playtime / 60));
+    text_generic.setString("Tempo: " + Tools::seconds_to_hour(profile.curr_miliseconds_playtime / 60));
+    top = 64 + (40 * line++);
+    text_generic.setPosition(sf::Vector2f(left, top));
+    window.draw(text_generic);
+
+    text_generic.setString("Recorde: " + Tools::seconds_to_hour(profile.best_miliseconds_playtime / 60));
     top = 64 + (40 * line++);
     text_generic.setPosition(sf::Vector2f(left, top));
     window.draw(text_generic);

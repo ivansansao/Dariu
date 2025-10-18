@@ -61,14 +61,14 @@ class Game {
 
     bool paused = false;
 
-    std::vector<Catraca *> catracas;
-    std::vector<Sova *> sovas;
-    std::vector<Cannon *> cannons;
-    std::vector<Bulletc *> bulletcs;
+    std::vector<Catraca*> catracas;
+    std::vector<Sova*> sovas;
+    std::vector<Cannon*> cannons;
+    std::vector<Bulletc*> bulletcs;
 
     static const int menuopc_size = 5;
     static std::string menuopc[menuopc_size];
-    const std::string version = "25.8.12";
+    const std::string version = "25.10.18";
 
     int menuopc_selected = 0;
     bool key_released = true;
@@ -78,7 +78,8 @@ class Game {
     struct profile {
         int completed_phases = 0;
         int lifes = 0;
-        int miliseconds_playtime = 0;
+        int curr_miliseconds_playtime = 0;
+        int best_miliseconds_playtime = 0;
         uint32_t locker = 0;
         std::string password = "";
     } profile;
