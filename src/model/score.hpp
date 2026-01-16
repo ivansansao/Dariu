@@ -8,6 +8,7 @@ class Score {
     Score();
 
     int darius;
+    int liquor;
     int bananas;
     int bananas_total;
     int thophy;

@@ -8,6 +8,7 @@ Tilemap::Tilemap() {
     gun.init(4, 0.2f, "./src/asset/image/Gun.png", sf::IntRect(0, 0, 32, 32), false, 0, 0, false);
     munition.init(3, 0.2f, "./src/asset/image/Munition.png", sf::IntRect(0, 0, 32, 32), true, 0, 0, false);
     jetpack.init(4, 0.5f, "./src/asset/image/Jetpack.png", sf::IntRect(0, 0, 32, 32), true, 0, 0, false);
+    liquor.init(4, 0.1f, "./src/asset/image/Liquor/Liquor.png", sf::IntRect(0, 0, 32, 32), true, 0, 0, false);
     banana.init(17, 0.5f, "./src/asset/image/Items/Fruits/Bananas.png", sf::IntRect(0, 0, 32, 32), true, 0, 0, false);
     portalP.init(0, 0.f, "./src/asset/image/PortalP.png", sf::IntRect(0, 0, 32, 32), true, 0, 0, false);
     portalQ.init(0, 0.f, "./src/asset/image/PortalQ.png", sf::IntRect(0, 0, 32, 32), true, 0, 0, false);
@@ -196,6 +197,8 @@ void Tilemap::draw(sf::RenderWindow* w) {
             } else if (tileChar == '@') {
                 start.setPosition(j * 32, i * 32);
                 w->draw(start);
+            } else if (tileChar == '%') {
+                liquor.draw(j * 32, i * 32, w);
             } else if (tileChar == '.') {
                 banana.draw(j * 32, i * 32, w);
             } else if (tileChar == 'J') {
@@ -280,6 +283,7 @@ void Tilemap::draw(sf::RenderWindow* w) {
     gun.anime(sf::IntRect(gun.getFrame() * 32, 0, 32, 32), 1);
     munition.anime(sf::IntRect(munition.getFrame() * 32, 0, 32, 32), 1);
     jetpack.anime(sf::IntRect(jetpack.getFrame() * 32, 0, 32, 32), 1);
+    liquor.anime(sf::IntRect(liquor.getFrame() * 32, 0, 32, 32), 1);
     banana.anime(sf::IntRect(banana.getFrame() * 32, 0, 32, 32), 1);
     water.anime(sf::IntRect(water.getFrame() * 32, 0, 32, 32), 1);
     trophy.anime(sf::IntRect(trophy.getFrame() * 32, 0, 32, 32), 1);
@@ -393,7 +397,7 @@ bool Tilemap::free_path_water(int i, int j) {
 }
 bool Tilemap::free_path_bullet(int i, int j) {
     const char til = this->getTileChar(i, j);
-    return til == ' ' || til == '@' || til == 'P' || til == 'Q' || til == 'G' || til == 'X' || til == 'R' || til == '^' || til == 'V' || til == '>' || til == '<' || til == 'M' || til == 'H' || til == 'Z' || til == 'k' || til == 'K' || til == 'g' || til == 'x' || til == 'j' || til == 'L' || til == 'u' || til == 'J' || til == 'Y' || til == '.' || til == 'T' || til == '0' || til == '1' || til == '2' || til == '3' || til == '4' || til == '5' || til == '6' || til == '7' || til == '8' || til == '9' || til == 's' || til == 'h' || til == 'i' || til == 'f' || til == 'd' || til == 'l' || til == 'e' || til == 'd' || til == 'm' || til == 'c' || til == 'n';
+    return til == ' ' || til == '@' || til == 'P' || til == 'Q' || til == 'G' || til == 'X' || til == 'R' || til == '^' || til == 'V' || til == '>' || til == '<' || til == 'M' || til == 'H' || til == 'Z' || til == '#' || til == 'k' || til == 'K' || til == 'g' || til == 'x' || til == 'j' || til == 'L' || til == 'u' || til == 'J' || til == 'Y' || til == '.' || til == 'T' || til == '0' || til == '1' || til == '2' || til == '3' || til == '4' || til == '5' || til == '6' || til == '7' || til == '8' || til == '9' || til == 's' || til == 'h' || til == 'i' || til == 'f' || til == 'd' || til == 'l' || til == 'e' || til == 'd' || til == 'm' || til == 'c' || til == 'n';
 }
 // char* Tilemap::tile(int i, int j) {
 //     if (i >= 0 && i <= this->H && j >= 0 && j <= this->W) {

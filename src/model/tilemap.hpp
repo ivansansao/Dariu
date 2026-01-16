@@ -37,6 +37,7 @@ class Tilemap {
     Animation gun;
     Animation munition;
     Animation jetpack;
+    Animation liquor;
     Animation banana;
     Animation water;
     Animation portalP;
@@ -87,18 +88,18 @@ class Tilemap {
     char edit_current_char;
 
     static std::string map[H];
-    std::vector<Plataform *> plataforms;
+    std::vector<Plataform*> plataforms;
     std::string mapfile = "";
 
     void update();
-    void draw(sf::RenderWindow *w);
+    void draw(sf::RenderWindow* w);
     void load_from_file(int phase);
     void load_map_from_file(int phase);
     void load_texture_from_file(int phase);
     void load_plataforms();
     void replaceAll(char a, char b);
     void clear();
-    void edit(sf::RenderWindow *w, sf::Event event, sf::View view);
+    void edit(sf::RenderWindow* w, sf::Event event, sf::View view);
     void edit_click();
     void edit_save();
     point getTileFromPixel(int x, int y, int heigh, int width);

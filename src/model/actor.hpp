@@ -31,7 +31,7 @@ class Actor {
     sf::FloatRect abs_pos;
     sf::Vector2f velocity;
 
-    std::vector<BulletGun *> bulletguns;
+    std::vector<BulletGun*> bulletguns;
 
     enum States { Normal,
                   DieStart,
@@ -45,6 +45,7 @@ class Actor {
     int updates = 0;
     int direction_x;
     int direction_y;
+    float i_walk_sprite = 0;
     float i_idle_sprite;
     float i_fall_sprite;
     float i_jump_sprite;
@@ -70,32 +71,32 @@ class Actor {
 
     bool onPortal = false;
 
-    virtual void draw(sf::RenderWindow *w);
-    virtual void update(Tilemap *tilemap, Sounds *sounds);
-    virtual void updateWalk(Tilemap *tilemap, Sounds *sounds);
-    virtual void updateFly(Tilemap *tilemap, Sounds *sounds);
-    virtual void on_collide(std::string where, int i, int j, Tilemap *tilemap, Sounds *sounds);
-    virtual void on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds);
+    virtual void draw(sf::RenderWindow* w);
+    virtual void update(Tilemap* tilemap, Sounds* sounds);
+    virtual void updateWalk(Tilemap* tilemap, Sounds* sounds);
+    virtual void updateFly(Tilemap* tilemap, Sounds* sounds);
+    virtual void on_collide(std::string where, int i, int j, Tilemap* tilemap, Sounds* sounds);
+    virtual void on_collide_other(int i, int j, Tilemap* tilemap, Sounds* sounds);
     virtual void set_position(float left, float top);
     virtual void reset_position();
-    virtual void die(Tilemap *tilemap, Sounds *sounds);
-    virtual void drawJetpackTime(sf::RenderWindow *w);
-    virtual void shot(Sounds *sounds);
-    virtual void update_bullets(Tilemap *tilemap, Sounds *sounds);
-    virtual void draw_bullets(sf::RenderWindow *w);
+    virtual void die(Tilemap* tilemap, Sounds* sounds);
+    virtual void drawJetpackTime(sf::RenderWindow* w);
+    virtual void shot(Sounds* sounds);
+    virtual void update_bullets(Tilemap* tilemap, Sounds* sounds);
+    virtual void draw_bullets(sf::RenderWindow* w);
 
     void jump();
     void jump(bool little);
     void add_gravity();
     bool onFloor();
-    void collision_x(Tilemap *, Sounds *sounds);
-    void collision_y(Tilemap *, Sounds *sounds);
-    void collision_other(Tilemap *, Sounds *sounds);
-    void collision_portal(Tilemap *tilemap, Sounds *sounds);
-    void play_sound_pop(Sounds *sounds);
+    void collision_x(Tilemap*, Sounds* sounds);
+    void collision_y(Tilemap*, Sounds* sounds);
+    void collision_other(Tilemap*, Sounds* sounds);
+    void collision_portal(Tilemap* tilemap, Sounds* sounds);
+    void play_sound_pop(Sounds* sounds);
     bool is_block(char el);
     bool is_alive();
-    point getCoord(Tilemap *tilemap, int offset_i, int offset_j);
+    point getCoord(Tilemap* tilemap, int offset_i, int offset_j);
     sf::Color setRandomColor();
     void setColor(sf::Color color);
 };

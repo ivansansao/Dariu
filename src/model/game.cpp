@@ -34,6 +34,7 @@ Game::Game() {
     font_greatvibes.loadFromFile("./src/asset/fonts/GreatVibes-Regular.ttf");
     font_irishgrooverregular.loadFromFile("./src/asset/fonts/irish/IrishGrover-Regular.ttf");
     std::vector<Catraca> catracas;
+    std::vector<Zarik> zariks;
 
     fireworks_tex.loadFromFile("./src/asset/image/fireworks.png");
     fireworks_spr.setTexture(fireworks_tex);
@@ -97,6 +98,9 @@ void Game::play() {
 
     for (auto& catraca : catracas) {
         catraca->update(&tilemap, &sounds);
+    }
+    for (auto& zarik : zariks) {
+        zarik->update(&tilemap, &sounds);
     }
     for (auto& sova : sovas) {
         sova->update(&tilemap, &sounds);
@@ -179,6 +183,9 @@ void Game::play() {
 
     for (auto& catraca : catracas) {
         catraca->draw(&window);
+    }
+    for (auto& zarik : zariks) {
+        zarik->draw(&window);
     }
     for (auto& sova : sovas) {
         sova->draw(&window);
@@ -279,6 +286,7 @@ void Game::win() {
         phase_current = 0;
         this->dariu.score.darius = 10;
         this->dariu.score.bananas = 0;
+        this->dariu.score.liquor = 0;
         this->dariu.score.thophy = 0;
         this->dariu.over = false;
         this->dariu.win = false;
@@ -319,6 +327,7 @@ void Game::over() {
         phase_current = 0;
         this->dariu.score.darius = 10;
         this->dariu.score.bananas = 0;
+        this->dariu.score.liquor = 0;
         this->dariu.score.thophy = 0;
         this->dariu.over = false;
         this->dariu.win = false;
@@ -358,6 +367,7 @@ void Game::load_phase() {
     load_enimies();
 
     // dariu.score.bananas = 0;
+    dariu.score.liquor = 0;
     dariu.win = false;
     dariu.score.thophy = 0;
     dariu.jetPack = false;
@@ -404,6 +414,18 @@ void Game::load_enimies() {
                 catraca->set_position(j * 32, i * 32);
                 catraca->id = (++id) * 30;
                 catracas.push_back(catraca);
+            }
+        }
+    }
+    zariks.clear();
+    id = 0;
+    for (int i{}; i < tilemap.H; ++i) {
+        for (int j{}; j < tilemap.W; j++) {
+            if (tilemap.getTileChar(i, j) == '#') {
+                Zarik* zarik = new Zarik();
+                zarik->set_position(j * 32, i * 32);
+                zarik->id = (++id) * 30;
+                zariks.push_back(zarik);
             }
         }
     }

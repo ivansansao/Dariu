@@ -62,6 +62,7 @@ class Game {
     bool paused = false;
 
     std::vector<Catraca*> catracas;
+    std::vector<Zarik*> zariks;
     std::vector<Sova*> sovas;
     std::vector<Cannon*> cannons;
     std::vector<Bulletc*> bulletcs;

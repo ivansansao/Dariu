@@ -16,6 +16,7 @@ Dariu::Dariu() {
     start_pos = sf::FloatRect(32.f, 672.f, 32.f, 32.f);
     reset_position();
     score.bananas = 0;
+    score.liquor = 0;
     score.bananas_total = 0;
     score.darius = 10;
     score.thophy = 0;
@@ -105,6 +106,7 @@ void Dariu::draw(sf::RenderWindow* w, int phase, int phase_total, int curr_milis
     xscore += L"          Artefatos: ";
     xscore += to_string(score.thophy) + "/" + to_string(score.thophy_total);
     xscore += "          Fase: " + to_string(phase) + " / " + to_string(phase_total);
+    xscore += "          Liquor: " + to_string(score.liquor);
 
     if (this->jetPackFuel > 0) {
         xscore += "          Mochila a jato: " + to_string((int)this->jetPackFuel) + " / 100";
@@ -182,6 +184,11 @@ void Dariu::on_collide_other(int i, int j, Tilemap* tilemap, Sounds* sounds) {
             score.bananas_total -= 30;
             score.darius++;
         }
+    }
+    if (tileChar == '%') {
+        tilemap->map[i][j] = ' ';
+        play_sound_pop(sounds);
+        score.liquor++;
     }
     if (tileChar == 'T') {
         if (sounds->grabflower_sound.getStatus() == 0) sounds->grabflower_sound.play();
