@@ -22,12 +22,19 @@ class Zarik : public Enimy {
    public:
     Zarik();
 
+    Animation animeEatingSalad;
+    double liquors = 0;
+    enum SpecialAction { Nothing,
+                         EatingSalad,
+    } specialAction = Nothing;
+
     void update(Tilemap* tilemap, Sounds* sounds);
     void updateWalk(Tilemap* tilemap, Sounds* sounds);
     void draw(sf::RenderWindow* w);
     void on_collide(std::string where, int i, int j, Tilemap* tilemap, Sounds* sounds);
     void on_collide_other(int i, int j, Tilemap* tilemap, Sounds* sounds);
     void die(Tilemap* tilemap, Sounds* sounds);
+    void drinkLiquor(int liquors);
 };
 class Catraca : public Enimy {
    public:
@@ -63,6 +70,8 @@ class Cannon : public Enimy {
 class Bulletc : public Enimy {
    public:
     Bulletc();
+
+    std::string doing = "waking";
 
     void update(Tilemap* tilemap);
     void draw(sf::RenderWindow* w);

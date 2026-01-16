@@ -180,6 +180,7 @@ void Enimy::die(Tilemap* tilemap, Sounds* sounds) {
  */
 
 Zarik::Zarik() {
+    animeEatingSalad.init(4, 0.1f, "./src/asset/image/Zarik/Zarik-eating-salad.png", sf::IntRect(0, 0, 32, 32), true, 0, 0, false);
     actor_tex_fall.loadFromFile("./src/asset/image/Zarik/Zarik-run.png");
     actor_tex_jump.loadFromFile("./src/asset/image/Zarik/Zarik-run.png");
     actor_tex.loadFromFile("./src/asset/image/Zarik/Zarik-run.png");
@@ -189,6 +190,18 @@ Zarik::Zarik() {
 void Zarik::update(Tilemap* tilemap, Sounds* sounds) {
     Enimy::update(tilemap, sounds);
     this->updates++;
+
+    if (this->liquors > 0) {
+        if (this->specialAction != SpecialAction::EatingSalad) {
+            this->specialAction = SpecialAction::EatingSalad;
+        }
+        this->liquors -= 0.01;
+    } else {
+        if (this->specialAction == SpecialAction::EatingSalad) {
+            this->specialAction = SpecialAction::Nothing;
+        }
+    }
+
     if (this->updates > 9999) this->updates = 0;
 }
 void Zarik::updateWalk(Tilemap* tilemap, Sounds* sounds) {
@@ -211,10 +224,11 @@ void Zarik::updateWalk(Tilemap* tilemap, Sounds* sounds) {
             add_gravity();
             collision_y(tilemap, sounds);
 
-            if (direction_x == 1) velocity.x = 0.5;
-            if (direction_x == -1) velocity.x = -0.5;
-
-            pos.left += velocity.x;
+            if (this->specialAction == SpecialAction::Nothing) {
+                if (direction_x == 1) velocity.x = 0.5;
+                if (direction_x == -1) velocity.x = -0.5;
+                pos.left += velocity.x;
+            }
 
             collision_x(tilemap, sounds);
             break;
@@ -253,16 +267,24 @@ void Zarik::draw(sf::RenderWindow* w) {
             actor_spr.setTexture(actor_tex_idle);
             actor_spr.setTextureRect(sf::IntRect(Tools::getStartSprite((int)i_idle_sprite % 3, direction_x) * 32, 0, direction_x * 32, 32));
             i_idle_sprite += 0.1;
+            w->draw(actor_spr);
         } else {
-            actor_spr.setTexture(actor_tex);
-            actor_spr.setTextureRect(sf::IntRect(Tools::getStartSprite((int)(pos.left / 2) % 4, direction_x) * 32, 0, direction_x * 32, 32));
+            if (this->specialAction == SpecialAction::Nothing) {
+                actor_spr.setTexture(actor_tex);
+                actor_spr.setTextureRect(sf::IntRect(Tools::getStartSprite((int)(pos.left / 2) % 4, direction_x) * 32, 0, direction_x * 32, 32));
+                w->draw(actor_spr);
+            } else {  // For now it is eating salad
+
+                animeEatingSalad.animeAuto();
+                animeEatingSalad.draw(pos.left, pos.top, w);
+            }
         }
     } else {
         actor_spr.setTexture(actor_tex_jump);
         actor_spr.setTextureRect(sf::IntRect(Tools::getStartSprite((int)i_jump_sprite % 4, -direction_x) * 32, 0, -direction_x * 32, 32));
         i_jump_sprite += 0.25;
+        w->draw(actor_spr);
     }
-    w->draw(actor_spr);
 }
 void Zarik::on_collide(std::string where, int i, int j, Tilemap* tilemap, Sounds* sounds) {
     Enimy::on_collide(where, i, j, tilemap, sounds);
@@ -272,6 +294,11 @@ void Zarik::on_collide_other(int i, int j, Tilemap* tilemap, Sounds* sounds) {
 }
 void Zarik::die(Tilemap* tilemap, Sounds* sounds) {
     Enimy::die(tilemap, sounds);
+}
+void Zarik::drinkLiquor(int liquors) {
+    if (liquors > 0) {
+        this->liquors += liquors;
+    }
 }
 
 /**
