@@ -472,13 +472,11 @@ void Game::check_collisions_enimies() {
         for (auto& zarik : zariks) {
             if (zarik->is_alive()) {
                 if (zarik->pos.intersects(dariu.pos)) {
-                    if (zarik->specialAction == Zarik::SpecialAction::Nothing) {
-                        if (dariu.score.liquor > 0) {
-                            zarik->drinkLiquor(dariu.score.liquor);
-                            dariu.score.liquor = 0;
-                        } else {
-                            dariu.die(&tilemap, &sounds);
-                        }
+                    if (dariu.score.liquor > 0) {
+                        zarik->drinkLiquor(dariu.score.liquor);
+                        dariu.score.liquor = 0;
+                    } else if (zarik->specialAction == Zarik::SpecialAction::Nothing) {
+                        dariu.die(&tilemap, &sounds);
                     }
                 }
                 for (auto& bullet : dariu.bulletguns) {

@@ -277,6 +277,7 @@ void Zarik::draw(sf::RenderWindow* w) {
 
                 animeEatingSalad.animeAuto();
                 animeEatingSalad.draw(pos.left, pos.top, w);
+                drawDowntimeSalad(w);
             }
         }
     } else {
@@ -298,7 +299,34 @@ void Zarik::die(Tilemap* tilemap, Sounds* sounds) {
 void Zarik::drinkLiquor(int liquors) {
     if (liquors > 0) {
         this->liquors += liquors;
+        if (this->liquors > this->maxLiquors) {
+            this->maxLiquors = this->liquors;
+        }
     }
+}
+void Zarik::drawDowntimeSalad(sf::RenderWindow* w) {
+    float xLeft = pos.left + pos.width;
+    float width = this->maxLiquors;
+    float x = this->liquors;
+    const float barWidth = 10.f;
+
+    sf::RectangleShape border(sf::Vector2f(pos.left, pos.top));
+    border.setFillColor(sf::Color(255, 0, 0, 255));
+    border.setPosition(sf::Vector2f(xLeft, pos.top + width));
+    border.setSize(sf::Vector2f(barWidth, 3));
+    w->draw(border);
+
+    sf::RectangleShape rectangle(sf::Vector2f(pos.left, pos.top));
+    rectangle.setFillColor(sf::Color(255, 255, 255, 255));
+    rectangle.setPosition(sf::Vector2f(xLeft, pos.top + width));
+    float scaledWidth = 0.f;
+    if (width > 0.f) {
+        scaledWidth = (x / width) * barWidth;
+        if (scaledWidth > barWidth) scaledWidth = barWidth;
+        if (scaledWidth < 0.f) scaledWidth = 0.f;
+    }
+    rectangle.setSize(sf::Vector2f(scaledWidth, 3));
+    w->draw(rectangle);
 }
 
 /**

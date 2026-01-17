@@ -24,6 +24,7 @@ class Zarik : public Enimy {
 
     Animation animeEatingSalad;
     double liquors = 0;
+    double maxLiquors = 0;
     enum SpecialAction { Nothing,
                          EatingSalad,
     } specialAction = Nothing;
@@ -35,6 +36,7 @@ class Zarik : public Enimy {
     void on_collide_other(int i, int j, Tilemap* tilemap, Sounds* sounds);
     void die(Tilemap* tilemap, Sounds* sounds);
     void drinkLiquor(int liquors);
+    void drawDowntimeSalad(sf::RenderWindow* w);
 };
 class Catraca : public Enimy {
    public:
