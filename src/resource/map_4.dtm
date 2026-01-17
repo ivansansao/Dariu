@@ -7,8 +7,8 @@ E   Z EE    ZZZ  ZZ                 .                ...........  ABBC      E   
 EBBB      ABBBBBBBC                 .                ...........            E   bBbb                     ABBBE       E
 E  EEEEEEEE                         .               ABBC T  ABBBC           E        .......   .....     D   E       E
 E            .                      .Z                  Z.                  E                  . T .     D   E       E
-E      > V   .            Z         B.....              ABBC                E        ABBBBBC   .. ..     D   E       E
-E            .Z       ..... ABC     E.H...                            V     E.....             ABBBC     DP2         E
+E      > V   .            Z         B..%%%              ABBC                E        ABBBBBC   .. ..     D   E       E
+E            .Z       ..... ABC     E.H%%%                            V     E.....             ABBBC     DP2         E
 E           BBBB    Z.......        EBBBBB.                                 EBBBBC               T       DC          E
 E                 H B.......B       E.....B.                                E                            DK1Y BZ     E 
 E                BBBEBBBBBBBEBBBB . E......B.        .   .                  E      .....        ABC      DBBBBBC     E
@@ -19,7 +19,7 @@ E ^    M <   >M <                   E bbbb        AbRbC   Q1               TE   
 E  L  AP1      P4 ..         H.     EBbbbbABBC............AC              ABEBC     ABBBBBC          M^           Z  E
 E     DEF   ZY    AC         AC     ......--....H.........DF ....... M^   Z                                      M^  E
 E@    DEFbbbbbFBBBDF Z       DF     ....T.EE....B.........DF ....... AC                                    Y         E
-EBuuuDEEF  Q3JF E DF.........DF ZY  ......EE....E.........DF ....... DF ..............H........    >M          <B    E
+EBuuuDEEF# Q3JF E DF.........DF ZY  ......EE....E.........DF ....... DF ..............H........    >M          <B    E
 EEBEEEEEEEEEEEERERDFREBRBRBBBEEBBRRBBRBRBBEEBBBBEBBBBBBBBBEEBBBBBBBBBEEBBBBBBBBBBBBBBBBBBBBBBBBRRRRRRRRRRRRRRRRREBBBBE
 [ENDBLOCK]
 [TERRAIN]
