@@ -481,6 +481,7 @@ void Game::check_collisions_enimies() {
                 }
                 for (auto& bullet : dariu.bulletguns) {
                     if (bullet->pos.intersects(zarik->pos)) {
+                        zarik->direction_x = zarik->direction_x * -1;  // Turn Zarik direction
                         bullet->collided = true;
                         zarik->sayProtest(&this->sounds);
                     }
