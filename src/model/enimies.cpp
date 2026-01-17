@@ -296,13 +296,19 @@ void Zarik::on_collide_other(int i, int j, Tilemap* tilemap, Sounds* sounds) {
 void Zarik::die(Tilemap* tilemap, Sounds* sounds) {
     Enimy::die(tilemap, sounds);
 }
-void Zarik::drinkLiquor(int liquors) {
+double Zarik::drinkLiquor(int liquors) {
+    if (this->specialAction == SpecialAction::EatingSalad) {
+        return liquors;
+    }
+
     if (liquors > 0) {
-        this->liquors += liquors;
+        this->liquors += liquors <= 10 ? liquors : 10;
         if (this->liquors > this->maxLiquors) {
             this->maxLiquors = this->liquors;
         }
     }
+
+    return liquors >= 10 ? liquors - 10 : 0;
 }
 void Zarik::drawDowntimeSalad(sf::RenderWindow* w) {
     float xLeft = pos.left + pos.width;
@@ -327,6 +333,20 @@ void Zarik::drawDowntimeSalad(sf::RenderWindow* w) {
     }
     rectangle.setSize(sf::Vector2f(scaledWidth, 3));
     w->draw(rectangle);
+}
+
+void Zarik::sayProtest(Sounds* sounds) {
+    if (this->protestType == 0) {
+        if (sounds->enimy_what_i_did_sound.getStatus() == 0) {
+            sounds->enimy_are_you_crazy_sound.play();
+            this->protestType = 1;
+        }
+    } else {
+        if (sounds->enimy_are_you_crazy_sound.getStatus() == 0) {
+            sounds->enimy_what_i_did_sound.play();
+            this->protestType = 0;
+        }
+    }
 }
 
 /**

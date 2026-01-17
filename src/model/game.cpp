@@ -6,7 +6,6 @@
 #include <cmath>
 
 #include "iostream"
-#include "tools.hpp"
 
 using namespace std;
 
@@ -473,8 +472,9 @@ void Game::check_collisions_enimies() {
             if (zarik->is_alive()) {
                 if (zarik->pos.intersects(dariu.pos)) {
                     if (dariu.score.liquor > 0) {
-                        zarik->drinkLiquor(dariu.score.liquor);
-                        dariu.score.liquor = 0;
+                        const int liquorsBefore = dariu.score.liquor;
+                        dariu.score.liquor = zarik->drinkLiquor(dariu.score.liquor);
+                        if (liquorsBefore != dariu.score.liquor) this->sounds.enemy_will_eat_salad_sound.play();
                     } else if (zarik->specialAction == Zarik::SpecialAction::Nothing) {
                         dariu.die(&tilemap, &sounds);
                     }
@@ -482,7 +482,7 @@ void Game::check_collisions_enimies() {
                 for (auto& bullet : dariu.bulletguns) {
                     if (bullet->pos.intersects(zarik->pos)) {
                         bullet->collided = true;
-                        // zarik->die(&tilemap, &sounds); Future -> Zarik just Cry
+                        zarik->sayProtest(&this->sounds);
                     }
                 }
             }

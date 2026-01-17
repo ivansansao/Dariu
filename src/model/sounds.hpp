@@ -58,6 +58,28 @@ class Sounds {
 
     sf::SoundBuffer enimydiedemoin;
     sf::Sound enimydiedemoin_sound;
+
+    sf::SoundBuffer enemy_will_eat_salad;
+    sf::Sound enemy_will_eat_salad_sound;
+
+    sf::SoundBuffer enimy_what_i_did;
+    sf::Sound enimy_what_i_did_sound;
+
+    sf::SoundBuffer enimy_are_you_crazy;
+    sf::Sound enimy_are_you_crazy_sound;
+
+    sf::SoundBuffer get_glas;
+    sf::Sound get_glas_sound0;
+    sf::Sound get_glas_sound1;
+    sf::Sound get_glas_sound2;
+    sf::Sound get_glas_sound3;
+    sf::Sound get_glas_sound4;
+    sf::Sound get_glas_sound5;
+    sf::Sound get_glas_sound6;
+    sf::Sound get_glas_sound7;
+    sf::Sound get_glas_sound8;
+    sf::Sound get_glas_sound9;
+
     sf::SoundBuffer enimydiein321;
     sf::Sound enimydiein321_sound;
     sf::SoundBuffer enimydieinfernu;
@@ -86,5 +108,7 @@ class Sounds {
     void effect_up();
     void effect_down();
     void applyVolume();
+
+    void playGetGlas();
 };
 #endif

@@ -106,8 +106,10 @@ void Dariu::draw(sf::RenderWindow* w, int phase, int phase_total, int curr_milis
     xscore += L"          Artefatos: ";
     xscore += to_string(score.thophy) + "/" + to_string(score.thophy_total);
     xscore += "          Fase: " + to_string(phase) + " / " + to_string(phase_total);
-    xscore += L"          Cachaça: ";
-    xscore += to_string(score.liquor);
+    if (this->score.liquor > 0) {
+        xscore += L"          Cachaças: ";
+        xscore += to_string(score.liquor);
+    }
 
     if (this->jetPackFuel > 0) {
         xscore += "          Mochila a jato: " + to_string((int)this->jetPackFuel) + " / 100";
@@ -188,7 +190,7 @@ void Dariu::on_collide_other(int i, int j, Tilemap* tilemap, Sounds* sounds) {
     }
     if (tileChar == '%') {
         tilemap->map[i][j] = ' ';
-        play_sound_pop(sounds);
+        sounds->playGetGlas();
         score.liquor++;
     }
     if (tileChar == 'T') {

@@ -59,6 +59,25 @@ Sounds::Sounds() {
 
     enimydiedemoin.loadFromFile("./src/asset/sound/enimydiedemoin.ogg");
     enimydiedemoin_sound.setBuffer(enimydiedemoin);
+
+    enemy_will_eat_salad.loadFromFile("./src/asset/sound/will_eat_salad.ogg");
+    enemy_will_eat_salad_sound.setBuffer(enemy_will_eat_salad);
+    enimy_what_i_did.loadFromFile("./src/asset/sound/what_i_did.ogg");
+    enimy_what_i_did_sound.setBuffer(enimy_what_i_did);
+    enimy_are_you_crazy.loadFromFile("./src/asset/sound/are_you_crazy.ogg");
+    enimy_are_you_crazy_sound.setBuffer(enimy_are_you_crazy);
+    get_glas.loadFromFile("./src/asset/sound/get_glas.ogg");
+    get_glas_sound0.setBuffer(get_glas);
+    get_glas_sound1.setBuffer(get_glas);
+    get_glas_sound2.setBuffer(get_glas);
+    get_glas_sound3.setBuffer(get_glas);
+    get_glas_sound4.setBuffer(get_glas);
+    get_glas_sound5.setBuffer(get_glas);
+    get_glas_sound6.setBuffer(get_glas);
+    get_glas_sound7.setBuffer(get_glas);
+    get_glas_sound8.setBuffer(get_glas);
+    get_glas_sound9.setBuffer(get_glas);
+
     enimydiein321.loadFromFile("./src/asset/sound/enimydiein321.ogg");
     enimydiein321_sound.setBuffer(enimydiein321);
     enimydieinfernu.loadFromFile("./src/asset/sound/enimydieinfernu.ogg");
@@ -129,6 +148,22 @@ void Sounds::applyVolume() {
     shot_sound.setVolume(volume_effect);
 
     enimydiedemoin_sound.setVolume(volume_effect);
+
+    enemy_will_eat_salad_sound.setVolume(volume_effect);
+    enimy_what_i_did_sound.setVolume(volume_effect);
+    enimy_are_you_crazy_sound.setVolume(volume_effect);
+
+    get_glas_sound0.setVolume(volume_effect);
+    get_glas_sound1.setVolume(volume_effect);
+    get_glas_sound2.setVolume(volume_effect);
+    get_glas_sound3.setVolume(volume_effect);
+    get_glas_sound4.setVolume(volume_effect);
+    get_glas_sound5.setVolume(volume_effect);
+    get_glas_sound6.setVolume(volume_effect);
+    get_glas_sound7.setVolume(volume_effect);
+    get_glas_sound8.setVolume(volume_effect);
+    get_glas_sound9.setVolume(volume_effect);
+
     enimydiein321_sound.setVolume(volume_effect);
     enimydieinfernu_sound.setVolume(volume_effect);
     enimydieraul_sound.setVolume(volume_effect);
@@ -137,4 +172,28 @@ void Sounds::applyVolume() {
     grabflower_sound.setVolume(volume_effect);
     getjetpack_sound.setVolume(volume_effect);
     getgun_sound.setVolume(volume_effect);
+}
+
+void Sounds::playGetGlas() {
+    if (this->get_glas_sound0.getStatus() == 0) {
+        this->get_glas_sound0.play();
+    } else if (this->get_glas_sound1.getStatus() == 0) {
+        this->get_glas_sound1.play();
+    } else if (this->get_glas_sound2.getStatus() == 0) {
+        this->get_glas_sound2.play();
+    } else if (this->get_glas_sound3.getStatus() == 0) {
+        this->get_glas_sound3.play();
+    } else if (this->get_glas_sound4.getStatus() == 0) {
+        this->get_glas_sound4.play();
+    } else if (this->get_glas_sound5.getStatus() == 0) {
+        this->get_glas_sound5.play();
+    } else if (this->get_glas_sound6.getStatus() == 0) {
+        this->get_glas_sound6.play();
+    } else if (this->get_glas_sound7.getStatus() == 0) {
+        this->get_glas_sound7.play();
+    } else if (this->get_glas_sound8.getStatus() == 0) {
+        this->get_glas_sound8.play();
+    } else if (this->get_glas_sound9.getStatus() == 0) {
+        this->get_glas_sound9.play();
+    }
 }
