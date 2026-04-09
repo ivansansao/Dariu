@@ -44,9 +44,18 @@ void Tilemap::load_texture_from_file(int phase) {
     if (terrain.empty()) terrain = "Terrain";
     std::string root = "./src/asset/image/" + terrain + "/";
 
+    background_loaded = false;
+
     terrain_tex.loadFromFile(root + "Terrain (16x16).png");
     terrain2_tex.loadFromFile(root + "Terrain (32x32).png");
     terrain_mid_false_tex.loadFromFile(root + "falseblock.png");
+
+    const std::string background_path = root + "background.png";
+    background_loaded = background_tex.loadFromFile(background_path);
+    if (background_loaded) {
+        background.setTexture(background_tex);
+        background.setPosition(0.f, 0.f);
+    }
 
     ground.setTexture(terrain_tex);
     ground.setTextureRect(sf::IntRect(96, 0, 32, 32));
@@ -189,6 +198,9 @@ void Tilemap::swapBlock(int i1, int j1, int i2, int j2) {
 }
 
 void Tilemap::draw(sf::RenderWindow* w) {
+    if (background_loaded) {
+        w->draw(background);
+    }
     for (int i{}; i < H; ++i) {
         for (int j{}; j < W; ++j) {
             const char tileChar = this->getTileChar(i, j);

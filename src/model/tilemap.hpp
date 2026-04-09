@@ -69,6 +69,7 @@ class Tilemap {
     sf::Sprite ground_door_closed;
     sf::Sprite coin;
     sf::Sprite background;
+    bool background_loaded = false;
 
     sf::Sprite ground_left;
     sf::Sprite ground_mid;
