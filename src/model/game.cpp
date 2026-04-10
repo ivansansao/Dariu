@@ -4,6 +4,8 @@
 #include <dirent.h>
 
 #include <cmath>
+#include <filesystem>
+#include <iomanip>
 
 #include "iostream"
 
@@ -803,6 +805,36 @@ void Game::menu_main() {
     window.display();
 }
 
+void Game::take_screenshot() {
+    sf::Vector2u windowSize = window.getSize();
+    sf::Texture texture;
+    if (!texture.create(windowSize.x, windowSize.y)) {
+        std::cerr << "Falha ao capturar a tela: não foi possível criar a textura." << std::endl;
+        return;
+    }
+    texture.update(window);
+    sf::Image screenshot = texture.copyToImage();
+
+    auto now = std::chrono::system_clock::now();
+    std::time_t nowTime = std::chrono::system_clock::to_time_t(now);
+    std::tm localTime{};
+#if defined(_WIN32)
+    localtime_s(&localTime, &nowTime);
+#else
+    localtime_r(&nowTime, &localTime);
+#endif
+
+    std::ostringstream filename;
+    filename << "screenshot-" << std::put_time(&localTime, "%Y%m%d-%H%M%S") << ".png";
+    const std::filesystem::path output = std::filesystem::current_path() / filename.str();
+
+    if (screenshot.saveToFile(output.string())) {
+        std::cout << "Screenshot salvo em: " << output << std::endl;
+    } else {
+        std::cerr << "Falha ao salvar screenshot em: " << output << std::endl;
+    }
+}
+
 void Game::loop_events() {
     sf::Event event;
     sf::Clock clock;
@@ -830,6 +862,10 @@ void Game::loop_events() {
                 this->dariu.zerokey_released = true;
             } else if (event.key.code == sf::Keyboard::Space) {
                 this->dariu.space_released = true;
+            }
+
+            if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::F2) {
+                take_screenshot();
             }
 
             if (event.type == sf::Event::JoystickButtonReleased) {

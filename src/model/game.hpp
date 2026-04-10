@@ -104,6 +104,7 @@ class Game {
     void run();
     bool is_fullscreen();
     void load_enimies();
+    void take_screenshot();
     void check_collisions_mobiles();
     void check_collisions_enimies();
     void load_phase();
