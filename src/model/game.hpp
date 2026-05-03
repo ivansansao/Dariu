@@ -63,6 +63,7 @@ class Game {
 
     std::vector<Catraca*> catracas;
     std::vector<Zarik*> zariks;
+    std::vector<Box1*> box1s;
     std::vector<Sova*> sovas;
     std::vector<Cannon*> cannons;
     std::vector<Bulletc*> bulletcs;

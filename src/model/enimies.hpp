@@ -41,6 +41,14 @@ class Zarik : public Enimy {
     void drawDowntimeSalad(sf::RenderWindow* w);
     void sayProtest(Sounds* sounds);
 };
+class Box1 : public Enimy {
+   public:
+    Box1();
+
+    void update(Tilemap* tilemap, Sounds* sounds);
+    void updateWalk(Tilemap* tilemap, Sounds* sounds);
+    void draw(sf::RenderWindow* w);
+};
 class Catraca : public Enimy {
    public:
     Catraca();

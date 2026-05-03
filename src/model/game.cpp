@@ -103,6 +103,9 @@ void Game::play() {
     for (auto& zarik : zariks) {
         zarik->update(&tilemap, &sounds);
     }
+    for (auto& box1 : box1s) {
+        box1->update(&tilemap, &sounds);
+    }
     for (auto& sova : sovas) {
         sova->update(&tilemap, &sounds);
     }
@@ -187,6 +190,9 @@ void Game::play() {
     }
     for (auto& zarik : zariks) {
         zarik->draw(&window);
+    }
+    for (auto& box1 : box1s) {
+        box1->draw(&window);
     }
     for (auto& sova : sovas) {
         sova->draw(&window);
@@ -430,6 +436,18 @@ void Game::load_enimies() {
             }
         }
     }
+    box1s.clear();
+    id = 0;
+    for (int i{}; i < tilemap.H; ++i) {
+        for (int j{}; j < tilemap.W; j++) {
+            if (tilemap.getTileChar(i, j) == 'O') {
+                Box1* box1 = new Box1();
+                box1->set_position(j * 32, i * 32);
+                box1->id = ++id;
+                box1s.push_back(box1);
+            }
+        }
+    }
     sovas.clear();
     id = 0;
     for (int i{}; i < tilemap.H; ++i) {
@@ -488,6 +506,11 @@ void Game::check_collisions_enimies() {
                         zarik->sayProtest(&this->sounds);
                     }
                 }
+            }
+        }
+
+        for (auto& box1 : box1s) {
+            if (box1->is_alive()) {
             }
         }
 

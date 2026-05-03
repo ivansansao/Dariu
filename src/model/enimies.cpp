@@ -350,6 +350,62 @@ void Zarik::sayProtest(Sounds* sounds) {
 }
 
 /**
+ * Box1 is enimy Char O
+ */
+
+Box1::Box1() {
+    actorIdle.init(1, 0.f, "./src/asset/image/Box1/Box1-iddle.png", sf::IntRect(0, 0, 32, 32), true, 0, 0, false);
+    velocity.x = 0;
+    velocity.y = 0;
+}
+
+void Box1::update(Tilemap* tilemap, Sounds* sounds) {
+    Enimy::update(tilemap, sounds);
+    this->updates++;
+    if (this->updates > 9999) this->updates = 0;
+}
+
+void Box1::updateWalk(Tilemap* tilemap, Sounds* sounds) {
+    switch (state) {
+        case (States::Normal): {
+            add_gravity();
+            collision_y(tilemap, sounds);
+            velocity.x = 0;
+            break;
+        }
+        case (States::DieStart): {
+            state = States::Dieing;
+            jump(true);
+            break;
+        }
+        case (States::Dieing): {
+            add_gravity();
+            if (pos.top > (tilemap->H * 32) + 32) state = States::Died;
+            break;
+        }
+        case (States::Died): {
+            break;
+        }
+        case (States::ReviveStart): {
+            break;
+        }
+        case (States::Reviving): {
+            break;
+        }
+        case (States::Revived): {
+            break;
+        }
+    }
+    collision_other(tilemap, sounds);
+    collision_portal(tilemap, sounds);
+}
+
+void Box1::draw(sf::RenderWindow* w) {
+    actorIdle.animeAuto();
+    actorIdle.draw(pos.left, pos.top, w);
+}
+
+/**
  * Catraca is enimy
  */
 
