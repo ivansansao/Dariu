@@ -6,6 +6,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "bulletgun.hpp"
+#include "rect.hpp"
 #include "sounds.hpp"
 #include "tilemap.hpp"
 
@@ -26,7 +27,7 @@ class Actor {
     sf::Sprite actor_spr;
 
     sf::FloatRect start_pos;
-    sf::FloatRect pos;
+    rect pos;
 
     sf::FloatRect abs_pos;
     sf::Vector2f velocity;
