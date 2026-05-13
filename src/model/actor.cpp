@@ -1,5 +1,6 @@
 #include "actor.hpp"
 
+#include <algorithm>
 #include <cmath>
 
 #include "animation.hpp"
@@ -41,7 +42,42 @@ Actor::Actor() {
     reset_position();
 }
 
-point Actor::getCoord(Tilemap *tilemap, int offset_i, int offset_j) {
+ActorCollisionResult collide_pushable_actor(Actor& actor, Actor& pushable) {
+    ActorCollisionResult result;
+
+    const float actorRight = actor.pos.left + actor.pos.width;
+    const float actorBottom = actor.pos.top + actor.pos.height;
+    const float pushableRight = pushable.pos.left + pushable.pos.width;
+    const float pushableBottom = pushable.pos.top + pushable.pos.height;
+    result.overlapX = std::min(actorRight, pushableRight) - std::max(actor.pos.left, pushable.pos.left);
+    result.overlapY = std::min(actorBottom, pushableBottom) - std::max(actor.pos.top, pushable.pos.top);
+
+    const bool onPushableTop = actor.velocity.y >= 0 &&
+                               result.overlapX > 1.f &&
+                               actorBottom >= pushable.pos.top - 0.001f &&
+                               actorBottom <= pushable.pos.top + std::max(8.f, actor.velocity.y + 1.f);
+
+    if (onPushableTop) {
+        actor.pos.top = pushable.pos.top - actor.pos.height;
+        actor.velocity.y = 0;
+        actor.on_ground = true;
+        result.where = "t";
+        return result;
+    }
+
+    result.where = actor.pos.touch(pushable.pos);
+    if (result.where == "l" && result.overlapY > 4.f) {
+        actor.pos.left = pushable.pos.left - actor.pos.width;
+        pushable.velocity.x = actor.velocity.x;
+    } else if (result.where == "r" && result.overlapY > 4.f) {
+        actor.pos.left = pushable.pos.left + pushable.pos.width;
+        pushable.velocity.x = actor.velocity.x;
+    }
+
+    return result;
+}
+
+point Actor::getCoord(Tilemap* tilemap, int offset_i, int offset_j) {
     point coord;
     coord.i = (int)(pos.top + offset_i) / pos.height;
     coord.j = (int)(pos.left + offset_j) / pos.width;
@@ -74,7 +110,7 @@ void Actor::set_position(float left, float top) {
 void Actor::reset_position() {
     this->pos = sf::FloatRect(start_pos.left, start_pos.top, 32.f, 32.f);
 }
-void Actor::update(Tilemap *tilemap, Sounds *sounds) {
+void Actor::update(Tilemap* tilemap, Sounds* sounds) {
     updates++;
     if (updates > 99999) updates = 0;
 
@@ -109,7 +145,7 @@ void Actor::update(Tilemap *tilemap, Sounds *sounds) {
     }
     update_bullets(tilemap, sounds);
 }
-void Actor::updateWalk(Tilemap *tilemap, Sounds *sounds) {
+void Actor::updateWalk(Tilemap* tilemap, Sounds* sounds) {
     // ---------------- Y ----------------
 
     if (sf::Joystick::isButtonPressed(0, 2)) {
@@ -186,7 +222,7 @@ void Actor::updateWalk(Tilemap *tilemap, Sounds *sounds) {
 
     collision_portal(tilemap, sounds);
 }
-void Actor::updateFly(Tilemap *tilemap, Sounds *sounds) {
+void Actor::updateFly(Tilemap* tilemap, Sounds* sounds) {
     if (this->jetPackFuel > 0) {
         this->jetPackFuel -= this->jetPackConsume;
         if (sounds->jetpack_sound.getStatus() == sf::Sound::Status::Stopped ||
@@ -249,7 +285,7 @@ void Actor::updateFly(Tilemap *tilemap, Sounds *sounds) {
 
     collision_portal(tilemap, sounds);
 }
-void Actor::collision_y(Tilemap *tilemap, Sounds *sounds) {
+void Actor::collision_y(Tilemap* tilemap, Sounds* sounds) {
     on_ground = false;
 
     for (int i = pos.top / 32; i <= (pos.top + pos.height) / 32; i++) {
@@ -272,7 +308,7 @@ void Actor::collision_y(Tilemap *tilemap, Sounds *sounds) {
     }
 
     sf::FloatRect pos1 = sf::FloatRect(pos.left, pos.top + 1, pos.width, pos.height);
-    for (auto &plataform : tilemap->plataforms) {
+    for (auto& plataform : tilemap->plataforms) {
         if (plataform->pos.intersects(pos1)) {
             if (velocity.y > 0) {
                 pos.top = plataform->pos.top - pos.height;
@@ -286,7 +322,7 @@ void Actor::collision_y(Tilemap *tilemap, Sounds *sounds) {
         }
     }
 }
-void Actor::collision_x(Tilemap *tilemap, Sounds *sounds) {
+void Actor::collision_x(Tilemap* tilemap, Sounds* sounds) {
     for (int i = pos.top / 32; i < (pos.top + pos.height) / 32; i++) {
         for (int j = pos.left / 32; j <= (pos.left + pos.width) / 32; j++) {
             if (is_block(tilemap->getTileChar(i, j))) {
@@ -305,7 +341,7 @@ void Actor::collision_x(Tilemap *tilemap, Sounds *sounds) {
         }
     }
 
-    for (auto &plataform : tilemap->plataforms) {
+    for (auto& plataform : tilemap->plataforms) {
         if (plataform->pos.intersects(pos)) {
             if (velocity.x > 0) {
                 pos.left = plataform->pos.left - pos.width;
@@ -318,14 +354,14 @@ void Actor::collision_x(Tilemap *tilemap, Sounds *sounds) {
     }
 }
 
-void Actor::collision_other(Tilemap *tilemap, Sounds *sounds) {
+void Actor::collision_other(Tilemap* tilemap, Sounds* sounds) {
     for (int i = pos.top / 32; i < (pos.top + pos.height) / 32; i++) {
         for (int j = pos.left / 32; j < (pos.left + pos.width) / 32; j++) {
             on_collide_other(i, j, tilemap, sounds);
         }
     }
 }
-void Actor::draw(sf::RenderWindow *w) {
+void Actor::draw(sf::RenderWindow* w) {
     if (this->jetPack) {
         actorJetpack.anime(sf::IntRect(Tools::getStartSprite(actorJetpack.getFrame(), direction_x) * pos.width, 0, direction_x * pos.width, pos.height), direction_x);
         actorJetpack.draw(pos.left, pos.top, w);
@@ -358,7 +394,7 @@ void Actor::draw(sf::RenderWindow *w) {
 
     this->draw_bullets(w);
 }
-void Actor::play_sound_pop(Sounds *sounds) {
+void Actor::play_sound_pop(Sounds* sounds) {
     if (sounds->pop_sound0.getStatus() == 0) {
         sounds->pop_sound0.play();
     } else if (sounds->pop_sound1.getStatus() == 0) {
@@ -381,12 +417,12 @@ void Actor::play_sound_pop(Sounds *sounds) {
         sounds->pop_sound9.play();
     }
 }
-void Actor::on_collide(std::string where, int i, int j, Tilemap *tilemap, Sounds *sounds) {
+void Actor::on_collide(std::string where, int i, int j, Tilemap* tilemap, Sounds* sounds) {
 }
-void Actor::on_collide_other(int i, int j, Tilemap *tilemap, Sounds *sounds) {
+void Actor::on_collide_other(int i, int j, Tilemap* tilemap, Sounds* sounds) {
 }
 
-void Actor::collision_portal(Tilemap *tilemap, Sounds *sounds) {
+void Actor::collision_portal(Tilemap* tilemap, Sounds* sounds) {
     auto posMap = getCoord(tilemap, pos.height / 2, pos.width / 2);
 
     if (onPortal) {
@@ -406,7 +442,7 @@ void Actor::collision_portal(Tilemap *tilemap, Sounds *sounds) {
         }
     }
 }
-void Actor::die(Tilemap *tilemap, Sounds *sounds) {
+void Actor::die(Tilemap* tilemap, Sounds* sounds) {
 }
 
 bool Actor::is_block(char el) {
@@ -415,7 +451,7 @@ bool Actor::is_block(char el) {
 bool Actor::is_alive() {
     return state == States::Normal;
 }
-void Actor::drawJetpackTime(sf::RenderWindow *w) {
+void Actor::drawJetpackTime(sf::RenderWindow* w) {
     float xLeft = pos.left + pos.width;
     float barTotal = this->jetPackCapacity * 0.1;
     float barFuel = this->jetPackFuel * 0.1;
@@ -435,7 +471,7 @@ void Actor::drawJetpackTime(sf::RenderWindow *w) {
     rectangle.setSize(sf::Vector2f(barFuel, 3));
     w->draw(rectangle);
 }
-void Actor::shot(Sounds *sounds) {
+void Actor::shot(Sounds* sounds) {
     if (this->is_alive()) {
         auto bullet = new BulletGun();
         bullet->pos.top = this->pos.top + (this->pos.height / 4);
@@ -450,15 +486,15 @@ void Actor::shot(Sounds *sounds) {
         this->bulletguns.push_back(bullet);
     }
 }
-void Actor::draw_bullets(sf::RenderWindow *w) {
-    for (auto &bullet : this->bulletguns) {
+void Actor::draw_bullets(sf::RenderWindow* w) {
+    for (auto& bullet : this->bulletguns) {
         bullet->draw(w);
     }
 }
-void Actor::update_bullets(Tilemap *tilemap, Sounds *sounds) {
+void Actor::update_bullets(Tilemap* tilemap, Sounds* sounds) {
     int index = 0;
     bool found = false;
-    for (auto &bullet : this->bulletguns) {
+    for (auto& bullet : this->bulletguns) {
         bullet->update(tilemap, sounds);
         if (bullet->collided) {
             found = true;

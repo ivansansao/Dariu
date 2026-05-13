@@ -490,34 +490,8 @@ void Game::check_collisions_enimies() {
 
         for (auto& box1 : box1s) {
             if (box1->is_alive()) {
-                const float dariuRight = dariu.pos.left + dariu.pos.width;
-                const float dariuBottom = dariu.pos.top + dariu.pos.height;
-                const float box1Right = box1->pos.left + box1->pos.width;
-                const float box1Bottom = box1->pos.top + box1->pos.height;
-                const float overlapX = std::min(dariuRight, box1Right) - std::max(dariu.pos.left, box1->pos.left);
-                const float overlapY = std::min(dariuBottom, box1Bottom) - std::max(dariu.pos.top, box1->pos.top);
-                const bool onBoxTop = dariu.velocity.y >= 0 &&
-                                      overlapX > 1.f &&
-                                      dariuBottom >= box1->pos.top - 0.001f &&
-                                      dariuBottom <= box1->pos.top + std::max(8.f, dariu.velocity.y + 1.f);
-
-                if (onBoxTop) {
-                    dariu.pos.top = box1->pos.top - dariu.pos.height;
-                    dariu.velocity.y = 0;
-                    dariu.on_ground = true;
-                    continue;
-                }
-
-                const string where = dariu.pos.touch(box1->pos);
-                if (where != "") {
-                    if (where == "l" && overlapY > 4.f) {
-                        dariu.pos.left = box1->pos.left - dariu.pos.width;
-                        box1->velocity.x = dariu.velocity.x;
-                    } else if (where == "r" && overlapY > 4.f) {
-                        dariu.pos.left = box1->pos.left + box1->pos.width;
-                        box1->velocity.x = dariu.velocity.x;
-                    }
-                }
+                const ActorCollisionResult collision = collide_pushable_actor(dariu, *box1);
+                if (collision.where == "t") continue;
             }
         }
 

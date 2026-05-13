@@ -5,10 +5,19 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 
+#include <string>
+#include <vector>
+
 #include "bulletgun.hpp"
 #include "rect.hpp"
 #include "sounds.hpp"
 #include "tilemap.hpp"
+
+struct ActorCollisionResult {
+    std::string where = "";
+    float overlapX = 0.f;
+    float overlapY = 0.f;
+};
 
 class Actor {
    public:
@@ -101,4 +110,7 @@ class Actor {
     sf::Color setRandomColor();
     void setColor(sf::Color color);
 };
+
+ActorCollisionResult collide_pushable_actor(Actor& actor, Actor& pushable);
+
 #endif
