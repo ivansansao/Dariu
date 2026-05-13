@@ -66,10 +66,10 @@ ActorCollisionResult collide_pushable_actor(Actor& actor, Actor& pushable) {
     }
 
     result.where = actor.pos.touch(pushable.pos);
-    if (result.where == "l" && result.overlapY > 4.f) {
+    if (result.where == "l" && result.overlapY > 4.f && actor.velocity.x > 0.f) {
         actor.pos.left = pushable.pos.left - actor.pos.width;
         pushable.velocity.x = actor.velocity.x;
-    } else if (result.where == "r" && result.overlapY > 4.f) {
+    } else if (result.where == "r" && result.overlapY > 4.f && actor.velocity.x < 0.f) {
         actor.pos.left = pushable.pos.left + pushable.pos.width;
         pushable.velocity.x = actor.velocity.x;
     }
