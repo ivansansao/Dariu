@@ -40,19 +40,19 @@ std::string rect::touch(const sf::FloatRect& other) const {
     }
 
     if (std::abs(rectRight - left) <= epsilon && overlapY >= -epsilon) {
-        return "l";
-    }
-
-    if (std::abs(other.left - thisRight) <= epsilon && overlapY >= -epsilon) {
         return "r";
     }
 
+    if (std::abs(other.left - thisRight) <= epsilon && overlapY >= -epsilon) {
+        return "l";
+    }
+
     if (std::abs(rectBottom - top) <= epsilon && overlapX >= -epsilon) {
-        return "t";
+        return "b";
     }
 
     if (std::abs(other.top - thisBottom) <= epsilon && overlapX >= -epsilon) {
-        return "b";
+        return "t";
     }
 
     if (overlapX <= epsilon || overlapY <= epsilon) {
@@ -65,10 +65,10 @@ std::string rect::touch(const sf::FloatRect& other) const {
     const float rectCenterY = other.top + (other.height / 2.f);
 
     if (overlapX < overlapY) {
-        return rectCenterX < thisCenterX ? "l" : "r";
+        return thisCenterX < rectCenterX ? "l" : "r";
     }
 
-    return rectCenterY < thisCenterY ? "t" : "b";
+    return thisCenterY < rectCenterY ? "t" : "b";
 }
 
 void rect::draw(sf::RenderWindow* w) const {
@@ -76,6 +76,6 @@ void rect::draw(sf::RenderWindow* w) const {
     shape.setPosition(left, top);
     shape.setFillColor(sf::Color::Transparent);
     shape.setOutlineColor(sf::Color::Red);
-    shape.setOutlineThickness(1.f);
+    shape.setOutlineThickness(-1.f);
     w->draw(shape);
 }

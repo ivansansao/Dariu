@@ -145,12 +145,15 @@ void Actor::updateWalk(Tilemap *tilemap, Sounds *sounds) {
         }
     }
 
-    add_gravity();
+    if (!on_ground || std::abs(velocity.y) > 0.001f) {
+        add_gravity();
+    }
     collision_y(tilemap, sounds);
 
     // ---------------- X ----------------
 
     float controll_x = sf::Joystick::getAxisPosition(0, sf::Joystick::X);  // -100 to 100
+    if (std::abs(controll_x) < 15.f) controll_x = 0.f;
 
     if (controll_x != 0) {
         velocity.x = (controll_x / 100) * 5;
@@ -213,6 +216,7 @@ void Actor::updateFly(Tilemap *tilemap, Sounds *sounds) {
     // ---------------- X ----------------
 
     float controll_x = sf::Joystick::getAxisPosition(0, sf::Joystick::X);  // -100 to 100
+    if (std::abs(controll_x) < 15.f) controll_x = 0.f;
 
     if (controll_x != 0) {
         velocity.x = (controll_x / 100) * 5;
@@ -255,10 +259,11 @@ void Actor::collision_y(Tilemap *tilemap, Sounds *sounds) {
                     on_collide("ground", i, j, tilemap, sounds);
                     pos.top = i * 32 - pos.height;
                     on_ground = true;
-                }
-                if (velocity.y < 0) {
+                } else if (velocity.y < 0) {
                     on_collide("top", i, j, tilemap, sounds);
                     pos.top = i * 32 + 32;
+                } else if (std::abs((pos.top + pos.height) - (i * 32)) <= 0.001f) {
+                    on_ground = true;
                 }
                 velocity.y = 0;
                 break;

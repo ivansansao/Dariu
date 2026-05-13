@@ -370,6 +370,8 @@ void Box1::updateWalk(Tilemap* tilemap, Sounds* sounds) {
         case (States::Normal): {
             add_gravity();
             collision_y(tilemap, sounds);
+            pos.left += velocity.x;
+            collision_x(tilemap, sounds);
             velocity.x = 0;
             break;
         }
