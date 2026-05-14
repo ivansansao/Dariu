@@ -181,9 +181,9 @@ void Actor::updateWalk(Tilemap* tilemap, Sounds* sounds) {
         }
     }
 
-    if (!on_ground || std::abs(velocity.y) > 0.001f) {
-        add_gravity();
-    }
+    // if (!on_ground || std::abs(velocity.y) > 0.001f) {
+    add_gravity();
+    // }
     collision_y(tilemap, sounds);
 
     // ---------------- X ----------------
