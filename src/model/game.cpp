@@ -519,17 +519,19 @@ void Game::check_collisions_enimies() {
             }
         }
 
-        for (size_t i = 0; i < box1s.size(); i++) {
-            for (size_t j = i + 1; j < box1s.size(); j++) {
-                Box1* box1 = box1s[i];
-                Box1* otherBox1 = box1s[j];
-                if (!box1->is_alive() || !otherBox1->is_alive()) continue;
+        for (size_t pass = 0; pass < box1s.size(); pass++) {
+            for (size_t i = 0; i < box1s.size(); i++) {
+                for (size_t j = i + 1; j < box1s.size(); j++) {
+                    Box1* box1 = box1s[i];
+                    Box1* otherBox1 = box1s[j];
+                    if (!box1->is_alive() || !otherBox1->is_alive()) continue;
 
-                if (box1->velocity.x != 0.f) {
-                    collide_pushable_actor(*box1, *otherBox1);
-                }
-                if (otherBox1->velocity.x != 0.f) {
-                    collide_pushable_actor(*otherBox1, *box1);
+                    if (box1->velocity.x != 0.f || box1->velocity.y != 0.f) {
+                        collide_pushable_actor(*box1, *otherBox1);
+                    }
+                    if (otherBox1->velocity.x != 0.f || otherBox1->velocity.y != 0.f) {
+                        collide_pushable_actor(*otherBox1, *box1);
+                    }
                 }
             }
         }
