@@ -162,7 +162,7 @@ void Game::play() {
     window.clear(sf::Color(62, 49, 60, 255));
     this->tilemap.draw(&window);
     this->dariu.draw(&window, phase_current, phase_total, profile.curr_miliseconds_playtime);
-    this->dariu.pos.draw(&window);
+    // this->dariu.pos.draw(&window);
 
     for (auto& catraca : catracas) {
         catraca->draw(&window);
@@ -505,11 +505,31 @@ void Game::check_collisions_enimies() {
                         if (!this->editing) dariu.die(&tilemap, &sounds);
                     }
                 }
+                for (auto& box1 : box1s) {
+                    if (box1->is_alive()) {
+                        collide_pushable_actor(*catraca, *box1);
+                    }
+                }
                 for (auto& bullet : dariu.bulletguns) {
                     if (bullet->pos.intersects(catraca->pos)) {
                         bullet->collided = true;
                         catraca->die(&tilemap, &sounds);
                     }
+                }
+            }
+        }
+
+        for (size_t i = 0; i < box1s.size(); i++) {
+            for (size_t j = i + 1; j < box1s.size(); j++) {
+                Box1* box1 = box1s[i];
+                Box1* otherBox1 = box1s[j];
+                if (!box1->is_alive() || !otherBox1->is_alive()) continue;
+
+                if (box1->velocity.x != 0.f) {
+                    collide_pushable_actor(*box1, *otherBox1);
+                }
+                if (otherBox1->velocity.x != 0.f) {
+                    collide_pushable_actor(*otherBox1, *box1);
                 }
             }
         }
