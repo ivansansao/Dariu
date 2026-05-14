@@ -552,9 +552,11 @@ void Game::check_collisions_enimies() {
                 if (bulletc->pos.intersects(dariu.pos)) {
                     if (dariu.velocity.y > 0) {
                         dariuJump = true;
-                        bulletc->die(&tilemap, &sounds);
-                    } else {
-                        if (!this->editing) dariu.die(&tilemap, &sounds);
+                        // bulletc->die(&tilemap, &sounds);
+                        bulletc->pos.top += 4;
+                        bulletc->direction_x = dariu.direction_x;
+                        // } else {
+                        //     if (!this->editing) dariu.die(&tilemap, &sounds);
                     }
                 }
                 for (auto& bullet : dariu.bulletguns) {
