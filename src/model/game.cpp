@@ -546,6 +546,11 @@ void Game::check_collisions_enimies() {
                         if (!this->editing) dariu.die(&tilemap, &sounds);
                     }
                 }
+                for (auto& box1 : box1s) {
+                    if (box1->is_alive()) {
+                        collide_pushable_actor(*sova, *box1);
+                    }
+                }
                 for (auto& bullet : sova->bulletguns) {
                     if (bullet->pos.intersects(dariu.pos)) {
                         if (!this->editing) dariu.die(&tilemap, &sounds);
