@@ -1,6 +1,7 @@
 #include "tilemap.hpp"
 
 #include <cmath>
+#include <sstream>
 
 #include "iostream"
 

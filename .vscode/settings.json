@@ -97,5 +97,6 @@
         "syncstream": "cpp",
         "text_encoding": "cpp"
     },
-    "editor.fontSize": 14
+    "editor.fontSize": 14,
+    "cmake.ignoreCMakeListsMissing": true
 }
