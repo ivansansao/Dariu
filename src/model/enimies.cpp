@@ -355,6 +355,7 @@ void Zarik::sayProtest(Sounds* sounds) {
 
 Box1::Box1() {
     actorIdle.init(1, 0.f, "./src/asset/image/Box1/Box1-iddle.png", sf::IntRect(0, 0, 32, 32), true, 0, 0, false);
+    actorRun.init(6, 0.2f, "./src/asset/image/Box1/Box1-run.png", sf::IntRect(0, 0, 32, 32), true, 0, 0, false);
     velocity.x = 0;
     velocity.y = 0;
 }
@@ -366,10 +367,13 @@ void Box1::update(Tilemap* tilemap, Sounds* sounds) {
 }
 
 void Box1::updateWalk(Tilemap* tilemap, Sounds* sounds) {
+    isMoving = false;
+
     switch (state) {
         case (States::Normal): {
             add_gravity();
             collision_y(tilemap, sounds);
+            isMoving = velocity.x != 0.f;
             pos.left += velocity.x;
             collision_x(tilemap, sounds);
             velocity.x = 0;
@@ -403,8 +407,13 @@ void Box1::updateWalk(Tilemap* tilemap, Sounds* sounds) {
 }
 
 void Box1::draw(sf::RenderWindow* w) {
-    actorIdle.animeAuto();
-    actorIdle.draw(pos.left, pos.top, w);
+    if (isMoving) {
+        actorRun.animeAuto();
+        actorRun.draw(pos.left, pos.top, w);
+    } else {
+        actorIdle.animeAuto();
+        actorIdle.draw(pos.left, pos.top, w);
+    }
 }
 
 /**

@@ -45,6 +45,8 @@ class Box1 : public Enimy {
    public:
     Box1();
 
+    bool isMoving = false;
+
     void update(Tilemap* tilemap, Sounds* sounds);
     void updateWalk(Tilemap* tilemap, Sounds* sounds);
     void draw(sf::RenderWindow* w);
