@@ -41,6 +41,12 @@ class Sounds {
     sf::SoundBuffer crash;
     sf::Sound crash_sound;
 
+    sf::SoundBuffer carry;
+    sf::Sound carry_sound;
+
+    sf::SoundBuffer drop;
+    sf::Sound drop_sound;
+
     sf::SoundBuffer pop;
     sf::Sound pop_sound0;
     sf::Sound pop_sound1;

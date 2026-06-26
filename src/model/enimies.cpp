@@ -361,6 +361,9 @@ Box1::Box1() {
 }
 
 void Box1::update(Tilemap* tilemap, Sounds* sounds) {
+    wasTouchingOtherBox = isTouchingOtherBox;
+    isTouchingOtherBox = false;
+
     Enimy::update(tilemap, sounds);
     this->updates++;
     if (this->updates > 9999) this->updates = 0;
@@ -371,8 +374,13 @@ void Box1::updateWalk(Tilemap* tilemap, Sounds* sounds) {
 
     switch (state) {
         case (States::Normal): {
+            const bool wasOnGround = on_ground;
+            const bool wasFalling = velocity.y > 0.f;
             add_gravity();
             collision_y(tilemap, sounds);
+            if (!wasOnGround && wasFalling && on_ground && sounds->drop_sound.getStatus() == sf::Sound::Stopped) {
+                sounds->drop_sound.play();
+            }
             isMoving = velocity.x != 0.f;
             pos.left += velocity.x;
             collision_x(tilemap, sounds);
@@ -404,6 +412,13 @@ void Box1::updateWalk(Tilemap* tilemap, Sounds* sounds) {
     }
     collision_other(tilemap, sounds);
     collision_portal(tilemap, sounds);
+}
+
+void Box1::touchOtherBox(Sounds* sounds) {
+    if (!wasTouchingOtherBox && !isTouchingOtherBox && sounds->drop_sound.getStatus() == sf::Sound::Stopped) {
+        sounds->drop_sound.play();
+    }
+    isTouchingOtherBox = true;
 }
 
 void Box1::draw(sf::RenderWindow* w) {

@@ -42,6 +42,13 @@ Sounds::Sounds() {
     crash.loadFromFile("./src/asset/sound/brickbreak.ogg");
     crash_sound.setBuffer(crash);
 
+    carry.loadFromFile("./src/asset/sound/carry.ogg");
+    carry_sound.setBuffer(carry);
+    carry_sound.setLoop(true);
+
+    drop.loadFromFile("./src/asset/sound/drop.ogg");
+    drop_sound.setBuffer(drop);
+
     pop.loadFromFile("./src/asset/sound/pop.ogg");
     pop_sound0.setBuffer(pop);
     pop_sound1.setBuffer(pop);
@@ -132,6 +139,8 @@ void Sounds::applyVolume() {
     dooropen_sound.setVolume(volume_effect);
     fired_sound.setVolume(volume_effect);
     crash_sound.setVolume(volume_effect);
+    carry_sound.setVolume(volume_effect);
+    drop_sound.setVolume(volume_effect);
     pop_sound0.setVolume(volume_effect);
     pop_sound1.setVolume(volume_effect);
     pop_sound2.setVolume(volume_effect);

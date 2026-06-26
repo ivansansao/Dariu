@@ -46,10 +46,13 @@ class Box1 : public Enimy {
     Box1();
 
     bool isMoving = false;
+    bool isTouchingOtherBox = false;
+    bool wasTouchingOtherBox = false;
 
     void update(Tilemap* tilemap, Sounds* sounds);
     void updateWalk(Tilemap* tilemap, Sounds* sounds);
     void draw(sf::RenderWindow* w);
+    void touchOtherBox(Sounds* sounds);
 };
 class Catraca : public Enimy {
    public:

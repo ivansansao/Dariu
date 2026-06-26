@@ -106,6 +106,18 @@ void Game::play() {
     for (auto& box1 : box1s) {
         box1->update(&tilemap, &sounds);
     }
+    bool isMovingBox1 = false;
+    for (auto& box1 : box1s) {
+        if (box1->isMoving) {
+            isMovingBox1 = true;
+            break;
+        }
+    }
+    if (isMovingBox1 && sounds.carry_sound.getStatus() == sf::Sound::Stopped) {
+        sounds.carry_sound.play();
+    } else if (!isMovingBox1 && sounds.carry_sound.getStatus() != sf::Sound::Stopped) {
+        sounds.carry_sound.stop();
+    }
     for (auto& sova : sovas) {
         sova->update(&tilemap, &sounds);
     }
@@ -579,10 +591,18 @@ void Game::check_collisions_enimies() {
                 if (!box1->is_alive() || !otherBox1->is_alive()) continue;
 
                 if (box1->velocity.x != 0.f || box1->velocity.y != 0.f) {
-                    collide_pushable_actor(*box1, *otherBox1);
+                    const ActorCollisionResult collision = collide_pushable_actor(*box1, *otherBox1);
+                    if (!collision.where.empty()) {
+                        box1->touchOtherBox(&sounds);
+                        otherBox1->touchOtherBox(&sounds);
+                    }
                 }
                 if (otherBox1->velocity.x != 0.f || otherBox1->velocity.y != 0.f) {
-                    collide_pushable_actor(*otherBox1, *box1);
+                    const ActorCollisionResult collision = collide_pushable_actor(*otherBox1, *box1);
+                    if (!collision.where.empty()) {
+                        box1->touchOtherBox(&sounds);
+                        otherBox1->touchOtherBox(&sounds);
+                    }
                 }
             }
         }
