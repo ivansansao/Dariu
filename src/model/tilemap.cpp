@@ -1,23 +1,39 @@
 #include "tilemap.hpp"
 
 #include <cmath>
+#include <filesystem>
 #include <sstream>
 
 #include "iostream"
 
-Tilemap::Tilemap() {
-    gun.init(4, 0.2f, "./src/asset/image/Gun.png", sf::IntRect(0, 0, 32, 32), false, 0, 0, false);
-    munition.init(3, 0.2f, "./src/asset/image/Munition.png", sf::IntRect(0, 0, 32, 32), true, 0, 0, false);
-    jetpack.init(4, 0.5f, "./src/asset/image/Jetpack.png", sf::IntRect(0, 0, 32, 32), true, 0, 0, false);
-    liquor.init(4, 0.1f, "./src/asset/image/Liquor/Liquor.png", sf::IntRect(0, 0, 32, 32), true, 0, 0, false);
-    banana.init(17, 0.5f, "./src/asset/image/Items/Fruits/Bananas.png", sf::IntRect(0, 0, 32, 32), true, 0, 0, false);
-    portalP.init(0, 0.f, "./src/asset/image/PortalP.png", sf::IntRect(0, 0, 32, 32), true, 0, 0, false);
-    portalQ.init(0, 0.f, "./src/asset/image/PortalQ.png", sf::IntRect(0, 0, 32, 32), true, 0, 0, false);
-    trophy.init(8, 0.01f, "./src/asset/image/SpinFlower.png", sf::IntRect(0, 0, 32, 32), true, 0, 0, false);
-    gate.init(10, 0.2f, "./src/asset/image/gate.png", sf::IntRect(0, 0, 32, 32), false, 0, 0, true);
-    exitDoorClosed.init(8, 0.1f, "./src/asset/image/door.png", sf::IntRect(0, 0, 32, 32), false, 0, 0, true);
-    exitDoorOpened.init(8, 0.1f, "./src/asset/image/door.png", sf::IntRect(0, 0, 32, 32), false, 0, 0, true);
-    gatekey.init(0, 0.f, "./src/asset/image/gatekey.png", sf::IntRect(0, 0, 32, 32), true, 0, 0, false);
+Tilemap::Tilemap()
+    : ground(terrain_tex),
+      ground_ora(terrain_tex),
+      ground_door_opened(terrain_tex),
+      ground_door_closed(terrain_tex),
+      coin(terrain_tex),
+      background(background_tex),
+      ground_left(terrain2_tex),
+      ground_mid(terrain2_tex),
+      ground_mid_false(terrain_mid_false_tex),
+      ground_right(terrain2_tex),
+      ground_left2(terrain2_tex),
+      ground_mid2(terrain2_tex),
+      ground_right2(terrain2_tex),
+      start(start_tex),
+      fire(fire_tex) {
+    gun.init(4, 0.2f, "./src/asset/image/Gun.png", sf::IntRect({0, 0}, {32, 32}), false, 0, 0, false);
+    munition.init(3, 0.2f, "./src/asset/image/Munition.png", sf::IntRect({0, 0}, {32, 32}), true, 0, 0, false);
+    jetpack.init(4, 0.5f, "./src/asset/image/Jetpack.png", sf::IntRect({0, 0}, {32, 32}), true, 0, 0, false);
+    liquor.init(4, 0.1f, "./src/asset/image/Liquor/Liquor.png", sf::IntRect({0, 0}, {32, 32}), true, 0, 0, false);
+    banana.init(17, 0.5f, "./src/asset/image/Items/Fruits/Bananas.png", sf::IntRect({0, 0}, {32, 32}), true, 0, 0, false);
+    portalP.init(0, 0.f, "./src/asset/image/PortalP.png", sf::IntRect({0, 0}, {32, 32}), true, 0, 0, false);
+    portalQ.init(0, 0.f, "./src/asset/image/PortalQ.png", sf::IntRect({0, 0}, {32, 32}), true, 0, 0, false);
+    trophy.init(8, 0.01f, "./src/asset/image/SpinFlower.png", sf::IntRect({0, 0}, {32, 32}), true, 0, 0, false);
+    gate.init(10, 0.2f, "./src/asset/image/gate.png", sf::IntRect({0, 0}, {32, 32}), false, 0, 0, true);
+    exitDoorClosed.init(8, 0.1f, "./src/asset/image/door.png", sf::IntRect({0, 0}, {32, 32}), false, 0, 0, true);
+    exitDoorOpened.init(8, 0.1f, "./src/asset/image/door.png", sf::IntRect({0, 0}, {32, 32}), false, 0, 0, true);
+    gatekey.init(0, 0.f, "./src/asset/image/gatekey.png", sf::IntRect({0, 0}, {32, 32}), true, 0, 0, false);
 }
 
 std::string Tilemap::map[H] = {};
@@ -47,64 +63,66 @@ void Tilemap::load_texture_from_file(int phase) {
 
     background_loaded = false;
 
-    terrain_tex.loadFromFile(root + "Terrain (16x16).png");
-    terrain2_tex.loadFromFile(root + "Terrain (32x32).png");
-    terrain_mid_false_tex.loadFromFile(root + "falseblock.png");
+    (void)terrain_tex.loadFromFile(root + "Terrain (16x16).png");
+    (void)terrain2_tex.loadFromFile(root + "Terrain (32x32).png");
+    (void)terrain_mid_false_tex.loadFromFile(root + "falseblock.png");
 
     const std::string background_path = root + "background.png";
-    background_loaded = background_tex.loadFromFile(background_path);
-    if (background_loaded) {
-        background.setTexture(background_tex);
-        background.setPosition(0.f, 0.f);
+    if (std::filesystem::exists(background_path)) {
+        background_loaded = background_tex.loadFromFile(background_path);
+        if (background_loaded) {
+            background.setTexture(background_tex);
+            background.setPosition({0.f, 0.f});
+        }
     }
 
     ground.setTexture(terrain_tex);
-    ground.setTextureRect(sf::IntRect(96, 0, 32, 32));
+    ground.setTextureRect(sf::IntRect({96, 0}, {32, 32}));
 
     ground_ora.setTexture(terrain_tex);
-    ground_ora.setTextureRect(sf::IntRect(272, 64, 32, 32));
+    ground_ora.setTextureRect(sf::IntRect({272, 64}, {32, 32}));
 
     ground_left.setTexture(terrain2_tex);
-    ground_left.setTextureRect(sf::IntRect(0, 0, 32, 32));
+    ground_left.setTextureRect(sf::IntRect({0, 0}, {32, 32}));
 
     ground_mid.setTexture(terrain2_tex);
-    ground_mid.setTextureRect(sf::IntRect(32, 0, 32, 32));
+    ground_mid.setTextureRect(sf::IntRect({32, 0}, {32, 32}));
 
     ground_mid_false.setTexture(terrain_mid_false_tex);
-    ground_mid_false.setTextureRect(sf::IntRect(0, 0, 32, 32));
+    ground_mid_false.setTextureRect(sf::IntRect({0, 0}, {32, 32}));
 
     ground_right.setTexture(terrain2_tex);
-    ground_right.setTextureRect(sf::IntRect(64, 0, 32, 32));
+    ground_right.setTextureRect(sf::IntRect({64, 0}, {32, 32}));
 
     ground_left2.setTexture(terrain2_tex);
-    ground_left2.setTextureRect(sf::IntRect(0, 32, 32, 32));
+    ground_left2.setTextureRect(sf::IntRect({0, 32}, {32, 32}));
     ground_mid2.setTexture(terrain2_tex);
-    ground_mid2.setTextureRect(sf::IntRect(32, 32, 32, 32));
+    ground_mid2.setTextureRect(sf::IntRect({32, 32}, {32, 32}));
     ground_right2.setTexture(terrain2_tex);
-    ground_right2.setTextureRect(sf::IntRect(64, 32, 32, 32));
+    ground_right2.setTextureRect(sf::IntRect({64, 32}, {32, 32}));
 
-    start_tex.loadFromFile("./src/asset/image/Start.png");
+    (void)start_tex.loadFromFile("./src/asset/image/Start.png");
     start.setTexture(start_tex);
-    start.setTextureRect(sf::IntRect(0, 0, 32, 32));
+    start.setTextureRect(sf::IntRect({0, 0}, {32, 32}));
 
-    fire_tex.loadFromFile("./src/asset/image/fire1.png");
+    (void)fire_tex.loadFromFile("./src/asset/image/fire1.png");
     fire.setTexture(fire_tex);
-    fire.setTextureRect(sf::IntRect(0, 0, 32, 32));
+    fire.setTextureRect(sf::IntRect({0, 0}, {32, 32}));
 
-    water.init(5, 0.1f, root + "Water.png", sf::IntRect(0, 0, 32, 32), true, 0, 0, false);
+    water.init(5, 0.1f, root + "Water.png", sf::IntRect({0, 0}, {32, 32}), true, 0, 0, false);
 
-    treeLog.init(1, 0.1f, "./src/asset/image/Treelog.png", sf::IntRect(0, 0, 32, 32), true, 0, 0, false);
-    treeLogSolid.init(1, 0.1f, "./src/asset/image/Treelogsolid.png", sf::IntRect(0, 0, 32, 32), true, 0, 0, false);
-    leafc.init(1, 0.1f, "./src/asset/image/LeafTree.png", sf::IntRect(32, 32, 32, 32), true, 0, 0, false);
-    leaf1.init(1, 0.1f, "./src/asset/image/LeafTree.png", sf::IntRect(0, 64, 32, 32), true, 0, 0, false);
-    leaf2.init(1, 0.1f, "./src/asset/image/LeafTree.png", sf::IntRect(0, 32, 32, 32), true, 0, 0, false);
-    leaf3.init(1, 0.1f, "./src/asset/image/LeafTree.png", sf::IntRect(0, 0, 32, 32), true, 0, 0, false);
-    leaf4.init(1, 0.1f, "./src/asset/image/LeafTree.png", sf::IntRect(32, 0, 32, 32), true, 0, 0, false);
-    leaf5.init(1, 0.1f, "./src/asset/image/LeafTree.png", sf::IntRect(64, 0, 32, 32), true, 0, 0, false);
-    leaf6.init(1, 0.1f, "./src/asset/image/LeafTree.png", sf::IntRect(64, 32, 32, 32), true, 0, 0, false);
-    leaf7.init(1, 0.1f, "./src/asset/image/LeafTree.png", sf::IntRect(64, 64, 32, 32), true, 0, 0, false);
+    treeLog.init(1, 0.1f, "./src/asset/image/Treelog.png", sf::IntRect({0, 0}, {32, 32}), true, 0, 0, false);
+    treeLogSolid.init(1, 0.1f, "./src/asset/image/Treelogsolid.png", sf::IntRect({0, 0}, {32, 32}), true, 0, 0, false);
+    leafc.init(1, 0.1f, "./src/asset/image/LeafTree.png", sf::IntRect({32, 32}, {32, 32}), true, 0, 0, false);
+    leaf1.init(1, 0.1f, "./src/asset/image/LeafTree.png", sf::IntRect({0, 64}, {32, 32}), true, 0, 0, false);
+    leaf2.init(1, 0.1f, "./src/asset/image/LeafTree.png", sf::IntRect({0, 32}, {32, 32}), true, 0, 0, false);
+    leaf3.init(1, 0.1f, "./src/asset/image/LeafTree.png", sf::IntRect({0, 0}, {32, 32}), true, 0, 0, false);
+    leaf4.init(1, 0.1f, "./src/asset/image/LeafTree.png", sf::IntRect({32, 0}, {32, 32}), true, 0, 0, false);
+    leaf5.init(1, 0.1f, "./src/asset/image/LeafTree.png", sf::IntRect({64, 0}, {32, 32}), true, 0, 0, false);
+    leaf6.init(1, 0.1f, "./src/asset/image/LeafTree.png", sf::IntRect({64, 32}, {32, 32}), true, 0, 0, false);
+    leaf7.init(1, 0.1f, "./src/asset/image/LeafTree.png", sf::IntRect({64, 64}, {32, 32}), true, 0, 0, false);
 
-    woodBridge.init(1, 0.1f, "./src/asset/image/Woodbridge.png", sf::IntRect(0, 0, 32, 32), true, 0, 0, false);
+    woodBridge.init(1, 0.1f, "./src/asset/image/Woodbridge.png", sf::IntRect({0, 0}, {32, 32}), true, 0, 0, false);
 }
 
 bool Tilemap::isPortal(int i, int j) {
@@ -157,7 +175,7 @@ void Tilemap::update() {
 
     std::string e;
     for (auto& plataform : plataforms) {
-        e = map[(int)plataform->pos.top / 32][(int)plataform->pos.left / 32];
+        e = map[(int)plataform->pos.position.y / 32][(int)plataform->pos.position.x / 32];
         if (e == "<") {
             plataform->velocity.x = -plataform->vel_step;
             plataform->velocity.y = 0.0f;
@@ -208,7 +226,7 @@ void Tilemap::draw(sf::RenderWindow* w) {
             if (tileChar == ' ') {
                 continue;
             } else if (tileChar == '@') {
-                start.setPosition(j * 32, i * 32);
+                start.setPosition({j * 32.f, i * 32.f});
                 w->draw(start);
             } else if (tileChar == '%') {
                 liquor.draw(j * 32, i * 32, w);
@@ -223,32 +241,32 @@ void Tilemap::draw(sf::RenderWindow* w) {
             } else if (tileChar == 'T') {
                 trophy.draw(j * 32, i * 32, w);
             } else if (tileChar == 'A') {
-                ground_left.setPosition(j * 32, i * 32);
+                ground_left.setPosition({j * 32.f, i * 32.f});
                 w->draw(ground_left);
             } else if (tileChar == 'B') {
-                ground_mid.setPosition(j * 32, i * 32);
+                ground_mid.setPosition({j * 32.f, i * 32.f});
                 w->draw(ground_mid);
             } else if (tileChar == '-') {
-                ground_mid_false.setPosition(j * 32, i * 32);
+                ground_mid_false.setPosition({j * 32.f, i * 32.f});
                 w->draw(ground_mid_false);
             } else if (tileChar == 'C') {
-                ground_right.setPosition(j * 32, i * 32);
+                ground_right.setPosition({j * 32.f, i * 32.f});
                 w->draw(ground_right);
             } else if (tileChar == 'D') {
-                ground_left2.setPosition(j * 32, i * 32);
+                ground_left2.setPosition({j * 32.f, i * 32.f});
                 w->draw(ground_left2);
             } else if (tileChar == 'E') {
-                ground_mid2.setPosition(j * 32, i * 32);
+                ground_mid2.setPosition({j * 32.f, i * 32.f});
                 w->draw(ground_mid2);
             } else if (tileChar == 'F') {
-                ground_right2.setPosition(j * 32, i * 32);
+                ground_right2.setPosition({j * 32.f, i * 32.f});
                 w->draw(ground_right2);
             } else if (tileChar == 'b') {
-                ground_ora.setPosition(j * 32, i * 32);
+                ground_ora.setPosition({j * 32.f, i * 32.f});
                 w->draw(ground_ora);
             } else if (tileChar == 'R') {
-                fire.setTextureRect(sf::IntRect(((int)i_fire % q_fire) * 32, 0, 32, 32));
-                fire.setPosition(j * 32, i * 32);
+                fire.setTextureRect(sf::IntRect({((int)i_fire % q_fire) * 32, 0}, {32, 32}));
+                fire.setPosition({j * 32.f, i * 32.f});
                 w->draw(fire);
             } else if (tileChar == 'P') {
                 portalP.draw(j * 32, i * 32, w);
@@ -293,13 +311,13 @@ void Tilemap::draw(sf::RenderWindow* w) {
             }
         }
     }
-    gun.anime(sf::IntRect(gun.getFrame() * 32, 0, 32, 32), 1);
-    munition.anime(sf::IntRect(munition.getFrame() * 32, 0, 32, 32), 1);
-    jetpack.anime(sf::IntRect(jetpack.getFrame() * 32, 0, 32, 32), 1);
-    liquor.anime(sf::IntRect(liquor.getFrame() * 32, 0, 32, 32), 1);
-    banana.anime(sf::IntRect(banana.getFrame() * 32, 0, 32, 32), 1);
-    water.anime(sf::IntRect(water.getFrame() * 32, 0, 32, 32), 1);
-    trophy.anime(sf::IntRect(trophy.getFrame() * 32, 0, 32, 32), 1);
+    gun.anime(sf::IntRect({gun.getFrame() * 32, 0}, {32, 32}), 1);
+    munition.anime(sf::IntRect({munition.getFrame() * 32, 0}, {32, 32}), 1);
+    jetpack.anime(sf::IntRect({jetpack.getFrame() * 32, 0}, {32, 32}), 1);
+    liquor.anime(sf::IntRect({liquor.getFrame() * 32, 0}, {32, 32}), 1);
+    banana.anime(sf::IntRect({banana.getFrame() * 32, 0}, {32, 32}), 1);
+    water.anime(sf::IntRect({water.getFrame() * 32, 0}, {32, 32}), 1);
+    trophy.anime(sf::IntRect({trophy.getFrame() * 32, 0}, {32, 32}), 1);
 
     i_fire += 0.5f;
 
@@ -314,8 +332,8 @@ void Tilemap::load_plataforms() {
         for (int j{}; j < this->W; j++) {
             if (this->getTileChar(i, j) == 'M') {
                 Plataform* plataform = new Plataform();
-                plataform->pos.top = i * 32;
-                plataform->pos.left = j * 32;
+                plataform->pos.position.y = i * 32;
+                plataform->pos.position.x = j * 32;
                 plataforms.push_back(plataform);
             }
         }
@@ -343,46 +361,47 @@ point Tilemap::getTileFromPixel(int x, int y, int height, int width) {
     return coord;
 }
 void Tilemap::edit(sf::RenderWindow* w, sf::Event event, sf::View view) {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
         this->edit_current_char = 'A';
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::B))
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::B))
         this->edit_current_char = 'B';
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::N))
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::N))
         this->edit_current_char = 'b';
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::C))
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::C))
         this->edit_current_char = 'C';
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
         this->edit_current_char = 'D';
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::E))
         this->edit_current_char = 'E';
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::F))
         this->edit_current_char = 'F';
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::H))
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::H))
         this->edit_current_char = 'H';
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::P))
         this->edit_current_char = 'P';
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q))
         this->edit_current_char = 'Q';
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::R))
         this->edit_current_char = 'R';
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::J))
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::J))
         this->edit_current_char = 'J';
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::T))
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::T))
         this->edit_current_char = 'T';
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Y))
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Y))
         this->edit_current_char = 'Y';
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::X))
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::X))
         this->edit_current_char = 'X';
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Z))
         this->edit_current_char = 'Z';
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Period))
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Period))
         this->edit_current_char = '.';
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
         this->edit_current_char = ' ';
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::F2))
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::F2))
         this->edit_save();
 
-    if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
+    const auto* mouseButtonPressed = event.getIf<sf::Event::MouseButtonPressed>();
+    if (mouseButtonPressed && mouseButtonPressed->button == sf::Mouse::Button::Left) {
         sf::Vector2i mousePos = sf::Mouse::getPosition(*w);
         sf::Vector2f worldPos = w->mapPixelToCoords(mousePos);
         point p = this->getTileFromPixel(worldPos.x, worldPos.y, 32, 32);

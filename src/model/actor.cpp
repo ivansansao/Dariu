@@ -10,18 +10,18 @@
 
 using namespace std;
 
-Actor::Actor() {
-    actorJetpack.init(3, 0.5f, "./src/asset/image/Dariu-jetpack.png", sf::IntRect(0, 0, 32, 32), true, 0, 0, false);
-    actorRun.init(8, 0.5f, "./src/asset/image/Dariu-run.png", sf::IntRect(0, 0, 32, 32), true, 0, 0, false);
-    actorIdle.init(1, 0.f, "./src/asset/image/Dariu-idle.png", sf::IntRect(0, 0, 32, 32), true, 0, 0, false);
-    actorJump.init(1, 0.f, "./src/asset/image/Dariu-jump.png", sf::IntRect(0, 0, 32, 32), true, 0, 0, false);
+Actor::Actor() : actor_spr(actor_tex_fall) {
+    actorJetpack.init(3, 0.5f, "./src/asset/image/Dariu-jetpack.png", sf::IntRect({0, 0}, {32, 32}), true, 0, 0, false);
+    actorRun.init(8, 0.5f, "./src/asset/image/Dariu-run.png", sf::IntRect({0, 0}, {32, 32}), true, 0, 0, false);
+    actorIdle.init(1, 0.f, "./src/asset/image/Dariu-idle.png", sf::IntRect({0, 0}, {32, 32}), true, 0, 0, false);
+    actorJump.init(1, 0.f, "./src/asset/image/Dariu-jump.png", sf::IntRect({0, 0}, {32, 32}), true, 0, 0, false);
 
-    actor_tex.loadFromFile("./src/asset/image/Dariu-run.png");
-    actor_tex_idle.loadFromFile("./src/asset/image/Dariu-idle.png");
-    actor_tex_jump.loadFromFile("./src/asset/image/Dariu-jump.png");
-    actor_tex_fall.loadFromFile("./src/asset/image/Dariu-run.png");
+    (void)actor_tex.loadFromFile("./src/asset/image/Dariu-run.png");
+    (void)actor_tex_idle.loadFromFile("./src/asset/image/Dariu-idle.png");
+    (void)actor_tex_jump.loadFromFile("./src/asset/image/Dariu-jump.png");
+    (void)actor_tex_fall.loadFromFile("./src/asset/image/Dariu-run.png");
     actor_spr.setTexture(actor_tex_fall);
-    start_pos = sf::FloatRect(672.f, 32.f, 32.f, 32.f);
+    start_pos = sf::FloatRect({672.f, 32.f}, {32.f, 32.f});
     abs_pos = pos;
     velocity = sf::Vector2f(0.f, 0.f);
     direction_x = 1;
@@ -45,20 +45,20 @@ Actor::Actor() {
 ActorCollisionResult collide_pushable_actor(Actor& actor, Actor& pushable) {
     ActorCollisionResult result;
 
-    const float actorRight = actor.pos.left + actor.pos.width;
-    const float actorBottom = actor.pos.top + actor.pos.height;
-    const float pushableRight = pushable.pos.left + pushable.pos.width;
-    const float pushableBottom = pushable.pos.top + pushable.pos.height;
-    result.overlapX = std::min(actorRight, pushableRight) - std::max(actor.pos.left, pushable.pos.left);
-    result.overlapY = std::min(actorBottom, pushableBottom) - std::max(actor.pos.top, pushable.pos.top);
+    const float actorRight = actor.pos.position.x + actor.pos.size.x;
+    const float actorBottom = actor.pos.position.y + actor.pos.size.y;
+    const float pushableRight = pushable.pos.position.x + pushable.pos.size.x;
+    const float pushableBottom = pushable.pos.position.y + pushable.pos.size.y;
+    result.overlapX = std::min(actorRight, pushableRight) - std::max(actor.pos.position.x, pushable.pos.position.x);
+    result.overlapY = std::min(actorBottom, pushableBottom) - std::max(actor.pos.position.y, pushable.pos.position.y);
 
     const bool onPushableTop = actor.velocity.y >= 0 &&
                                result.overlapX > 1.f &&
-                               actorBottom >= pushable.pos.top - 0.001f &&
-                               actorBottom <= pushable.pos.top + std::max(8.f, actor.velocity.y + 1.f);
+                               actorBottom >= pushable.pos.position.y - 0.001f &&
+                               actorBottom <= pushable.pos.position.y + std::max(8.f, actor.velocity.y + 1.f);
 
     if (onPushableTop) {
-        actor.pos.top = pushable.pos.top - actor.pos.height;
+        actor.pos.position.y = pushable.pos.position.y - actor.pos.size.y;
         actor.velocity.y = 0;
         actor.on_ground = true;
         result.where = "t";
@@ -67,10 +67,10 @@ ActorCollisionResult collide_pushable_actor(Actor& actor, Actor& pushable) {
 
     result.where = actor.pos.touch(pushable.pos);
     if (result.where == "l" && result.overlapY > 4.f && actor.velocity.x > 0.f) {
-        actor.pos.left = pushable.pos.left - actor.pos.width;
+        actor.pos.position.x = pushable.pos.position.x - actor.pos.size.x;
         pushable.velocity.x = actor.velocity.x;
     } else if (result.where == "r" && result.overlapY > 4.f && actor.velocity.x < 0.f) {
-        actor.pos.left = pushable.pos.left + pushable.pos.width;
+        actor.pos.position.x = pushable.pos.position.x + pushable.pos.size.x;
         pushable.velocity.x = actor.velocity.x;
     }
 
@@ -79,8 +79,8 @@ ActorCollisionResult collide_pushable_actor(Actor& actor, Actor& pushable) {
 
 point Actor::getCoord(Tilemap* tilemap, int offset_i, int offset_j) {
     point coord;
-    coord.i = (int)(pos.top + offset_i) / pos.height;
-    coord.j = (int)(pos.left + offset_j) / pos.width;
+    coord.i = (int)(pos.position.y + offset_i) / pos.size.y;
+    coord.j = (int)(pos.position.x + offset_j) / pos.size.x;
 
     if (coord.i < 0) coord.i = 0;
     if (coord.i > tilemap->H - 1) coord.i = tilemap->H - 1;
@@ -99,16 +99,16 @@ void Actor::jump(bool little) {
 }
 void Actor::add_gravity() {
     velocity.y += 1;
-    pos.top += velocity.y;
+    pos.position.y += velocity.y;
 }
 void Actor::set_position(float left, float top) {
-    pos.left = left;
-    pos.top = top;
-    start_pos.left = left;
-    start_pos.top = top;
+    pos.position.x = left;
+    pos.position.y = top;
+    start_pos.position.x = left;
+    start_pos.position.y = top;
 }
 void Actor::reset_position() {
-    this->pos = sf::FloatRect(start_pos.left, start_pos.top, 32.f, 32.f);
+    this->pos = sf::FloatRect({start_pos.position.x, start_pos.position.y}, {32.f, 32.f});
 }
 void Actor::update(Tilemap* tilemap, Sounds* sounds) {
     updates++;
@@ -117,12 +117,12 @@ void Actor::update(Tilemap* tilemap, Sounds* sounds) {
     if (this->jetPack) {
         this->updateFly(tilemap, sounds);
     } else {
-        if (sounds->jetpack_sound.Playing == sf::Sound::Status::Playing) {
+        if (sounds->jetpack_sound.getStatus() == sf::SoundSource::Status::Playing) {
             sounds->jetpack_sound.pause();
         }
         this->updateWalk(tilemap, sounds);
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Joystick::isButtonPressed(0, sf::Joystick::X)) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space) || sf::Joystick::isButtonPressed(0, 1)) {
         if (space_released) {
             space_released = false;
             if (this->jetPack) {
@@ -132,12 +132,12 @@ void Actor::update(Tilemap* tilemap, Sounds* sounds) {
             }
         }
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LControl)) {
         if (lcontroll_released) {
             shot(sounds);
             lcontroll_released = false;
         }
-    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad0)) {
+    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Numpad0)) {
         if (zerokey_released) {
             shot(sounds);
             zerokey_released = false;
@@ -159,20 +159,20 @@ void Actor::updateWalk(Tilemap* tilemap, Sounds* sounds) {
      *      [Z3]
      */
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Joystick::isButtonPressed(0, sf::Joystick::Z)) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up) || sf::Joystick::isButtonPressed(0, 3)) {
         if (up_released) {
             if (on_ground) {
-                if (sounds->jump_sound.getStatus() == 0) {
+                if (sounds->jump_sound.getStatus() == sf::SoundSource::Status::Stopped) {
                     sounds->jump_sound.play();
                 }
                 jump();
                 up_released = false;
             }
         }
-    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) {
+    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Z)) {
         if (z_released) {
             if (on_ground) {
-                if (sounds->jump_sound.getStatus() == 0) {
+                if (sounds->jump_sound.getStatus() == sf::SoundSource::Status::Stopped) {
                     sounds->jump_sound.play();
                 }
                 jump();
@@ -188,7 +188,7 @@ void Actor::updateWalk(Tilemap* tilemap, Sounds* sounds) {
 
     // ---------------- X ----------------
 
-    float controll_x = sf::Joystick::getAxisPosition(0, sf::Joystick::X);  // -100 to 100
+    float controll_x = sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::X);  // -100 to 100
     if (std::abs(controll_x) < 15.f) controll_x = 0.f;
 
     if (controll_x != 0) {
@@ -199,10 +199,10 @@ void Actor::updateWalk(Tilemap* tilemap, Sounds* sounds) {
             direction_x = -1;
         }
     } else {
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right)) {
             velocity.x += 1;
             direction_x = 1;
-        } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+        } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left)) {
             velocity.x -= 1;
             direction_x = -1;
         } else {
@@ -212,7 +212,7 @@ void Actor::updateWalk(Tilemap* tilemap, Sounds* sounds) {
     if (velocity.x > 5) velocity.x = 5;
     if (velocity.x < -5) velocity.x = -5;
 
-    pos.left += velocity.x;
+    pos.position.x += velocity.x;
 
     collision_x(tilemap, sounds);
 
@@ -225,8 +225,8 @@ void Actor::updateWalk(Tilemap* tilemap, Sounds* sounds) {
 void Actor::updateFly(Tilemap* tilemap, Sounds* sounds) {
     if (this->jetPackFuel > 0) {
         this->jetPackFuel -= this->jetPackConsume;
-        if (sounds->jetpack_sound.getStatus() == sf::Sound::Status::Stopped ||
-            sounds->jetpack_sound.getStatus() == sf::Sound::Status::Paused) {
+        if (sounds->jetpack_sound.getStatus() == sf::SoundSource::Status::Stopped ||
+            sounds->jetpack_sound.getStatus() == sf::SoundSource::Status::Paused) {
             sounds->jetpack_sound.play();
         }
     }
@@ -236,22 +236,22 @@ void Actor::updateFly(Tilemap* tilemap, Sounds* sounds) {
     }
 
     // ---------------- Y ----------------
-    float controll_y = sf::Joystick::getAxisPosition(0, sf::Joystick::Y);  // -100 to 100
+    float controll_y = sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Y);  // -100 to 100
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || controll_y < 0) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up) || controll_y < 0) {
         velocity.y = -5;
-    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || controll_y > 0) {
+    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down) || controll_y > 0) {
         velocity.y = 5;
     } else {
         velocity.y = 0;
     }
 
-    pos.top += velocity.y;
+    pos.position.y += velocity.y;
     collision_y(tilemap, sounds);
 
     // ---------------- X ----------------
 
-    float controll_x = sf::Joystick::getAxisPosition(0, sf::Joystick::X);  // -100 to 100
+    float controll_x = sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::X);  // -100 to 100
     if (std::abs(controll_x) < 15.f) controll_x = 0.f;
 
     if (controll_x != 0) {
@@ -262,10 +262,10 @@ void Actor::updateFly(Tilemap* tilemap, Sounds* sounds) {
             direction_x = -1;
         }
     } else {
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right)) {
             velocity.x += 1;
             direction_x = 1;
-        } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+        } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left)) {
             velocity.x -= 1;
             direction_x = -1;
         } else {
@@ -275,7 +275,7 @@ void Actor::updateFly(Tilemap* tilemap, Sounds* sounds) {
     if (velocity.x > 5) velocity.x = 5;
     if (velocity.x < -5) velocity.x = -5;
 
-    pos.left += velocity.x;
+    pos.position.x += velocity.x;
 
     collision_x(tilemap, sounds);
 
@@ -288,17 +288,17 @@ void Actor::updateFly(Tilemap* tilemap, Sounds* sounds) {
 void Actor::collision_y(Tilemap* tilemap, Sounds* sounds) {
     on_ground = false;
 
-    for (int i = pos.top / 32; i <= (pos.top + pos.height) / 32; i++) {
-        for (int j = pos.left / 32; j < (pos.left + pos.width) / 32; j++) {
+    for (int i = pos.position.y / 32; i <= (pos.position.y + pos.size.y) / 32; i++) {
+        for (int j = pos.position.x / 32; j < (pos.position.x + pos.size.x) / 32; j++) {
             if (is_block(tilemap->getTileChar(i, j))) {
                 if (velocity.y > 0) {
                     on_collide("ground", i, j, tilemap, sounds);
-                    pos.top = i * 32 - pos.height;
+                    pos.position.y = i * 32 - pos.size.y;
                     on_ground = true;
                 } else if (velocity.y < 0) {
                     on_collide("top", i, j, tilemap, sounds);
-                    pos.top = i * 32 + 32;
-                } else if (std::abs((pos.top + pos.height) - (i * 32)) <= 0.001f) {
+                    pos.position.y = i * 32 + 32;
+                } else if (std::abs((pos.position.y + pos.size.y) - (i * 32)) <= 0.001f) {
                     on_ground = true;
                 }
                 velocity.y = 0;
@@ -307,15 +307,15 @@ void Actor::collision_y(Tilemap* tilemap, Sounds* sounds) {
         }
     }
 
-    sf::FloatRect pos1 = sf::FloatRect(pos.left, pos.top + 1, pos.width, pos.height);
+    sf::FloatRect pos1 = sf::FloatRect({pos.position.x, pos.position.y + 1}, {pos.size.x, pos.size.y});
     for (auto& plataform : tilemap->plataforms) {
-        if (plataform->pos.intersects(pos1)) {
+        if (plataform->pos.findIntersection(pos1).has_value()) {
             if (velocity.y > 0) {
-                pos.top = plataform->pos.top - pos.height;
-                pos.left += plataform->velocity.x;
+                pos.position.y = plataform->pos.position.y - pos.size.y;
+                pos.position.x += plataform->velocity.x;
                 on_ground = true;
             } else if (velocity.y < 0) {
-                pos.top = plataform->pos.top + plataform->pos.height;
+                pos.position.y = plataform->pos.position.y + plataform->pos.size.y;
             }
             velocity.y = 0;
             break;
@@ -323,30 +323,30 @@ void Actor::collision_y(Tilemap* tilemap, Sounds* sounds) {
     }
 }
 void Actor::collision_x(Tilemap* tilemap, Sounds* sounds) {
-    for (int i = pos.top / 32; i < (pos.top + pos.height) / 32; i++) {
-        for (int j = pos.left / 32; j <= (pos.left + pos.width) / 32; j++) {
+    for (int i = pos.position.y / 32; i < (pos.position.y + pos.size.y) / 32; i++) {
+        for (int j = pos.position.x / 32; j <= (pos.position.x + pos.size.x) / 32; j++) {
             if (is_block(tilemap->getTileChar(i, j))) {
                 if (velocity.x < 0) {
                     on_collide("left", i, j, tilemap, sounds);
-                    const int j2 = ((int)pos.left / 32) + 1;
+                    const int j2 = ((int)pos.position.x / 32) + 1;
                     if (!is_block(tilemap->map[i][j2])) {
-                        pos.left = j * 32 + 32;
+                        pos.position.x = j * 32 + 32;
                     }
                 }
                 if (velocity.x > 0) {
                     on_collide("right", i, j, tilemap, sounds);
-                    pos.left = j * 32 - pos.width;
+                    pos.position.x = j * 32 - pos.size.x;
                 }
             }
         }
     }
 
     for (auto& plataform : tilemap->plataforms) {
-        if (plataform->pos.intersects(pos)) {
+        if (plataform->pos.findIntersection(pos).has_value()) {
             if (velocity.x > 0) {
-                pos.left = plataform->pos.left - pos.width;
+                pos.position.x = plataform->pos.position.x - pos.size.x;
             } else if (velocity.x < 0) {
-                pos.left = plataform->pos.left + plataform->pos.height;
+                pos.position.x = plataform->pos.position.x + plataform->pos.size.y;
             }
             velocity.x = 0;
             break;
@@ -355,65 +355,68 @@ void Actor::collision_x(Tilemap* tilemap, Sounds* sounds) {
 }
 
 void Actor::collision_other(Tilemap* tilemap, Sounds* sounds) {
-    for (int i = pos.top / 32; i < (pos.top + pos.height) / 32; i++) {
-        for (int j = pos.left / 32; j < (pos.left + pos.width) / 32; j++) {
+    for (int i = pos.position.y / 32; i < (pos.position.y + pos.size.y) / 32; i++) {
+        for (int j = pos.position.x / 32; j < (pos.position.x + pos.size.x) / 32; j++) {
             on_collide_other(i, j, tilemap, sounds);
         }
     }
 }
 void Actor::draw(sf::RenderWindow* w) {
+    const int spriteWidth = static_cast<int>(pos.size.x);
+    const int spriteHeight = static_cast<int>(pos.size.y);
+
     if (this->jetPack) {
-        actorJetpack.anime(sf::IntRect(Tools::getStartSprite(actorJetpack.getFrame(), direction_x) * pos.width, 0, direction_x * pos.width, pos.height), direction_x);
-        actorJetpack.draw(pos.left, pos.top, w);
+        actorJetpack.anime(sf::IntRect({Tools::getStartSprite(actorJetpack.getFrame(), direction_x) * spriteWidth, 0}, {direction_x * spriteWidth, spriteHeight}), direction_x);
+        actorJetpack.draw(pos.position.x, pos.position.y, w);
         this->drawJetpackTime(w);
     } else {
         if (on_ground) {
             if (velocity.x == 0) {
-                actorIdle.anime(sf::IntRect(Tools::getStartSprite(0, direction_x) * pos.width, 0, direction_x * pos.width, pos.height), direction_x);
-                actorIdle.draw(pos.left, pos.top, w);
+                actorIdle.anime(sf::IntRect({Tools::getStartSprite(0, direction_x) * spriteWidth, 0}, {direction_x * spriteWidth, spriteHeight}), direction_x);
+                actorIdle.draw(pos.position.x, pos.position.y, w);
 
             } else {
-                actorRun.anime(sf::IntRect(Tools::getStartSprite((int)pos.left % actorRun.q_frame, direction_x) * pos.width, 0, direction_x * pos.width, pos.height), direction_x);
-                actorRun.draw(pos.left, pos.top, w);
+                actorRun.anime(sf::IntRect({Tools::getStartSprite((int)pos.position.x % actorRun.q_frame, direction_x) * spriteWidth, 0}, {direction_x * spriteWidth, spriteHeight}), direction_x);
+                actorRun.draw(pos.position.x, pos.position.y, w);
             }
         } else {
-            actorJump.anime(sf::IntRect(Tools::getStartSprite(0, direction_x) * pos.width, 0, direction_x * pos.width, pos.height), direction_x);
-            actorJump.draw(pos.left, pos.top, w);
+            actorJump.anime(sf::IntRect({Tools::getStartSprite(0, direction_x) * spriteWidth, 0}, {direction_x * spriteWidth, spriteHeight}), direction_x);
+            actorJump.draw(pos.position.x, pos.position.y, w);
         }
     }
 
     if (0) {
         sf::RectangleShape rectangle;
-        rectangle.setSize(sf::Vector2f(pos.width, pos.height));
+        rectangle.setSize(sf::Vector2f(pos.size.x, pos.size.y));
         rectangle.setFillColor(sf::Color(0, 0, 0, 0));
         rectangle.setOutlineColor(sf::Color::Red);
         rectangle.setOutlineThickness(2.f);
-        rectangle.setPosition(sf::Vector2f(pos.left, pos.top));
+        rectangle.setPosition({pos.position.x, pos.position.y});
         w->draw(rectangle);
     }
 
     this->draw_bullets(w);
 }
 void Actor::play_sound_pop(Sounds* sounds) {
-    if (sounds->pop_sound0.getStatus() == 0) {
+    if (sounds->pop_sound0.getStatus() == sf::SoundSource::Status::Stopped) {
         sounds->pop_sound0.play();
-    } else if (sounds->pop_sound1.getStatus() == 0) {
+    } else if (sounds->pop_sound1.getStatus() == sf::SoundSource::Status::Stopped) {
         sounds->pop_sound1.play();
-    } else if (sounds->pop_sound2.getStatus() == 0) {
+    } else if (sounds->pop_sound2.getStatus() == sf::SoundSource::Status::Stopped) {
         sounds->pop_sound2.play();
-    } else if (sounds->pop_sound3.getStatus() == 0) {
+    } else if (sounds->pop_sound3.getStatus() == sf::SoundSource::Status::Stopped) {
         sounds->pop_sound3.play();
-    } else if (sounds->pop_sound4.getStatus() == 0) {
+    } else if (sounds->pop_sound4.getStatus() == sf::SoundSource::Status::Stopped) {
         sounds->pop_sound4.play();
-    } else if (sounds->pop_sound5.getStatus() == 0) {
+    } else if (sounds->pop_sound5.getStatus() == sf::SoundSource::Status::Stopped) {
         sounds->pop_sound5.play();
-    } else if (sounds->pop_sound6.getStatus() == 0) {
+    } else if (sounds->pop_sound6.getStatus() == sf::SoundSource::Status::Stopped) {
         sounds->pop_sound6.play();
-    } else if (sounds->pop_sound7.getStatus() == 0) {
+    } else if (sounds->pop_sound7.getStatus() == sf::SoundSource::Status::Stopped) {
         sounds->pop_sound7.play();
-    } else if (sounds->pop_sound8.getStatus() == 0) {
+    } else if (sounds->pop_sound8.getStatus() == sf::SoundSource::Status::Stopped) {
         sounds->pop_sound8.play();
-    } else if (sounds->pop_sound9.getStatus() == 0) {
+    } else if (sounds->pop_sound9.getStatus() == sf::SoundSource::Status::Stopped) {
         sounds->pop_sound9.play();
     }
 }
@@ -423,7 +426,7 @@ void Actor::on_collide_other(int i, int j, Tilemap* tilemap, Sounds* sounds) {
 }
 
 void Actor::collision_portal(Tilemap* tilemap, Sounds* sounds) {
-    auto posMap = getCoord(tilemap, pos.height / 2, pos.width / 2);
+    auto posMap = getCoord(tilemap, pos.size.y / 2, pos.size.x / 2);
 
     if (onPortal) {
         if (!tilemap->isPortal(posMap.i, posMap.j)) {
@@ -435,8 +438,8 @@ void Actor::collision_portal(Tilemap* tilemap, Sounds* sounds) {
             const auto point = tilemap->getMapOppositPortal(posMap.i, posMap.j);
 
             if (point.found) {
-                this->pos.top = point.i * this->pos.height;
-                this->pos.left = point.j * this->pos.width;
+                this->pos.position.y = point.i * this->pos.size.y;
+                this->pos.position.x = point.j * this->pos.size.x;
                 this->velocity.y = this->velocity.y * -1;
             }
         }
@@ -452,36 +455,36 @@ bool Actor::is_alive() {
     return state == States::Normal;
 }
 void Actor::drawJetpackTime(sf::RenderWindow* w) {
-    float xLeft = pos.left + pos.width;
+    float xLeft = pos.position.x + pos.size.x;
     float barTotal = this->jetPackCapacity * 0.1;
     float barFuel = this->jetPackFuel * 0.1;
 
     if (direction_x > 0)
-        xLeft = pos.left - barTotal;
+        xLeft = pos.position.x - barTotal;
 
-    sf::RectangleShape border(sf::Vector2f(pos.left, pos.top));
+    sf::RectangleShape border(sf::Vector2f(pos.position.x, pos.position.y));
     border.setFillColor(sf::Color(255, 0, 0, 255));
-    border.setPosition(sf::Vector2f(xLeft, pos.top + barTotal));
+    border.setPosition({xLeft, pos.position.y + barTotal});
     border.setSize(sf::Vector2f(10, 3));
     w->draw(border);
 
-    sf::RectangleShape rectangle(sf::Vector2f(pos.left, pos.top));
+    sf::RectangleShape rectangle(sf::Vector2f(pos.position.x, pos.position.y));
     rectangle.setFillColor(sf::Color(255, 255, 255, 255));
-    rectangle.setPosition(sf::Vector2f(xLeft, pos.top + barTotal));
+    rectangle.setPosition({xLeft, pos.position.y + barTotal});
     rectangle.setSize(sf::Vector2f(barFuel, 3));
     w->draw(rectangle);
 }
 void Actor::shot(Sounds* sounds) {
     if (this->is_alive()) {
         auto bullet = new BulletGun();
-        bullet->pos.top = this->pos.top + (this->pos.height / 4);
+        bullet->pos.position.y = this->pos.position.y + (this->pos.size.y / 4);
         if (this->direction_x > 0) {
-            bullet->pos.left = this->pos.left + this->pos.width - (bullet->bulletGun.sprite.getLocalBounds().width);
+            bullet->pos.position.x = this->pos.position.x + this->pos.size.x - (bullet->bulletGun.sprite.getLocalBounds().size.x);
         } else {
-            bullet->pos.left = this->pos.left;
+            bullet->pos.position.x = this->pos.position.x;
         }
-        bullet->pos.width = bullet->bulletGun.sprite.getLocalBounds().width;
-        bullet->pos.height = bullet->bulletGun.sprite.getLocalBounds().height;
+        bullet->pos.size.x = bullet->bulletGun.sprite.getLocalBounds().size.x;
+        bullet->pos.size.y = bullet->bulletGun.sprite.getLocalBounds().size.y;
         bullet->bulletGun.direction_x = this->direction_x;
         this->bulletguns.push_back(bullet);
     }

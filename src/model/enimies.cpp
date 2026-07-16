@@ -28,7 +28,7 @@ void Enimy::updateWalk(Tilemap* tilemap, Sounds* sounds) {
             if (direction_x == 1) velocity.x = 0.5;
             if (direction_x == -1) velocity.x = -0.5;
 
-            pos.left += velocity.x;
+            pos.position.x += velocity.x;
 
             collision_x(tilemap, sounds);
             break;
@@ -40,7 +40,7 @@ void Enimy::updateWalk(Tilemap* tilemap, Sounds* sounds) {
         }
         case (States::Dieing): {
             add_gravity();
-            if (pos.top > (tilemap->H * 32) + 32) state = States::Died;
+            if (pos.position.y > (tilemap->H * 32) + 32) state = States::Died;
             break;
         }
         case (States::Died): {
@@ -73,8 +73,8 @@ void Enimy::updateFly(Tilemap* tilemap, Sounds* sounds) {
             velocity.y = 0;
             if (direction_y == 1) velocity.y = 0.5;
             if (direction_y == -1) velocity.y = -0.5;
-            // const int ver = pos.top + 32;
-            // const int hor = pos.left + 16;
+            // const int ver = pos.position.y + 32;
+            // const int hor = pos.position.x + 16;
             // const int x = ver / 32;
             // const int y = hor / 32;
             // const int previous = 1;
@@ -90,14 +90,14 @@ void Enimy::updateFly(Tilemap* tilemap, Sounds* sounds) {
             // else if (direction_x == -1 && frontLeftBlock != ' ')
             //     velocity.y = -5;
 
-            pos.top += velocity.y;
+            pos.position.y += velocity.y;
 
             collision_y(tilemap, sounds);
 
             if (direction_x == 1) velocity.x = 1;
             if (direction_x == -1) velocity.x = -1;
 
-            pos.left += velocity.x;
+            pos.position.x += velocity.x;
 
             collision_x(tilemap, sounds);
             break;
@@ -109,7 +109,7 @@ void Enimy::updateFly(Tilemap* tilemap, Sounds* sounds) {
         }
         case (States::Dieing): {
             add_gravity();
-            if (pos.top > (tilemap->H * 32) + 32) state = States::Died;
+            if (pos.position.y > (tilemap->H * 32) + 32) state = States::Died;
             break;
         }
         case (States::Died): {
@@ -130,15 +130,15 @@ void Enimy::updateFly(Tilemap* tilemap, Sounds* sounds) {
 }
 
 void Enimy::draw(sf::RenderWindow* w) {
-    actor_spr.setPosition(pos.left, pos.top);
+    actor_spr.setPosition({pos.position.x, pos.position.y});
 
     if (velocity.x == 0) {
         actor_spr.setTexture(actor_tex_idle);
-        actor_spr.setTextureRect(sf::IntRect(Tools::getStartSprite((int)i_idle_sprite % 11, direction_x) * 32, 0, direction_x * 32, 32));
+        actor_spr.setTextureRect(sf::IntRect({Tools::getStartSprite((int)i_idle_sprite % 11, direction_x) * 32, 0}, {direction_x * 32, 32}));
         i_idle_sprite += 0.2;
     } else {
         actor_spr.setTexture(actor_tex);
-        actor_spr.setTextureRect(sf::IntRect(Tools::getStartSprite((int)pos.left % 12, direction_x) * 32, 0, direction_x * 32, 32));
+        actor_spr.setTextureRect(sf::IntRect({Tools::getStartSprite((int)pos.position.x % 12, direction_x) * 32, 0}, {direction_x * 32, 32}));
     }
     w->draw(actor_spr);
 }
@@ -163,15 +163,15 @@ void Enimy::on_collide_other(int i, int j, Tilemap* tilemap, Sounds* sounds) {
 void Enimy::die(Tilemap* tilemap, Sounds* sounds) {
     if (state == States::Normal) {
         state = States::DieStart;
-        if (sounds->enimydie_sound.getStatus() == 0) sounds->enimydie_sound.play();
+        if (sounds->enimydie_sound.getStatus() == sf::SoundSource::Status::Stopped) sounds->enimydie_sound.play();
 
         int selected = Tools::getRandInt(0, 5);
 
-        if (selected == 1 && sounds->enimydieinfernu_sound.getStatus() == 0) sounds->enimydieinfernu_sound.play();
-        if (selected == 2 && sounds->enimydiedemoin_sound.getStatus() == 0) sounds->enimydiedemoin_sound.play();
-        if (selected == 3 && sounds->enimydiein321_sound.getStatus() == 0) sounds->enimydiein321_sound.play();
-        if (selected == 4 && sounds->enimydieraul_sound.getStatus() == 0) sounds->enimydieraul_sound.play();
-        if (selected == 5 && sounds->enimydievendoluz_sound.getStatus() == 0) sounds->enimydievendoluz_sound.play();
+        if (selected == 1 && sounds->enimydieinfernu_sound.getStatus() == sf::SoundSource::Status::Stopped) sounds->enimydieinfernu_sound.play();
+        if (selected == 2 && sounds->enimydiedemoin_sound.getStatus() == sf::SoundSource::Status::Stopped) sounds->enimydiedemoin_sound.play();
+        if (selected == 3 && sounds->enimydiein321_sound.getStatus() == sf::SoundSource::Status::Stopped) sounds->enimydiein321_sound.play();
+        if (selected == 4 && sounds->enimydieraul_sound.getStatus() == sf::SoundSource::Status::Stopped) sounds->enimydieraul_sound.play();
+        if (selected == 5 && sounds->enimydievendoluz_sound.getStatus() == sf::SoundSource::Status::Stopped) sounds->enimydievendoluz_sound.play();
     }
 }
 
@@ -180,11 +180,11 @@ void Enimy::die(Tilemap* tilemap, Sounds* sounds) {
  */
 
 Zarik::Zarik() {
-    animeEatingSalad.init(4, 0.1f, "./src/asset/image/Zarik/Zarik-eating-salad.png", sf::IntRect(0, 0, 32, 32), true, 0, 0, false);
-    actor_tex_fall.loadFromFile("./src/asset/image/Zarik/Zarik-run.png");
-    actor_tex_jump.loadFromFile("./src/asset/image/Zarik/Zarik-run.png");
-    actor_tex.loadFromFile("./src/asset/image/Zarik/Zarik-run.png");
-    actor_tex_idle.loadFromFile("./src/asset/image/Zarik/Zarik-run.png");
+    animeEatingSalad.init(4, 0.1f, "./src/asset/image/Zarik/Zarik-eating-salad.png", sf::IntRect({0, 0}, {32, 32}), true, 0, 0, false);
+    (void)actor_tex_fall.loadFromFile("./src/asset/image/Zarik/Zarik-run.png");
+    (void)actor_tex_jump.loadFromFile("./src/asset/image/Zarik/Zarik-run.png");
+    (void)actor_tex.loadFromFile("./src/asset/image/Zarik/Zarik-run.png");
+    (void)actor_tex_idle.loadFromFile("./src/asset/image/Zarik/Zarik-run.png");
 };
 
 void Zarik::update(Tilemap* tilemap, Sounds* sounds) {
@@ -227,7 +227,7 @@ void Zarik::updateWalk(Tilemap* tilemap, Sounds* sounds) {
             if (this->specialAction == SpecialAction::Nothing) {
                 if (direction_x == 1) velocity.x = 0.5;
                 if (direction_x == -1) velocity.x = -0.5;
-                pos.left += velocity.x;
+                pos.position.x += velocity.x;
             }
 
             collision_x(tilemap, sounds);
@@ -240,7 +240,7 @@ void Zarik::updateWalk(Tilemap* tilemap, Sounds* sounds) {
         }
         case (States::Dieing): {
             add_gravity();
-            if (pos.top > (tilemap->H * 32) + 32) state = States::Died;
+            if (pos.position.y > (tilemap->H * 32) + 32) state = States::Died;
             break;
         }
         case (States::Died): {
@@ -260,29 +260,29 @@ void Zarik::updateWalk(Tilemap* tilemap, Sounds* sounds) {
     collision_portal(tilemap, sounds);
 }
 void Zarik::draw(sf::RenderWindow* w) {
-    actor_spr.setPosition(pos.left, pos.top);
+    actor_spr.setPosition({pos.position.x, pos.position.y});
 
     if (on_ground) {
         if (velocity.x == 0) {
             actor_spr.setTexture(actor_tex_idle);
-            actor_spr.setTextureRect(sf::IntRect(Tools::getStartSprite((int)i_idle_sprite % 3, direction_x) * 32, 0, direction_x * 32, 32));
+            actor_spr.setTextureRect(sf::IntRect({Tools::getStartSprite((int)i_idle_sprite % 3, direction_x) * 32, 0}, {direction_x * 32, 32}));
             i_idle_sprite += 0.1;
             w->draw(actor_spr);
         } else {
             if (this->specialAction == SpecialAction::Nothing) {
                 actor_spr.setTexture(actor_tex);
-                actor_spr.setTextureRect(sf::IntRect(Tools::getStartSprite((int)(pos.left / 2) % 4, direction_x) * 32, 0, direction_x * 32, 32));
+                actor_spr.setTextureRect(sf::IntRect({Tools::getStartSprite((int)(pos.position.x / 2) % 4, direction_x) * 32, 0}, {direction_x * 32, 32}));
                 w->draw(actor_spr);
             } else {  // For now it is eating salad
 
                 animeEatingSalad.animeAuto();
-                animeEatingSalad.draw(pos.left, pos.top, w);
+                animeEatingSalad.draw(pos.position.x, pos.position.y, w);
                 drawDowntimeSalad(w);
             }
         }
     } else {
         actor_spr.setTexture(actor_tex_jump);
-        actor_spr.setTextureRect(sf::IntRect(Tools::getStartSprite((int)i_jump_sprite % 4, -direction_x) * 32, 0, -direction_x * 32, 32));
+        actor_spr.setTextureRect(sf::IntRect({Tools::getStartSprite((int)i_jump_sprite % 4, -direction_x) * 32, 0}, {-direction_x * 32, 32}));
         i_jump_sprite += 0.25;
         w->draw(actor_spr);
     }
@@ -311,20 +311,20 @@ double Zarik::drinkLiquor(int liquors) {
     return liquors >= 10 ? liquors - 10 : 0;
 }
 void Zarik::drawDowntimeSalad(sf::RenderWindow* w) {
-    float xLeft = pos.left + pos.width;
+    float xLeft = pos.position.x + pos.size.x;
     float width = this->maxLiquors;
     float x = this->liquors;
     const float barWidth = 10.f;
 
-    sf::RectangleShape border(sf::Vector2f(pos.left, pos.top));
+    sf::RectangleShape border(sf::Vector2f(pos.position.x, pos.position.y));
     border.setFillColor(sf::Color(255, 0, 0, 255));
-    border.setPosition(sf::Vector2f(xLeft, pos.top + width));
+    border.setPosition({xLeft, pos.position.y + width});
     border.setSize(sf::Vector2f(barWidth, 3));
     w->draw(border);
 
-    sf::RectangleShape rectangle(sf::Vector2f(pos.left, pos.top));
+    sf::RectangleShape rectangle(sf::Vector2f(pos.position.x, pos.position.y));
     rectangle.setFillColor(sf::Color(255, 255, 255, 255));
-    rectangle.setPosition(sf::Vector2f(xLeft, pos.top + width));
+    rectangle.setPosition({xLeft, pos.position.y + width});
     float scaledWidth = 0.f;
     if (width > 0.f) {
         scaledWidth = (x / width) * barWidth;
@@ -337,12 +337,12 @@ void Zarik::drawDowntimeSalad(sf::RenderWindow* w) {
 
 void Zarik::sayProtest(Sounds* sounds) {
     if (this->protestType == 0) {
-        if (sounds->enimy_what_i_did_sound.getStatus() == 0) {
+        if (sounds->enimy_what_i_did_sound.getStatus() == sf::SoundSource::Status::Stopped) {
             sounds->enimy_are_you_crazy_sound.play();
             this->protestType = 1;
         }
     } else {
-        if (sounds->enimy_are_you_crazy_sound.getStatus() == 0) {
+        if (sounds->enimy_are_you_crazy_sound.getStatus() == sf::SoundSource::Status::Stopped) {
             sounds->enimy_what_i_did_sound.play();
             this->protestType = 0;
         }
@@ -354,8 +354,8 @@ void Zarik::sayProtest(Sounds* sounds) {
  */
 
 Box1::Box1() {
-    actorIdle.init(1, 0.f, "./src/asset/image/Box1/Box1-iddle.png", sf::IntRect(0, 0, 32, 32), true, 0, 0, false);
-    actorRun.init(6, 0.2f, "./src/asset/image/Box1/Box1-run.png", sf::IntRect(0, 0, 32, 32), true, 0, 0, false);
+    actorIdle.init(1, 0.f, "./src/asset/image/Box1/Box1-iddle.png", sf::IntRect({0, 0}, {32, 32}), true, 0, 0, false);
+    actorRun.init(6, 0.2f, "./src/asset/image/Box1/Box1-run.png", sf::IntRect({0, 0}, {32, 32}), true, 0, 0, false);
     velocity.x = 0;
     velocity.y = 0;
 }
@@ -378,11 +378,11 @@ void Box1::updateWalk(Tilemap* tilemap, Sounds* sounds) {
             const bool wasFalling = velocity.y > 0.f;
             add_gravity();
             collision_y(tilemap, sounds);
-            if (!wasOnGround && wasFalling && on_ground && sounds->drop_sound.getStatus() == sf::Sound::Stopped) {
+            if (!wasOnGround && wasFalling && on_ground && sounds->drop_sound.getStatus() == sf::SoundSource::Status::Stopped) {
                 sounds->drop_sound.play();
             }
             isMoving = velocity.x != 0.f;
-            pos.left += velocity.x;
+            pos.position.x += velocity.x;
             collision_x(tilemap, sounds);
             velocity.x = 0;
             break;
@@ -394,7 +394,7 @@ void Box1::updateWalk(Tilemap* tilemap, Sounds* sounds) {
         }
         case (States::Dieing): {
             add_gravity();
-            if (pos.top > (tilemap->H * 32) + 32) state = States::Died;
+            if (pos.position.y > (tilemap->H * 32) + 32) state = States::Died;
             break;
         }
         case (States::Died): {
@@ -415,7 +415,7 @@ void Box1::updateWalk(Tilemap* tilemap, Sounds* sounds) {
 }
 
 void Box1::touchOtherBox(Sounds* sounds) {
-    if (!wasTouchingOtherBox && !isTouchingOtherBox && sounds->drop_sound.getStatus() == sf::Sound::Stopped) {
+    if (!wasTouchingOtherBox && !isTouchingOtherBox && sounds->drop_sound.getStatus() == sf::SoundSource::Status::Stopped) {
         sounds->drop_sound.play();
     }
     isTouchingOtherBox = true;
@@ -424,10 +424,10 @@ void Box1::touchOtherBox(Sounds* sounds) {
 void Box1::draw(sf::RenderWindow* w) {
     if (isMoving) {
         actorRun.animeAuto();
-        actorRun.draw(pos.left, pos.top, w);
+        actorRun.draw(pos.position.x, pos.position.y, w);
     } else {
         actorIdle.animeAuto();
-        actorIdle.draw(pos.left, pos.top, w);
+        actorIdle.draw(pos.position.x, pos.position.y, w);
     }
 }
 
@@ -436,10 +436,10 @@ void Box1::draw(sf::RenderWindow* w) {
  */
 
 Catraca::Catraca() {
-    actor_tex_fall.loadFromFile("./src/asset/image/catraca_fall.png");
-    actor_tex_jump.loadFromFile("./src/asset/image/catraca_jump.png");
-    actor_tex.loadFromFile("./src/asset/image/catraca.png");
-    actor_tex_idle.loadFromFile("./src/asset/image/catraca_idle.png");
+    (void)actor_tex_fall.loadFromFile("./src/asset/image/catraca_fall.png");
+    (void)actor_tex_jump.loadFromFile("./src/asset/image/catraca_jump.png");
+    (void)actor_tex.loadFromFile("./src/asset/image/catraca.png");
+    (void)actor_tex_idle.loadFromFile("./src/asset/image/catraca_idle.png");
 };
 
 void Catraca::update(Tilemap* tilemap, Sounds* sounds) {
@@ -470,7 +470,7 @@ void Catraca::updateWalk(Tilemap* tilemap, Sounds* sounds) {
             if (direction_x == 1) velocity.x = 0.5;
             if (direction_x == -1) velocity.x = -0.5;
 
-            pos.left += velocity.x;
+            pos.position.x += velocity.x;
 
             collision_x(tilemap, sounds);
             break;
@@ -482,7 +482,7 @@ void Catraca::updateWalk(Tilemap* tilemap, Sounds* sounds) {
         }
         case (States::Dieing): {
             add_gravity();
-            if (pos.top > (tilemap->H * 32) + 32) state = States::Died;
+            if (pos.position.y > (tilemap->H * 32) + 32) state = States::Died;
             break;
         }
         case (States::Died): {
@@ -502,25 +502,25 @@ void Catraca::updateWalk(Tilemap* tilemap, Sounds* sounds) {
     collision_portal(tilemap, sounds);
 }
 void Catraca::draw(sf::RenderWindow* w) {
-    actor_spr.setPosition(pos.left, pos.top);
+    actor_spr.setPosition({pos.position.x, pos.position.y});
 
     if (on_ground) {
         if (velocity.x == 0) {
             actor_spr.setTexture(actor_tex_idle);
-            actor_spr.setTextureRect(sf::IntRect(Tools::getStartSprite((int)i_idle_sprite % 7, direction_x) * 32, 0, direction_x * 32, 32));
+            actor_spr.setTextureRect(sf::IntRect({Tools::getStartSprite((int)i_idle_sprite % 7, direction_x) * 32, 0}, {direction_x * 32, 32}));
             i_idle_sprite += 0.2;
         } else {
             actor_spr.setTexture(actor_tex);
-            actor_spr.setTextureRect(sf::IntRect(Tools::getStartSprite((int)pos.left % 8, direction_x) * 32, 0, direction_x * 32, 32));
+            actor_spr.setTextureRect(sf::IntRect({Tools::getStartSprite((int)pos.position.x % 8, direction_x) * 32, 0}, {direction_x * 32, 32}));
         }
     } else {
         // if (velocity.y > 0) {
         //     actor_spr.setTexture(actor_tex_fall);
-        //     actor_spr.setTextureRect(sf::IntRect(Tools::getStartSprite((int)i_fall_sprite % 1, direction_x) * 32, 0, direction_x * 32, 32));
+        //     actor_spr.setTextureRect(sf::IntRect({Tools::getStartSprite((int)i_fall_sprite % 1, direction_x) * 32, 0}, {direction_x * 32, 32}));
         //     i_fall_sprite += 0.4;
         // } else {
         actor_spr.setTexture(actor_tex_jump);
-        actor_spr.setTextureRect(sf::IntRect(Tools::getStartSprite((int)i_jump_sprite % 8, -direction_x) * 32, 0, -direction_x * 32, 32));
+        actor_spr.setTextureRect(sf::IntRect({Tools::getStartSprite((int)i_jump_sprite % 8, -direction_x) * 32, 0}, {-direction_x * 32, 32}));
         i_jump_sprite += 0.25;
         // }
     }
@@ -540,10 +540,10 @@ void Catraca::die(Tilemap* tilemap, Sounds* sounds) {
  */
 
 Sova::Sova() {
-    actor_tex_fall.loadFromFile("./src/asset/image/sova.png");
-    actor_tex.loadFromFile("./src/asset/image/sova.png");
-    actor_tex_idle.loadFromFile("./src/asset/image/sova.png");
-    actorJetpack.init(3, 0.5f, "./src/asset/image/Sova-jetpack.png", sf::IntRect(0, 0, 32, 32), true, 0, 0, false);
+    (void)actor_tex_fall.loadFromFile("./src/asset/image/sova.png");
+    (void)actor_tex.loadFromFile("./src/asset/image/sova.png");
+    (void)actor_tex_idle.loadFromFile("./src/asset/image/sova.png");
+    actorJetpack.init(3, 0.5f, "./src/asset/image/Sova-jetpack.png", sf::IntRect({0, 0}, {32, 32}), true, 0, 0, false);
 };
 
 void Sova::update(Tilemap* tilemap, Sounds* sounds) {
@@ -573,16 +573,18 @@ void Sova::update(Tilemap* tilemap, Sounds* sounds) {
     if (this->updates > 9999) this->updates = 0;
 }
 void Sova::draw(sf::RenderWindow* w) {
-    actor_spr.setPosition(pos.left, pos.top);
+    actor_spr.setPosition({pos.position.x, pos.position.y});
+    const int spriteWidth = static_cast<int>(pos.size.x);
+    const int spriteHeight = static_cast<int>(pos.size.y);
 
     if (this->jetPack) {
-        actorJetpack.anime(sf::IntRect(Tools::getStartSprite(actorJetpack.getFrame(), direction_x) * pos.width, 0, direction_x * pos.width, pos.height), direction_x);
-        actorJetpack.draw(pos.left, pos.top, w);
+        actorJetpack.anime(sf::IntRect({Tools::getStartSprite(actorJetpack.getFrame(), direction_x) * spriteWidth, 0}, {direction_x * spriteWidth, spriteHeight}), direction_x);
+        actorJetpack.draw(pos.position.x, pos.position.y, w);
         this->drawJetpackTime(w);
     } else {
         // if (on_ground) {
         actor_spr.setTexture(actor_tex);
-        actor_spr.setTextureRect(sf::IntRect(Tools::getStartSprite((int)pos.left % 6, direction_x * -1) * 32, 0, (direction_x * -1) * 32, 32));
+        actor_spr.setTextureRect(sf::IntRect({Tools::getStartSprite((int)pos.position.x % 6, direction_x * -1) * 32, 0}, {(direction_x * -1) * 32, 32}));
         // }
         w->draw(actor_spr);
     }
@@ -608,9 +610,9 @@ void Sova::die(Tilemap* tilemap, Sounds* sounds) {
  */
 
 Cannon::Cannon() {
-    actor_tex_fall.loadFromFile("./src/asset/image/nest.png");
-    actor_tex.loadFromFile("./src/asset/image/nest.png");
-    actor_tex_idle.loadFromFile("./src/asset/image/nest.png");
+    (void)actor_tex_fall.loadFromFile("./src/asset/image/nest.png");
+    (void)actor_tex.loadFromFile("./src/asset/image/nest.png");
+    (void)actor_tex_idle.loadFromFile("./src/asset/image/nest.png");
 };
 
 void Cannon::update(Tilemap* tilemap, Sounds* sounds) {
@@ -631,7 +633,7 @@ void Cannon::update(Tilemap* tilemap, Sounds* sounds) {
         }
         case (States::Dieing): {
             add_gravity();
-            if (pos.top > (tilemap->H * 32) + 32) state = States::Died;
+            if (pos.position.y > (tilemap->H * 32) + 32) state = States::Died;
             break;
         }
         case (States::Died): {
@@ -649,10 +651,10 @@ void Cannon::update(Tilemap* tilemap, Sounds* sounds) {
     }
 }
 void Cannon::draw(sf::RenderWindow* w) {
-    actor_spr.setPosition(pos.left, pos.top);
+    actor_spr.setPosition({pos.position.x, pos.position.y});
     if (on_ground) {
         actor_spr.setTexture(actor_tex);
-        actor_spr.setTextureRect(sf::IntRect(0, 0, 32, 32));
+        actor_spr.setTextureRect(sf::IntRect({0, 0}, {32, 32}));
     }
     w->draw(actor_spr);
 }
@@ -670,10 +672,10 @@ void Cannon::die(Tilemap* tilemap, Sounds* sounds) {
  */
 
 Bulletc::Bulletc() {
-    actorRun.init(9, 0.2f, "./src/asset/image/arara.png", sf::IntRect(0, 0, 32, 32), true, 0, 0, false);
-    actor_tex_fall.loadFromFile("./src/asset/image/arara.png");
-    actor_tex.loadFromFile("./src/asset/image/arara.png");
-    actor_tex_idle.loadFromFile("./src/asset/image/arara.png");
+    actorRun.init(9, 0.2f, "./src/asset/image/arara.png", sf::IntRect({0, 0}, {32, 32}), true, 0, 0, false);
+    (void)actor_tex_fall.loadFromFile("./src/asset/image/arara.png");
+    (void)actor_tex.loadFromFile("./src/asset/image/arara.png");
+    (void)actor_tex_idle.loadFromFile("./src/asset/image/arara.png");
     on_ground = true;
     direction_x = -1;
 };
@@ -684,12 +686,12 @@ void Bulletc::update(Tilemap* tilemap, Sounds* sounds) {
             if (direction_x == 1) velocity.x = 0.9;
             if (direction_x == -1) velocity.x = -0.9;
 
-            pos.left += velocity.x;
+            pos.position.x += velocity.x;
 
-            if (pos.left < 0) {
+            if (pos.position.x < 0) {
                 reset_position();
             } else {
-                if (pos.left + pos.width > tilemap->W * 32) {
+                if (pos.position.x + pos.size.x > tilemap->W * 32) {
                     reset_position();
                 }
             }
@@ -703,7 +705,7 @@ void Bulletc::update(Tilemap* tilemap, Sounds* sounds) {
         }
         case (States::Dieing): {
             add_gravity();
-            if (pos.top > (tilemap->H * 32) + 32) state = States::Died;
+            if (pos.position.y > (tilemap->H * 32) + 32) state = States::Died;
             break;
         }
         case (States::Died): {
@@ -723,14 +725,16 @@ void Bulletc::update(Tilemap* tilemap, Sounds* sounds) {
     }
 }
 void Bulletc::draw(sf::RenderWindow* w) {
-    actorRun.anime(sf::IntRect(Tools::getStartSprite(actorRun.getFrame(), direction_x) * pos.width, 0, direction_x * pos.width, pos.height), direction_x);
-    actorRun.draw(pos.left, pos.top, w);
+    const int spriteWidth = static_cast<int>(pos.size.x);
+    const int spriteHeight = static_cast<int>(pos.size.y);
+    actorRun.anime(sf::IntRect({Tools::getStartSprite(actorRun.getFrame(), direction_x) * spriteWidth, 0}, {direction_x * spriteWidth, spriteHeight}), direction_x);
+    actorRun.draw(pos.position.x, pos.position.y, w);
 
-    // actor_spr.setPosition(pos.left, pos.top);
+    // actor_spr.setPosition({pos.position.x, pos.position.y});
     // if (on_ground) {
-    //     int vel = (int)pos.left * 0.3;
+    //     int vel = (int)pos.position.x * 0.3;
     //     actor_spr.setTexture(actor_tex);
-    //     actor_spr.setTextureRect(sf::IntRect(Tools::getStartSprite(8 - (vel % 9), direction_x) * 32, 0, direction_x * 32, 32));
+    //     actor_spr.setTextureRect(sf::IntRect({Tools::getStartSprite(8 - (vel % 9), direction_x) * 32, 0}, {direction_x * 32, 32}));
     // }
     // w->draw(actor_spr);
 }

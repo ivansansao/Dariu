@@ -13,9 +13,8 @@ class Dariu : public Actor {
     Dariu();
     ~Dariu();
     Score score;
-    sf::Text text_score;
-
     sf::Font font_vibes;
+    sf::Text text_score;
 
     bool win;
     bool over;

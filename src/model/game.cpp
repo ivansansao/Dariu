@@ -11,33 +11,33 @@
 
 using namespace std;
 
-Game::Game() {
+Game::Game() : text_gameover(font_roboto), text_gamewin(font_roboto), text_generic(font_roboto), fireworks_spr(fireworks_tex) {
     bool fullscreen = true;
     if (std::getenv("DARIU_FULLSCREEN")) {
         fullscreen = (std::string)std::getenv("DARIU_FULLSCREEN") == "1";
     }
 
     if (fullscreen) {
-        window.create(sf::VideoMode::getDesktopMode(), "Dariu", sf::Style::Fullscreen);
+        window.create(sf::VideoMode::getDesktopMode(), "Dariu", sf::State::Fullscreen);
     } else {
-        window.create(sf::VideoMode(1280, 736), "Dariu", sf::Style::Titlebar | sf::Style::Close);
+        window.create(sf::VideoMode({1280, 736}), "Dariu", sf::Style::Titlebar | sf::Style::Close);
     }
     // window.UseVerticalSync(false);
     window.setVerticalSyncEnabled(true);  // Don't allow more FPS than your monitor support.
     window.setFramerateLimit(60);         // There is a relation between framerate and setVerticalSyncEnabled.
 
-    window.setPosition(sf::Vector2i(0, 0));
+    window.setPosition({0, 0});
 
-    view.reset(sf::FloatRect(0.f, 0.f, 1280.f, 736.f));
+    view = sf::View(sf::FloatRect({0.f, 0.f}, {1280.f, 736.f}));
     gameover_loaded = false;
 
-    font_roboto.loadFromFile("./src/asset/fonts/RobotoFlex-Regular.ttf");
-    font_greatvibes.loadFromFile("./src/asset/fonts/GreatVibes-Regular.ttf");
-    font_irishgrooverregular.loadFromFile("./src/asset/fonts/irish/IrishGrover-Regular.ttf");
+    (void)font_roboto.openFromFile("./src/asset/fonts/RobotoFlex-Regular.ttf");
+    (void)font_greatvibes.openFromFile("./src/asset/fonts/GreatVibes-Regular.ttf");
+    (void)font_irishgrooverregular.openFromFile("./src/asset/fonts/irish/IrishGrover-Regular.ttf");
     std::vector<Catraca> catracas;
     std::vector<Zarik> zariks;
 
-    fireworks_tex.loadFromFile("./src/asset/image/fireworks.png");
+    (void)fireworks_tex.loadFromFile("./src/asset/image/fireworks.png");
     fireworks_spr.setTexture(fireworks_tex);
     fireworks_i = 0;
     fireworks_j = 0;
@@ -113,9 +113,9 @@ void Game::play() {
             break;
         }
     }
-    if (isMovingBox1 && sounds.carry_sound.getStatus() == sf::Sound::Stopped) {
+    if (isMovingBox1 && sounds.carry_sound.getStatus() == sf::SoundSource::Status::Stopped) {
         sounds.carry_sound.play();
-    } else if (!isMovingBox1 && sounds.carry_sound.getStatus() != sf::Sound::Stopped) {
+    } else if (!isMovingBox1 && sounds.carry_sound.getStatus() != sf::SoundSource::Status::Stopped) {
         sounds.carry_sound.stop();
     }
     for (auto& sova : sovas) {
@@ -126,10 +126,10 @@ void Game::play() {
     for (auto& cannon : cannons) {
         cannon->update(&tilemap, &sounds);
         bulletcs[i1]->update(&tilemap, &sounds);
-        bulletcs[i1]->start_pos.left = cannons[i1]->pos.left;
-        bulletcs[i1]->start_pos.top = cannons[i1]->pos.top;
-        if (cannons[i1]->pos.left == bulletcs[i1]->pos.left) {
-            if (dariu.pos.left > cannons[i1]->pos.left)
+        bulletcs[i1]->start_pos.position.x = cannons[i1]->pos.position.x;
+        bulletcs[i1]->start_pos.position.y = cannons[i1]->pos.position.y;
+        if (cannons[i1]->pos.position.x == bulletcs[i1]->pos.position.x) {
+            if (dariu.pos.position.x > cannons[i1]->pos.position.x)
                 bulletcs[i1]->direction_x = 1;
             else
                 bulletcs[i1]->direction_x = -1;
@@ -140,15 +140,15 @@ void Game::play() {
 
     check_collisions_enimies();
 
-    if (dariu.pos.left > 2496) {
-        view.reset(sf::FloatRect(2496.f, 0.f, 1280, 736.f));
-        dariu.text_score.setPosition(2496.f + 7, 7);
-    } else if (dariu.pos.left > 1248) {
-        dariu.text_score.setPosition(1248.f + 7, 7);
-        view.reset(sf::FloatRect(1248.f, 0.f, 1280, 736.f));
+    if (dariu.pos.position.x > 2496) {
+        view = sf::View(sf::FloatRect({2496.f, 0.f}, {1280, 736.f}));
+        dariu.text_score.setPosition({2496.f + 7, 7});
+    } else if (dariu.pos.position.x > 1248) {
+        dariu.text_score.setPosition({1248.f + 7, 7});
+        view = sf::View(sf::FloatRect({1248.f, 0.f}, {1280, 736.f}));
     } else {
-        dariu.text_score.setPosition(0.f + 7, 7);
-        view.reset(sf::FloatRect(0.f, 0.f, 1280, 736.f));
+        dariu.text_score.setPosition({0.f + 7, 7});
+        view = sf::View(sf::FloatRect({0.f, 0.f}, {1280, 736.f}));
     }
 
     if (dariu.win) {
@@ -198,16 +198,16 @@ void Game::play() {
     // window.setMouseCursorVisible(false);
 
     // auto mouse = sf::Mouse::getPosition(window);
-    // const float i = dariu.pos.top / 32;
-    // const float j = dariu.pos.left / 32;
-    // ss << "Mouse (" << position.x << "," << position.y << ") Dariu (" << dariu.pos.top << "," << dariu.pos.left << ") i/32,j/32 (" << i << " , " << j << ") Bloco da esquerda: " << (int)Tools::floor_special(j + 1, 0.71) << " Bloco da direita: " << (int)Tools::ceil_special(j, 0.39);
+    // const float i = dariu.pos.position.y / 32;
+    // const float j = dariu.pos.position.x / 32;
+    // ss << "Mouse (" << position.x << "," << position.y << ") Dariu (" << dariu.pos.position.y << "," << dariu.pos.position.x << ") i/32,j/32 (" << i << " , " << j << ") Bloco da esquerda: " << (int)Tools::floor_special(j + 1, 0.71) << " Bloco da direita: " << (int)Tools::ceil_special(j, 0.39);
     // ss << "Mouse (" << mouse.x << "," << mouse.y << ") " << mouse.x / 32 << tilemap.map[mouse.y / 32][mouse.x / 32];
     // window.setTitle(ss.str());
     // sf::RectangleShape rectangle;
     // rectangle.setSize(sf::Vector2f(1, 1));
     // rectangle.setOutlineColor(sf::Color::Red);
     // // rectangle.setOutlineThickness(5);
-    // rectangle.setPosition(mouse.x, mouse.y);
+    // rectangle.setPosition({mouse.x, mouse.y});
     // window.draw(rectangle);
 
     window.display();
@@ -236,7 +236,7 @@ void Game::close() {
 };
 void Game::win() {
     if (!gamewin_loaded) {
-        view.reset(sf::FloatRect(0.f, 0.f, 1280, 736.f));
+        view = sf::View(sf::FloatRect({0.f, 0.f}, {1280, 736.f}));
         window.setView(view);
         sounds.music.stop();
         sounds.music_gamewin.play();
@@ -248,20 +248,20 @@ void Game::win() {
     text_gamewin.setCharacterSize(60);
     text_gamewin.setFillColor(sf::Color::White);
     text_gamewin.setString(L"Parabéns, você ganhou!!!");
-    text_gamewin.setPosition(sf::Vector2f(600 - text_gamewin.getGlobalBounds().width / 2, window.getSize().y / 2 - text_gamewin.getGlobalBounds().height / 2));
+    text_gamewin.setPosition({600 - text_gamewin.getGlobalBounds().size.x / 2, window.getSize().y / 2.f - text_gamewin.getGlobalBounds().size.y / 2});
     window.draw(text_gamewin);
 
     text_gamewin.setFont(font_roboto);
     text_gamewin.setCharacterSize(16);
     text_gamewin.setFillColor(sf::Color::White);
     text_gamewin.setString(L"V - Voltar ao menu");
-    text_gamewin.setPosition(sf::Vector2f(600 - text_gamewin.getGlobalBounds().width / 2, window.getSize().y / 2 - text_gamewin.getGlobalBounds().height / 2 + 120));
+    text_gamewin.setPosition({600 - text_gamewin.getGlobalBounds().size.x / 2, window.getSize().y / 2.f - text_gamewin.getGlobalBounds().size.y / 2 + 120});
     window.draw(text_gamewin);
 
     // Show fireworks
 
-    fireworks_spr.setPosition(500, 100);
-    fireworks_spr.setTextureRect(sf::IntRect((int)fireworks_j * 256, (int)fireworks_i * 256, 256, 256));
+    fireworks_spr.setPosition({500, 100});
+    fireworks_spr.setTextureRect(sf::IntRect({(int)fireworks_j * 256, (int)fireworks_i * 256}, {256, 256}));
     fireworks_j += 0.3;
     if ((int)fireworks_j > 5) {
         fireworks_j = 0;
@@ -276,7 +276,7 @@ void Game::win() {
 
     window.display();
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::V)) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::V)) {
         gamewin_loaded = false;
         sounds.music_gamewin.stop();
         game_loaded = false;
@@ -294,7 +294,7 @@ void Game::win() {
 };
 void Game::over() {
     if (!gameover_loaded) {
-        view.reset(sf::FloatRect(0.f, 0.f, 1280, 736.f));
+        view = sf::View(sf::FloatRect({0.f, 0.f}, {1280, 736.f}));
         window.setView(view);
         sounds.music.stop();
         sounds.music_gameover.play();
@@ -305,19 +305,19 @@ void Game::over() {
     text_gameover.setCharacterSize(60);
     text_gameover.setFillColor(sf::Color::White);
     text_gameover.setString(L"VOCÊ PERDEU!");
-    text_gameover.setPosition(sf::Vector2f(600 - text_gameover.getGlobalBounds().width / 2, window.getSize().y / 2 - text_gameover.getGlobalBounds().height / 2));
+    text_gameover.setPosition({600 - text_gameover.getGlobalBounds().size.x / 2, window.getSize().y / 2.f - text_gameover.getGlobalBounds().size.y / 2});
     window.draw(text_gameover);
 
     text_gameover.setFont(font_roboto);
     text_gameover.setCharacterSize(16);
     text_gameover.setFillColor(sf::Color::White);
     text_gameover.setString(L"V - Voltar ao menu");
-    text_gameover.setPosition(sf::Vector2f(600 - text_gameover.getGlobalBounds().width / 2, window.getSize().y / 2 - text_gameover.getGlobalBounds().height / 2 + 120));
+    text_gameover.setPosition({600 - text_gameover.getGlobalBounds().size.x / 2, window.getSize().y / 2.f - text_gameover.getGlobalBounds().size.y / 2 + 120});
     window.draw(text_gameover);
 
     window.display();
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::V)) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::V)) {
         gameover_loaded = false;
         sounds.music_gameover.stop();
         game_loaded = false;
@@ -354,7 +354,7 @@ void Game::load() {
     }
 }
 bool Game::is_fullscreen() {
-    return window.getSize().x == sf::VideoMode::getDesktopMode().width;
+    return window.getSize().x == sf::VideoMode::getDesktopMode().size.x;
 }
 
 void Game::load_phase() {
@@ -481,7 +481,7 @@ void Game::check_collisions_enimies() {
 
         for (auto& zarik : zariks) {
             if (zarik->is_alive()) {
-                if (zarik->pos.intersects(dariu.pos)) {
+                if (zarik->pos.findIntersection(dariu.pos).has_value()) {
                     if (dariu.score.liquor > 0) {
                         const int liquorsBefore = dariu.score.liquor;
                         dariu.score.liquor = zarik->drinkLiquor(dariu.score.liquor);
@@ -491,7 +491,7 @@ void Game::check_collisions_enimies() {
                     }
                 }
                 for (auto& bullet : dariu.bulletguns) {
-                    if (bullet->pos.intersects(zarik->pos)) {
+                    if (bullet->pos.findIntersection(zarik->pos).has_value()) {
                         zarik->direction_x = zarik->direction_x * -1;  // Turn Zarik direction
                         bullet->collided = true;
                         zarik->sayProtest(&this->sounds);
@@ -509,7 +509,7 @@ void Game::check_collisions_enimies() {
 
         for (auto& catraca : catracas) {
             if (catraca->is_alive()) {
-                if (catraca->pos.intersects(dariu.pos)) {
+                if (catraca->pos.findIntersection(dariu.pos).has_value()) {
                     if (dariu.velocity.y > 0) {
                         dariuJump = true;
                         catraca->die(&tilemap, &sounds);
@@ -523,7 +523,7 @@ void Game::check_collisions_enimies() {
                     }
                 }
                 for (auto& bullet : dariu.bulletguns) {
-                    if (bullet->pos.intersects(catraca->pos)) {
+                    if (bullet->pos.findIntersection(catraca->pos).has_value()) {
                         bullet->collided = true;
                         catraca->die(&tilemap, &sounds);
                     }
@@ -533,7 +533,7 @@ void Game::check_collisions_enimies() {
 
         for (auto& sova : sovas) {
             if (sova->is_alive()) {
-                if (sova->pos.intersects(dariu.pos)) {
+                if (sova->pos.findIntersection(dariu.pos).has_value()) {
                     if (dariu.velocity.y > 0) {
                         dariuJump = true;
                         sova->die(&tilemap, &sounds);
@@ -547,12 +547,12 @@ void Game::check_collisions_enimies() {
                     }
                 }
                 for (auto& bullet : sova->bulletguns) {
-                    if (bullet->pos.intersects(dariu.pos)) {
+                    if (bullet->pos.findIntersection(dariu.pos).has_value()) {
                         if (!this->editing) dariu.die(&tilemap, &sounds);
                     }
                 }
                 for (auto& bullet : dariu.bulletguns) {
-                    if (bullet->pos.intersects(sova->pos)) {
+                    if (bullet->pos.findIntersection(sova->pos).has_value()) {
                         bullet->collided = true;
                         sova->die(&tilemap, &sounds);
                     }
@@ -561,18 +561,18 @@ void Game::check_collisions_enimies() {
         }
         for (auto& bulletc : bulletcs) {
             if (bulletc->is_alive()) {
-                if (bulletc->pos.intersects(dariu.pos)) {
+                if (bulletc->pos.findIntersection(dariu.pos).has_value()) {
                     if (dariu.velocity.y > 0) {
                         dariuJump = true;
                         // bulletc->die(&tilemap, &sounds);
-                        bulletc->pos.top += 4;
+                        bulletc->pos.position.y += 4;
                         bulletc->direction_x = dariu.direction_x;
                         // } else {
                         //     if (!this->editing) dariu.die(&tilemap, &sounds);
                     }
                 }
                 for (auto& bullet : dariu.bulletguns) {
-                    if (bullet->pos.intersects(bulletc->pos)) {
+                    if (bullet->pos.findIntersection(bulletc->pos).has_value()) {
                         bullet->collided = true;
                         bulletc->die(&tilemap, &sounds);
                     }
@@ -702,10 +702,10 @@ void Game::new_profile() {
  */
 void Game::menu_main() {
     if (!menumain_loaded) {
-        menuDariu.init(8, 0.2f, "./src/asset/image/Dariu-run.png", sf::IntRect(0, 0, 32, 32), true, 0, 0, false);
+        menuDariu.init(8, 0.2f, "./src/asset/image/Dariu-run.png", sf::IntRect({0, 0}, {32, 32}), true, 0, 0, false);
         menumain_loaded = true;
         sounds.music.pause();
-        view.reset(sf::FloatRect(0.f, 0.f, 1280.f, 736.f));
+        view = sf::View(sf::FloatRect({0.f, 0.f}, {1280.f, 736.f}));
         window.setView(view);
         text_generic.setFont(font_greatvibes);
         text_generic.setFillColor(sf::Color::White);
@@ -725,19 +725,19 @@ void Game::menu_main() {
      */
 
     if (key_released) {
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up)) {
             sounds.jump_sound.play();
             menuopc_selected--;
             if (menuopc_selected < 0) {
                 menuopc_selected = menuopc_size - 1;
             }
             key_released = false;
-        } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+        } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down)) {
             sounds.jump_sound.play();
             menuopc_selected++;
             if (menuopc_selected > menuopc_size - 1) menuopc_selected = 0;
             key_released = false;
-        } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+        } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right)) {
             if (menuopc_selected == menuopcs::Env_volumn) {
                 sounds.music_up();
                 menuopc[1] = "Volume ambiente " + to_string((int)sounds.volume_music);
@@ -745,7 +745,7 @@ void Game::menu_main() {
                 sounds.effect_up();
                 menuopc[2] = "Volume de efeitos " + to_string((int)sounds.volume_effect);
             }
-        } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+        } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left)) {
             if (menuopc_selected == menuopcs::Env_volumn) {
                 sounds.music_down();
                 menuopc[1] = "Volume ambiente " + to_string((int)sounds.volume_music);
@@ -753,13 +753,13 @@ void Game::menu_main() {
                 sounds.effect_down();
                 menuopc[2] = "Volume de efeitos " + to_string((int)sounds.volume_effect);
             }
-        } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Y)) {
+        } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Y)) {
             if (menuopc_selected == menuopcs::Reset) {
                 this->reset();
             }
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter)) {
             if (menuopc_selected == menuopcs::Play) {
                 page = pages::GAME_RESUME;
                 menumain_loaded = false;
@@ -770,14 +770,14 @@ void Game::menu_main() {
     }
 
     if (menuopc_selected == menuopcs::Env_volumn) {
-        if (sounds.music.getStatus() == sf::Music::Paused || sounds.music.getStatus() == sf::Music::Stopped)
+        if (sounds.music.getStatus() == sf::SoundSource::Status::Paused || sounds.music.getStatus() == sf::SoundSource::Status::Stopped)
             sounds.music.play();
     } else {
-        if (sounds.music.getStatus() == sf::Music::Playing)
+        if (sounds.music.getStatus() == sf::SoundSource::Status::Playing)
             sounds.music.pause();
     }
 
-    menuDariu.anime(sf::IntRect(Tools::getStartSprite(menuDariu.getFrame(), 1) * 32, 0, 1 * 32, 32), 1);
+    menuDariu.anime(sf::IntRect({Tools::getStartSprite(menuDariu.getFrame(), 1) * 32, 0}, {1 * 32, 32}), 1);
 
     /**
      *  DRAW
@@ -787,7 +787,7 @@ void Game::menu_main() {
 
     text_generic.setString("Version: " + this->version);
     text_generic.setCharacterSize(12);
-    text_generic.setPosition(sf::Vector2f(1160, 700));
+    text_generic.setPosition({static_cast<float>(1160), static_cast<float>(700)});
     window.draw(text_generic);
 
     text_generic.setFont(font_irishgrooverregular);
@@ -800,8 +800,8 @@ void Game::menu_main() {
     int line = 2;
 
     text_generic.setString("Dariu");
-    left = 600 - text_generic.getGlobalBounds().width / 2;
-    text_generic.setPosition(sf::Vector2f(left, 32));
+    left = 600 - text_generic.getGlobalBounds().size.x / 2;
+    text_generic.setPosition({static_cast<float>(left), static_cast<float>(32)});
     window.draw(text_generic);
 
     for (auto opc : menuopc) {
@@ -811,8 +811,8 @@ void Game::menu_main() {
         } else {
             text_generic.setString("   " + opc + "   ");
         }
-        left = 600 - text_generic.getGlobalBounds().width / 2;
-        text_generic.setPosition(sf::Vector2f(left, top));
+        left = 600 - text_generic.getGlobalBounds().size.x / 2;
+        text_generic.setPosition({static_cast<float>(left), static_cast<float>(top)});
         window.draw(text_generic);
 
         if (menuopc_selected == i)
@@ -829,7 +829,7 @@ void Game::menu_main() {
     text_generic.setString("Meu recorde:");
     left = 600 + 350;
     top = 64;
-    text_generic.setPosition(sf::Vector2f(left, top));
+    text_generic.setPosition({static_cast<float>(left), static_cast<float>(top)});
     window.draw(text_generic);
 
     text_generic.setFont(font_roboto);
@@ -837,22 +837,22 @@ void Game::menu_main() {
 
     text_generic.setString("Fases: " + to_string(profile.completed_phases));
     top = 64 + (40 * line++);
-    text_generic.setPosition(sf::Vector2f(left, top));
+    text_generic.setPosition({static_cast<float>(left), static_cast<float>(top)});
     window.draw(text_generic);
 
     text_generic.setString("Vidas: " + to_string(profile.lifes));
     top = 64 + (40 * line++);
-    text_generic.setPosition(sf::Vector2f(left, top));
+    text_generic.setPosition({static_cast<float>(left), static_cast<float>(top)});
     window.draw(text_generic);
 
     text_generic.setString("Tempo: " + Tools::seconds_to_hour(profile.curr_miliseconds_playtime / 60));
     top = 64 + (40 * line++);
-    text_generic.setPosition(sf::Vector2f(left, top));
+    text_generic.setPosition({static_cast<float>(left), static_cast<float>(top)});
     window.draw(text_generic);
 
     text_generic.setString("Recorde: " + Tools::seconds_to_hour(profile.best_miliseconds_playtime / 60));
     top = 64 + (40 * line++);
-    text_generic.setPosition(sf::Vector2f(left, top));
+    text_generic.setPosition({static_cast<float>(left), static_cast<float>(top)});
     window.draw(text_generic);
 
     window.display();
@@ -861,7 +861,7 @@ void Game::menu_main() {
 void Game::take_screenshot() {
     sf::Vector2u windowSize = window.getSize();
     sf::Texture texture;
-    if (!texture.create(windowSize.x, windowSize.y)) {
+    if (!texture.resize(windowSize)) {
         std::cerr << "Falha ao capturar a tela: não foi possível criar a textura." << std::endl;
         return;
     }
@@ -889,39 +889,41 @@ void Game::take_screenshot() {
 }
 
 void Game::loop_events() {
-    sf::Event event;
     sf::Clock clock;
-    while (window.pollEvent(event)) {
-        if (event.type == sf::Event::Closed) {
+    while (const std::optional<sf::Event> event = window.pollEvent()) {
+        if (event->is<sf::Event::Closed>()) {
             window.close();
         }
 
-        if (event.type == sf::Event::KeyReleased || event.type == sf::Event::JoystickButtonReleased) {
+        const auto* keyReleased = event->getIf<sf::Event::KeyReleased>();
+        const auto* joystickButtonReleased = event->getIf<sf::Event::JoystickButtonReleased>();
+        if (keyReleased || joystickButtonReleased) {
             key_released = true;
             this->dariu.key_released = true;
 
-            if (event.key.code == sf::Keyboard::Escape) {
+            const sf::Keyboard::Key key = keyReleased ? keyReleased->code : sf::Keyboard::Key::Unknown;
+            if (key == sf::Keyboard::Key::Escape) {
                 if (page == pages::GAME_PLAY) {
                     this->save_profile();
                     page = pages::MENU_MAIN;
                 }
-            } else if (event.key.code == sf::Keyboard::Up) {
+            } else if (key == sf::Keyboard::Key::Up) {
                 this->dariu.up_released = true;
-            } else if (event.key.code == sf::Keyboard::Z) {
+            } else if (key == sf::Keyboard::Key::Z) {
                 this->dariu.z_released = true;
-            } else if (event.key.code == sf::Keyboard::LControl) {
+            } else if (key == sf::Keyboard::Key::LControl) {
                 this->dariu.lcontroll_released = true;
-            } else if (event.key.code == sf::Keyboard::Numpad0) {
+            } else if (key == sf::Keyboard::Key::Numpad0) {
                 this->dariu.zerokey_released = true;
-            } else if (event.key.code == sf::Keyboard::Space) {
+            } else if (key == sf::Keyboard::Key::Space) {
                 this->dariu.space_released = true;
             }
 
-            if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::F2) {
+            if (key == sf::Keyboard::Key::F2) {
                 take_screenshot();
             }
 
-            if (event.type == sf::Event::JoystickButtonReleased) {
+            if (joystickButtonReleased) {
                 this->dariu.up_released = true;
                 this->dariu.z_released = true;
                 this->dariu.space_released = true;
@@ -929,12 +931,12 @@ void Game::loop_events() {
                 this->dariu.zerokey_released = true;
             }
             if (0) {
-                if (event.key.code == sf::Keyboard::PageUp) {
+                if (key == sf::Keyboard::Key::PageUp) {
                     window.setVerticalSyncEnabled(false);  // Don't allow more FPS than your monitor support.
                     window.setFramerateLimit(0);
                     sounds.jump_sound.play();
                     std::cout << "Sincronismo vertical desativado!" << std::endl;
-                } else if (event.key.code == sf::Keyboard::PageDown) {
+                } else if (key == sf::Keyboard::Key::PageDown) {
                     window.setVerticalSyncEnabled(true);  // Don't allow more FPS than your monitor support.
                     window.setFramerateLimit(60);
                     sounds.jump_sound.play();

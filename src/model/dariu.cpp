@@ -8,12 +8,12 @@
 
 using namespace std;
 
-Dariu::Dariu() {
-    font_vibes.loadFromFile("./src/asset/fonts/irish/IrishGrover-Regular.ttf");
+Dariu::Dariu() : text_score(font_vibes) {
+    (void)font_vibes.openFromFile("./src/asset/fonts/irish/IrishGrover-Regular.ttf");
     text_score.setFont(font_vibes);
     text_score.setCharacterSize(14);
     text_score.setFillColor(sf::Color::White);
-    start_pos = sf::FloatRect(32.f, 672.f, 32.f, 32.f);
+    start_pos = sf::FloatRect({32.f, 672.f}, {32.f, 32.f});
     reset_position();
     score.bananas = 0;
     score.liquor = 0;
@@ -31,8 +31,8 @@ void Dariu::reset_position() {
 }
 void Dariu::die(Tilemap* tilemap, Sounds* sounds) {
     if (state == States::Normal) {
-        const uint16_t i = this->pos.top / 32;
-        const uint16_t j = this->pos.left / 32;
+        const uint16_t i = this->pos.position.y / 32;
+        const uint16_t j = this->pos.position.x / 32;
 
         const char lt = tilemap->map[i - 1][j - 1];
         const char lc = tilemap->map[i][j - 1];
@@ -48,7 +48,7 @@ void Dariu::die(Tilemap* tilemap, Sounds* sounds) {
 
         if (lt != '@' && lc != '@' && lb != '@' && ct != '@' && cc != '@' && cb != '@' && rt != '@' && rc != '@' && rb != '@') {
             state = States::DieStart;
-            if (sounds->fired_sound.getStatus() == 0) sounds->fired_sound.play();
+            if (sounds->fired_sound.getStatus() == sf::SoundSource::Status::Stopped) sounds->fired_sound.play();
         }
     }
 }
@@ -66,7 +66,7 @@ void Dariu::update(Tilemap* tilemap, Sounds* sounds) {
         }
         case (States::Dieing): {
             add_gravity();
-            if (pos.top > (tilemap->H * 32) + 32) state = States::Died;
+            if (pos.position.y > (tilemap->H * 32) + 32) state = States::Died;
             break;
         }
         case (States::Died): {
@@ -97,7 +97,7 @@ void Dariu::update(Tilemap* tilemap, Sounds* sounds) {
     if (score.darius < 0) {
         over = true;
     }
-    actor_spr.setPosition(pos.left, pos.top);
+    actor_spr.setPosition({pos.position.x, pos.position.y});
 }
 void Dariu::draw(sf::RenderWindow* w, int phase, int phase_total, int curr_miliseconds_playtime) {
     Actor::draw(w);
@@ -129,14 +129,14 @@ void Dariu::draw(sf::RenderWindow* w, int phase, int phase_total, int curr_milis
 void Dariu::on_collide(std::string where, int i, int j, Tilemap* tilemap, Sounds* sounds) {
     Actor::on_collide(where, i, j, tilemap, sounds);
 
-    const float j32 = pos.left / 32;
+    const float j32 = pos.position.x / 32;
     int left_block = Tools::floor_special(j32 + 1, 0.71);
     int right_block = Tools::ceil_special(j32, 0.39);
 
     if (where == "top") {
         if (tilemap->getTileChar(i, j) == 'b') {
             tilemap->map[i][j] = ' ';
-            if (sounds->crash_sound.getStatus() == 0) sounds->crash_sound.play();
+            if (sounds->crash_sound.getStatus() == sf::SoundSource::Status::Stopped) sounds->crash_sound.play();
         };
     }
     if (tilemap->map[i][left_block] == 'R') {
@@ -154,14 +154,14 @@ void Dariu::on_collide_other(int i, int j, Tilemap* tilemap, Sounds* sounds) {
     Actor::on_collide_other(i, j, tilemap, sounds);
     const char tileChar = tilemap->getTileChar(i, j);
 
-    const float j32 = pos.left / 32;
+    const float j32 = pos.position.x / 32;
     int left_block = Tools::floor_special(j32 + 1, 0.71);
     int right_block = Tools::ceil_special(j32, 0.39);
 
     if (score.thophy >= score.thophy_total) {
         if (!tilemap->door_opened) {
             if (score.darius >= 0) {
-                if (sounds->dooropen_sound.getStatus() == 0) sounds->dooropen_sound.play();
+                if (sounds->dooropen_sound.getStatus() == sf::SoundSource::Status::Stopped) sounds->dooropen_sound.play();
                 tilemap->replaceAll('X', 'x');
                 tilemap->door_opened = true;
             }
@@ -194,7 +194,7 @@ void Dariu::on_collide_other(int i, int j, Tilemap* tilemap, Sounds* sounds) {
         score.liquor++;
     }
     if (tileChar == 'T') {
-        if (sounds->grabflower_sound.getStatus() == 0) sounds->grabflower_sound.play();
+        if (sounds->grabflower_sound.getStatus() == sf::SoundSource::Status::Stopped) sounds->grabflower_sound.play();
         tilemap->map[i][j] = ' ';
         score.thophy++;
     }
@@ -216,12 +216,12 @@ void Dariu::on_collide_other(int i, int j, Tilemap* tilemap, Sounds* sounds) {
         sounds->getgun_sound.play();
     }
     if (tileChar == 'u') {  // Munition
-        if (sounds->grabammo_sound.getStatus() == 0) sounds->grabammo_sound.play();
+        if (sounds->grabammo_sound.getStatus() == sf::SoundSource::Status::Stopped) sounds->grabammo_sound.play();
         tilemap->map[i][j] = ' ';
         this->munitions += 5;
     }
     if (tileChar == 'x') {
-        if (sounds->levelcomplete_sound.getStatus() == 0) {
+        if (sounds->levelcomplete_sound.getStatus() == sf::SoundSource::Status::Stopped) {
             sounds->levelcomplete_sound.play();
         }
         win = true;

@@ -11,9 +11,9 @@ https://youtu.be/lxCaeRWEStc
 
 # Download
 
-Just download zip file from Releases at this page em run dariu.exe
+Just download zip file from Releases at this page and run dariu.exe
 
-# Controlls
+# Controls
 
 Key    | Action
 -------|-----------------
@@ -40,8 +40,14 @@ sudo apt install g++ -y
 mkdir games
 cd games
 git clone https://github.com/ivansansao/Dariu.git 
-chmod +x compileAndRun.sh # Just first time
-./compileAndRun.sh
+cd Dariu
+make run
+~~~
+
+To run another phase:
+
+~~~bash
+make run RUN_ARGS=3
 ~~~
 
 ### Compile on Windows (Using g++)

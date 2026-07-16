@@ -5,20 +5,38 @@ WARN=-Wall
 CPPVERSION=-std=c++17
 ifeq ($(OS), Windows_NT)	
 	TARGET=dariu.exe
-	REMOVE=del *.o
-	SFML=-IC:\SFML\include -LC:\SFML\lib -LC:\mingw64\x86_64-w64-mingw32 -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
+	REMOVE=del /Q *.o
+	SFML_CFLAGS=-IC:\SFML\include
+	SFML_LIBS=-LC:\SFML\lib -LC:\mingw64\x86_64-w64-mingw32 -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 else
-	TARGET=./dariu
-	REMOVE=rm *.o
-	SFML=-I/usr/local/include -L/usr/local/lib -Wl,--disable-new-dtags -Wl,-rpath,/usr/local/lib -Wl,-rpath,'$$ORIGIN/lib' -Wl,-rpath-link,./lib -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
+	TARGET=dariu
+	REMOVE=rm -f *.o
+	SFML_CFLAGS=-I$(CURDIR)/include $(shell pkg-config --cflags sfml-all)
+	SFML_LIBS=$(shell pkg-config --libs sfml-all)
 endif
-CXXFLAGS=$(DEBUG) $(OPT) $(WARN) $(SFML) $(CPPVERSION)
+CXXFLAGS=$(DEBUG) $(OPT) $(WARN) $(CPPVERSION) $(SFML_CFLAGS)
+LDFLAGS=$(SFML_LIBS)
 LD=g++
 OBJS= main.o game.o dariu.o tilemap.o tools.o actor.o animation.o score.o enimies.o plataform.o sounds.o bulletgun.o rect.o
+RUN_ARGS?=2
+.PHONY: all run clean clean-target
+
 all: $(OBJS)
-	$(LD) -o $(TARGET) $(OBJS) $(CXXFLAGS)
+	$(LD) -o $(TARGET) $(OBJS) $(LDFLAGS)
+
+run: clean-target clean all
+	@echo $(CURDIR)
+	@trap '$(REMOVE); exit 130' INT TERM; \
+	./$(TARGET) $(RUN_ARGS); \
+	status=$$?; \
+	$(REMOVE); \
+	exit $$status
+
+clean:
 	@$(REMOVE)
-	@./$(TARGET) 2
+
+clean-target:
+	@$(REMOVE) $(TARGET)
 
 main.o: ./src/main.cpp ; $(CXX) -c $(CXXFLAGS) ./src/main.cpp -o main.o
 game.o: ./src/model/game.cpp ; $(CXX) -c $(CXXFLAGS) ./src/model/game.cpp -o game.o
