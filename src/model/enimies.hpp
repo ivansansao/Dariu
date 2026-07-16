@@ -91,7 +91,7 @@ class Bulletc : public Enimy {
 
     std::string doing = "waking";
 
-    void update(Tilemap* tilemap);
+    void update(Tilemap* tilemap, Sounds* sounds);
     void draw(sf::RenderWindow* w);
     void on_collide(std::string where, int i, int j, Tilemap* tilemap, Sounds* sounds);
     void on_collide_other(int i, int j, Tilemap* tilemap, Sounds* sounds);

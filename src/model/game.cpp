@@ -125,7 +125,7 @@ void Game::play() {
     int i1 = 0;
     for (auto& cannon : cannons) {
         cannon->update(&tilemap, &sounds);
-        bulletcs[i1]->update(&tilemap);
+        bulletcs[i1]->update(&tilemap, &sounds);
         bulletcs[i1]->start_pos.left = cannons[i1]->pos.left;
         bulletcs[i1]->start_pos.top = cannons[i1]->pos.top;
         if (cannons[i1]->pos.left == bulletcs[i1]->pos.left) {

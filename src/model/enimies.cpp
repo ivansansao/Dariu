@@ -678,7 +678,7 @@ Bulletc::Bulletc() {
     direction_x = -1;
 };
 
-void Bulletc::update(Tilemap* tilemap) {
+void Bulletc::update(Tilemap* tilemap, Sounds* sounds) {
     switch (state) {
         case (States::Normal): {
             if (direction_x == 1) velocity.x = 0.9;
